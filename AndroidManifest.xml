@@ -61,6 +61,21 @@
 			android:authorities="lecho.app.campus..provider.CategoryContentProvider"
 			android:exported="false" >
 		</provider>
+				<provider
+			android:name="lecho.app.campus..provider.PlaceUnitContentProvider"
+			android:authorities="lecho.app.campus..provider.PlaceUnitContentProvider"
+			android:exported="false" >
+		</provider>
+		<provider
+			android:name="lecho.app.campus..provider.PlaceFacultyContentProvider"
+			android:authorities="lecho.app.campus..provider.PlaceFacultyContentProvider"
+			android:exported="false" >
+		</provider>
+		<provider
+			android:name="lecho.app.campus..provider.PlaceCategoryContentProvider"
+			android:authorities="lecho.app.campus..provider.PlaceCategoryContentProvider"
+			android:exported="false" >
+		</provider>
 	</application>
 
 </manifest>

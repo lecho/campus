@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  * @author lecho
  * 
  */
-public class Faculty implements BaseColumns {
+public abstract class Faculty implements BaseColumns {
 
 	public static final String TABLE_NAME = "faculty";
 	public static final String NAME = "name";

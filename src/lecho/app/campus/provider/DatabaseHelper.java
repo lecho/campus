@@ -1,5 +1,12 @@
 package lecho.app.campus.provider;
 
+import lecho.app.campus.content.Category;
+import lecho.app.campus.content.Faculty;
+import lecho.app.campus.content.Place;
+import lecho.app.campus.content.PlaceCategory;
+import lecho.app.campus.content.PlaceFaculty;
+import lecho.app.campus.content.PlaceUnit;
+import lecho.app.campus.content.Unit;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -39,8 +46,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// db.execSQL(TABLE.CREATE_TABLE);
-
+		db.execSQL(Place.CREATE_TABLE);
+		db.execSQL(Unit.CREATE_TABLE);
+		db.execSQL(Faculty.CREATE_TABLE);
+		db.execSQL(Category.CREATE_TABLE);
+		db.execSQL(PlaceUnit.CREATE_TABLE);
+		db.execSQL(PlaceFaculty.CREATE_TABLE);
+		db.execSQL(PlaceCategory.CREATE_TABLE);
 	}
 
 	/**
@@ -50,7 +62,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		// db.execSQL(DROP_TABLE + TABLENAME);
+		db.execSQL(DROP_TABLE + Place.TABLE_NAME);
+		db.execSQL(DROP_TABLE + Unit.TABLE_NAME);
+		db.execSQL(DROP_TABLE + Faculty.TABLE_NAME);
+		db.execSQL(DROP_TABLE + Category.TABLE_NAME);
+		db.execSQL(DROP_TABLE + PlaceUnit.TABLE_NAME);
+		db.execSQL(DROP_TABLE + PlaceFaculty.TABLE_NAME);
+		db.execSQL(DROP_TABLE + PlaceCategory.TABLE_NAME);
 
 		onCreate(db);
 	}
