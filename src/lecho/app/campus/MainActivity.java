@@ -1,7 +1,8 @@
 package lecho.app.campus;
 
-import android.os.Bundle;
+import lecho.app.campus.utils.XmlParser;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -10,6 +11,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		XmlParser.loadCampusData(getApplicationContext());
 	}
 
 	@Override

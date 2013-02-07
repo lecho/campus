@@ -42,38 +42,38 @@
 		</activity>
 		<!-- providers -->
 		<provider
-			android:name="lecho.app.campus..provider.PlaceContentProvider"
-			android:authorities="lecho.app.campus..provider.PlaceContentProvider"
+			android:name="lecho.app.campus.provider.PlaceContentProvider"
+			android:authorities="lecho.app.campus.provider.PlaceContentProvider"
 			android:exported="false" >
 		</provider>
 		<provider
-			android:name="lecho.app.campus..provider.UnitContentProvider"
-			android:authorities="lecho.app.campus..provider.UnitContentProvider"
+			android:name="lecho.app.campus.provider.UnitContentProvider"
+			android:authorities="lecho.app.campus.provider.UnitContentProvider"
 			android:exported="false" >
 		</provider>
 		<provider
-			android:name="lecho.app.campus..provider.FacultyContentProvider"
-			android:authorities="lecho.app.campus..provider.FacultyContentProvider"
+			android:name="lecho.app.campus.provider.FacultyContentProvider"
+			android:authorities="lecho.app.campus.provider.FacultyContentProvider"
 			android:exported="false" >
 		</provider>
 		<provider
-			android:name="lecho.app.campus..provider.CategoryContentProvider"
-			android:authorities="lecho.app.campus..provider.CategoryContentProvider"
+			android:name="lecho.app.campus.provider.CategoryContentProvider"
+			android:authorities="lecho.app.campus.provider.CategoryContentProvider"
 			android:exported="false" >
 		</provider>
 				<provider
-			android:name="lecho.app.campus..provider.PlaceUnitContentProvider"
-			android:authorities="lecho.app.campus..provider.PlaceUnitContentProvider"
+			android:name="lecho.app.campus.provider.PlaceUnitContentProvider"
+			android:authorities="lecho.app.campus.provider.PlaceUnitContentProvider"
 			android:exported="false" >
 		</provider>
 		<provider
-			android:name="lecho.app.campus..provider.PlaceFacultyContentProvider"
-			android:authorities="lecho.app.campus..provider.PlaceFacultyContentProvider"
+			android:name="lecho.app.campus.provider.PlaceFacultyContentProvider"
+			android:authorities="lecho.app.campus.provider.PlaceFacultyContentProvider"
 			android:exported="false" >
 		</provider>
 		<provider
-			android:name="lecho.app.campus..provider.PlaceCategoryContentProvider"
-			android:authorities="lecho.app.campus..provider.PlaceCategoryContentProvider"
+			android:name="lecho.app.campus.provider.PlaceCategoryContentProvider"
+			android:authorities="lecho.app.campus.provider.PlaceCategoryContentProvider"
 			android:exported="false" >
 		</provider>
 	</application>

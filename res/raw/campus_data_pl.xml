@@ -60,30 +60,33 @@
     <!-- places -->
 	<places>
 		<place>
-		<_id>
-			1
-		</_id>
-		<name>
-			Test Place
-		</name>
-		<symbol>
-			T1
-		</symbol>
-		<web_page>
-			www.google.pl
-		</web_page>
-		<description>
-			Test Place Description
-		</description>
-		<keywords>
-			test place t1
-		</keywords>
-		<latitude>
-			51.000000
-		</latitude>
-		<longtitude>
-			20.000000
-		</longtitude>
+		    <_id>
+			    1
+		    </_id>
+		    <name>
+			    Test Place
+		    </name>
+		    <symbol>
+			    T1
+		    </symbol>
+		    <web_page>
+			    www.google.pl
+		    </web_page>
+		    <description>
+			    Test Place Description
+		    </description>
+		    <keywords>
+			    test place t1
+		    </keywords>
+            <address>
+                Test Street 11, 90-230 Test City
+            </address>
+		    <latitude>
+			    51.000000
+		    </latitude>
+		    <longtitude>
+			    20.000000
+		    </longtitude>
 		</place>
 	</places>
     <!-- places_categories -->

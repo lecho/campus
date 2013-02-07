@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 public abstract class PlaceFaculty implements BaseColumns {
 
-	public static final String TABLE_NAME = "place_category";
+	public static final String TABLE_NAME = "place_faculty";
 	public static final String PLACE_ID = "place_id";
 	public static final String FACULTY_ID = "faculty_id";
 
