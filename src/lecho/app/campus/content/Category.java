@@ -16,8 +16,8 @@ public abstract class Category implements BaseColumns {
 	public static final String DESCRIPTION = "description";
 
 	// table DLL
-	public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID
-			+ " integer primary key autoincrement, " + NAME + " text, " + DESCRIPTION + " text);";
+	public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
+			+ NAME + " text, " + DESCRIPTION + " text);";
 
 	// provider relative stuff
 	public static final String AUTHORITY = "lecho.app.campus.provider.CategoryContentProvider";

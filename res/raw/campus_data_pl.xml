@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<campus>
+    <!-- categories -->
+	<categories>
+		<category>
+			<_id>
+				1
+			</_id>
+			<name>
+				Test Category
+			</name>
+			<description>
+				Test Category Description
+			</description>
+		</category>
+	</categories>
+    <!-- faculties -->
+	<faculties>
+		<faculty>
+			<_id>
+				1
+			</_id>
+			<name>
+				Test Faculty
+			</name>
+			<short_name>
+				TFSN
+			</short_name>
+			<web_page>
+				www.google.pl
+			</web_page>
+			<description>
+				Test Faculty Description
+			</description>
+		</faculty>
+	</faculties>
+    <!-- units -->
+	<units>
+		<unit>
+			<_id>
+				1
+			</_id>
+			<name>
+				Test Unit
+			</name>
+			<short_name>
+				TUSN
+			</short_name>
+			<web_page>
+				www.google.pl
+			</web_page>
+			<description>
+				Test Unit Description
+			</description>
+			<faculty_id>
+				1
+			</faculty_id>
+		</unit>
+	</units>
+    <!-- places -->
+	<places>
+		<place>
+		<_id>
+			1
+		</_id>
+		<name>
+			Test Place
+		</name>
+		<symbol>
+			T1
+		</symbol>
+		<web_page>
+			www.google.pl
+		</web_page>
+		<description>
+			Test Place Description
+		</description>
+		<keywords>
+			test place t1
+		</keywords>
+		<latitude>
+			51.000000
+		</latitude>
+		<longtitude>
+			20.000000
+		</longtitude>
+		</place>
+	</places>
+    <!-- places_categories -->
+	<places_categories>
+        <place_category>
+            <place_id>
+                1
+            </place_id>
+            <category_id>
+                1
+            </category_id>
+        </place_category>   
+    </places_categories>
+    <!-- places_units -->
+    <places_units>
+        <place_unit>
+            <place_id>
+                1
+            </place_id>
+            <unit_id>
+                1
+            </unit_id>
+        </place_unit>
+    </places_units>
+    <!-- places_faculties -->
+    <places_faculties>
+        <place_faculty>
+            <place_id>
+                1
+            </place_id>
+            <faculty_id>
+                1
+            </faculty_id>
+        </place_faculty>
+    </places_faculties>
+</campus>
