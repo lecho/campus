@@ -31,7 +31,7 @@ public class XmlParser {
 	public static final String TAG = XmlParser.class.getSimpleName();
 
 	/**
-	 * Parsing campus_data_xx.xml file from raw resources.
+	 * Parses campus_data_xx.xml file from raw resources.
 	 * 
 	 * @param ctx
 	 * @return true if success, false otherwise
