@@ -22,6 +22,27 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<provider
+			android:name="lecho.app.campus..provider.PlaceContentProvider"
+			android:authorities="lecho.app.campus..provider.PlaceContentProvider"
+			android:exported="false" >
+		</provider>
+		<provider
+			android:name="lecho.app.campus..provider.UnitContentProvider"
+			android:authorities="lecho.app.campus..provider.UnitContentProvider"
+			android:exported="false" >
+		</provider>
+		<provider
+			android:name="lecho.app.campus..provider.FacultyContentProvider"
+			android:authorities="lecho.app.campus..provider.FacultyContentProvider"
+			android:exported="false" >
+		</provider>
+		<provider
+			android:name="lecho.app.campus..provider.CategoryContentProvider"
+			android:authorities="lecho.app.campus..provider.CategoryContentProvider"
+			android:exported="false" >
+		</provider>
 	</application>
 
 </manifest>
