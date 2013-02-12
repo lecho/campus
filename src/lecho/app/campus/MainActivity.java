@@ -1,23 +1,38 @@
 package lecho.app.campus;
 
-import lecho.app.campus.utils.XmlParser;
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.View;
+import android.widget.LinearLayout;
 
-public class MainActivity extends Activity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+
+public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		XmlParser.loadCampusData(getApplicationContext());
+		setContentView(R.layout.fragment_place_details);
+		// getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_button_normal));
+		// XmlParser.loadCampusData(getApplicationContext());
+		View v = findViewById(R.id.info_layout);
+		View i = View.inflate(getApplicationContext(), R.layout.group_view, null);
+		((LinearLayout) v).addView(i);
+		View ii = View.inflate(getApplicationContext(), R.layout.item_view, null);
+		((LinearLayout) v).addView(ii);
+		View iii = View.inflate(getApplicationContext(), R.layout.item_view, null);
+		((LinearLayout) v).addView(iii);
+		View i2 = View.inflate(getApplicationContext(), R.layout.group_view, null);
+		((LinearLayout) v).addView(i2);
+		View i3 = View.inflate(getApplicationContext(), R.layout.item_view, null);
+		((LinearLayout) v).addView(i3);
+		View i4 = View.inflate(getApplicationContext(), R.layout.more_view, null);
+		((LinearLayout) v).addView(i4);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 

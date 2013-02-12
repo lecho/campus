@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">campus</string>
-	<string name="hello_world">Hello world!</string>
-	<string name="menu_settings">Settings</string>
+	<string name="app_name">KampusPŁ</string>
+	<string name="hello_world">Witaj Świecie!</string>
+	<string name="menu_settings">Ustawienia</string>
+    <string name="cd_place_photo">Zdjęcie obiektu</string>
+    <string name="cd_info_button">Więcej informacji o jednosce.</string>
+    <string name="additional_info">Dodatkowe informacje</string>
 
 </resources>
