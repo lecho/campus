@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lecho.app.campus.R;
-import lecho.app.campus.provider.Category;
-import lecho.app.campus.provider.Faculty;
-import lecho.app.campus.provider.Place;
-import lecho.app.campus.provider.PlaceCategory;
-import lecho.app.campus.provider.PlaceFaculty;
-import lecho.app.campus.provider.PlaceUnit;
-import lecho.app.campus.provider.Unit;
+import lecho.app.campus.contract.Category;
+import lecho.app.campus.contract.Faculty;
+import lecho.app.campus.contract.Place;
+import lecho.app.campus.contract.PlaceCategory;
+import lecho.app.campus.contract.PlaceFaculty;
+import lecho.app.campus.contract.PlaceUnit;
+import lecho.app.campus.contract.Unit;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

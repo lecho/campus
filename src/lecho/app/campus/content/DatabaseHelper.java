@@ -1,12 +1,12 @@
 package lecho.app.campus.content;
 
-import lecho.app.campus.provider.Category;
-import lecho.app.campus.provider.Faculty;
-import lecho.app.campus.provider.Place;
-import lecho.app.campus.provider.PlaceCategory;
-import lecho.app.campus.provider.PlaceFaculty;
-import lecho.app.campus.provider.PlaceUnit;
-import lecho.app.campus.provider.Unit;
+import lecho.app.campus.contract.Category;
+import lecho.app.campus.contract.Faculty;
+import lecho.app.campus.contract.Place;
+import lecho.app.campus.contract.PlaceCategory;
+import lecho.app.campus.contract.PlaceFaculty;
+import lecho.app.campus.contract.PlaceUnit;
+import lecho.app.campus.contract.Unit;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

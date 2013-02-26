@@ -1,6 +1,6 @@
 package lecho.app.campus.utils;
 
-public interface Constants {
+public interface Config {
 
 	public String PHOTOS_FOLDER = "photos";
 

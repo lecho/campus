@@ -1,6 +1,6 @@
 package lecho.app.campus.content;
 
-import lecho.app.campus.provider.Place;
+import lecho.app.campus.contract.Category;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -9,17 +9,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class PlaceContentProvider extends ContentProvider {
-	public static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
-	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
-	public static final int PLACE_DIR = 1;
-	public static final int PLACE_ITEM = 2;
+public class CategoryProvider extends ContentProvider {
+	public static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.category";
+	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.category";
+	public static final int CATEGORY_DIR = 1;
+	public static final int CATEGORY_ITEM = 2;
 	protected DatabaseHelper mDbHelper;
 	private static final UriMatcher sUriMatcher;
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME, PLACE_DIR);
-		sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/#", PLACE_ITEM);
+		sUriMatcher.addURI(Category.AUTHORITY, Category.TABLE_NAME, CATEGORY_DIR);
+		sUriMatcher.addURI(Category.AUTHORITY, Category.TABLE_NAME + "/#", CATEGORY_ITEM);
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class PlaceContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsDeleted = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
-			rowsDeleted = db.delete(Place.TABLE_NAME, selection, selectionArgs);
+		case CATEGORY_DIR:
+			rowsDeleted = db.delete(Category.TABLE_NAME, selection, selectionArgs);
 			break;
-		case PLACE_ITEM:
-			StringBuilder sb = new StringBuilder().append(Place._ID).append("=?");
+		case CATEGORY_ITEM:
+			StringBuilder sb = new StringBuilder().append(Category._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			rowsDeleted = db.delete(Place.TABLE_NAME, sb.toString(), args);
+			rowsDeleted = db.delete(Category.TABLE_NAME, sb.toString(), args);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -45,9 +45,9 @@ public class PlaceContentProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
+		case CATEGORY_DIR:
 			return DIR_CONTENT_TYPE;
-		case PLACE_ITEM:
+		case CATEGORY_ITEM:
 			return ITEM_CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Invalid URI: " + uri);
@@ -59,9 +59,9 @@ public class PlaceContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Uri newRow = null;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
-			long id = db.insert(Place.TABLE_NAME, null, values);
-			newRow = ContentUris.withAppendedId(Place.CONTENT_URI, id);
+		case CATEGORY_DIR:
+			long id = db.insert(Category.TABLE_NAME, null, values);
+			newRow = ContentUris.withAppendedId(Category.CONTENT_URI, id);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -85,13 +85,13 @@ public class PlaceContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		Cursor c;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
-			c = db.query(Place.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
+		case CATEGORY_DIR:
+			c = db.query(Category.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
 			break;
-		case PLACE_ITEM:
-			StringBuilder sb = new StringBuilder().append(Place._ID).append("=?");
+		case CATEGORY_ITEM:
+			StringBuilder sb = new StringBuilder().append(Category._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			c = db.query(Place.TABLE_NAME, projection, sb.toString(), args, null, null, null);
+			c = db.query(Category.TABLE_NAME, projection, sb.toString(), args, null, null, null);
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
 		}
@@ -104,13 +104,13 @@ public class PlaceContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsUpdated = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
-			rowsUpdated = db.update(Place.TABLE_NAME, values, selection, selectionArgs);
+		case CATEGORY_DIR:
+			rowsUpdated = db.update(Category.TABLE_NAME, values, selection, selectionArgs);
 			break;
-		case PLACE_ITEM:
-			StringBuilder sb = new StringBuilder().append(Place._ID).append("=?");
+		case CATEGORY_ITEM:
+			StringBuilder sb = new StringBuilder().append(Category._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			rowsUpdated = db.update(Place.TABLE_NAME, values, sb.toString(), args);
+			rowsUpdated = db.update(Category.TABLE_NAME, values, sb.toString(), args);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -124,11 +124,11 @@ public class PlaceContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsAffected = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_DIR:
+		case CATEGORY_DIR:
 			try {
 				db.beginTransaction();
 				for (ContentValues cv : values) {
-					if (db.insert(Place.TABLE_NAME, null, cv) > 0) {
+					if (db.insert(Category.TABLE_NAME, null, cv) > 0) {
 						++rowsAffected;
 					}
 				}
