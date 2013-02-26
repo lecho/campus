@@ -1,6 +1,6 @@
-package lecho.app.campus.provider;
+package lecho.app.campus.content;
 
-import lecho.app.campus.content.PlaceFaculty;
+import lecho.app.campus.provider.Unit;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -9,17 +9,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class PlaceFacultyContentProvider extends ContentProvider {
-	public static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.place_faculty";
-	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_faculty";
-	public static final int PLACE_FACULTY_DIR = 1;
-	public static final int PLACE_FACULTY_ITEM = 2;
+public class UnitContentProvider extends ContentProvider {
+	public static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.unit";
+	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.unit";
+	public static final int UNIT_DIR = 1;
+	public static final int UNIT_ITEM = 2;
 	protected DatabaseHelper mDbHelper;
 	private static final UriMatcher sUriMatcher;
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(PlaceFaculty.AUTHORITY, PlaceFaculty.TABLE_NAME, PLACE_FACULTY_DIR);
-		sUriMatcher.addURI(PlaceFaculty.AUTHORITY, PlaceFaculty.TABLE_NAME + "/#", PLACE_FACULTY_ITEM);
+		sUriMatcher.addURI(Unit.AUTHORITY, Unit.TABLE_NAME, UNIT_DIR);
+		sUriMatcher.addURI(Unit.AUTHORITY, Unit.TABLE_NAME + "/#", UNIT_ITEM);
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsDeleted = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
-			rowsDeleted = db.delete(PlaceFaculty.TABLE_NAME, selection, selectionArgs);
+		case UNIT_DIR:
+			rowsDeleted = db.delete(Unit.TABLE_NAME, selection, selectionArgs);
 			break;
-		case PLACE_FACULTY_ITEM:
-			StringBuilder sb = new StringBuilder().append(PlaceFaculty._ID).append("=?");
+		case UNIT_ITEM:
+			StringBuilder sb = new StringBuilder().append(Unit._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			rowsDeleted = db.delete(PlaceFaculty.TABLE_NAME, sb.toString(), args);
+			rowsDeleted = db.delete(Unit.TABLE_NAME, sb.toString(), args);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -45,9 +45,9 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
+		case UNIT_DIR:
 			return DIR_CONTENT_TYPE;
-		case PLACE_FACULTY_ITEM:
+		case UNIT_ITEM:
 			return ITEM_CONTENT_TYPE;
 		default:
 			throw new IllegalArgumentException("Invalid URI: " + uri);
@@ -59,9 +59,9 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Uri newRow = null;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
-			long id = db.insert(PlaceFaculty.TABLE_NAME, null, values);
-			newRow = ContentUris.withAppendedId(PlaceFaculty.CONTENT_URI, id);
+		case UNIT_DIR:
+			long id = db.insert(Unit.TABLE_NAME, null, values);
+			newRow = ContentUris.withAppendedId(Unit.CONTENT_URI, id);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -85,13 +85,13 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		Cursor c;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
-			c = db.query(PlaceFaculty.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
+		case UNIT_DIR:
+			c = db.query(Unit.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
 			break;
-		case PLACE_FACULTY_ITEM:
-			StringBuilder sb = new StringBuilder().append(PlaceFaculty._ID).append("=?");
+		case UNIT_ITEM:
+			StringBuilder sb = new StringBuilder().append(Unit._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			c = db.query(PlaceFaculty.TABLE_NAME, projection, sb.toString(), args, null, null, null);
+			c = db.query(Unit.TABLE_NAME, projection, sb.toString(), args, null, null, null);
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
 		}
@@ -104,13 +104,13 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsUpdated = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
-			rowsUpdated = db.update(PlaceFaculty.TABLE_NAME, values, selection, selectionArgs);
+		case UNIT_DIR:
+			rowsUpdated = db.update(Unit.TABLE_NAME, values, selection, selectionArgs);
 			break;
-		case PLACE_FACULTY_ITEM:
-			StringBuilder sb = new StringBuilder().append(PlaceFaculty._ID).append("=?");
+		case UNIT_ITEM:
+			StringBuilder sb = new StringBuilder().append(Unit._ID).append("=?");
 			String[] args = new String[] { uri.getLastPathSegment() };
-			rowsUpdated = db.update(PlaceFaculty.TABLE_NAME, values, sb.toString(), args);
+			rowsUpdated = db.update(Unit.TABLE_NAME, values, sb.toString(), args);
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid URI " + uri);
@@ -124,11 +124,11 @@ public class PlaceFacultyContentProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int rowsAffected = 0;
 		switch (sUriMatcher.match(uri)) {
-		case PLACE_FACULTY_DIR:
+		case UNIT_DIR:
 			try {
 				db.beginTransaction();
 				for (ContentValues cv : values) {
-					if (db.insert(PlaceFaculty.TABLE_NAME, null, cv) > 0) {
+					if (db.insert(Unit.TABLE_NAME, null, cv) > 0) {
 						++rowsAffected;
 					}
 				}

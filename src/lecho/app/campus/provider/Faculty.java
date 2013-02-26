@@ -1,4 +1,4 @@
-package lecho.app.campus.content;
+package lecho.app.campus.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

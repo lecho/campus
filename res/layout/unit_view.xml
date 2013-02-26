@@ -21,7 +21,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/h_separator"
-        android:layout_toLeftOf="@+id/button_layout"/>
+        android:layout_toLeftOf="@+id/button_layout"
+        android:text="Instytut Matematyki"/>
     <LinearLayout
         android:id="@id/button_layout"
         android:layout_width="wrap_content"

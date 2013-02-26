@@ -1,6 +1,6 @@
-package lecho.app.campus.provider;
+package lecho.app.campus.content;
 
-import lecho.app.campus.content.PlaceUnit;
+import lecho.app.campus.provider.PlaceUnit;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
