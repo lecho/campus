@@ -1,7 +1,9 @@
 package lecho.app.campus.utils;
 
-public interface Config {
+public final class Config {
 
-	public String PHOTOS_FOLDER = "photos";
+    public static final String PHOTOS_FOLDER = "photos";
+    public static final boolean LOGV = true;
+    public static final boolean LOGD = true;
 
 }
