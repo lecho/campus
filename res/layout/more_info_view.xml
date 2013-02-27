@@ -17,7 +17,7 @@
         android:background="@color/white" />
     <TextView
         android:id="@+id/label"
-        style="@style/groupName"
+        style="@style/FacultyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/h_separator"

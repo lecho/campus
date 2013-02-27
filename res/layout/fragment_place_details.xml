@@ -26,14 +26,14 @@
                 android:background="@color/maroon" />
             <Button
                 android:id="@+id/place_symbol"
-                style="@style/placeSymbol"
+                style="@style/PlaceSymbol"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_alignBottom="@id/place_image"
                 android:layout_alignParentRight="true" />
             <TextView
                 android:id="@+id/place_name"
-                style="@style/placeName"
+                style="@style/PlaceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
