@@ -15,7 +15,7 @@ public abstract class Category implements BaseColumns {
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 
-    // table DLL
+    // table DDL
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
             + NAME + " text, " + DESCRIPTION + " text);";
 

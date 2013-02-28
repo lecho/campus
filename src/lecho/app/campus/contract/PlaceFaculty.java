@@ -14,7 +14,7 @@ public abstract class PlaceFaculty implements BaseColumns {
     public static final String PLACE_ID = "place_id";
     public static final String FACULTY_ID = "faculty_id";
 
-    // table DLL
+    // table DDL
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID
             + " integer primary key autoincrement, " + PLACE_ID + " integer, " + FACULTY_ID + " integer);";
 

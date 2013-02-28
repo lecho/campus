@@ -21,7 +21,7 @@ public abstract class Place implements BaseColumns {
     public static final String LONGTITUDE = "longtitude";
     public static final String ADDRESS = "address";
 
-    // table DLL
+    // table DDL
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
             + NAME + " text, " + SYMBOL + " varchar(16), " + WEB_PAGE + " text, " + DESCRIPTION + " text, " + KEYWORDS
             + " text, " + LATITUDE + " real, " + LONGTITUDE + " real, " + ADDRESS + " text);";

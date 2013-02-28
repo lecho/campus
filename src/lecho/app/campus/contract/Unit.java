@@ -18,7 +18,7 @@ public abstract class Unit implements BaseColumns {
     public static final String DESCRIPTION = "description";
     public static final String FACULTY_ID = "faculty_id";
 
-    // table DLL
+    // table DDL
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
             + NAME + " text, " + SHORT_NAME + " varchar(16), " + WEB_PAGE + " text, " + DESCRIPTION + " text, "
             + FACULTY_ID + " integer);";

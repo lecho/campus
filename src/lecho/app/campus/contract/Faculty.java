@@ -16,7 +16,7 @@ public abstract class Faculty implements BaseColumns {
     public static final String WEB_PAGE = "web_page";
     public static final String DESCRIPTION = "description";
 
-    // table DLL
+    // table DDL
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
             + NAME + " text, " + SHORT_NAME + " varchar(16), " + WEB_PAGE + " text, " + DESCRIPTION + " text);";
 
