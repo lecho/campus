@@ -1,5 +1,6 @@
 package lecho.app.campus.content;
 
+import lecho.app.campus.contract.Category;
 import lecho.app.campus.contract.Place;
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -10,16 +11,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 public class PlaceProvider extends ContentProvider {
-    public static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
-    public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
-    public static final int PLACE_DIR = 1;
-    public static final int PLACE_ITEM = 2;
-    protected DatabaseHelper mDbHelper;
+    private static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
+    private static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
+    private static final String DIR_CONTENT_TYPE_BY_CATEGORY = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_by_category";
+    private static final String DIR_CONTENT_TYPE_BY_FACULTY = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_by_faculty";
+    private static final int PLACE_DIR = 1;
+    private static final int PLACE_ITEM = 2;
+    private static final int PLACE_DIR_BY_CATEGORY = 3;
+    private static final int PLACE_DIR_BY_FACULTY = 4;
+    private DatabaseHelper mDbHelper;
     private static final UriMatcher sUriMatcher;
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME, PLACE_DIR);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/#", PLACE_ITEM);
+        // filters by category id
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#", PLACE_DIR_BY_CATEGORY);
+        // filter by faculty id
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#", PLACE_DIR_BY_FACULTY);
     }
 
     @Override
@@ -49,6 +58,10 @@ public class PlaceProvider extends ContentProvider {
             return DIR_CONTENT_TYPE;
         case PLACE_ITEM:
             return ITEM_CONTENT_TYPE;
+        case PLACE_DIR_BY_CATEGORY:
+            return DIR_CONTENT_TYPE_BY_CATEGORY;
+        case PLACE_DIR_BY_FACULTY:
+            return DIR_CONTENT_TYPE_BY_FACULTY;
         default:
             throw new IllegalArgumentException("Invalid URI: " + uri);
         }
