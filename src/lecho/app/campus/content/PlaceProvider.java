@@ -1,7 +1,10 @@
 package lecho.app.campus.content;
 
 import lecho.app.campus.contract.Category;
+import lecho.app.campus.contract.Faculty;
 import lecho.app.campus.contract.Place;
+import lecho.app.campus.contract.PlaceCategory;
+import lecho.app.campus.contract.PlaceFaculty;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -28,8 +31,15 @@ public class PlaceProvider extends ContentProvider {
         // filters by category id
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#", PLACE_DIR_BY_CATEGORY);
         // filter by faculty id
-        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#", PLACE_DIR_BY_FACULTY);
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Faculty.TABLE_NAME + "/#", PLACE_DIR_BY_FACULTY);
     }
+
+    // TODO test
+    private static final String SELECTION_PLACE_BY_CATEGORY = Place._ID + " in (select " + PlaceCategory.PLACE_ID
+            + " from " + PlaceCategory.TABLE_NAME + " where " + PlaceCategory.CATEGORY_ID + "=?)";
+
+    private static final String SELECTION_PLACE_BY_FACULTY = Place._ID + " in (select " + PlaceFaculty.PLACE_ID
+            + " from " + PlaceFaculty.TABLE_NAME + " where " + PlaceFaculty.FACULTY_ID + "=?)";
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -98,13 +108,26 @@ public class PlaceProvider extends ContentProvider {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Cursor c;
         switch (sUriMatcher.match(uri)) {
-        case PLACE_DIR:
+        case PLACE_DIR: {
             c = db.query(Place.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
             break;
-        case PLACE_ITEM:
+        }
+        case PLACE_ITEM: {
             StringBuilder sb = new StringBuilder().append(Place._ID).append("=?");
             String[] args = new String[] { uri.getLastPathSegment() };
             c = db.query(Place.TABLE_NAME, projection, sb.toString(), args, null, null, null);
+            break;
+        }
+        case PLACE_DIR_BY_CATEGORY: {
+            String[] args = new String[] { uri.getLastPathSegment() };
+            c = db.query(Place.TABLE_NAME, projection, SELECTION_PLACE_BY_CATEGORY, args, null, null, null);
+            break;
+        }
+        case PLACE_DIR_BY_FACULTY: {
+            String[] args = new String[] { uri.getLastPathSegment() };
+            c = db.query(Place.TABLE_NAME, projection, SELECTION_PLACE_BY_FACULTY, args, null, null, null);
+            break;
+        }
         default:
             throw new IllegalArgumentException("Invalid URI " + uri);
         }
@@ -144,6 +167,7 @@ public class PlaceProvider extends ContentProvider {
                     if (db.insert(Place.TABLE_NAME, null, cv) > 0) {
                         ++rowsAffected;
                     }
+                    db.yieldIfContendedSafely();
                 }
                 db.setTransactionSuccessful();
             } finally {
