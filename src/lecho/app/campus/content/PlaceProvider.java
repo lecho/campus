@@ -1,7 +1,6 @@
 package lecho.app.campus.content;
 
 import lecho.app.campus.contract.Category;
-import lecho.app.campus.contract.Faculty;
 import lecho.app.campus.contract.Place;
 import lecho.app.campus.contract.PlaceCategory;
 import lecho.app.campus.contract.PlaceFaculty;
@@ -14,32 +13,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 public class PlaceProvider extends ContentProvider {
-    private static final String ITEM_CONTENT_TYPE = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
-    private static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
-    private static final String DIR_CONTENT_TYPE_BY_CATEGORY = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_by_category";
-    private static final String DIR_CONTENT_TYPE_BY_FACULTY = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_by_faculty";
+    private static final String CONTENT_TYPE_DIR = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
+    private static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
+    private static final String CONTENT_TYPE_DIR_FILTERED = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_filtered";
     private static final int PLACE_DIR = 1;
     private static final int PLACE_ITEM = 2;
-    private static final int PLACE_DIR_BY_CATEGORY = 3;
-    private static final int PLACE_DIR_BY_FACULTY = 4;
+    private static final int PLACE_DIR_FILTERED = 3;
     private DatabaseHelper mDbHelper;
     private static final UriMatcher sUriMatcher;
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME, PLACE_DIR);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/#", PLACE_ITEM);
-        // filters by category id
-        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#", PLACE_DIR_BY_CATEGORY);
-        // filter by faculty id
-        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Faculty.TABLE_NAME + "/#", PLACE_DIR_BY_FACULTY);
+        // filters
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#/#", PLACE_DIR_FILTERED);
     }
 
     // TODO test
-    private static final String SELECTION_PLACE_BY_CATEGORY = Place._ID + " in (select " + PlaceCategory.PLACE_ID
-            + " from " + PlaceCategory.TABLE_NAME + " where " + PlaceCategory.CATEGORY_ID + "=?)";
-
-    private static final String SELECTION_PLACE_BY_FACULTY = Place._ID + " in (select " + PlaceFaculty.PLACE_ID
-            + " from " + PlaceFaculty.TABLE_NAME + " where " + PlaceFaculty.FACULTY_ID + "=?)";
+    private static final String SELECTION_PLACE_FILTERED = Place._ID + " in (select " + PlaceCategory.PLACE_ID
+            + " from " + PlaceCategory.TABLE_NAME + " where " + PlaceCategory.CATEGORY_ID + "=?) or " + Place._ID
+            + " in (select " + PlaceFaculty.PLACE_ID + " from " + PlaceFaculty.TABLE_NAME + " where "
+            + PlaceFaculty.FACULTY_ID + "=?)";
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -65,13 +59,11 @@ public class PlaceProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)) {
         case PLACE_DIR:
-            return DIR_CONTENT_TYPE;
+            return CONTENT_TYPE_ITEM;
         case PLACE_ITEM:
-            return ITEM_CONTENT_TYPE;
-        case PLACE_DIR_BY_CATEGORY:
-            return DIR_CONTENT_TYPE_BY_CATEGORY;
-        case PLACE_DIR_BY_FACULTY:
-            return DIR_CONTENT_TYPE_BY_FACULTY;
+            return CONTENT_TYPE_DIR;
+        case PLACE_DIR_FILTERED:
+            return CONTENT_TYPE_DIR_FILTERED;
         default:
             throw new IllegalArgumentException("Invalid URI: " + uri);
         }
@@ -116,16 +108,6 @@ public class PlaceProvider extends ContentProvider {
             StringBuilder sb = new StringBuilder().append(Place._ID).append("=?");
             String[] args = new String[] { uri.getLastPathSegment() };
             c = db.query(Place.TABLE_NAME, projection, sb.toString(), args, null, null, null);
-            break;
-        }
-        case PLACE_DIR_BY_CATEGORY: {
-            String[] args = new String[] { uri.getLastPathSegment() };
-            c = db.query(Place.TABLE_NAME, projection, SELECTION_PLACE_BY_CATEGORY, args, null, null, null);
-            break;
-        }
-        case PLACE_DIR_BY_FACULTY: {
-            String[] args = new String[] { uri.getLastPathSegment() };
-            c = db.query(Place.TABLE_NAME, projection, SELECTION_PLACE_BY_FACULTY, args, null, null, null);
             break;
         }
         default:

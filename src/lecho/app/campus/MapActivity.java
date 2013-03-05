@@ -19,6 +19,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 public class MapActivity extends SherlockFragmentActivity implements LoaderCallbacks<Cursor> {
     private static final int PLACES_LOADER_ID = 1;
     private static final String TAG = MapActivity.class.getSimpleName();
+    private static final String LOADER_SELECTION = "lecho.app.campus:LOADER_SELECTION";
+    private static final String LOADER_SELECTION_ARGS = "lecho.app.campus:LOADER_SELECTION_ARGS";
 
     private GoogleMap mMap;
 
