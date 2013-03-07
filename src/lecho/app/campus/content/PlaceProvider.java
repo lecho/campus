@@ -18,22 +18,40 @@ public class PlaceProvider extends ContentProvider {
     private static final String CONTENT_TYPE_DIR_FILTERED = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_filtered";
     private static final int PLACE_DIR = 1;
     private static final int PLACE_ITEM = 2;
-    private static final int PLACE_DIR_FILTERED = 3;
+    private static final int PLACE_FILTERED = 3;
     private DatabaseHelper mDbHelper;
     private static final UriMatcher sUriMatcher;
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME, PLACE_DIR);
         sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/#", PLACE_ITEM);
-        // filters
-        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/#/#", PLACE_DIR_FILTERED);
+        // filters, last segment should have following structure
+        // <category_id>-<faculty_id>, '-' is unreserved URI character so it
+        // should be save in this context.
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/*", PLACE_FILTERED);
     }
 
-    // TODO test
-    private static final String SELECTION_PLACE_FILTERED = Place._ID + " in (select " + PlaceCategory.PLACE_ID
-            + " from " + PlaceCategory.TABLE_NAME + " where " + PlaceCategory.CATEGORY_ID + "=?) or " + Place._ID
-            + " in (select " + PlaceFaculty.PLACE_ID + " from " + PlaceFaculty.TABLE_NAME + " where "
+    // TODO need tests
+    // private static final String SELECTION_PLACE_FILTERED = Place._ID +
+    // " in (select " + PlaceCategory.PLACE_ID
+    // + " from " + PlaceCategory.TABLE_NAME + " where " +
+    // PlaceCategory.CATEGORY_ID + "=?) or " + Place._ID
+    // + " in (select " + PlaceFaculty.PLACE_ID + " from " +
+    // PlaceFaculty.TABLE_NAME + " where "
+    // + PlaceFaculty.FACULTY_ID + "=?)";
+
+    private static final String PROJECTION_PLACE_FILTERED = Place._ID + " " + Place.SYMBOL + " " + Place.NAME + " "
+            + Place.LATITUDE + " " + Place.LONGTITUDE;
+
+    private static final String QUERY_PLACE_BY_CATEGORY = "select " + PROJECTION_PLACE_FILTERED + " where " + Place._ID
+            + " in (select " + PlaceCategory.PLACE_ID + " from " + PlaceCategory.TABLE_NAME + " where "
+            + PlaceCategory.CATEGORY_ID + "=?)";
+
+    private static final String QUERY_PLACE_BY_FACULTY = "select " + PROJECTION_PLACE_FILTERED + " where " + Place._ID
+            + " in (select " + PlaceCategory.PLACE_ID + " from " + PlaceFaculty.TABLE_NAME + " where "
             + PlaceFaculty.FACULTY_ID + "=?)";
+
+    private static final String QUERY_PLACE_FILTERED = QUERY_PLACE_BY_CATEGORY + " union " + QUERY_PLACE_BY_FACULTY;
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -62,7 +80,7 @@ public class PlaceProvider extends ContentProvider {
             return CONTENT_TYPE_ITEM;
         case PLACE_ITEM:
             return CONTENT_TYPE_DIR;
-        case PLACE_DIR_FILTERED:
+        case PLACE_FILTERED:
             return CONTENT_TYPE_DIR_FILTERED;
         default:
             throw new IllegalArgumentException("Invalid URI: " + uri);
@@ -109,6 +127,12 @@ public class PlaceProvider extends ContentProvider {
             String[] args = new String[] { uri.getLastPathSegment() };
             c = db.query(Place.TABLE_NAME, projection, sb.toString(), args, null, null, null);
             break;
+        }
+        case PLACE_FILTERED: {
+            // last segment should never be null and if it will be let app
+            // crash.
+            String[] args = uri.getLastPathSegment().split("-");
+            c = db.rawQuery(QUERY_PLACE_FILTERED, args);
         }
         default:
             throw new IllegalArgumentException("Invalid URI " + uri);
