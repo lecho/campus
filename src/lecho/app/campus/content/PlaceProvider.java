@@ -1,6 +1,5 @@
 package lecho.app.campus.content;
 
-import lecho.app.campus.contract.Category;
 import lecho.app.campus.contract.Place;
 import lecho.app.campus.contract.PlaceCategory;
 import lecho.app.campus.contract.PlaceFaculty;
@@ -13,8 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 public class PlaceProvider extends ContentProvider {
-    private static final String CONTENT_TYPE_DIR = " vnd.android.cursor.item/vnd.lecho.app.campus.place";
-    private static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.dir/vnd.lecho.app.campus.place";
+    private static final String CONTENT_TYPE_DIR = " vnd.android.cursor.dir/vnd.lecho.app.campus.place";
+    private static final String CONTENT_TYPE_ITEM = "vnd.android.cursor.item/vnd.lecho.app.campus.place";
     private static final String CONTENT_TYPE_DIR_FILTERED = "vnd.android.cursor.dir/vnd.lecho.app.campus.place_filtered";
     private static final int PLACE_DIR = 1;
     private static final int PLACE_ITEM = 2;
@@ -28,7 +27,7 @@ public class PlaceProvider extends ContentProvider {
         // filters, last segment should have following structure
         // <category_id>-<faculty_id>, '-' is unreserved URI character so it
         // should be save in this context.
-        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/" + Category.TABLE_NAME + "/*", PLACE_FILTERED);
+        sUriMatcher.addURI(Place.AUTHORITY, Place.TABLE_NAME + "/filter/*", PLACE_FILTERED);
     }
 
     // TODO need tests

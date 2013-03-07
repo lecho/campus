@@ -12,6 +12,7 @@ import android.provider.BaseColumns;
 public abstract class Unit implements BaseColumns {
 
     public static final String TABLE_NAME = "unit";
+    public static final String VIEW_NAME = "unit_view";
     public static final String NAME = "name";
     public static final String SHORT_NAME = "short_name";
     public static final String WEB_PAGE = "web_page";
@@ -22,6 +23,8 @@ public abstract class Unit implements BaseColumns {
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID + " integer primary key, "
             + NAME + " text, " + SHORT_NAME + " varchar(16), " + WEB_PAGE + " text, " + DESCRIPTION + " text, "
             + FACULTY_ID + " integer);";
+
+    // TODO create view with columns from unit and faculty
 
     // provider relative stuff
     public static final String AUTHORITY = "lecho.app.campus.content.UnitProvider";
