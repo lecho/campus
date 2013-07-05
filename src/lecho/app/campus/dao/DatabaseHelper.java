@@ -5,29 +5,21 @@ import lecho.app.campus.utils.Config;
 import android.content.Context;
 
 /**
- * Use this clase to get DevOpenHelper instance or DaoMaster instance.
+ * Use this class to get DevOpenHelper instance or DaoMaster instance.
  * 
  * @author Lecho
  * 
  */
 public abstract class DatabaseHelper {
 	public static final String DB_NAME = "campus_db_" + Config.APP_TARGET;
-	// TODO What should have single instance here? Check sources of GreenDao.
-	// DevOpenHelper is jus SQLiteHelper so it can be singleton.
+	// Single DevOpenHelper means single db connection.
 	private static DevOpenHelper sDevOpenHelper;
 
-	// But hard to say which of these should be singletons if any,
+	// Single DaoMaster means single db connection.
 	private static DaoMaster sDaoMaster;
 
 	private static DaoSession sDaoSession;
 
-	/**
-	 * Get {@link DevOpenHelper} static instance. Bleh..., no double checking
-	 * for many threads, no enum singleton:)
-	 * 
-	 * @param context
-	 * @return
-	 */
 	private static DevOpenHelper getDevOpenHelper(Context context) {
 		if (null == sDevOpenHelper) {
 			sDevOpenHelper = new DevOpenHelper(context, DB_NAME, null);
@@ -43,7 +35,8 @@ public abstract class DatabaseHelper {
 	}
 
 	/**
-	 * Returns always the same read/write session instance.
+	 * Returns always the same read/write session instance. Bleh... no double
+	 * instance checking, not final, not enum:)
 	 * 
 	 * @param context
 	 * @return
