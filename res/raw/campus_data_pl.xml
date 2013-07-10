@@ -1,181 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <campus>
-    <!-- categories -->
-	<categories>
+    <categories>
 		<category>
-			<_id>
-				1
-			</_id>
-			<name>
-				Test Category
-			</name>
-			<description>
-				Test Category Description
-			</description>
+			<id>1</id>
+			<name>category1<name>
+			<description>category1 description</description>
 		</category>
-        <category>
-            <_id>
-                2
-            </_id>
-            <name>
-                Test Category2
-            </name>
-            <description>
-                Test Category Description2
-            </description>
-        </category>
+		<category>
+			<id>2</id>
+			<name>category2<name>
+			<description>category2 description</description>
+		</category>		
+		<category>
+			<id>3</id>
+			<name>category3<name>
+			<description>category3 description</description>
+		</category>
 	</categories>
-    <!-- faculties -->
 	<faculties>
 		<faculty>
-			<_id>
-				1
-			</_id>
-			<name>
-				Test Faculty
-			</name>
-			<short_name>
-				TFSN
-			</short_name>
-			<web_page>
-				www.google.pl
-			</web_page>
-			<description>
-				Test Faculty Description
-			</description>
+			<id>1</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
+		</faculty>
+		<faculty>
+			<id>2</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
+		</faculty>
+		<faculty>
+			<id>3</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
 		</faculty>
 	</faculties>
-    <!-- units -->
 	<units>
 		<unit>
-			<_id>
-				1
-			</_id>
-			<name>
-				Test Unit
-			</name>
-			<short_name>
-				TUSN
-			</short_name>
-			<web_page>
-				www.google.pl
-			</web_page>
-			<description>
-				Test Unit Description
-			</description>
-			<faculty_id>
-				1
-			</faculty_id>
+			<id>1</id>
+			<name>unit1</name>
+			<short_name>u1</short_name>
+			<description>unit1 description</description>
+			<webpage>www.google.com</webpage>
+			<facultyid>1<facultyid>
+		</unit>
+		<unit>
+			<id>2</id>
+			<name>unit2</name>
+			<short_name>u2</short_name>
+			<description>unit2 description</description>
+			<webpage>www.google.com</webpage>
+			<facultyid>1<facultyid>
+		</unit>
+			<unit>
+			<id>3</id>
+			<name>unit3</name>
+			<short_name>u3</short_name>
+			<description>unit3 description</description>
+			<webpage>www.google.com</webpage>
+			<facultyid>2<facultyid>
+		</unit>
+		</unit>
+			<unit>
+			<id>4</id>
+			<name>unit4</name>
+			<short_name>u4</short_name>
+			<description>unit4 description</description>
+			<webpage>www.google.com</webpage>
 		</unit>
 	</units>
-    <!-- places -->
 	<places>
 		<place>
-		    <_id>
-			    1
-		    </_id>
-		    <name>
-			    Test Place
-		    </name>
-		    <symbol>
-			    T1
-		    </symbol>
-		    <web_page>
-			    www.google.pl
-		    </web_page>
-		    <description>
-			    Test Place Description
-		    </description>
-		    <keywords>
-			    test place t1
-		    </keywords>
-            <address>
-                Test Street 11, 90-230 Test City
-            </address>
-		    <latitude>
-			    51.000000
-		    </latitude>
-		    <longtitude>
-			    20.000000
-		    </longtitude>
+			<id>1</id>
+			<name>place1</name>
+			<symbol>a1</symbol>
+			<description>description</description>
+			<latitude>18.324233</latitude>
+			<longtitude>88.343245</longtitude>
+			<address>Łódź, Wólczańska 220</address>
+			<webpage>www.google.com</webpage>
+			<category>1,2</category>
+			<unit>1,2,3,4</unit>
+			<faculty>1,2</faculty>
 		</place>
-        <place>
-            <_id>
-                2
-            </_id>
-            <name>
-                Test Place2
-            </name>
-            <symbol>
-                T2
-            </symbol>
-            <web_page>
-                www.onet.pl
-            </web_page>
-            <description>
-                Test Place Description2
-            </description>
-            <keywords>
-                test place t2
-            </keywords>
-            <address>
-                Test Street 12, 90-230 Test City
-            </address>
-            <latitude>
-                51.000000
-            </latitude>
-            <longtitude>
-                20.000000
-            </longtitude>
-        </place>
+			<place>
+			<id>2</id>
+			<name>place2</name>
+			<symbol>a2</symbol>
+			<description>description</description>
+			<latitude>18.324233</latitude>
+			<longtitude>88.343245</longtitude>
+			<address>Łódź, Wólczańska 222</address>
+			<webpage>www.google.com</webpage>
+			<category>1</category>
+			<unit>1,2</unit>
+			<faculty>1</faculty>
+		</place>	
 	</places>
-    <!-- places_categories -->
-	<places_categories>
-        <place_category>
-            <place_id>
-                1
-            </place_id>
-            <category_id>
-                1
-            </category_id>
-        </place_category>   
-        <place_category>
-            <place_id>
-                2
-            </place_id>
-            <category_id>
-                1
-            </category_id>
-        </place_category>
-        <place_category>
-            <place_id>
-                2
-            </place_id>
-            <category_id>
-                2
-            </category_id>
-        </place_category>      
-    </places_categories>
-    <!-- places_units -->
-    <places_units>
-        <place_unit>
-            <place_id>
-                1
-            </place_id>
-            <unit_id>
-                1
-            </unit_id>
-        </place_unit>
-    </places_units>
-    <!-- places_faculties -->
-    <places_faculties>
-        <place_faculty>
-            <place_id>
-                1
-            </place_id>
-            <faculty_id>
-                1
-            </faculty_id>
-        </place_faculty>
-    </places_faculties>
 </campus>
