@@ -10,7 +10,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_place_details);
+		setContentView(R.layout.activity_main);
 		// getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_button_normal));
 		// XmlParser.loadCampusData(getApplicationContext());
 	}

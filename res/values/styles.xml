@@ -1,37 +1,20 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
+
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="@style/Theme.campus_style">        <!--
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
     </style>
+
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme"> <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    <style name="PlaceSymbol">
-        <item name="android:background">@drawable/symbol_selector</item>
-        <item name="android:layout_marginBottom">-48dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:textColor">@color/maroon</item>
-        <item name="android:textSize">36sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="PlaceName">
-        <item name="android:padding">5dp</item>
-        <item name="android:textColor">@color/maroon</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="UnitName">
-        <item name="android:gravity">center_vertical|left</item>
-        <item name="android:textColor">@color/maroon</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-    <style name="FacultyName" parent="@style/UnitName">
-        <item name="android:textStyle">bold</item>
-    </style>
+
 </resources>

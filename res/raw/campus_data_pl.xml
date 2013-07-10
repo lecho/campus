@@ -3,17 +3,17 @@
     <categories>
 		<category>
 			<id>1</id>
-			<name>category1<name>
+			<name>category1</name>
 			<description>category1 description</description>
 		</category>
 		<category>
 			<id>2</id>
-			<name>category2<name>
+			<name>category2</name>
 			<description>category2 description</description>
 		</category>		
 		<category>
 			<id>3</id>
-			<name>category3<name>
+			<name>category3</name>
 			<description>category3 description</description>
 		</category>
 	</categories>
@@ -44,7 +44,7 @@
 			<short_name>u1</short_name>
 			<description>unit1 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>1<facultyid>
+			<facultyid>1</facultyid>
 		</unit>
 		<unit>
 			<id>2</id>
@@ -52,7 +52,7 @@
 			<short_name>u2</short_name>
 			<description>unit2 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>1<facultyid>
+			<facultyid>1</facultyid>
 		</unit>
 			<unit>
 			<id>3</id>
@@ -60,8 +60,7 @@
 			<short_name>u3</short_name>
 			<description>unit3 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>2<facultyid>
-		</unit>
+			<facultyid>2</facultyid>
 		</unit>
 			<unit>
 			<id>4</id>
