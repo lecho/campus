@@ -14,7 +14,6 @@ public class Faculty {
     /** Not-null value. */
     private String name;
     private String shortName;
-    private String description;
     private String webpage;
 
     /** Used to resolve relations */
@@ -24,7 +23,6 @@ public class Faculty {
     private transient FacultyDao myDao;
 
     private List<PlaceFaculty> placeFacultyList;
-    private List<Unit> unitList;
 
     public Faculty() {
     }
@@ -33,11 +31,10 @@ public class Faculty {
         this.id = id;
     }
 
-    public Faculty(Long id, String name, String shortName, String description, String webpage) {
+    public Faculty(Long id, String name, String shortName, String webpage) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.description = description;
         this.webpage = webpage;
     }
 
@@ -73,14 +70,6 @@ public class Faculty {
         this.shortName = shortName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getWebpage() {
         return webpage;
     }
@@ -109,28 +98,6 @@ public class Faculty {
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetPlaceFacultyList() {
         placeFacultyList = null;
-    }
-
-    /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<Unit> getUnitList() {
-        if (unitList == null) {
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            UnitDao targetDao = daoSession.getUnitDao();
-            List<Unit> unitListNew = targetDao._queryFaculty_UnitList(id);
-            synchronized (this) {
-                if(unitList == null) {
-                    unitList = unitListNew;
-                }
-            }
-        }
-        return unitList;
-    }
-
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetUnitList() {
-        unitList = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

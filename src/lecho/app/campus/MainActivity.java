@@ -1,5 +1,6 @@
 package lecho.app.campus;
 
+import lecho.app.campus.utils.XmlParser;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -11,8 +12,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_button_normal));
-		// XmlParser.loadCampusData(getApplicationContext());
+		XmlParser.loadCampusData(getApplicationContext());
 	}
 
 	@Override

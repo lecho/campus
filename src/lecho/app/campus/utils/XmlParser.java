@@ -1,331 +1,299 @@
-//package lecho.app.campus.utils;
-//
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import lecho.app.campus.R;
-//import lecho.app.campus.dao.Category;
-//import lecho.app.campus.dao.CategoryDao;
-//import lecho.app.campus.dao.Faculty;
-//import lecho.app.campus.dao.FacultyDao;
-//import lecho.app.campus.dao.Place;
-//import lecho.app.campus.dao.PlaceCategory;
-//import lecho.app.campus.dao.PlaceCategoryDao;
-//import lecho.app.campus.dao.PlaceDao;
-//import lecho.app.campus.dao.PlaceFaculty;
-//import lecho.app.campus.dao.PlaceFacultyDao;
-//import lecho.app.campus.dao.PlaceUnit;
-//import lecho.app.campus.dao.PlaceUnitDao;
-//import lecho.app.campus.dao.Unit;
-//import lecho.app.campus.dao.UnitDao;
-//
-//import org.xmlpull.v1.XmlPullParser;
-//import org.xmlpull.v1.XmlPullParserException;
-//import org.xmlpull.v1.XmlPullParserFactory;
-//
-//import android.content.ContentValues;
-//import android.content.Context;
-//import android.util.Log;
-//
-///**
-// * 
-// * @author lecho
-// * 
-// */
-//public class XmlParser {
-//	public static final String TAG = XmlParser.class.getSimpleName();
-//
-//	/**
-//	 * Parses campus_data_xx.xml file from raw resources.
-//	 * 
-//	 * @param ctx
-//	 * @return true if success, false otherwise
-//	 */
-//	public static boolean loadCampusData(Context ctx) {
-//		try {
-//			Log.i(TAG, "Loading data from xml");
-//			InputStream in;
-//			in = ctx.getResources().openRawResource(R.raw.campus_data_pl);
-//			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-//			factory.setNamespaceAware(true);
-//			XmlPullParser xpp = factory.newPullParser();
-//			xpp.setInput(in, "UTF-8");
-//			int eventType = xpp.getEventType();
-//			List<ContentValues> places = new ArrayList<ContentValues>();
-//			List<ContentValues> categories = new ArrayList<ContentValues>();
-//			List<ContentValues> units = new ArrayList<ContentValues>();
-//			List<ContentValues> faculties = new ArrayList<ContentValues>();
-//			List<ContentValues> placesCategories = new ArrayList<ContentValues>();
-//			List<ContentValues> placesUnits = new ArrayList<ContentValues>();
-//			List<ContentValues> placesFaculties = new ArrayList<ContentValues>();
-//			while (eventType != XmlPullParser.END_DOCUMENT) {
-//				if (eventType == XmlPullParser.START_TAG) {
-//					if (PlaceDao.TABLENAME.equals(xpp.getName())) {
-//						places.add(parsePlace(xpp));
-//					} else if (FacultyDao.TABLENAME.equals(xpp.getName())) {
-//						faculties.add(parseFaculty(xpp));
-//					} else if (UnitDao.TABLENAME.equals(xpp.getName())) {
-//						units.add(parseUnit(xpp));
-//					} else if (CategoryDao.TABLENAME.equals(xpp.getName())) {
-//						categories.add(parseCategory(xpp));
-//					} else if (PlaceFacultyDao.TABLENAME.equals(xpp.getName())) {
-//						placesFaculties.add(parsePlaceFaculty(xpp));
-//					} else if (PlaceUnitDao.TABLENAME.equals(xpp.getName())) {
-//						placesUnits.add(parsePlaceUnit(xpp));
-//					} else if (PlaceCategoryDao.TABLENAME.equals(xpp.getName())) {
-//						placesCategories.add(parsePlaceCategory(xpp));
-//					}
-//				}
-//				eventType = xpp.next();
-//			}
-//
-////			ctx.getContentResolver().bulkInsert(Place.CONTENT_URI, places.toArray(new ContentValues[places.size()]));
-////			ctx.getContentResolver().bulkInsert(Category.CONTENT_URI,
-////					categories.toArray(new ContentValues[categories.size()]));
-////			ctx.getContentResolver().bulkInsert(Faculty.CONTENT_URI,
-////					faculties.toArray(new ContentValues[faculties.size()]));
-////			ctx.getContentResolver().bulkInsert(Unit.CONTENT_URI, units.toArray(new ContentValues[units.size()]));
-////			ctx.getContentResolver().bulkInsert(PlaceCategory.CONTENT_URI,
-////					placesCategories.toArray(new ContentValues[placesCategories.size()]));
-////			ctx.getContentResolver().bulkInsert(PlaceFaculty.CONTENT_URI,
-////					placesFaculties.toArray(new ContentValues[placesFaculties.size()]));
-////			ctx.getContentResolver().bulkInsert(PlaceUnit.CONTENT_URI,
-////					placesUnits.toArray(new ContentValues[placesUnits.size()]));
-////		} catch (Exception e) {
-//			Log.e(TAG, "Could not parse data file", e);
-//		}
-//		return false;
-//	}
-//
-//	private static ContentValues parsePlace(XmlPullParser xpp) throws XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (PlaceDao..equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place._ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (Place.NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.NAME, xpp.getText().trim());
-//					}
-//				} else if (Place.SYMBOL.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.SYMBOL, xpp.getText().trim());
-//					}
-//				} else if (Place.WEB_PAGE.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.WEB_PAGE, xpp.getText().trim());
-//					}
-//				} else if (Place.DESCRIPTION.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.DESCRIPTION, xpp.getText().trim());
-//					}
-//				} else if (Place.KEYWORDS.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.KEYWORDS, xpp.getText().trim());
-//					}
-//				} else if (Place.ADDRESS.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.ADDRESS, xpp.getText().trim());
-//					}
-//				} else if (Place.LATITUDE.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.LATITUDE, Double.parseDouble(xpp.getText().trim()));
-//					}
-//				} else if (Place.LONGTITUDE.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Place.LONGTITUDE, Double.parseDouble(xpp.getText().trim()));
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (Place.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parseCategory(XmlPullParser xpp) throws IOException, XmlPullParserException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (Category._ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Category._ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (Category.NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Category.NAME, xpp.getText().trim());
-//					}
-//				} else if (Category.DESCRIPTION.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Category.DESCRIPTION, xpp.getText().trim());
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (Category.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parseFaculty(XmlPullParser xpp) throws XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (Faculty._ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Faculty._ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (Faculty.NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Faculty.NAME, xpp.getText().trim());
-//					}
-//				} else if (Faculty.SHORT_NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Faculty.SHORT_NAME, xpp.getText().trim());
-//					}
-//				} else if (Faculty.WEB_PAGE.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Faculty.WEB_PAGE, xpp.getText().trim());
-//					}
-//				} else if (Faculty.DESCRIPTION.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Faculty.DESCRIPTION, xpp.getText().trim());
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (Faculty.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parseUnit(XmlPullParser xpp) throws XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (Unit._ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit._ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (Unit.NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit.NAME, xpp.getText().trim());
-//					}
-//				} else if (Unit.SHORT_NAME.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit.SHORT_NAME, xpp.getText().trim());
-//					}
-//				} else if (Unit.WEB_PAGE.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit.WEB_PAGE, xpp.getText().trim());
-//					}
-//				} else if (Unit.DESCRIPTION.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit.DESCRIPTION, xpp.getText().trim());
-//					}
-//				} else if (Unit.FACULTY_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(Unit.FACULTY_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (Unit.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parsePlaceCategory(XmlPullParser xpp) throws XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (PlaceCategory.PLACE_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceCategory.PLACE_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (PlaceCategory.CATEGORY_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceCategory.CATEGORY_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (PlaceCategory.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parsePlaceUnit(XmlPullParser xpp) throws NumberFormatException,
-//			XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (PlaceUnit.PLACE_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceUnit.PLACE_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (PlaceUnit.UNIT_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceUnit.UNIT_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (PlaceUnit.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-//
-//	private static ContentValues parsePlaceFaculty(XmlPullParser xpp) throws NumberFormatException,
-//			XmlPullParserException, IOException {
-//		ContentValues cv = new ContentValues();
-//		int eventType = xpp.getEventType();
-//		while (eventType != XmlPullParser.END_DOCUMENT) {
-//			if (eventType == XmlPullParser.START_TAG) {
-//				if (PlaceFaculty.PLACE_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceFaculty.PLACE_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				} else if (PlaceFaculty.FACULTY_ID.equals(xpp.getName())) {
-//					if (xpp.nextToken() == XmlPullParser.TEXT) {
-//						cv.put(PlaceFaculty.FACULTY_ID, Long.valueOf(xpp.getText().trim()));
-//					}
-//				}
-//			} else if (eventType == XmlPullParser.END_TAG) {
-//				if (PlaceFaculty.TABLE_NAME.equals(xpp.getName())) {
-//					return cv;
-//				}
-//			}
-//			eventType = xpp.next();
-//		}
-//		throw new IllegalStateException("Invalid xml file format");
-//	}
-// }
+package lecho.app.campus.utils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import lecho.app.campus.R;
+import lecho.app.campus.dao.Category;
+import lecho.app.campus.dao.CategoryDao;
+import lecho.app.campus.dao.DaoSession;
+import lecho.app.campus.dao.Faculty;
+import lecho.app.campus.dao.FacultyDao;
+import lecho.app.campus.dao.Place;
+import lecho.app.campus.dao.PlaceCategory;
+import lecho.app.campus.dao.PlaceCategoryDao;
+import lecho.app.campus.dao.PlaceDao;
+import lecho.app.campus.dao.PlaceFaculty;
+import lecho.app.campus.dao.PlaceFacultyDao;
+import lecho.app.campus.dao.PlaceUnit;
+import lecho.app.campus.dao.PlaceUnitDao;
+import lecho.app.campus.dao.Unit;
+import lecho.app.campus.dao.UnitDao;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import android.content.Context;
+import android.util.Log;
+
+/**
+ * 
+ * @author lecho
+ * 
+ */
+public class XmlParser {
+	public static final String TAG = XmlParser.class.getSimpleName();
+
+	private static final String SEPARATOR = ",";
+
+	private static final String ID = "id";
+	private static final String PLACE = "place";
+	private static final String FACULTY = "faculty";
+	private static final String UNIT = "unit";
+	private static final String CATEGORY = "category";
+	private static final String NAME = "name";
+	private static final String SHORT_NAME = "short_name";
+	private static final String DESCRIPTION = "description";
+	private static final String WEBPAGE = "webpage";
+	private static final String SYMBOL = "symbol";
+	private static final String LATITUDE = "latitude";
+	private static final String LONGTITUDE = "longtitude";
+	private static final String ADDRESS = "address";
+	private static final String PLACE_CATEGORY = "place_category";
+	private static final String PLACE_FACULTY = "place_faculty";
+	private static final String PLACE_UNIT = "place_unit";
+	private static final String UNIT_FACULTY = "unit_faculty";
+
+	/**
+	 * Parses campus_data_xx.xml file from raw resources.
+	 * 
+	 * @param context
+	 * @return true if success, false otherwise.
+	 */
+	public static boolean loadCampusData(Context context) {
+		try {
+			Log.i(TAG, "Loading data from xml");
+			long time = System.nanoTime();
+			// lists with entities to persist.
+			final List<Place> places = new ArrayList<Place>();
+			final List<Category> categories = new ArrayList<Category>();
+			final List<Faculty> faculties = new ArrayList<Faculty>();
+			final List<Unit> units = new ArrayList<Unit>();
+			final List<PlaceCategory> placeCategories = new ArrayList<PlaceCategory>();
+			final List<PlaceFaculty> placeFaculties = new ArrayList<PlaceFaculty>();
+			final List<PlaceUnit> placeUnits = new ArrayList<PlaceUnit>();
+
+			InputStream in;
+			in = context.getResources().openRawResource(R.raw.campus_data_pl);
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			XmlPullParser xpp = factory.newPullParser();
+			xpp.setInput(in, "UTF-8");
+			int eventType = xpp.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				if (eventType == XmlPullParser.START_TAG) {
+					if (CATEGORY.equals(xpp.getName())) {
+						parseCategory(xpp, categories);
+					} else if (FACULTY.equals(xpp.getName())) {
+						parseFaculty(xpp, faculties);
+					} else if (UNIT.equals(xpp.getName())) {
+						parseUnit(xpp, units);
+					} else if (PLACE.equals(xpp.getName())) {
+						parsePlace(xpp, places, placeCategories, placeFaculties, placeUnits);
+					}
+				}
+				eventType = xpp.next();
+			}
+			// Insert data into database in single transaction.
+			final DaoSession daoSession = DatabaseHelper.getDaoSession(context);
+			DatabaseHelper.getDaoSession(context).runInTx(new Runnable() {
+
+				@Override
+				public void run() {
+					CategoryDao categoryDao = daoSession.getCategoryDao();
+					for (Category category : categories) {
+						categoryDao.insert(category);
+					}
+					FacultyDao facultyDao = daoSession.getFacultyDao();
+					for (Faculty faculty : faculties) {
+						facultyDao.insert(faculty);
+					}
+					UnitDao unitDao = daoSession.getUnitDao();
+					for (Unit unit : units) {
+						unitDao.insert(unit);
+					}
+					PlaceDao placeDao = daoSession.getPlaceDao();
+					for (Place place : places) {
+						placeDao.insert(place);
+					}
+					PlaceCategoryDao placeCategoryDao = daoSession.getPlaceCategoryDao();
+					for (PlaceCategory placeCategory : placeCategories) {
+						placeCategoryDao.insert(placeCategory);
+					}
+					PlaceFacultyDao placeFacultyDao = daoSession.getPlaceFacultyDao();
+					for (PlaceFaculty placeFaculty : placeFaculties) {
+						placeFacultyDao.insert(placeFaculty);
+					}
+					PlaceUnitDao placeUnitDao = daoSession.getPlaceUnitDao();
+					for (PlaceUnit placeUnit : placeUnits) {
+						placeUnitDao.insert(placeUnit);
+					}
+				}
+			});
+			long elapsedTime = (System.nanoTime() - time) / 1000000L;
+			Log.i(TAG, "Success, data loaded from xml in " + elapsedTime + "ms.");
+			return true;
+		} catch (Exception e) {
+			Log.e(TAG, "Could not parse xml file.", e);
+		}
+		return false;
+	}
+
+	private static void parseCategory(XmlPullParser xpp, List<Category> categories) throws XmlPullParserException,
+			IOException {
+		Category category = new Category();
+		int eventType = xpp.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			// Parse CATEGORY attributes
+			if (eventType == XmlPullParser.START_TAG) {
+				if (ID.equals(xpp.getName())) {
+					category.setId(Long.valueOf(xpp.nextText().trim()));
+				} else if (NAME.equals(xpp.getName())) {
+					category.setName(xpp.nextText().trim());
+				} else if (SYMBOL.equals(xpp.getName())) {
+					category.setSymbol(xpp.nextText().trim());
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (CATEGORY.equals(xpp.getName())) {
+					// This should be end of PLACE definition
+					categories.add(category);
+					return;
+				}
+			}
+			eventType = xpp.next();
+		}
+		// Parser go through whole document and didn't find closing PLACE tag,
+		// something's wrong with the xml file.
+		throw new IllegalStateException("Invalid xml file format while parsint CATEGORY");
+	}
+
+	private static void parseFaculty(XmlPullParser xpp, List<Faculty> faculties) throws XmlPullParserException,
+			IOException {
+		Faculty faculty = new Faculty();
+		int eventType = xpp.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			// Parse PLACE attributes
+			if (eventType == XmlPullParser.START_TAG) {
+				if (ID.equals(xpp.getName())) {
+					faculty.setId(Long.valueOf(xpp.nextText().trim()));
+				} else if (NAME.equals(xpp.getName())) {
+					faculty.setName(xpp.nextText().trim());
+				} else if (SHORT_NAME.equals(xpp.getName())) {
+					faculty.setShortName(xpp.nextText().trim());
+				} else if (WEBPAGE.equals(xpp.getName())) {
+					faculty.setWebpage(xpp.nextText().trim());
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (FACULTY.equals(xpp.getName())) {
+					// This should be end of PLACE definition
+					faculties.add(faculty);
+					return;
+				}
+			}
+			eventType = xpp.next();
+		}
+		// Parser go through whole document and didn't find closing PLACE tag,
+		// something's wrong with the xml file.
+		throw new IllegalStateException("Invalid xml file format");
+	}
+
+	private static void parseUnit(XmlPullParser xpp, List<Unit> units) throws XmlPullParserException, IOException {
+		Unit unit = new Unit();
+		int eventType = xpp.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			// Parse PLACE attributes
+			if (eventType == XmlPullParser.START_TAG) {
+				if (ID.equals(xpp.getName())) {
+					unit.setId(Long.valueOf(xpp.nextText().trim()));
+				} else if (NAME.equals(xpp.getName())) {
+					unit.setName(xpp.nextText().trim());
+				} else if (SHORT_NAME.equals(xpp.getName())) {
+					unit.setShortName(xpp.nextText().trim());
+				} else if (WEBPAGE.equals(xpp.getName())) {
+					unit.setWebpage(xpp.nextText().trim());
+				} else if (UNIT_FACULTY.equals(xpp.getName())) {
+					unit.setFacultyId(Long.valueOf(xpp.nextText().trim()));
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (UNIT.equals(xpp.getName())) {
+					// This should be end of PLACE definition
+					units.add(unit);
+					return;
+				}
+			}
+			eventType = xpp.next();
+		}
+		// Parser go through whole document and didn't find closing PLACE tag,
+		// something's wrong with the xml file.
+		throw new IllegalStateException("Invalid xml file format");
+	}
+
+	private static void parsePlace(XmlPullParser xpp, List<Place> places, List<PlaceCategory> placeCategories,
+			List<PlaceFaculty> placeFaculties, List<PlaceUnit> placeUnits) throws XmlPullParserException, IOException {
+		Place place = new Place();
+		int eventType = xpp.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			// Parse PLACE attributes
+			if (eventType == XmlPullParser.START_TAG) {
+				if (ID.equals(xpp.getName())) {
+					place.setId(Long.valueOf(xpp.nextText().trim()));
+				} else if (NAME.equals(xpp.getName())) {
+					place.setName(xpp.nextText().trim());
+				} else if (SYMBOL.equals(xpp.getName())) {
+					place.setSymbol(xpp.nextText().trim());
+				} else if (DESCRIPTION.equals(xpp.getName())) {
+					place.setDescription(xpp.nextText().trim());
+				} else if (LATITUDE.equals(xpp.getName())) {
+					place.setLatitude(Double.valueOf(xpp.nextText().trim()));
+				} else if (LONGTITUDE.equals(xpp.getName())) {
+					place.setLongtitude(Double.valueOf(xpp.nextText().trim()));
+				} else if (ADDRESS.equals(xpp.getName())) {
+					place.setAddress(xpp.nextText().trim());
+				} else if (WEBPAGE.equals(xpp.getName())) {
+					place.setWebpage(xpp.nextText().trim());
+				} else if (PLACE_CATEGORY.equals(xpp.getName())) {
+					if (null == place) {
+						throw new IllegalStateException(
+								"Invalid xml file format. Place cannot be null while parsing CATEGORY relation.");
+					}
+					String[] categories = xpp.nextText().trim().split(SEPARATOR);
+					for (String categoryId : categories) {
+						placeCategories.add(new PlaceCategory(null, Long.valueOf(categoryId), place.getId()));
+					}
+				} else if (PLACE_UNIT.equals(xpp.getName())) {
+					if (null == place) {
+						throw new IllegalStateException(
+								"Invalid xml file format. Place cannot be null while parsing UNIT relation.");
+					}
+					String[] units = xpp.nextText().trim().split(SEPARATOR);
+					for (String unitId : units) {
+						placeUnits.add(new PlaceUnit(null, Long.valueOf(unitId), place.getId()));
+					}
+				} else if (PLACE_FACULTY.equals(xpp.getName())) {
+					if (null == place) {
+						throw new IllegalStateException(
+								"Invalid xml file format. Place cannot be null while parsing FACULTY relation.");
+					}
+					String[] faculties = xpp.nextText().trim().split(SEPARATOR);
+					for (String facultyId : faculties) {
+						placeFaculties.add(new PlaceFaculty(null, Long.valueOf(facultyId), place.getId()));
+					}
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (PLACE.equals(xpp.getName())) {
+					// This should be end of PLACE definition
+					places.add(place);
+					return;
+				}
+			}
+			eventType = xpp.next();
+		}
+		// Parser go through whole document and didn't find closing PLACE tag,
+		// something's wrong with the xml file.
+		throw new IllegalStateException("Invalid xml file format while parsing PLACE");
+	}
+
+}

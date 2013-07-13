@@ -15,7 +15,6 @@ public class Category {
     private String name;
     /** Not-null value. */
     private String symbol;
-    private String description;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -32,11 +31,10 @@ public class Category {
         this.id = id;
     }
 
-    public Category(Long id, String name, String symbol, String description) {
+    public Category(Long id, String name, String symbol) {
         this.id = id;
         this.name = name;
         this.symbol = symbol;
-        this.description = description;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -71,14 +69,6 @@ public class Category {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

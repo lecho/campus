@@ -1,7 +1,8 @@
-package lecho.app.campus.dao;
+package lecho.app.campus.utils;
 
+import lecho.app.campus.dao.DaoMaster;
 import lecho.app.campus.dao.DaoMaster.DevOpenHelper;
-import lecho.app.campus.utils.Config;
+import lecho.app.campus.dao.DaoSession;
 import android.content.Context;
 
 /**

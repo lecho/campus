@@ -26,8 +26,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property ShortName = new Property(2, String.class, "shortName", false, "SHORT_NAME");
-        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
-        public final static Property Webpage = new Property(4, String.class, "webpage", false, "WEBPAGE");
+        public final static Property Webpage = new Property(3, String.class, "webpage", false, "WEBPAGE");
     };
 
     private DaoSession daoSession;
@@ -49,8 +48,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT NOT NULL ," + // 1: name
                 "'SHORT_NAME' TEXT," + // 2: shortName
-                "'DESCRIPTION' TEXT," + // 3: description
-                "'WEBPAGE' TEXT);"); // 4: webpage
+                "'WEBPAGE' TEXT);"); // 3: webpage
     }
 
     /** Drops the underlying database table. */
@@ -75,14 +73,9 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
             stmt.bindString(3, shortName);
         }
  
-        String description = entity.getDescription();
-        if (description != null) {
-            stmt.bindString(4, description);
-        }
- 
         String webpage = entity.getWebpage();
         if (webpage != null) {
-            stmt.bindString(5, webpage);
+            stmt.bindString(4, webpage);
         }
     }
 
@@ -105,8 +98,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // shortName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // description
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // webpage
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // webpage
         );
         return entity;
     }
@@ -117,8 +109,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setShortName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setWebpage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setWebpage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

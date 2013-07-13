@@ -4,17 +4,17 @@
 		<category>
 			<id>1</id>
 			<name>category1</name>
-			<description>category1 description</description>
+			<symbol>cat1</symbol>
 		</category>
 		<category>
 			<id>2</id>
 			<name>category2</name>
-			<description>category2 description</description>
+			<symbol>cat2</symbol>
 		</category>		
 		<category>
 			<id>3</id>
 			<name>category3</name>
-			<description>category3 description</description>
+			<symbol>cat3</symbol>
 		</category>
 	</categories>
 	<faculties>
@@ -44,7 +44,7 @@
 			<short_name>u1</short_name>
 			<description>unit1 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>1</facultyid>
+			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>2</id>
@@ -52,17 +52,17 @@
 			<short_name>u2</short_name>
 			<description>unit2 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>1</facultyid>
+			<unit_faculty>1</unit_faculty>
 		</unit>
-			<unit>
+		<unit>
 			<id>3</id>
 			<name>unit3</name>
 			<short_name>u3</short_name>
 			<description>unit3 description</description>
 			<webpage>www.google.com</webpage>
-			<facultyid>2</facultyid>
+			<unit_faculty>2</unit_faculty>
 		</unit>
-			<unit>
+		<unit>
 			<id>4</id>
 			<name>unit4</name>
 			<short_name>u4</short_name>
@@ -80,9 +80,9 @@
 			<longtitude>88.343245</longtitude>
 			<address>Łódź, Wólczańska 220</address>
 			<webpage>www.google.com</webpage>
-			<category>1,2</category>
-			<unit>1,2,3,4</unit>
-			<faculty>1,2</faculty>
+			<place_category>1,2</place_category>
+			<place_unit>1,2,3,4</place_unit>
+			<place_faculty>1,2</place_faculty>
 		</place>
 			<place>
 			<id>2</id>
@@ -93,9 +93,9 @@
 			<longtitude>88.343245</longtitude>
 			<address>Łódź, Wólczańska 222</address>
 			<webpage>www.google.com</webpage>
-			<category>1</category>
-			<unit>1,2</unit>
-			<faculty>1</faculty>
+			<place_category>1</place_category>
+			<place_unit>1,2</place_unit>
+			<place_faculty>1</place_faculty>
 		</place>	
 	</places>
 </campus>

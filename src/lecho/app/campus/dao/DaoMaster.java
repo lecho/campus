@@ -11,8 +11,8 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 import lecho.app.campus.dao.PlaceFacultyDao;
 import lecho.app.campus.dao.PlaceCategoryDao;
 import lecho.app.campus.dao.PlaceUnitDao;
-import lecho.app.campus.dao.UnitDao;
 import lecho.app.campus.dao.FacultyDao;
+import lecho.app.campus.dao.UnitDao;
 import lecho.app.campus.dao.CategoryDao;
 import lecho.app.campus.dao.PlaceDao;
 
@@ -28,8 +28,8 @@ public class DaoMaster extends AbstractDaoMaster {
         PlaceFacultyDao.createTable(db, ifNotExists);
         PlaceCategoryDao.createTable(db, ifNotExists);
         PlaceUnitDao.createTable(db, ifNotExists);
-        UnitDao.createTable(db, ifNotExists);
         FacultyDao.createTable(db, ifNotExists);
+        UnitDao.createTable(db, ifNotExists);
         CategoryDao.createTable(db, ifNotExists);
         PlaceDao.createTable(db, ifNotExists);
     }
@@ -39,8 +39,8 @@ public class DaoMaster extends AbstractDaoMaster {
         PlaceFacultyDao.dropTable(db, ifExists);
         PlaceCategoryDao.dropTable(db, ifExists);
         PlaceUnitDao.dropTable(db, ifExists);
-        UnitDao.dropTable(db, ifExists);
         FacultyDao.dropTable(db, ifExists);
+        UnitDao.dropTable(db, ifExists);
         CategoryDao.dropTable(db, ifExists);
         PlaceDao.dropTable(db, ifExists);
     }
@@ -77,8 +77,8 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(PlaceFacultyDao.class);
         registerDaoClass(PlaceCategoryDao.class);
         registerDaoClass(PlaceUnitDao.class);
-        registerDaoClass(UnitDao.class);
         registerDaoClass(FacultyDao.class);
+        registerDaoClass(UnitDao.class);
         registerDaoClass(CategoryDao.class);
         registerDaoClass(PlaceDao.class);
     }

@@ -14,7 +14,6 @@ public class Unit {
     /** Not-null value. */
     private String name;
     private String shortName;
-    private String description;
     private String webpage;
     private Long facultyId;
 
@@ -23,6 +22,9 @@ public class Unit {
 
     /** Used for active entity operations. */
     private transient UnitDao myDao;
+
+    private Faculty faculty;
+    private Long faculty__resolvedKey;
 
     private List<PlaceUnit> placeUnitList;
 
@@ -33,11 +35,10 @@ public class Unit {
         this.id = id;
     }
 
-    public Unit(Long id, String name, String shortName, String description, String webpage, Long facultyId) {
+    public Unit(Long id, String name, String shortName, String webpage, Long facultyId) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.description = description;
         this.webpage = webpage;
         this.facultyId = facultyId;
     }
@@ -74,14 +75,6 @@ public class Unit {
         this.shortName = shortName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getWebpage() {
         return webpage;
     }
@@ -96,6 +89,31 @@ public class Unit {
 
     public void setFacultyId(Long facultyId) {
         this.facultyId = facultyId;
+    }
+
+    /** To-one relationship, resolved on first access. */
+    public Faculty getFaculty() {
+        Long __key = this.facultyId;
+        if (faculty__resolvedKey == null || !faculty__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            FacultyDao targetDao = daoSession.getFacultyDao();
+            Faculty facultyNew = targetDao.load(__key);
+            synchronized (this) {
+                faculty = facultyNew;
+            	faculty__resolvedKey = __key;
+            }
+        }
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        synchronized (this) {
+            this.faculty = faculty;
+            facultyId = faculty == null ? null : faculty.getId();
+            faculty__resolvedKey = facultyId;
+        }
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

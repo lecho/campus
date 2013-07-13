@@ -1,15 +1,15 @@
 package lecho.app.campus.dao;
 
 import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 
 import lecho.app.campus.dao.Unit;
 
@@ -29,14 +29,12 @@ public class UnitDao extends AbstractDao<Unit, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property ShortName = new Property(2, String.class, "shortName", false, "SHORT_NAME");
-        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
-        public final static Property Webpage = new Property(4, String.class, "webpage", false, "WEBPAGE");
-        public final static Property FacultyId = new Property(5, Long.class, "facultyId", false, "FACULTY_ID");
+        public final static Property Webpage = new Property(3, String.class, "webpage", false, "WEBPAGE");
+        public final static Property FacultyId = new Property(4, Long.class, "facultyId", false, "FACULTY_ID");
     };
 
     private DaoSession daoSession;
 
-    private Query<Unit> faculty_UnitListQuery;
 
     public UnitDao(DaoConfig config) {
         super(config);
@@ -54,9 +52,8 @@ public class UnitDao extends AbstractDao<Unit, Long> {
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT NOT NULL ," + // 1: name
                 "'SHORT_NAME' TEXT," + // 2: shortName
-                "'DESCRIPTION' TEXT," + // 3: description
-                "'WEBPAGE' TEXT," + // 4: webpage
-                "'FACULTY_ID' INTEGER);"); // 5: facultyId
+                "'WEBPAGE' TEXT," + // 3: webpage
+                "'FACULTY_ID' INTEGER);"); // 4: facultyId
     }
 
     /** Drops the underlying database table. */
@@ -81,19 +78,14 @@ public class UnitDao extends AbstractDao<Unit, Long> {
             stmt.bindString(3, shortName);
         }
  
-        String description = entity.getDescription();
-        if (description != null) {
-            stmt.bindString(4, description);
-        }
- 
         String webpage = entity.getWebpage();
         if (webpage != null) {
-            stmt.bindString(5, webpage);
+            stmt.bindString(4, webpage);
         }
  
         Long facultyId = entity.getFacultyId();
         if (facultyId != null) {
-            stmt.bindLong(6, facultyId);
+            stmt.bindLong(5, facultyId);
         }
     }
 
@@ -116,9 +108,8 @@ public class UnitDao extends AbstractDao<Unit, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // shortName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // description
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // webpage
-            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5) // facultyId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // webpage
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4) // facultyId
         );
         return entity;
     }
@@ -129,9 +120,8 @@ public class UnitDao extends AbstractDao<Unit, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setShortName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setWebpage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setFacultyId(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
+        entity.setWebpage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setFacultyId(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */
@@ -157,18 +147,95 @@ public class UnitDao extends AbstractDao<Unit, Long> {
         return true;
     }
     
-    /** Internal query to resolve the "unitList" to-many relationship of Faculty. */
-    public List<Unit> _queryFaculty_UnitList(Long facultyId) {
-        synchronized (this) {
-            if (faculty_UnitListQuery == null) {
-                QueryBuilder<Unit> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.FacultyId.eq(null));
-                faculty_UnitListQuery = queryBuilder.build();
-            }
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getFacultyDao().getAllColumns());
+            builder.append(" FROM UNIT T");
+            builder.append(" LEFT JOIN FACULTY T0 ON T.'FACULTY_ID'=T0.'_id'");
+            builder.append(' ');
+            selectDeep = builder.toString();
         }
-        Query<Unit> query = faculty_UnitListQuery.forCurrentThread();
-        query.setParameter(0, facultyId);
-        return query.list();
+        return selectDeep;
+    }
+    
+    protected Unit loadCurrentDeep(Cursor cursor, boolean lock) {
+        Unit entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        Faculty faculty = loadCurrentOther(daoSession.getFacultyDao(), cursor, offset);
+        entity.setFaculty(faculty);
+
+        return entity;    
     }
 
+    public Unit loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<Unit> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<Unit> list = new ArrayList<Unit>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<Unit> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<Unit> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

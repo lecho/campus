@@ -46,7 +46,7 @@ public class PlaceFacultyDao extends AbstractDao<PlaceFaculty, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'PLACE_FACULTY' (" + //
-                "'_id' INTEGER PRIMARY KEY ," + // 0: id
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'FACULTY_ID' INTEGER," + // 1: facultyId
                 "'PLACE_ID' INTEGER);"); // 2: placeId
     }

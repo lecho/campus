@@ -1,81 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="lecho.app.campus"
-	android:versionCode="1"
-	android:versionName="1.0" >
+    package="lecho.app.campus"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-	<uses-sdk
-		android:minSdkVersion="8"
-		android:targetSdkVersion="16" />
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
 
-	<application
-		android:allowBackup="true"
-		android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name"
-		android:theme="@style/AppTheme" >
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
 
-		<!-- activities -->
-		<activity
-			android:name="lecho.app.campus.MainActivity"
-			android:label="@string/app_name" >
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
+        <!-- activities -->
+        <activity
+            android:name="lecho.app.campus.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="lecho.app.campus.PlaceDetailsActivity"
-			android:label="@string/app_name" >
-		</activity>
-		<activity
-			android:name="lecho.app.campus.HelpActivity"
-			android:label="@string/app_name" >
-		</activity>
-		<activity
-			android:name="lecho.app.campus.GalleryActivity"
-			android:label="@string/app_name" >
-		</activity>
-		<activity
-			android:name="lecho.app.campus.AboutActivity"
-			android:label="@string/app_name" >
-		</activity>
-		<!-- providers -->
-		<provider
-			android:name="lecho.app.campus.content.PlaceProvider"
-			android:authorities="lecho.app.campus.content.PlaceProvider"
-			android:exported="false" >
-		</provider>
-		<provider
-			android:name="lecho.app.campus.content.UnitProvider"
-			android:authorities="lecho.app.campus.content.UnitProvider"
-			android:exported="false" >
-		</provider>
-		<provider
-			android:name="lecho.app.campus.content.FacultyProvider"
-			android:authorities="lecho.app.campus.content.FacultyProvider"
-			android:exported="false" >
-		</provider>
-		<provider
-			android:name="lecho.app.campus.content.CategoryProvider"
-			android:authorities="lecho.app.campus.content.CategoryProvider"
-			android:exported="false" >
-		</provider>
-				<provider
-			android:name="lecho.app.campus.content.PlaceUnitProvider"
-			android:authorities="lecho.app.campus.content.PlaceUnitProvider"
-			android:exported="false" >
-		</provider>
-		<provider
-			android:name="lecho.app.campus.content.PlaceFacultyProvider"
-			android:authorities="lecho.app.campus.content.PlaceFacultyProvider"
-			android:exported="false" >
-		</provider>
-		<provider
-			android:name="lecho.app.campus.content.PlaceCategoryProvider"
-			android:authorities="lecho.app.campus.content.PlaceCategoryContentProvider"
-			android:exported="false" >
-		</provider>
-	</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>

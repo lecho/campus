@@ -26,7 +26,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Symbol = new Property(2, String.class, "symbol", false, "SYMBOL");
-        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
     };
 
     private DaoSession daoSession;
@@ -47,8 +46,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'CATEGORY' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT NOT NULL ," + // 1: name
-                "'SYMBOL' TEXT NOT NULL ," + // 2: symbol
-                "'DESCRIPTION' TEXT);"); // 3: description
+                "'SYMBOL' TEXT NOT NULL );"); // 2: symbol
     }
 
     /** Drops the underlying database table. */
@@ -68,11 +66,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         }
         stmt.bindString(2, entity.getName());
         stmt.bindString(3, entity.getSymbol());
- 
-        String description = entity.getDescription();
-        if (description != null) {
-            stmt.bindString(4, description);
-        }
     }
 
     @Override
@@ -93,8 +86,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         Category entity = new Category( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.getString(offset + 2), // symbol
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // description
+            cursor.getString(offset + 2) // symbol
         );
         return entity;
     }
@@ -105,7 +97,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setSymbol(cursor.getString(offset + 2));
-        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */
