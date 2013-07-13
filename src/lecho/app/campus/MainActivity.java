@@ -12,7 +12,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		XmlParser.loadCampusData(getApplicationContext());
+		XmlParser.loadCampusData(getApplicationContext(), R.raw.campus_data_pl);
 	}
 
 	@Override

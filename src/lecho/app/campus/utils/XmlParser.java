@@ -60,10 +60,8 @@ public class XmlParser {
 	/**
 	 * Parses campus_data_xx.xml file from raw resources.
 	 * 
-	 * @param context
-	 * @return true if success, false otherwise.
 	 */
-	public static boolean loadCampusData(Context context) {
+	public static boolean loadCampusData(Context context, int rawResource) {
 		try {
 			Log.i(TAG, "Loading data from xml");
 			long time = System.nanoTime();
@@ -77,7 +75,7 @@ public class XmlParser {
 			final List<PlaceUnit> placeUnits = new ArrayList<PlaceUnit>();
 
 			InputStream in;
-			in = context.getResources().openRawResource(R.raw.campus_data_pl);
+			in = context.getResources().openRawResource(rawResource);
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
 			XmlPullParser xpp = factory.newPullParser();
