@@ -1,5 +1,9 @@
-package lecho.app.campus;
+package lecho.app.campus.activity;
 
+import lecho.app.campus.R;
+import lecho.app.campus.R.layout;
+import lecho.app.campus.R.menu;
+import lecho.app.campus.R.raw;
 import lecho.app.campus.utils.DataParser;
 import android.os.Bundle;
 

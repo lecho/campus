@@ -21,14 +21,14 @@ public abstract class DatabaseHelper {
 
 	private static DaoSession sDaoSession;
 
-	private static DevOpenHelper getDevOpenHelper(Context context) {
+	public static DevOpenHelper getDevOpenHelper(Context context) {
 		if (null == sDevOpenHelper) {
 			sDevOpenHelper = new DevOpenHelper(context, DB_NAME, null);
 		}
 		return sDevOpenHelper;
 	}
 
-	private static DaoMaster getDaoMaster(Context context) {
+	public static DaoMaster getDaoMaster(Context context) {
 		if (null == sDaoMaster) {
 			sDaoMaster = new DaoMaster(getDevOpenHelper(context).getWritableDatabase());
 		}
