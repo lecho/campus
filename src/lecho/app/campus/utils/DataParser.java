@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.app.campus.R;
 import lecho.app.campus.dao.Category;
 import lecho.app.campus.dao.CategoryDao;
 import lecho.app.campus.dao.DaoSession;
@@ -34,11 +33,10 @@ import android.util.Log;
  * @author lecho
  * 
  */
-public class XmlParser {
-	public static final String TAG = XmlParser.class.getSimpleName();
+public class DataParser {
+	public static final String TAG = DataParser.class.getSimpleName();
 
 	private static final String SEPARATOR = ",";
-
 	private static final String ID = "id";
 	private static final String PLACE = "place";
 	private static final String FACULTY = "faculty";
