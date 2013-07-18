@@ -4,9 +4,9 @@
     android:layout_height="wrap_content" >
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/place_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="256dp"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/place_details_header_image_description"
         android:scaleType="centerCrop"
@@ -16,30 +16,52 @@
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_below="@id/photo"
+        android:layout_below="@id/place_photo"
         android:background="@color/moron" />
 
     <Button
-        android:id="@+id/symbol"
+        android:id="@+id/place_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/photo"
+        android:layout_alignBottom="@id/place_photo"
         android:layout_alignParentRight="true"
         android:background="@drawable/ic_symbol_normal"
         android:text="B9"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/moron"
-        android:textSize="44sp"
+        android:textSize="42sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/place_webpage_button"
+        style="@style/Widget.Sherlock.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/separator"
+        android:text="WWW"
+        android:textColor="@color/moron"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/place_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@id/separator"
-        android:text="Tymczasowa Nazwa Miejsca w Obrębie Kampusu"
+        android:layout_toLeftOf="@id/place_webpage_button"
+        android:text="Tymczasowa Nazwa MiejscawObrębie Kampusu"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/moron"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/place_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_name"
+        android:text="Tymczasowa Opis miejsca dla którego wyświetlane są aktualnie szczegóły. Tutaj mogą się pojawić inne nazwy miejsca, przeznaczenie itp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/moron" />
 
 </RelativeLayout>
