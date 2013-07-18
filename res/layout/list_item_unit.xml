@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/unit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/moron" />
+
+    <Button
+        android:id="@+id/unit_webpage_button"
+        style="@style/Widget.Sherlock.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/unit_name"
+        android:text="WWW"
+        android:textColor="@color/moron" />
+
+    <Button
+        android:id="@+id/unit_faculty_button"
+        style="@style/Widget.Sherlock.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@id/unit_name"
+        android:layout_toLeftOf="@id/unit_webpage_button"
+        android:text="FTIMS"
+        android:textColor="@color/moron" />
+
+</RelativeLayout>
