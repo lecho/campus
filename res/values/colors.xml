@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="moron">#800000</color>
+    <color name="first">#800000</color>
+    <color name="second">#C6BCA1</color>
+    <color name="third">#867C61</color>
+    <color name="forth">#373833</color>
 
 </resources>

@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_below="@id/place_photo"
-        android:background="@color/moron" />
+        android:background="@color/first" />
 
     <Button
         android:id="@+id/place_symbol"
@@ -28,20 +28,26 @@
         android:background="@drawable/ic_symbol_normal"
         android:text="B9"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/moron"
+        android:textColor="@color/first"
         android:textSize="42sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/place_webpage_button"
-        style="@style/Widget.Sherlock.ActionButton"
+    <LinearLayout
+        android:id="@+id/place_more_info_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/separator"
-        android:text="WWW"
-        android:textColor="@color/moron"
-        android:textStyle="bold" />
+        android:layout_above="@+id/place_description"
+        android:layout_below="@id/separator" >
+
+        <ImageButton
+            android:id="@+id/unit_more_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_more"
+            android:contentDescription="@string/place_more_info_button" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/place_name"
@@ -49,19 +55,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/separator"
-        android:layout_toLeftOf="@id/place_webpage_button"
+        android:layout_toLeftOf="@id/place_more_info_layout"
         android:text="Tymczasowa Nazwa MiejscawObrębie Kampusu"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/moron"
+        android:textColor="@color/first"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/place_description"
+        android:id="@id/place_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_name"
-        android:text="Tymczasowa Opis miejsca dla którego wyświetlane są aktualnie szczegóły. Tutaj mogą się pojawić inne nazwy miejsca, przeznaczenie itp"
+        android:text="Inne nazwy: lodex, tramwaj"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/moron" />
+        android:textColor="@color/forth" />
 
 </RelativeLayout>
