@@ -11,9 +11,13 @@ import lecho.app.campus.dao.Unit;
  * @author Lecho
  * 
  */
-public class PlaceDetails {
+public final class PlaceDetails {
+	public PlaceDetails(Place place, List<Unit> units) {
+		this.place = place;
+		this.units = units;
+	}
 
-	public Place place;
-	public List<Unit> unitList;
+	public final Place place;
+	public final List<Unit> units;
 
 }

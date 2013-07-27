@@ -125,14 +125,12 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 
 			Place place = placeDao.load(mPlaceId);
 			List<PlaceUnit> placeUnitList = place.getPlaceUnitList();
-			List<Unit> unitList = new ArrayList<Unit>(placeUnitList.size());
+			List<Unit> units = new ArrayList<Unit>(placeUnitList.size());
 			for (PlaceUnit placeUnit : placeUnitList) {
 				Unit unit = unitDao.loadDeep(placeUnit.getUnitId());
-				unitList.add(unit);
+				units.add(unit);
 			}
-			PlaceDetails placeDetails = new PlaceDetails();
-			placeDetails.place = place;
-			placeDetails.unitList = unitList;
+			PlaceDetails placeDetails = new PlaceDetails(place, units);
 			return placeDetails;
 		}
 
@@ -231,7 +229,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 				PlaceDao placeDao = mDaoSession.getPlaceDao();
 				placeDao.detach(data.place);
 				UnitDao unitDao = mDaoSession.getUnitDao();
-				for (Unit unit : data.unitList) {
+				for (Unit unit : data.units) {
 					unitDao.detach(unit);
 				}
 				data = null;
