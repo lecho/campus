@@ -1,5 +1,6 @@
 package lecho.app.campus.activity;
 
+import lecho.app.campus.fragment.PlaceDetailsFragment;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -7,8 +8,10 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 public class PlaceDetailsActivity extends SherlockFragmentActivity {
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
+	protected void onCreate(Bundle saveInstanceState) {
+		super.onCreate(saveInstanceState);
+		PlaceDetailsFragment fragment = PlaceDetailsFragment.newInstance(1L);
+		getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment).commit();
 	}
 
 }
