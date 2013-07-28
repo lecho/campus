@@ -25,12 +25,11 @@
         android:layout_alignBottom="@id/place_photo"
         android:layout_alignParentRight="true"
         android:background="@drawable/ic_symbol_normal"
-        android:text="B9"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/first"
         android:textSize="42sp"
-        android:textStyle="bold" 
-        android:gravity="center"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/place_more_info_layout"
@@ -56,7 +55,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/separator"
         android:layout_toLeftOf="@id/place_more_info_layout"
-        android:text="Tymczasowa Nazwa MiejscawObrębie Kampusu"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/first"
         android:textStyle="bold" />
@@ -66,7 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_name"
-        android:text="Inne nazwy: lodex, tramwaj"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/forth" />
 

@@ -10,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:gravity="center_vertical"
         android:minHeight="48dp"
-        android:text="Instytut Informatyki"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/first" />
 
@@ -21,9 +20,6 @@
         android:layout_below="@id/unit_name"
         android:background="@color/second"
         android:gravity="center_horizontal"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp"
-        android:text="FTIMS"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/forth"
         android:textStyle="bold|italic" />
@@ -36,7 +32,7 @@
         android:layout_alignParentRight="true" >
 
         <ImageButton
-            android:id="@+id/unit_more_info"
+            android:id="@+id/unit_more_info_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
