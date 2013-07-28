@@ -17,7 +17,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		DataParser.loadCampusData(getApplicationContext(), R.raw.campus_data_pl);
+		DataParser.loadCampusData(getApplicationContext(), R.raw.campus_data);
 		Button btn = (Button) findViewById(R.id.button);
 		btn.setOnClickListener(new View.OnClickListener() {
 
