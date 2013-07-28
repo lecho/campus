@@ -7,6 +7,7 @@ import java.util.List;
 
 import lecho.app.campus.R;
 import lecho.app.campus.dao.DaoSession;
+import lecho.app.campus.dao.Faculty;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.dao.PlaceDao;
 import lecho.app.campus.dao.PlaceUnit;
@@ -32,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.google.android.gms.internal.co;
 
 /**
  * Displays Place details, photo, name, symbol etc.
@@ -93,6 +95,13 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		}
 	}
 
+	@Override
+	public void onLoaderReset(Loader<PlaceDetails> loader) {
+		if (PLACE_DETAILS_LOADER == loader.getId()) {
+			// Nothing to do here.
+		}
+	}
+
 	private void prepareHeader(PlaceDetails data) {
 		mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
 		// Photo.
@@ -145,30 +154,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onLoaderReset(Loader<PlaceDetails> loader) {
-		if (PLACE_DETAILS_LOADER == loader.getId()) {
-			// Nothing to do here.
-		}
-	}
-
-	private static class PlaceUnitsAdapter extends ArrayAdapter<Unit> {
-
-		public PlaceUnitsAdapter(Context context, int textViewResourceId, List<Unit> objects) {
-			super(context, textViewResourceId, objects);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// // TODO Auto-generated method stub
-			// return super.getView(position, convertView, parent);
-			TextView tv = new TextView(getContext());
-			tv.setText(getItem(position).getName());
-			return tv;
-		}
-
 	}
 
 	/**
@@ -314,6 +299,52 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 				data = null;
 			}
 		}
+	}
+
+	/**
+	 * Units Array Adapter.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
+	private static class PlaceUnitsAdapter extends ArrayAdapter<Unit> {
+
+		public PlaceUnitsAdapter(Context context, int textViewResourceId, List<Unit> objects) {
+			super(context, textViewResourceId, objects);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder;
+			if (null == convertView) {
+				convertView = View.inflate(getContext(), R.layout.list_item_unit, null);
+				holder = new ViewHolder();
+				holder.unitName = (TextView) convertView.findViewById(R.id.unit_name);
+				holder.unitFaculty = (TextView) convertView.findViewById(R.id.unit_facluty);
+				holder.unitMoreInfoButton = (ImageButton) convertView.findViewById(R.id.unit_more_info_button);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			Unit unit = getItem(position);
+			holder.unitName.setText(unit.getName());
+			Faculty faculty = unit.getFaculty();
+			if (null != faculty) {
+				holder.unitFaculty.setText(unit.getFaculty().getShortName());
+			}
+			// TODO Decide what to do if unit has no faculty.
+			// TODO Complete unit row implementation.
+
+			return convertView;
+		}
+
+		private static class ViewHolder {
+			TextView unitName;
+			TextView unitFaculty;
+			ImageButton unitMoreInfoButton;
+		}
+
 	}
 
 }
