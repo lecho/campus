@@ -18,7 +18,7 @@
         android:layout_below="@id/place_photo"
         android:background="@color/first" />
 
-    <Button
+    <TextView
         android:id="@+id/place_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/first"
         android:textSize="42sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/place_more_info_layout"

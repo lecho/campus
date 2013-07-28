@@ -27,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -100,7 +99,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
 		loadPlaceMainPhoto(data, placePhoto);
 		// Symbol.
-		Button placeSymbol = (Button) mHeader.findViewById(R.id.place_symbol);
+		TextView placeSymbol = (TextView) mHeader.findViewById(R.id.place_symbol);
 		placeSymbol.setText(data.place.getSymbol());
 		// Name.
 		TextView placeName = (TextView) mHeader.findViewById(R.id.place_name);

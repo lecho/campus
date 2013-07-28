@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<campus>
+    <categories>
+		<category>
+			<id>1</id>
+			<name>category1</name>
+			<symbol>cat1</symbol>
+		</category>
+		<category>
+			<id>2</id>
+			<name>category2</name>
+			<symbol>cat2</symbol>
+		</category>		
+		<category>
+			<id>3</id>
+			<name>category3</name>
+			<symbol>cat3</symbol>
+		</category>
+	</categories>
+	<faculties>
+		<faculty>
+			<id>1</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
+		</faculty>
+		<faculty>
+			<id>2</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
+		</faculty>
+		<faculty>
+			<id>3</id>
+			<name>faculty1</name>
+			<short_name>fac1</short_name>
+			<webpage>www.google.com</webpage>
+		</faculty>
+	</faculties>
+	<units>
+		<unit>
+			<id>1</id>
+			<name>unit1</name>
+			<short_name>u1</short_name>
+			<description>unit1 description</description>
+			<webpage>www.google.com</webpage>
+			<unit_faculty>1</unit_faculty>
+		</unit>
+		<unit>
+			<id>2</id>
+			<name>unit2</name>
+			<short_name>u2</short_name>
+			<description>unit2 description</description>
+			<webpage>www.google.com</webpage>
+			<unit_faculty>1</unit_faculty>
+		</unit>
+		<unit>
+			<id>3</id>
+			<name>unit3</name>
+			<short_name>u3</short_name>
+			<description>unit3 description</description>
+			<webpage>www.google.com</webpage>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>4</id>
+			<name>unit4</name>
+			<short_name>u4</short_name>
+			<description>unit4 description</description>
+			<webpage>www.google.com</webpage>
+		</unit>
+	</units>
+	<places>
+		<place>
+			<id>1</id>
+			<name>place1</name>
+			<symbol>A1</symbol>
+			<description>description</description>
+			<latitude>18.324233</latitude>
+			<longtitude>88.343245</longtitude>
+			<address>Łódź, Wólczańska 220</address>
+			<webpage>www.google.com</webpage>
+			<place_category>1,2</place_category>
+			<place_unit>1,2,3,4</place_unit>
+			<place_faculty>1,2</place_faculty>
+		</place>
+			<place>
+			<id>2</id>
+			<name>place2</name>
+			<symbol>a2</symbol>
+			<description>description</description>
+			<latitude>18.324233</latitude>
+			<longtitude>88.343245</longtitude>
+			<address>Łódź, Wólczańska 222</address>
+			<webpage>www.google.com</webpage>
+			<place_category>1</place_category>
+			<place_unit>1,2</place_unit>
+			<place_faculty>1</place_faculty>
+		</place>	
+	</places>
+</campus>
