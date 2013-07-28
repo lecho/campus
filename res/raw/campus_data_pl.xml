@@ -74,7 +74,7 @@
 		<place>
 			<id>1</id>
 			<name>place1</name>
-			<symbol>a1</symbol>
+			<symbol>A1</symbol>
 			<description>description</description>
 			<latitude>18.324233</latitude>
 			<longtitude>88.343245</longtitude>

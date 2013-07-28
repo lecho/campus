@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import lecho.app.campus.dao.Category;
 import lecho.app.campus.dao.CategoryDao;
@@ -239,7 +240,7 @@ public class DataParser {
 				} else if (NAME.equals(xpp.getName())) {
 					place.setName(xpp.nextText().trim());
 				} else if (SYMBOL.equals(xpp.getName())) {
-					place.setSymbol(xpp.nextText().trim());
+					place.setSymbol(xpp.nextText().trim().toUpperCase(Locale.UK));
 				} else if (DESCRIPTION.equals(xpp.getName())) {
 					place.setDescription(xpp.nextText().trim());
 				} else if (LATITUDE.equals(xpp.getName())) {

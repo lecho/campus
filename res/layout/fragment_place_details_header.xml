@@ -9,8 +9,7 @@
         android:layout_height="256dp"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/place_details_header_image_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/temp_pic" />
+        android:scaleType="centerCrop" />
 
     <View
         android:id="@+id/separator"
@@ -36,8 +35,8 @@
         android:id="@+id/place_more_info_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
         android:layout_above="@+id/place_description"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/separator" >
 
         <ImageButton

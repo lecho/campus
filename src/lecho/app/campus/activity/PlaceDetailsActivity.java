@@ -11,7 +11,7 @@ public class PlaceDetailsActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle saveInstanceState) {
 		super.onCreate(saveInstanceState);
 		PlaceDetailsFragment fragment = PlaceDetailsFragment.newInstance(1L);
-		getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment).commit();
+		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, fragment).commit();
 	}
 
 }

@@ -1,5 +1,7 @@
 package lecho.app.campus.fragment;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +16,13 @@ import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlaceDetails;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +41,11 @@ import com.actionbarsherlock.app.SherlockListFragment;
  * 
  */
 public class PlaceDetailsFragment extends SherlockListFragment implements LoaderCallbacks<PlaceDetails> {
+	private static final String TAG = PlaceDetailsFragment.class.getSimpleName();
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
 	private View mHeader;
-	private PlaceDetailsAdapter mUnitsAdapter;
+	private PlaceUnitsAdapter mUnitsAdapter;
 
 	public static PlaceDetailsFragment newInstance(long placeId) {
 		PlaceDetailsFragment fragment = new PlaceDetailsFragment();
@@ -53,6 +58,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 	}
 
 	@Override
@@ -79,48 +85,79 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
 			// Fill the list header.
-			mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
-			// TODO Set photo.
-			ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
-			Button placeSymbol = (Button) mHeader.findViewById(R.id.place_symbol);
-			placeSymbol.setText(data.place.getSymbol());
-			TextView placeName = (TextView) mHeader.findViewById(R.id.place_name);
-			String placeNameText = data.place.getName();
-			if (TextUtils.isEmpty(placeNameText)) {
-				placeName.setText(placeNameText);
-			} else {
-				placeName.setVisibility(View.GONE);
-			}
-			// TODO Set place more info button action
-			ImageButton placeMoreInfo = (ImageButton) mHeader.findViewById(R.id.place_more_info_button);
-			TextView placeDescription = (TextView) mHeader.findViewById(R.id.place_description);
-			String placeDescriptionText = data.place.getDescription();
-			if (TextUtils.isEmpty(placeDescriptionText)) {
-				placeDescription.setText(placeDescriptionText);
-			} else {
-				placeDescription.setVisibility(View.GONE);
-			}
-			// Set list header.
-			getListView().addHeaderView(mHeader);
+			prepareHeader(data);
 			// Fill the list adapter.
-			mUnitsAdapter = new PlaceDetailsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
+			mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
 					data.units);
 			setListAdapter(mUnitsAdapter);
 
 		}
 	}
 
-	@Override
-	public void onLoaderReset(Loader<PlaceDetails> loader) {
-		if (PLACE_DETAILS_LOADER == loader.getId()) {
-			// TODO clear details view
+	private void prepareHeader(PlaceDetails data) {
+		mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
+		// Photo.
+		ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
+		loadPlaceMainPhoto(data, placePhoto);
+		// Symbol.
+		Button placeSymbol = (Button) mHeader.findViewById(R.id.place_symbol);
+		placeSymbol.setText(data.place.getSymbol());
+		// Name.
+		TextView placeName = (TextView) mHeader.findViewById(R.id.place_name);
+		String placeNameText = data.place.getName();
+		if (TextUtils.isEmpty(placeNameText)) {
+			placeName.setVisibility(View.GONE);
+		} else {
+			placeName.setText(placeNameText);
+		}
+		// Description.
+		TextView placeDescription = (TextView) mHeader.findViewById(R.id.place_description);
+		String placeDescriptionText = data.place.getDescription();
+		if (TextUtils.isEmpty(placeDescriptionText)) {
+			placeDescription.setVisibility(View.GONE);
+		} else {
+			placeDescription.setText(placeDescriptionText);
+		}
+		// More info.
+		// TODO Set place more info button action
+		ImageButton placeMoreInfo = (ImageButton) mHeader.findViewById(R.id.place_more_info_button);
 
+		// Set list header.
+		if (getListView().getHeaderViewsCount() == 0) {
+			getListView().addHeaderView(mHeader);
 		}
 	}
 
-	private static class PlaceDetailsAdapter extends ArrayAdapter<Unit> {
+	private void loadPlaceMainPhoto(PlaceDetails data, ImageView placePhoto) {
+		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append("/")
+				.append(data.place.getSymbol()).append("/").append(Config.PLACE_MAIN_PHOTO);
+		InputStream inputStream = null;
+		try {
+			inputStream = getActivity().getAssets().open(placePhotoPath.toString());
+			placePhoto.setImageBitmap(BitmapFactory.decodeStream(inputStream));
+		} catch (IOException e) {
+			Log.e(TAG, "Could not load main place photo from file: " + placePhotoPath.toString(), e);
+		} finally {
+			if (null != inputStream) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Could not close stream for main place photo from file: " + placePhotoPath.toString(), e);
+				}
+			}
+		}
+	}
 
-		public PlaceDetailsAdapter(Context context, int textViewResourceId, List<Unit> objects) {
+	@Override
+	public void onLoaderReset(Loader<PlaceDetails> loader) {
+		if (PLACE_DETAILS_LOADER == loader.getId()) {
+			// Nothing to do here.
+		}
+	}
+
+	private static class PlaceUnitsAdapter extends ArrayAdapter<Unit> {
+
+		public PlaceUnitsAdapter(Context context, int textViewResourceId, List<Unit> objects) {
 			super(context, textViewResourceId, objects);
 		}
 
