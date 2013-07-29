@@ -1,11 +1,10 @@
 package lecho.app.campus.fragment;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import lecho.app.campus.R;
+import lecho.app.campus.activity.PlacePhotoActivity;
 import lecho.app.campus.dao.DaoSession;
 import lecho.app.campus.dao.Faculty;
 import lecho.app.campus.dao.Place;
@@ -15,15 +14,16 @@ import lecho.app.campus.dao.Unit;
 import lecho.app.campus.dao.UnitDao;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
+import lecho.app.campus.utils.PhotoBitmapLoader;
 import lecho.app.campus.utils.PlaceDetails;
 import android.content.Context;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +101,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		}
 	}
 
-	private void prepareHeader(PlaceDetails data) {
+	private void prepareHeader(final PlaceDetails data) {
 		mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
 		// Photo.
 		ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
@@ -136,6 +136,17 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		// More info.
 		// TODO Set place more info button action
 		ImageButton placeMoreInfo = (ImageButton) mHeader.findViewById(R.id.place_more_info_button);
+		placeMoreInfo.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), PlacePhotoActivity.class);
+				i.putExtra(Config.ARG_PLACE_ID, data.place.getId());
+				i.putExtra(Config.ARG_PLACE_SYMBOL, data.place.getSymbol());
+				startActivity(i);
+
+			}
+		});
 
 		// Set list header.
 		if (getListView().getHeaderViewsCount() == 0) {
@@ -143,24 +154,10 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		}
 	}
 
-	private void loadPlaceMainPhoto(PlaceDetails data, ImageView placePhoto) {
+	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
 		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append("/")
 				.append(data.place.getSymbol()).append("/").append(Config.PLACE_MAIN_PHOTO);
-		InputStream inputStream = null;
-		try {
-			inputStream = getActivity().getAssets().open(placePhotoPath.toString());
-			placePhoto.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-		} catch (IOException e) {
-			Log.e(TAG, "Could not load main place photo from file: " + placePhotoPath.toString(), e);
-		} finally {
-			if (null != inputStream) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					Log.e(TAG, "Could not close stream for main place photo from file: " + placePhotoPath.toString(), e);
-				}
-			}
-		}
+		new Handler().post(new PhotoBitmapLoader(getActivity(), placePhoto, placePhotoPath.toString()));
 	}
 
 	/**

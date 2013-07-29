@@ -9,4 +9,5 @@ public abstract class Config {
 
 	public static final String ARG_PLACE_ID = "lecho.app.campus:ARG_PLACE_ID";
 	public static final String PLACE_MAIN_PHOTO = "main.jpg";
+	public static final String ARG_PLACE_SYMBOL = "lecho.app.campus:ARG_PLACE_SYMBOL";
 }
