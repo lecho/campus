@@ -60,10 +60,17 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@id/place_description"
+        android:id="@+id/place_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/place_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/forth" />
+    <TextView
+        android:id="@+id/place_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_address"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/forth" />
 

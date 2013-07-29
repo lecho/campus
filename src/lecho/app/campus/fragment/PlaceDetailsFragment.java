@@ -33,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.google.android.gms.internal.co;
 
 /**
  * Displays Place details, photo, name, symbol etc.
@@ -117,6 +116,14 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			placeName.setVisibility(View.GONE);
 		} else {
 			placeName.setText(placeNameText);
+		}
+		// Address.
+		TextView placeAddress = (TextView) mHeader.findViewById(R.id.place_address);
+		String placeAddressText = data.place.getAddress();
+		if (TextUtils.isEmpty(placeAddressText)) {
+			placeAddress.setVisibility(View.GONE);
+		} else {
+			placeAddress.setText(placeAddressText);
 		}
 		// Description.
 		TextView placeDescription = (TextView) mHeader.findViewById(R.id.place_description);
