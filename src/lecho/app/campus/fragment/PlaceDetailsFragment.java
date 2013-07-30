@@ -1,5 +1,6 @@
 package lecho.app.campus.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,8 +156,8 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	}
 
 	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
-		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append("/")
-				.append(data.place.getSymbol()).append("/").append(Config.PLACE_MAIN_PHOTO);
+		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
+				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO);
 		new Handler().post(new PhotoBitmapLoader(getActivity(), placePhoto, placePhotoPath.toString()));
 	}
 
