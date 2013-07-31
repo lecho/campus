@@ -17,6 +17,7 @@ import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PhotoBitmapLoader;
 import lecho.app.campus.utils.PlaceDetails;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,9 +25,14 @@ import android.os.Handler;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
+import android.view.GestureDetector.OnDoubleTapListener;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -106,6 +112,10 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
 		// Photo.
 		ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
+		GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getActivity(),
+				new PlacePhotoGestureListener());
+		gestureDetector.setOnDoubleTapListener(new PlacePhotoTapListener(getActivity(), data));
+		placePhoto.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
 		loadPlaceMainPhoto(data, placePhoto);
 		// Symbol.
 		TextView placeSymbol = (TextView) mHeader.findViewById(R.id.place_symbol);
@@ -137,17 +147,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		// More info.
 		// TODO Set place more info button action
 		ImageButton placeMoreInfo = (ImageButton) mHeader.findViewById(R.id.place_more_info_button);
-		placeMoreInfo.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), PlacePhotoActivity.class);
-				i.putExtra(Config.ARG_PLACE_ID, data.place.getId());
-				i.putExtra(Config.ARG_PLACE_SYMBOL, data.place.getSymbol());
-				startActivity(i);
-
-			}
-		});
 
 		// Set list header.
 		if (getListView().getHeaderViewsCount() == 0) {
@@ -190,7 +189,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			mDaoSession = DatabaseHelper.getDaoSession(getContext());
 			PlaceDao placeDao = mDaoSession.getPlaceDao();
 			UnitDao unitDao = mDaoSession.getUnitDao();
-
 			Place place = placeDao.load(mPlaceId);
 			List<PlaceUnit> placeUnitList = place.getPlaceUnitList();
 			List<Unit> units = new ArrayList<Unit>(placeUnitList.size());
@@ -352,4 +350,83 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 
 	}
 
+	private static class PlacePhotoGestureListener implements OnGestureListener {
+
+		@Override
+		public boolean onDown(MotionEvent e) {
+			return false;
+		}
+
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+			return false;
+		}
+
+		@Override
+		public void onLongPress(MotionEvent e) {
+		}
+
+		@Override
+		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+			return false;
+		}
+
+		@Override
+		public void onShowPress(MotionEvent e) {
+		}
+
+		@Override
+		public boolean onSingleTapUp(MotionEvent e) {
+			return false;
+		}
+
+	}
+
+	private static class PlacePhotoTapListener implements OnDoubleTapListener {
+		private Activity mActivity;
+		private long mPlaceId;
+		private String mPlaceSymbol;
+
+		public PlacePhotoTapListener(final Activity activity, final PlaceDetails data) {
+			mActivity = activity;
+			mPlaceId = data.place.getId();
+			mPlaceSymbol = data.place.getSymbol();
+		}
+
+		@Override
+		public boolean onDoubleTap(MotionEvent e) {
+			Intent intent = new Intent(mActivity, PlacePhotoActivity.class);
+			intent.putExtra(Config.ARG_PLACE_ID, mPlaceId);
+			intent.putExtra(Config.ARG_PLACE_SYMBOL, mPlaceSymbol);
+			mActivity.startActivity(intent);
+			return true;
+		}
+
+		@Override
+		public boolean onDoubleTapEvent(MotionEvent e) {
+			return false;
+		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent e) {
+			return false;
+		}
+
+	}
+
+	private static class PlacePhotoTouchListener implements OnTouchListener {
+
+		private GestureDetectorCompat mGestureDetector;
+
+		public PlacePhotoTouchListener(final GestureDetectorCompat gestureDetector) {
+			mGestureDetector = gestureDetector;
+		}
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			mGestureDetector.onTouchEvent(event);
+			return false;
+		}
+
+	}
 }
