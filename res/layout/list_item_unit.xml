@@ -9,35 +9,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:gravity="center_vertical"
-        android:minHeight="48dp"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/first" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/unit_facluty"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/unit_name"
         android:background="@color/second"
         android:gravity="center_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/forth"
+        android:textColor="@color/third"
         android:textStyle="bold|italic" />
-
-    <LinearLayout
-        android:id="@+id/unit_more_info_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@id/unit_facluty"
-        android:layout_alignParentRight="true" >
-
-        <ImageButton
-            android:id="@+id/unit_more_info_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_more"
-            android:contentDescription="@string/unit_more_info_button" />
-    </LinearLayout>
 
 </RelativeLayout>

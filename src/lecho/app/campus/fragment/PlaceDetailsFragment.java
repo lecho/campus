@@ -144,9 +144,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		} else {
 			placeDescription.setText(placeDescriptionText);
 		}
-		// More info.
-		// TODO Set place more info button action
-		ImageButton placeMoreInfo = (ImageButton) mHeader.findViewById(R.id.place_more_info_button);
 
 		// Set list header.
 		if (getListView().getHeaderViewsCount() == 0) {
@@ -324,7 +321,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 				holder = new ViewHolder();
 				holder.unitName = (TextView) convertView.findViewById(R.id.unit_name);
 				holder.unitFaculty = (TextView) convertView.findViewById(R.id.unit_facluty);
-				holder.unitMoreInfoButton = (ImageButton) convertView.findViewById(R.id.unit_more_info_button);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -335,9 +331,9 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			Faculty faculty = unit.getFaculty();
 			if (null != faculty) {
 				holder.unitFaculty.setText(unit.getFaculty().getShortName());
+			} else {
+				holder.unitFaculty.setVisibility(View.INVISIBLE);
 			}
-			// TODO Decide what to do if unit has no faculty.
-			// TODO Complete unit row implementation.
 
 			return convertView;
 		}
@@ -345,7 +341,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		private static class ViewHolder {
 			TextView unitName;
 			TextView unitFaculty;
-			ImageButton unitMoreInfoButton;
 		}
 
 	}
@@ -425,7 +420,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			mGestureDetector.onTouchEvent(event);
-			return false;
+			return true;
 		}
 
 	}
