@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -127,14 +126,6 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			placeName.setVisibility(View.GONE);
 		} else {
 			placeName.setText(placeNameText);
-		}
-		// Address.
-		TextView placeAddress = (TextView) mHeader.findViewById(R.id.place_address);
-		String placeAddressText = data.place.getAddress();
-		if (TextUtils.isEmpty(placeAddressText)) {
-			placeAddress.setVisibility(View.GONE);
-		} else {
-			placeAddress.setText(placeAddressText);
 		}
 		// Description.
 		TextView placeDescription = (TextView) mHeader.findViewById(R.id.place_description);

@@ -46,11 +46,9 @@ public class DataParser {
 	private static final String NAME = "name";
 	private static final String SHORT_NAME = "short_name";
 	private static final String DESCRIPTION = "description";
-	private static final String WEBPAGE = "webpage";
 	private static final String SYMBOL = "symbol";
 	private static final String LATITUDE = "latitude";
 	private static final String LONGTITUDE = "longtitude";
-	private static final String ADDRESS = "address";
 	private static final String PLACE_CATEGORY = "place_category";
 	private static final String PLACE_FACULTY = "place_faculty";
 	private static final String PLACE_UNIT = "place_unit";
@@ -180,8 +178,6 @@ public class DataParser {
 					faculty.setName(xpp.nextText().trim());
 				} else if (SHORT_NAME.equals(xpp.getName())) {
 					faculty.setShortName(xpp.nextText().trim());
-				} else if (WEBPAGE.equals(xpp.getName())) {
-					faculty.setWebpage(xpp.nextText().trim());
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (FACULTY.equals(xpp.getName())) {
@@ -209,8 +205,6 @@ public class DataParser {
 					unit.setName(xpp.nextText().trim());
 				} else if (SHORT_NAME.equals(xpp.getName())) {
 					unit.setShortName(xpp.nextText().trim());
-				} else if (WEBPAGE.equals(xpp.getName())) {
-					unit.setWebpage(xpp.nextText().trim());
 				} else if (UNIT_FACULTY.equals(xpp.getName())) {
 					unit.setFacultyId(Long.valueOf(xpp.nextText().trim()));
 				}
@@ -247,10 +241,6 @@ public class DataParser {
 					place.setLatitude(Double.valueOf(xpp.nextText().trim()));
 				} else if (LONGTITUDE.equals(xpp.getName())) {
 					place.setLongtitude(Double.valueOf(xpp.nextText().trim()));
-				} else if (ADDRESS.equals(xpp.getName())) {
-					place.setAddress(xpp.nextText().trim());
-				} else if (WEBPAGE.equals(xpp.getName())) {
-					place.setWebpage(xpp.nextText().trim());
 				} else if (PLACE_CATEGORY.equals(xpp.getName())) {
 					if (null == place) {
 						throw new IllegalStateException(

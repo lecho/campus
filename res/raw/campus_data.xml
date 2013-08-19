@@ -20,69 +20,74 @@
 	<faculties>
 		<faculty>
 			<id>1</id>
-			<name>faculty1</name>
-			<short_name>fac1</short_name>
-			<webpage>www.google.com</webpage>
+			<name>FIZYKI TECHNICZNEJ, INFORMATYKI I MATEMATYKI STOSOWANEJ</name>
+			<short_name>FTIMS</short_name>
 		</faculty>
 		<faculty>
 			<id>2</id>
-			<name>faculty1</name>
-			<short_name>fac1</short_name>
-			<webpage>www.google.com</webpage>
+			<name>ELEKTRONIKI, ELEKTROTECHNIKI, INFORMATYKI I AUTOMATYKI</name>
+			<short_name>EEIA</short_name>
 		</faculty>
 		<faculty>
 			<id>3</id>
-			<name>faculty1</name>
-			<short_name>fac1</short_name>
-			<webpage>www.google.com</webpage>
+			<name>ORGANIZACJI I ZARZĄDZANIA</name>
+			<short_name>OIZ</short_name>
 		</faculty>
 	</faculties>
 	<units>
 		<unit>
 			<id>1</id>
-			<name>unit1</name>
+			<name>Instytut Informatyki</name>
 			<short_name>u1</short_name>
-			<description>unit1 description</description>
-			<webpage>www.google.com</webpage>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>2</id>
-			<name>unit2</name>
+			<name>Instytut Matematyki</name>
 			<short_name>u2</short_name>
-			<description>unit2 description</description>
-			<webpage>www.google.com</webpage>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>3</id>
-			<name>unit3</name>
+			<name>Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych</name>
 			<short_name>u3</short_name>
-			<description>unit3 description</description>
-			<webpage>www.google.com</webpage>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>4</id>
-			<name>unit4</name>
+			<name>Instytut Nauk Społecznych i Zarządzania Technologiami</name>
 			<short_name>u4</short_name>
-			<description>unit4 description</description>
 			<webpage>www.google.com</webpage>
+		</unit>
+		<unit>
+			<id>5</id>
+			<name>Katedra Zarządzania Produkcją i Logistyki</name>
+			<short_name>u5</short_name>
+			<unit_faculty>3</unit_faculty>
+		</unit>
+		<unit>
+			<id>6</id>
+			<name>Katedra Systemów Zarządzania i Innowacji</name>
+			<short_name>u6</short_name>
+			<unit_faculty>3</unit_faculty>
+		</unit>
+		<unit>
+			<id>7</id>
+			<name>Kolegium Logistyki</name>
+			<short_name>u7</short_name>
 		</unit>
 	</units>
 	<places>
 		<place>
 			<id>1</id>
-			<name>place1</name>
+			<name>Budynek Trzech Wydziałów</name>
 			<symbol>A1</symbol>
-			<description>description</description>
+			<description>Lodex, Tramwaj</description>
 			<latitude>18.324233</latitude>
 			<longtitude>88.343245</longtitude>
-			<address>Łódź, Wólczańska 220</address>
-			<webpage>www.google.com</webpage>
 			<place_category>1,2</place_category>
-			<place_unit>1,2,3,4</place_unit>
-			<place_faculty>1,2</place_faculty>
+			<place_unit>1,2,3,4,5,6,7</place_unit>
+			<place_faculty>1,2,3</place_faculty>
 		</place>
 			<place>
 			<id>2</id>
@@ -91,8 +96,6 @@
 			<description>description</description>
 			<latitude>18.324233</latitude>
 			<longtitude>88.343245</longtitude>
-			<address>Łódź, Wólczańska 222</address>
-			<webpage>www.google.com</webpage>
 			<place_category>1</place_category>
 			<place_unit>1,2</place_unit>
 			<place_faculty>1</place_faculty>

@@ -26,7 +26,6 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property ShortName = new Property(2, String.class, "shortName", false, "SHORT_NAME");
-        public final static Property Webpage = new Property(3, String.class, "webpage", false, "WEBPAGE");
     };
 
     private DaoSession daoSession;
@@ -47,8 +46,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'FACULTY' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT NOT NULL ," + // 1: name
-                "'SHORT_NAME' TEXT," + // 2: shortName
-                "'WEBPAGE' TEXT);"); // 3: webpage
+                "'SHORT_NAME' TEXT);"); // 2: shortName
     }
 
     /** Drops the underlying database table. */
@@ -72,11 +70,6 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         if (shortName != null) {
             stmt.bindString(3, shortName);
         }
- 
-        String webpage = entity.getWebpage();
-        if (webpage != null) {
-            stmt.bindString(4, webpage);
-        }
     }
 
     @Override
@@ -97,8 +90,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         Faculty entity = new Faculty( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // shortName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // webpage
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // shortName
         );
         return entity;
     }
@@ -109,7 +101,6 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setShortName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setWebpage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

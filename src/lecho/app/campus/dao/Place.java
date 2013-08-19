@@ -18,8 +18,6 @@ public class Place {
     private String description;
     private double latitude;
     private double longtitude;
-    private String address;
-    private String webpage;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -38,15 +36,13 @@ public class Place {
         this.id = id;
     }
 
-    public Place(Long id, String name, String symbol, String description, double latitude, double longtitude, String address, String webpage) {
+    public Place(Long id, String name, String symbol, String description, double latitude, double longtitude) {
         this.id = id;
         this.name = name;
         this.symbol = symbol;
         this.description = description;
         this.latitude = latitude;
         this.longtitude = longtitude;
-        this.address = address;
-        this.webpage = webpage;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -105,22 +101,6 @@ public class Place {
 
     public void setLongtitude(double longtitude) {
         this.longtitude = longtitude;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getWebpage() {
-        return webpage;
-    }
-
-    public void setWebpage(String webpage) {
-        this.webpage = webpage;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

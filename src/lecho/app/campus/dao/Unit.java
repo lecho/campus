@@ -14,7 +14,6 @@ public class Unit {
     /** Not-null value. */
     private String name;
     private String shortName;
-    private String webpage;
     private Long facultyId;
 
     /** Used to resolve relations */
@@ -35,11 +34,10 @@ public class Unit {
         this.id = id;
     }
 
-    public Unit(Long id, String name, String shortName, String webpage, Long facultyId) {
+    public Unit(Long id, String name, String shortName, Long facultyId) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.webpage = webpage;
         this.facultyId = facultyId;
     }
 
@@ -73,14 +71,6 @@ public class Unit {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public String getWebpage() {
-        return webpage;
-    }
-
-    public void setWebpage(String webpage) {
-        this.webpage = webpage;
     }
 
     public Long getFacultyId() {

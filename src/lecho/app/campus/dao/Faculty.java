@@ -14,7 +14,6 @@ public class Faculty {
     /** Not-null value. */
     private String name;
     private String shortName;
-    private String webpage;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -31,11 +30,10 @@ public class Faculty {
         this.id = id;
     }
 
-    public Faculty(Long id, String name, String shortName, String webpage) {
+    public Faculty(Long id, String name, String shortName) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
-        this.webpage = webpage;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -68,14 +66,6 @@ public class Faculty {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public String getWebpage() {
-        return webpage;
-    }
-
-    public void setWebpage(String webpage) {
-        this.webpage = webpage;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

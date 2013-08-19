@@ -29,8 +29,6 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
         public final static Property Latitude = new Property(4, double.class, "latitude", false, "LATITUDE");
         public final static Property Longtitude = new Property(5, double.class, "longtitude", false, "LONGTITUDE");
-        public final static Property Address = new Property(6, String.class, "address", false, "ADDRESS");
-        public final static Property Webpage = new Property(7, String.class, "webpage", false, "WEBPAGE");
     };
 
     private DaoSession daoSession;
@@ -54,9 +52,7 @@ public class PlaceDao extends AbstractDao<Place, Long> {
                 "'SYMBOL' TEXT NOT NULL ," + // 2: symbol
                 "'DESCRIPTION' TEXT," + // 3: description
                 "'LATITUDE' REAL NOT NULL ," + // 4: latitude
-                "'LONGTITUDE' REAL NOT NULL ," + // 5: longtitude
-                "'ADDRESS' TEXT," + // 6: address
-                "'WEBPAGE' TEXT);"); // 7: webpage
+                "'LONGTITUDE' REAL NOT NULL );"); // 5: longtitude
     }
 
     /** Drops the underlying database table. */
@@ -83,16 +79,6 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         }
         stmt.bindDouble(5, entity.getLatitude());
         stmt.bindDouble(6, entity.getLongtitude());
- 
-        String address = entity.getAddress();
-        if (address != null) {
-            stmt.bindString(7, address);
-        }
- 
-        String webpage = entity.getWebpage();
-        if (webpage != null) {
-            stmt.bindString(8, webpage);
-        }
     }
 
     @Override
@@ -116,9 +102,7 @@ public class PlaceDao extends AbstractDao<Place, Long> {
             cursor.getString(offset + 2), // symbol
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // description
             cursor.getDouble(offset + 4), // latitude
-            cursor.getDouble(offset + 5), // longtitude
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // address
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // webpage
+            cursor.getDouble(offset + 5) // longtitude
         );
         return entity;
     }
@@ -132,8 +116,6 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setLatitude(cursor.getDouble(offset + 4));
         entity.setLongtitude(cursor.getDouble(offset + 5));
-        entity.setAddress(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setWebpage(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     /** @inheritdoc */
