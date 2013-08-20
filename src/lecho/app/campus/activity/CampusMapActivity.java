@@ -3,11 +3,16 @@ package lecho.app.campus.activity;
 import lecho.app.campus.R;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class CampusMapActivity extends SherlockFragmentActivity {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
@@ -16,7 +21,6 @@ public class CampusMapActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light_DarkActionBar);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
@@ -43,11 +47,44 @@ public class CampusMapActivity extends SherlockFragmentActivity {
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		// mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+		mMap.setInfoWindowAdapter(new CampusInfoWindowAdapter());
 		// mMap.setOnInfoWindowClickListener(this);
-		// mMap.setMapType(MAP_TYPE_HYBRID);
+		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.setMyLocationEnabled(true);
-		// setUpAllMarkers();
+		setUpMarkers();
 		// zoomMapOnStart();
+	}
+
+	private void setUpMarkers() {
+		double lat = 51.754645;
+		double lng = 19.452780;
+	
+		for (int i = 0; i < 5; ++i) {
+			LatLng ll = new LatLng(lat, lng);
+			mMap.addMarker(new MarkerOptions().position(ll)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)).title("B9").snippet("Trolololo"));
+			lat += 0.1;
+			lng += 0.1;
+		}
+	}
+
+	/**
+	 * Adapter for custom marker info window
+	 * 
+	 * @author lecho
+	 * 
+	 */
+	private static class CampusInfoWindowAdapter implements InfoWindowAdapter {
+
+		@Override
+		public View getInfoContents(com.google.android.gms.maps.model.Marker arg0) {
+			return null;
+		}
+
+		@Override
+		public View getInfoWindow(com.google.android.gms.maps.model.Marker arg0) {
+			return null;
+		}
+
 	}
 }
