@@ -150,7 +150,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 
 	/**
 	 * Loads Place details from database, name, symbol, faculties etc. Loader
-	 * doesn't what for changes in database, there's no need for that in this
+	 * doesn't watch for changes in database, there's no need for that in this
 	 * app.
 	 * 
 	 * Implementation based on sample from android sdk documentation.
