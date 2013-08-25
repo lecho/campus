@@ -14,7 +14,9 @@ import lecho.app.campus.dao.PlaceUnitDao;
 import lecho.app.campus.dao.UnitDao;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlacesList;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
@@ -23,6 +25,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -34,7 +38,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList> {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
-
 	private GoogleMap mMap;
 
 	@Override
@@ -74,18 +77,40 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// zoomMapOnStart();
 	}
 
-	private void setUpMarkers(List<Place> places) {
-		// double lat = 51.754645;
-		// double lng = 19.452780;
-		//
-		// for (int i = 0; i < 5; ++i) {
-		// LatLng ll = new LatLng(lat, lng);
-		// mMap.addMarker(new MarkerOptions().position(ll)
-		// .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)).title("B9").snippet("Trolololo"));
-		// lat += 0.1;
-		// lng += 0.1;
-		// }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		searchView.setIconifiedByDefault(false);
+		return true;
+	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			// String query = intent.getStringExtra(SearchManager.QUERY);
+			// query = query.toLowerCase();
+			// StringBuilder sb = new
+			// StringBuilder().append(PoiContract.KEY_WORDS).append(" like ?");
+			// String[] args = new String[] { "%" + query + "%" };
+			// Cursor c = getContentResolver().query(PoiContract.CONTENT_URI,
+			// null, sb.toString(), args, null);
+			// searchOnMap(c, query);
+			// c.close();
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			// Handle a suggestions click (because the suggestions all use
+			// ACTION_VIEW)
+			// Uri data = intent.getData();
+			// Cursor c = getContentResolver().query(data, null, null, null,
+			// null);
+			// searchOnMap(c, null);
+			// c.close();
+		}
+	}
+
+	private void setUpMarkers(List<Place> places) {
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongtitude());
 			mMap.addMarker(new MarkerOptions().position(latLng)
@@ -165,10 +190,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		private static final String QUERY_FILTER_PLACES_BY_FACULTY = "LEFT JOIN " + PlaceFacultyDao.TABLENAME
 				+ " PF ON T." + PlaceDao.Properties.Id.columnName + "=PF."
 				+ PlaceFacultyDao.Properties.PlaceId.columnName + " WHERE PF."
-				+ PlaceFacultyDao.Properties.FacultyId.columnName + "=?";;
+				+ PlaceFacultyDao.Properties.FacultyId.columnName + "=?";
 		// Search by place name, place symbol, place description, units names
 		// inside particular place(5 arguments for ?).
-		private static final String QUERY_SEARCH_PLACES = " WHERE T." + PlaceDao.Properties.Symbol.columnName
+		private static final String QUERY_SEARCH_PLACES = "WHERE T." + PlaceDao.Properties.Symbol.columnName
 				+ " LIKE ? OR T." + PlaceDao.Properties.Name.columnName + " LIKE ? OR T."
 				+ PlaceDao.Properties.Description.columnName + " LIKE ? OR T." + PlaceDao.Properties.Id.columnName
 				+ " IN( SELECT PU." + PlaceUnitDao.Properties.PlaceId.columnName + " FROM " + PlaceUnitDao.TABLENAME

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:hint="@string/search_hint"
+    android:label="@string/search_label"
+    android:searchMode="showSearchLabelAsBadge"
+    android:searchSuggestAuthority="lecho.app.campus.dao.SearchSuggestionProvider"
+    android:searchSuggestIntentAction="android.intent.action.VIEW"
+    android:searchSuggestIntentData="lecho.app.campus.dao.SearchSuggestionProvider"
+    android:searchSuggestSelection="like ?"
+    android:searchSuggestThreshold="2"
+    android:voicePromptText="@string/search_invoke"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />

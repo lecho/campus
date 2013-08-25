@@ -5,7 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="place_details_header_image_description">Place photo</string>
-    <string name="place_more_info_button">Place more info button</string>
-    <string name="unit_more_info_button">Unit more info button</string>
+    <string name="search_hint">Search hint</string>
+    <string name="search_label">Search label</string>
+    <string name="search_invoke">Search invoke</string>
 
 </resources>
