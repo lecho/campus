@@ -8,6 +8,8 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 /**
@@ -18,7 +20,28 @@ import android.net.Uri;
 public class SearchSuggestionProvider extends ContentProvider {
 	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus";
 	public static final int CAMPUS_MAP_DIR = 1;
-	private static final int MAX_SUGGESTIONS = 6;
+	private static final String MAX_SUGGESTIONS = "10";
+	//
+	private static final String ID = "_id";
+	private static final String SYMBOL = "symbol";
+	private static final String NAME = "name";
+
+	private static final String QUERY_SEARCH_BY_PLACE = "select P." + PlaceDao.Properties.Id.columnName + " as " + ID
+			+ ", P." + PlaceDao.Properties.Symbol.columnName + " as " + SYMBOL + ", P."
+			+ PlaceDao.Properties.Name.columnName + " as " + NAME + " from " + PlaceDao.TABLENAME + " P where P."
+			+ PlaceDao.Properties.Symbol.columnName + " like ? or P." + PlaceDao.Properties.Name.columnName
+			+ " like ? or P." + PlaceDao.Properties.Description.columnName + " like ?";
+
+	private static final String QUERY_SEARCH_BY_UNIT = "select P." + PlaceDao.Properties.Id.columnName + " as " + ID
+			+ ", P." + PlaceDao.Properties.Symbol.columnName + " as " + SYMBOL + ", U."
+			+ UnitDao.Properties.Name.columnName + " as " + NAME + " from " + PlaceDao.TABLENAME + " P left join "
+			+ PlaceUnitDao.TABLENAME + " PU on PU." + PlaceUnitDao.Properties.PlaceId.columnName + "=P."
+			+ PlaceDao.Properties.Id.columnName + " left join " + UnitDao.TABLENAME + " U on PU."
+			+ PlaceUnitDao.Properties.UnitId.columnName + "=U." + UnitDao.Properties.Id.columnName + " where U."
+			+ UnitDao.Properties.Name.columnName + " like ?";
+
+	// private static final String QUERY = QUERY_SEARCH_BY_PLACE + " union all "
+	// + QUERY_SEARCH_BY_UNIT;
 
 	private static final UriMatcher sUriMatcher;
 	private DaoSession mDaoSession;
@@ -54,15 +77,22 @@ public class SearchSuggestionProvider extends ContentProvider {
 	 */
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-
+		// TODO check if selectionArgs are empty.
 		MatrixCursor mc = new MatrixCursor(new String[] { PlaceDao.Properties.Id.columnName,
 				SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2,
 				SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID });
-
-		for (int i = 0; i < 5; ++i) {
-			mc.newRow().add(1L).add("A1").add("LODEX").add(1);
+		SQLiteDatabase db = mDaoSession.getDatabase();
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+		String query = qb.buildUnionQuery(new String[] { QUERY_SEARCH_BY_PLACE, QUERY_SEARCH_BY_UNIT }, null,
+				MAX_SUGGESTIONS);
+		String arg = new StringBuilder("%").append(selectionArgs[0]).append("%").toString();
+		Cursor c = db.rawQuery(query, new String[] { arg, arg, arg, arg });
+		//TODO change matrixCursor to normal cursor.
+		while (c.moveToNext()) {
+			mc.newRow().add(c.getLong(c.getColumnIndexOrThrow(ID))).add(c.getString(c.getColumnIndexOrThrow(SYMBOL)))
+					.add(c.getString(c.getColumnIndexOrThrow(NAME))).add(c.getLong(c.getColumnIndexOrThrow(ID)));
 		}
-
+		c.close();
 		return mc;
 	}
 
