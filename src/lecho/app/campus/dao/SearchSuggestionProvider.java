@@ -1,5 +1,7 @@
 package lecho.app.campus.dao;
 
+import java.util.Arrays;
+
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import android.app.SearchManager;
@@ -79,7 +81,9 @@ public class SearchSuggestionProvider extends ContentProvider {
 		String query = qb.buildUnionQuery(new String[] { QUERY_SEARCH_BY_PLACE, QUERY_SEARCH_BY_UNIT }, null,
 				MAX_SUGGESTIONS);
 		String arg = new StringBuilder("%").append(selectionArgs[0]).append("%").toString();
-		Cursor c = db.rawQuery(query, new String[] { arg, arg, arg, arg, arg });
+		String[] args = new String[5];
+		Arrays.fill(args, arg);
+		Cursor c = db.rawQuery(query, args);
 		return c;
 	}
 
