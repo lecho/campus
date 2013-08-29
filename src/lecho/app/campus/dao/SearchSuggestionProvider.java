@@ -21,11 +21,9 @@ public class SearchSuggestionProvider extends ContentProvider {
 	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus";
 	public static final int CAMPUS_MAP_DIR = 1;
 	private static final String MAX_SUGGESTIONS = "10";
-	//
 	private static final String ID = "_id";
-	private static final String SYMBOL = "symbol";
-	private static final String NAME = "name";
 
+	// Search for places by symbol, name or description.
 	private static final String QUERY_SEARCH_BY_PLACE = "select P." + PlaceDao.Properties.Id.columnName + " as " + ID
 			+ ", P." + PlaceDao.Properties.Symbol.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", P."
 			+ PlaceDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
@@ -34,6 +32,7 @@ public class SearchSuggestionProvider extends ContentProvider {
 			+ PlaceDao.Properties.Name.columnName + " like ? or P." + PlaceDao.Properties.Description.columnName
 			+ " like ?";
 
+	// Search for place by units names and short names.
 	private static final String QUERY_SEARCH_BY_UNIT = "select P." + PlaceDao.Properties.Id.columnName + " as " + ID
 			+ ", P." + PlaceDao.Properties.Symbol.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", U."
 			+ UnitDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
@@ -73,9 +72,6 @@ public class SearchSuggestionProvider extends ContentProvider {
 		return true;
 	}
 
-	/**
-	 * Returns matrix cursor for suggestions
-	 */
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		SQLiteDatabase db = mDaoSession.getDatabase();
