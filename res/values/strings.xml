@@ -5,8 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="place_details_header_image_description">Place photo</string>
-    <string name="search_hint">Search hint</string>
-    <string name="search_label">Search label</string>
-    <string name="search_invoke">Search invoke</string>
+    <string name="search_hint">Wyszukaj</string>
+    <string name="search_label">Wyszukaj</string>
+    <string name="search_invoke">Wyszukaj</string>
+    <string name="search_fake_place_name">Budynek</string>
 
 </resources>

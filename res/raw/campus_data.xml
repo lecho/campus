@@ -91,9 +91,9 @@
 		</place>
 			<place>
 			<id>2</id>
-			<name>place2</name>
+			<name>Budynek A2</name>
 			<symbol>a2</symbol>
-			<description>description</description>
+			<description></description>
 			<latitude>51.654645</latitude>
 			<longtitude>19.752780</longtitude>
 			<place_category>1</place_category>

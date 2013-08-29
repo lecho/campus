@@ -83,7 +83,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		searchView.setIconifiedByDefault(false);
 		return true;
 	}
 
@@ -357,4 +356,5 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			}
 		}
 	}
+
 }

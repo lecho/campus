@@ -19,31 +19,33 @@ import android.net.Uri;
  * 
  */
 public class SearchSuggestionProvider extends ContentProvider {
+	public static final String AUTHORITY = SearchSuggestionProvider.class.getName();
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus";
 	public static final int CAMPUS_MAP_DIR = 1;
 	private static final String MAX_SUGGESTIONS = "10";
 
 	// Search for places by symbol, name or description.
-	private static final String QUERY_SEARCH_BY_PLACE = "select P." + PlaceDao.Properties.Id.columnName + ", P."
-			+ PlaceDao.Properties.Symbol.columnName + ", P." + PlaceDao.Properties.Name.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_TEXT_1 + ", P." + PlaceDao.Properties.Description.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P." + PlaceDao.Properties.Id.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from " + PlaceDao.TABLENAME + " P where P."
-			+ PlaceDao.Properties.Symbol.columnName + " like ? or P." + PlaceDao.Properties.Name.columnName
-			+ " like ? or P." + PlaceDao.Properties.Description.columnName + " like ?";
+	private static final String QUERY_SEARCH_BY_PLACE = "select distinct P." + PlaceDao.Properties.Id.columnName
+			+ ", P." + PlaceDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", P."
+			+ PlaceDao.Properties.Description.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
+			+ PlaceDao.Properties.Id.columnName + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from "
+			+ PlaceDao.TABLENAME + " P where P." + PlaceDao.Properties.Symbol.columnName + " like ? or P."
+			+ PlaceDao.Properties.Name.columnName + " like ? or P." + PlaceDao.Properties.Description.columnName
+			+ " like ?";
 
-	// Search for place by units names and short names.
-	private static final String QUERY_SEARCH_BY_UNIT = "select P." + PlaceDao.Properties.Id.columnName + ", P."
-			+ PlaceDao.Properties.Symbol.columnName + ", U." + UnitDao.Properties.Name.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_TEXT_1 + ", F." + FacultyDao.Properties.ShortName.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P." + PlaceDao.Properties.Id.columnName + " as "
-			+ SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from " + PlaceDao.TABLENAME + " P left join "
-			+ PlaceUnitDao.TABLENAME + " PU on PU." + PlaceUnitDao.Properties.PlaceId.columnName + "=P."
-			+ PlaceDao.Properties.Id.columnName + " left join " + UnitDao.TABLENAME + " U on PU."
-			+ PlaceUnitDao.Properties.UnitId.columnName + "=U." + UnitDao.Properties.Id.columnName + " left join "
-			+ FacultyDao.TABLENAME + " F on F." + FacultyDao.Properties.Id.columnName + "=U."
-			+ UnitDao.Properties.FacultyId.columnName + " where U." + UnitDao.Properties.Name.columnName
-			+ " like ? or U." + UnitDao.Properties.ShortName.columnName + " like ?";
+	// Search for place by units names and short names.DISTINCT
+	private static final String QUERY_SEARCH_BY_UNIT = "select distinct P." + PlaceDao.Properties.Id.columnName
+			+ ", U." + UnitDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", F."
+			+ FacultyDao.Properties.ShortName.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
+			+ PlaceDao.Properties.Id.columnName + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from "
+			+ PlaceDao.TABLENAME + " P left join " + PlaceUnitDao.TABLENAME + " PU on PU."
+			+ PlaceUnitDao.Properties.PlaceId.columnName + "=P." + PlaceDao.Properties.Id.columnName + " left join "
+			+ UnitDao.TABLENAME + " U on PU." + PlaceUnitDao.Properties.UnitId.columnName + "=U."
+			+ UnitDao.Properties.Id.columnName + " left join " + FacultyDao.TABLENAME + " F on F."
+			+ FacultyDao.Properties.Id.columnName + "=U." + UnitDao.Properties.FacultyId.columnName + " where U."
+			+ UnitDao.Properties.Name.columnName + " like ? or U." + UnitDao.Properties.ShortName.columnName
+			+ " like ? group by U." + UnitDao.Properties.Name.columnName;
 
 	private static final UriMatcher sUriMatcher;
 	private DaoSession mDaoSession;
