@@ -6,6 +6,7 @@ import java.util.List;
 
 import lecho.app.campus.BuildConfig;
 import lecho.app.campus.R;
+import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.DaoSession;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.dao.PlaceCategoryDao;
@@ -16,8 +17,10 @@ import lecho.app.campus.dao.UnitDao;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlacesList;
 import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -29,6 +32,7 @@ import android.view.View;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,11 +43,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList> {
+public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
+		OnQueryTextListener {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private GoogleMap mMap;
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
+	private SearchSuggestionAdapter mSearchSuggestionAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +89,25 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	@Override
+	protected void onPause() {
+		if (null != mSearchSuggestionAdapter) {
+			mSearchSuggestionAdapter.close();
+		}
+		super.onPause();
+
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
+		searchView.setSearchableInfo(searchableInfo);
+		// Set custom adapter for custom dropdown view
+		mSearchSuggestionAdapter = new SearchSuggestionAdapter(getApplicationContext(), searchView, searchableInfo);
+		searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
+		searchView.setOnQueryTextListener(this);
 		return true;
 	}
 
@@ -155,6 +175,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mMap.clear();
 			mMarkers.clear();
 		}
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		Cursor c = mSearchSuggestionAdapter.runQueryOnBackgroundThread(newText);
+		mSearchSuggestionAdapter.changeCursor(c);
+		return true;
 	}
 
 	/**

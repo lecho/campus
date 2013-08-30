@@ -59,7 +59,7 @@
 
         <provider
             android:name="lecho.app.campus.provider.SearchSuggestionProvider"
-            android:authorities="lecho.app.campus.dao.SearchSuggestionProvider"
+            android:authorities="lecho.app.campus.provider.SearchSuggestionProvider"
             android:exported="false" >
         </provider>
     </application>
