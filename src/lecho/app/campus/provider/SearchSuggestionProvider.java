@@ -32,25 +32,25 @@ public class SearchSuggestionProvider extends ContentProvider {
 
 	// Search for places by symbol, name or description.
 	private static final String QUERY_SEARCH_BY_PLACE = "select distinct P." + PlaceDao.Properties.Id.columnName
-			+ ", P." + PlaceDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", P."
-			+ PlaceDao.Properties.Description.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
-			+ PlaceDao.Properties.Id.columnName + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from "
-			+ PlaceDao.TABLENAME + " P where P." + PlaceDao.Properties.Symbol.columnName + " like ? or P."
-			+ PlaceDao.Properties.Name.columnName + " like ? or P." + PlaceDao.Properties.Description.columnName
-			+ " like ?";
+			+ ", P." + PlaceDao.Properties.Symbol.columnName + ", P." + PlaceDao.Properties.Name.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_TEXT_1 + ", P." + PlaceDao.Properties.Description.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P." + PlaceDao.Properties.Id.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from " + PlaceDao.TABLENAME + " P where P."
+			+ PlaceDao.Properties.Symbol.columnName + " like ? or P." + PlaceDao.Properties.Name.columnName
+			+ " like ? or P." + PlaceDao.Properties.Description.columnName + " like ?";
 
 	// Search for place by units names and short names.DISTINCT
 	private static final String QUERY_SEARCH_BY_UNIT = "select distinct P." + PlaceDao.Properties.Id.columnName
-			+ ", U." + UnitDao.Properties.Name.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ", F."
-			+ FacultyDao.Properties.ShortName.columnName + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P."
-			+ PlaceDao.Properties.Id.columnName + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from "
-			+ PlaceDao.TABLENAME + " P left join " + PlaceUnitDao.TABLENAME + " PU on PU."
-			+ PlaceUnitDao.Properties.PlaceId.columnName + "=P." + PlaceDao.Properties.Id.columnName + " left join "
-			+ UnitDao.TABLENAME + " U on PU." + PlaceUnitDao.Properties.UnitId.columnName + "=U."
-			+ UnitDao.Properties.Id.columnName + " left join " + FacultyDao.TABLENAME + " F on F."
-			+ FacultyDao.Properties.Id.columnName + "=U." + UnitDao.Properties.FacultyId.columnName + " where U."
-			+ UnitDao.Properties.Name.columnName + " like ? or U." + UnitDao.Properties.ShortName.columnName
-			+ " like ? group by U." + UnitDao.Properties.Name.columnName;
+			+ ", P." + PlaceDao.Properties.Symbol.columnName + ", U." + UnitDao.Properties.Name.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_TEXT_1 + ", F." + FacultyDao.Properties.ShortName.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_TEXT_2 + ", P." + PlaceDao.Properties.Id.columnName + " as "
+			+ SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from " + PlaceDao.TABLENAME + " P left join "
+			+ PlaceUnitDao.TABLENAME + " PU on PU." + PlaceUnitDao.Properties.PlaceId.columnName + "=P."
+			+ PlaceDao.Properties.Id.columnName + " left join " + UnitDao.TABLENAME + " U on PU."
+			+ PlaceUnitDao.Properties.UnitId.columnName + "=U." + UnitDao.Properties.Id.columnName + " left join "
+			+ FacultyDao.TABLENAME + " F on F." + FacultyDao.Properties.Id.columnName + "=U."
+			+ UnitDao.Properties.FacultyId.columnName + " where U." + UnitDao.Properties.Name.columnName
+			+ " like ? or U." + UnitDao.Properties.ShortName.columnName + " like ?";
 
 	private static final UriMatcher sUriMatcher;
 	private DaoSession mDaoSession;

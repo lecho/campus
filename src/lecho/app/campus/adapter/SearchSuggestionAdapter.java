@@ -1,6 +1,7 @@
 package lecho.app.campus.adapter;
 
 import lecho.app.campus.R;
+import lecho.app.campus.dao.PlaceDao;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.ContentResolver;
@@ -8,8 +9,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.widget.ResourceCursorAdapter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actionbarsherlock.widget.SearchView;
@@ -19,29 +22,50 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 	private SearchableInfo mSearchableInfo;
 	private SearchView mSearchView;
 
+	static final int INVALID_INDEX = -1;
+	// Cached column indexes, updated when the cursor changes.
+	private int mSymbolCol = INVALID_INDEX;
+	private int mNameCol = INVALID_INDEX;
+	private int mDescriptionCol = INVALID_INDEX;
+
 	public SearchSuggestionAdapter(Context context, SearchView searchView, SearchableInfo searchableInfo) {
 		super(context, R.layout.search_dropdown_item, null, FLAG_REGISTER_CONTENT_OBSERVER);
 		mSearchableInfo = searchableInfo;
 		mSearchView = searchView;
 	}
 
+	/**
+	 * Tags the view with cached child view look-ups.
+	 */
+	@Override
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		View v = super.newView(context, cursor, parent);
+		v.setTag(new ChildViewCache(v));
+		return v;
+	}
+
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-		// String symbol =
-		// cursor.getString(cursor.getColumnIndexOrThrow(PlaceDao.Properties.Symbol.columnName));
-		String name = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1));
-		String description = cursor.getString(cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_2));
+		ChildViewCache views = (ChildViewCache) view.getTag();
 
-		TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-		TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+		String symbol = cursor.getString(mSymbolCol);
+		String name = cursor.getString(mNameCol);
+		String description = cursor.getString(mDescriptionCol);
 
-		text2.setText(description);
-		text2.setVisibility(View.VISIBLE);
-		text1.setText(name);
-		text1.setSingleLine(true);
-		text1.setMaxLines(1);
-		text1.setVisibility(View.VISIBLE);
+		views.mSymbol.setText(symbol);
 
+		if (TextUtils.isEmpty(description)) {
+			views.mName.setSingleLine(false);
+			views.mName.setMaxLines(2);
+			views.mName.setText(name);
+			views.mDescription.setVisibility(View.GONE);
+		} else {
+			views.mName.setSingleLine(true);
+			views.mName.setMaxLines(1);
+			views.mName.setText(name);
+			views.mDescription.setVisibility(View.VISIBLE);
+			views.mDescription.setText(description);
+		}
 	}
 
 	@Override
@@ -116,7 +140,41 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 		return mContext.getContentResolver().query(uri, null, selection, selArgs, null);
 	}
 
+	/**
+	 * Cache columns.
+	 */
+	@Override
+	public void changeCursor(Cursor c) {
+		try {
+			super.changeCursor(c);
+
+			if (c != null) {
+				mSymbolCol = c.getColumnIndex(PlaceDao.Properties.Symbol.columnName);
+				mNameCol = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1);
+				mDescriptionCol = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2);
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "error changing cursor and caching columns", e);
+		}
+	}
+
 	public void close() {
 		changeCursor(null);
+	}
+
+	/**
+	 * Cache of the child views of drop-drown list items, to avoid looking up
+	 * the children each time the contents of a list item are changed.
+	 */
+	private final static class ChildViewCache {
+		public final TextView mSymbol;
+		public final TextView mName;
+		public final TextView mDescription;
+
+		public ChildViewCache(View v) {
+			mSymbol = (TextView) v.findViewById(R.id.symbol);
+			mName = (TextView) v.findViewById(R.id.name);
+			mDescription = (TextView) v.findViewById(R.id.description);
+		}
 	}
 }
