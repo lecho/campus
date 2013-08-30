@@ -58,7 +58,7 @@
         </activity>
 
         <provider
-            android:name="lecho.app.campus.dao.SearchSuggestionProvider"
+            android:name="lecho.app.campus.provider.SearchSuggestionProvider"
             android:authorities="lecho.app.campus.dao.SearchSuggestionProvider"
             android:exported="false" >
         </provider>
