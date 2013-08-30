@@ -2,23 +2,28 @@ package lecho.app.campus.activity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import lecho.app.campus.R;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.loader.PlacesLoader;
+import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlacesList;
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -31,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -39,7 +45,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private GoogleMap mMap;
+	// TODO check WeakHashMap
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
+	private HashMap<Marker, Long> mMarkersIds = new HashMap<Marker, Long>();
 	private SearchSuggestionAdapter mSearchSuggestionAdapter;
 
 	@Override
@@ -75,8 +83,29 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// mMap.setOnInfoWindowClickListener(this);
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.setMyLocationEnabled(true);
-		// setUpMarkers();
-		// zoomMapOnStart();
+		zoomMapOnStart();
+	}
+
+	private void zoomMapOnStart() {
+		final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
+		if (mapView.getViewTreeObserver().isAlive()) {
+			mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+				@SuppressWarnings("deprecation")
+				@SuppressLint("NewApi")
+				@Override
+				public void onGlobalLayout() {
+					LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
+					LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
+					LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
+					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+						mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					} else {
+						mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					}
+					mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+				}
+			});
+		}
 	}
 
 	@Override
@@ -105,15 +134,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			// String query = intent.getStringExtra(SearchManager.QUERY);
-			// query = query.toLowerCase();
-			// StringBuilder sb = new
-			// StringBuilder().append(PoiContract.KEY_WORDS).append(" like ?");
-			// String[] args = new String[] { "%" + query + "%" };
-			// Cursor c = getContentResolver().query(PoiContract.CONTENT_URI,
-			// null, sb.toString(), args, null);
-			// searchOnMap(c, query);
-			// c.close();
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			Bundle args = new Bundle();
+			args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_PLACES_BY_SEARCH);
+			args.putString(PlacesLoader.ARG_ARG, query);
+			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because all the suggestions use
 			// ACTION_VIEW)
@@ -128,13 +153,29 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void setUpMarkers(List<Place> places) {
+		mMap.clear();
 		mMarkers.clear();
+		mMarkersIds.clear();
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongtitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
+			mMarkersIds.put(marker, place.getId());
+		}
+	}
+
+	private void changeMarkersVisibility(PlacesList data) {
+		for (Entry<Long, Marker> entry : mMarkers.entrySet()) {
+			boolean isVisible = false;
+			for (Place place : data.places) {
+				if (place.getId().equals(entry.getKey())) {
+					isVisible = true;
+					break;
+				}
+			}
+			entry.getValue().setVisible(isVisible);
 		}
 	}
 
@@ -155,7 +196,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
 		if (PLACES_LOADER == loader.getId()) {
-			setUpMarkers(data.places);
+			if (mMarkers.size() != data.places.size()) {
+				setUpMarkers(data.places);
+			} else {
+				changeMarkersVisibility(data);
+			}
 		}
 
 	}
@@ -165,6 +210,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			mMap.clear();
 			mMarkers.clear();
+			mMarkersIds.clear();
 		}
 	}
 

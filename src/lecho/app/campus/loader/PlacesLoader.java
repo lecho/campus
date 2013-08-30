@@ -1,6 +1,7 @@
 package lecho.app.campus.loader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lecho.app.campus.BuildConfig;
@@ -27,6 +28,7 @@ import android.util.Log;
  * 
  */
 public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
+	private static final String TAG = PlacesLoader.class.getSimpleName();
 	public static final String ARG_ACTION = "lecho.app.campus:ACTION";
 	public static final String ARG_ARG = "lecho.app.campus:ARG";
 	// No args
@@ -52,7 +54,6 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			+ PlaceUnitDao.Properties.UnitId.columnName + "=U." + UnitDao.Properties.Id.columnName + " AND (U."
 			+ UnitDao.Properties.Name.columnName + " LIKE ? OR U." + UnitDao.Properties.ShortName.columnName
 			+ " LIKE ?)))";
-	private static final String TAG = PlacesLoader.class.getSimpleName();
 
 	private DaoSession mDaoSession;
 	private PlacesList mData;
@@ -95,7 +96,8 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			}
 			StringBuilder sb = new StringBuilder("%").append(mArg).append("%");
 			String arg = sb.toString();
-			String[] args = new String[] { arg, arg, arg, arg, arg };
+			String[] args = new String[5];
+			Arrays.fill(args, arg);
 			places = placeDao.queryRaw(QUERY_SEARCH_PLACES, args);
 			break;
 		default:
@@ -103,7 +105,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		}
 		// I don't want to return null list
 		if (null == places) {
-			places = new ArrayList<Place>(1);
+			places = new ArrayList<Place>(0);
 		}
 		return new PlacesList(places);
 	}

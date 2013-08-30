@@ -13,6 +13,9 @@ public abstract class Config {
 
 	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus.dao.SearchSuggestionProvider";
 
-	public static final double START_LAT = 51.748684;
-	public static final double START_LNG = 19.45538;
+	public static final double START_LAT1 = 51.740000;
+	public static final double START_LNG1 = 19.440000;
+	public static final double START_LAT2 = 51.770000;
+	public static final double START_LNG2 = 19.480000;
+
 }
