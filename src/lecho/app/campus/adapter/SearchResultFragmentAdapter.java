@@ -11,12 +11,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 	List<Place> mPlaces;
 
-	public SearchResultFragmentAdapter(FragmentManager fm) {
-		super(fm);
-	}
-
 	public SearchResultFragmentAdapter(FragmentManager fm, List<Place> places) {
 		super(fm);
+		if (null == places) {
+			throw new IllegalArgumentException("Places list cannot be null for SearchResultFragmentAdapter");
+		}
 		mPlaces = places;
 	}
 
@@ -29,9 +28,11 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		if (null != mPlaces) {
-			return mPlaces.size();
-		}
-		return 0;
+		return mPlaces.size();
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return mPlaces.get(position).getId();
 	}
 }

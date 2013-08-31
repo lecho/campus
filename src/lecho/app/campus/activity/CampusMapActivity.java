@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -35,6 +36,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -49,9 +53,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private SearchSuggestionAdapter mSearchSuggestionAdapter;
+	private SearchResultFragmentAdapter mSearchResultAdapter;
 	// TODO check WeakHashMap
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
+	private Marker mCurrentMarkerKey;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 		Log.i(TAG, "connection result: " + playServicesStatus);
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
+		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
 		setUpMapIfNeeded();
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
@@ -84,7 +91,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void setUpMap() {
 		mMap.setInfoWindowAdapter(new CampusInfoWindowAdapter(getApplicationContext()));
-		// mMap.setOnInfoWindowClickListener(this);
+		mMap.setOnMapClickListener(new MapClickListener());
+		mMap.setOnMarkerClickListener(new MarkerClickListener());
+		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.setMyLocationEnabled(true);
 		zoomMapOnStart();
@@ -202,10 +211,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			if (mMarkers.size() != data.places.size()) {
 				setUpMarkers(data.places);
-				SearchResultFragmentAdapter adapter = new SearchResultFragmentAdapter(getSupportFragmentManager(),
-						data.places);
+				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
 				if (null != mViewPager) {
-					mViewPager.setAdapter(adapter);
+					mViewPager.setAdapter(mSearchResultAdapter);
 				}
 			} else {
 				changeMarkersVisibility(data);
@@ -266,7 +274,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @author lecho
 	 * 
 	 */
-	private static class ZoomAnimationCalback implements GoogleMap.CancelableCallback {
+	private class ZoomAnimationCalback implements GoogleMap.CancelableCallback {
 		private Marker mMarker;
 
 		public ZoomAnimationCalback(Marker marker) {
@@ -280,8 +288,54 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onFinish() {
+			mCurrentMarkerKey = mMarker;
+			mViewPager.setVisibility(View.VISIBLE);
 			mMarker.showInfoWindow();
 		}
+	}
+
+	private class SearchResultChangeListener extends SimpleOnPageChangeListener {
+
+		@Override
+		public void onPageSelected(int position) {
+			Long id = mSearchResultAdapter.getItemId(position);
+			Marker marker = mMarkers.get(id);
+			searchOnMap(marker);
+		}
+	}
+
+	private class MarkerInfoWindowClickListener implements OnInfoWindowClickListener {
+
+		@Override
+		public void onInfoWindowClick(Marker marker) {
+			Intent i = new Intent(CampusMapActivity.this, PlaceDetailsActivity.class);
+			i.putExtra(Config.ARG_PLACE_ID, mMarkersData.get(marker).getId());
+			startActivity(i);
+
+		}
+
+	}
+
+	private class MarkerClickListener implements OnMarkerClickListener {
+
+		@Override
+		public boolean onMarkerClick(Marker marker) {
+			mCurrentMarkerKey = marker;
+			mViewPager.setVisibility(View.VISIBLE);
+			return false;
+		}
+
+	}
+
+	private class MapClickListener implements OnMapClickListener {
+
+		@Override
+		public void onMapClick(LatLng latLng) {
+			mCurrentMarkerKey = null;
+			mViewPager.setVisibility(View.GONE);
+
+		}
+
 	}
 
 }
