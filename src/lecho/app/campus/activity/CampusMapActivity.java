@@ -129,15 +129,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	@Override
-	protected void onPause() {
-		if (null != mSearchSuggestionAdapter) {
-			mSearchSuggestionAdapter.changeCursor(null);
-		}
-		super.onPause();
-
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -191,11 +182,21 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Move map camera to selected marker.
+	 * @param marker
+	 */
 	private void goToMarker(final Marker marker) {
 		mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), new ZoomAnimationCalback(marker));
 	}
 
-	private void handleMarker(Marker marker) {
+	/**
+	 * Performs necessary actions when user click on the marker or camera is
+	 * moved to that marker.
+	 * 
+	 * @param marker
+	 */
+	private void handleMarker(final Marker marker) {
 		mCurrentMarker = marker;
 		mViewPager.setVisibility(View.VISIBLE);
 		Place place = mMarkersData.get(marker);
