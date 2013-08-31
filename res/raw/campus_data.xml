@@ -83,8 +83,8 @@
 			<name>Budynek Trzech Wydziałów</name>
 			<symbol>A1</symbol>
 			<description>Lodex, Tramwaj</description>
-			<latitude>51.754645</latitude>
-			<longtitude>19.752780</longtitude>
+			<latitude>51.743000</latitude>
+			<longtitude>19.444000</longtitude>
 			<place_category>2</place_category>
 			<place_unit>1,2,3,4,5,6,7</place_unit>
 			<place_faculty>1,2,3</place_faculty>
@@ -94,8 +94,8 @@
 			<name>Budynek A2</name>
 			<symbol>A22</symbol>
 			<description></description>
-			<latitude>51.654645</latitude>
-			<longtitude>19.752780</longtitude>
+			<latitude>51.760000</latitude>
+			<longtitude>19.460000</longtitude>
 			<place_category>1</place_category>
 			<place_unit>1,3</place_unit>
 			<place_faculty>1</place_faculty>
