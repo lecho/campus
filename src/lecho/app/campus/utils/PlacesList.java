@@ -11,10 +11,12 @@ import lecho.app.campus.dao.Place;
  * 
  */
 public final class PlacesList {
-	public PlacesList(List<Place> places) {
-		this.places = places;
+	public PlacesList(int action, List<Place> places) {
+		mAction = action;
+		mPlaces = places;
 	}
 
-	public final List<Place> places;
+	public final int mAction;
+	public final List<Place> mPlaces;
 
 }

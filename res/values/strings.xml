@@ -9,5 +9,7 @@
     <string name="search_label">Wyszukaj</string>
     <string name="search_invoke">Wyszukaj</string>
     <string name="search_fake_place_name">Budynek</string>
+    <string name="search_no_results">Nic nie znalazłem:(</string>
+    <string name="search_no_results_back">Cofnij</string>
 
 </resources>

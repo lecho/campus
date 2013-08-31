@@ -107,7 +107,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		if (null == places) {
 			places = new ArrayList<Place>(0);
 		}
-		return new PlacesList(places);
+		return new PlacesList(mAction, places);
 	}
 
 	/**
@@ -203,10 +203,11 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		if (null != data) {
 			// Detach data from DaoSession.
 			PlaceDao placeDao = mDaoSession.getPlaceDao();
-			for (Place place : data.places) {
+			for (Place place : data.mPlaces) {
 				placeDao.detach(place);
 			}
 			data = null;
 		}
 	}
+
 }

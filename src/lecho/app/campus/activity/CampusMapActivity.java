@@ -11,6 +11,8 @@ import lecho.app.campus.dao.Place;
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlacesList;
+import net.simonvt.messagebar.MessageBar;
+import net.simonvt.messagebar.MessageBar.OnMessageClickListener;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
@@ -19,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -26,7 +29,6 @@ import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -51,6 +53,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
+	private MenuItem mSearchMenuItem;
+	private MessageBar mMessageBar;
 	private SearchSuggestionAdapter mSearchSuggestionAdapter;
 	private SearchResultFragmentAdapter mSearchResultAdapter;
 	// TODO check WeakHashMap
@@ -62,10 +66,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
+
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 		Log.i(TAG, "connection result: " + playServicesStatus);
+
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
+		mMessageBar = new MessageBar(this);
+		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		setUpMapIfNeeded();
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
@@ -136,10 +144,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// Search view preparation
 		// Workaround for but
 		// http://code.google.com/p/android/issues/detail?id=25758
-		MenuItem searchMenuItem = menu.findItem(R.id.search);
-		searchMenuItem.setOnActionExpandListener(new SearchViewExpandListener());
+		mSearchMenuItem = menu.findItem(R.id.search);
+		mSearchMenuItem.setOnActionExpandListener(new SearchViewExpandListener());
 
-		SearchView searchView = (SearchView) searchMenuItem.getActionView();
+		SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
 		searchView.setSearchableInfo(searchableInfo);
 		// Set custom adapter for custom dropdown view
@@ -195,11 +203,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mViewPager.setCurrentItem(pos);
 	}
 
-	private void showSearchResults(PlacesList data) {
-		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
-		mViewPager.setAdapter(mSearchResultAdapter);
-	}
-
 	@Override
 	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
 		if (PLACES_LOADER == id) {
@@ -213,14 +216,35 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
 		if (PLACES_LOADER == loader.getId()) {
-			if (mMarkers.size() != data.places.size()) {
-				setUpMarkers(data.places);
-				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
+			int action = data.mAction;
+			if (PlacesLoader.LOAD_ALL_PLACES == action) {
+				setUpMarkers(data.mPlaces);
+				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
 				if (null != mViewPager) {
+					mViewPager.setVisibility(View.GONE);
 					mViewPager.setAdapter(mSearchResultAdapter);
 				}
+			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
+				setUpMarkers(data.mPlaces);
+				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
+				if (null != mViewPager) {
+					mViewPager.setVisibility(View.VISIBLE);
+					mViewPager.setAdapter(mSearchResultAdapter);
+					if (data.mPlaces.size() > 0) {
+						Long placeId = data.mPlaces.get(0).getId();
+						Marker marker = mMarkers.get(placeId);
+						goToMarker(marker);
+					} else {
+						mMessageBar.show(getString(R.string.search_no_results),
+								getString(R.string.search_no_results_back));
+					}
+				}
+			} else if (PlacesLoader.LOAD_PLACES_BY_CATEGORY == action) {
+
+			} else if (PlacesLoader.LOAD_PLACES_BY_FACULTY == action) {
+
 			} else {
-				showSearchResults(data);
+				Log.e(TAG, "Invalid PlacesLoader action: " + action);
 			}
 		}
 
@@ -312,9 +336,27 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			Toast.makeText(CampusMapActivity.this, "Colapse", Toast.LENGTH_SHORT).show();
+			Bundle args = new Bundle();
+			args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
+			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, CampusMapActivity.this);
 			return true;
 		}
+	}
+
+	private class MessageBarButtonListener implements OnMessageClickListener {
+
+		@Override
+		public void onMessageClick(Parcelable token) {
+			// Bundle args = new Bundle();
+			// args.putInt(PlacesLoader.ARG_ACTION,
+			// PlacesLoader.LOAD_ALL_PLACES);
+			// getSupportLoaderManager().restartLoader(PLACES_LOADER, args,
+			// CampusMapActivity.this);
+			if (null != mSearchMenuItem) {
+				mSearchMenuItem.collapseActionView();
+			}
+		}
+
 	}
 
 }
