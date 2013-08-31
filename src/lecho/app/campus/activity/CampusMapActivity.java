@@ -83,7 +83,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		mMap.setInfoWindowAdapter(new CampusInfoWindowAdapter());
+		mMap.setInfoWindowAdapter(new CampusInfoWindowAdapter(getApplicationContext()));
 		// mMap.setOnInfoWindowClickListener(this);
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.setMyLocationEnabled(true);
@@ -163,7 +163,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongtitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
-					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)).title(place.getSymbol())
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
 			mMarkersData.put(marker, place);
@@ -183,7 +183,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	private void searchOnMap(Marker marker) {
+	private void searchOnMap(final Marker marker) {
 		mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), new ZoomAnimationCalback(marker));
 	}
 
@@ -242,15 +242,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * 
 	 */
 	private static class CampusInfoWindowAdapter implements InfoWindowAdapter {
+		private Context mContext;
+
+		public CampusInfoWindowAdapter(Context context) {
+			mContext = context;
+		}
 
 		@Override
-		public View getInfoContents(com.google.android.gms.maps.model.Marker arg0) {
+		public View getInfoContents(Marker marker) {
 			return null;
 		}
 
 		@Override
-		public View getInfoWindow(com.google.android.gms.maps.model.Marker arg0) {
-			return null;
+		public View getInfoWindow(Marker marker) {
+			return View.inflate(mContext, R.layout.custom_info_window, null);
 		}
 
 	}
