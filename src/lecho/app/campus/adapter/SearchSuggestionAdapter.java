@@ -165,10 +165,6 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 		}
 	}
 
-	public void close() {
-		changeCursor(null);
-	}
-
 	/**
 	 * Cache of the child views of drop-drown list items, to avoid looking up
 	 * the children each time the contents of a list item are changed.

@@ -2,7 +2,6 @@ package lecho.app.campus.activity;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import lecho.app.campus.R;
 import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
@@ -17,7 +16,6 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,15 +26,16 @@ import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 import com.actionbarsherlock.widget.SearchView;
-import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -47,8 +46,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
-		OnQueryTextListener {
+public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList> {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private ViewPager mViewPager;
@@ -125,7 +123,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onPause() {
 		if (null != mSearchSuggestionAdapter) {
-			mSearchSuggestionAdapter.close();
+			mSearchSuggestionAdapter.changeCursor(null);
 		}
 		super.onPause();
 
@@ -135,13 +133,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+		// Search view preparation
+		// Workaround for but
+		// http://code.google.com/p/android/issues/detail?id=25758
+		MenuItem searchMenuItem = menu.findItem(R.id.search);
+		searchMenuItem.setOnActionExpandListener(new SearchViewExpandListener());
+
+		SearchView searchView = (SearchView) searchMenuItem.getActionView();
 		SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
 		searchView.setSearchableInfo(searchableInfo);
 		// Set custom adapter for custom dropdown view
 		mSearchSuggestionAdapter = new SearchSuggestionAdapter(getApplicationContext(), searchView, searchableInfo);
 		searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
-		searchView.setOnQueryTextListener(this);
 		return true;
 	}
 
@@ -180,19 +183,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	private void changeMarkersVisibility(PlacesList data) {
-		for (Entry<Long, Marker> entry : mMarkers.entrySet()) {
-			boolean isVisible = false;
-			for (Place place : data.places) {
-				if (place.getId().equals(entry.getKey())) {
-					isVisible = true;
-					break;
-				}
-			}
-			entry.getValue().setVisible(isVisible);
-		}
-	}
-
 	private void goToMarker(final Marker marker) {
 		mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), new ZoomAnimationCalback(marker));
 	}
@@ -203,6 +193,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		Place place = mMarkersData.get(marker);
 		int pos = mSearchResultAdapter.getItemPosition(place);
 		mViewPager.setCurrentItem(pos);
+	}
+
+	private void showSearchResults(PlacesList data) {
+		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
+		mViewPager.setAdapter(mSearchResultAdapter);
 	}
 
 	@Override
@@ -225,7 +220,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					mViewPager.setAdapter(mSearchResultAdapter);
 				}
 			} else {
-				changeMarkersVisibility(data);
+				showSearchResults(data);
 			}
 		}
 
@@ -238,18 +233,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mMarkers.clear();
 			mMarkersData.clear();
 		}
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String query) {
-		return false;
-	}
-
-	@Override
-	public boolean onQueryTextChange(String newText) {
-		Cursor c = mSearchSuggestionAdapter.runQueryOnBackgroundThread(newText);
-		mSearchSuggestionAdapter.changeCursor(c);
-		return true;
 	}
 
 	/**
@@ -318,6 +301,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		}
 
+	}
+
+	private class SearchViewExpandListener implements OnActionExpandListener {
+
+		@Override
+		public boolean onMenuItemActionExpand(MenuItem item) {
+			return true;
+		}
+
+		@Override
+		public boolean onMenuItemActionCollapse(MenuItem item) {
+			Toast.makeText(CampusMapActivity.this, "Colapse", Toast.LENGTH_SHORT).show();
+			return true;
+		}
 	}
 
 }
