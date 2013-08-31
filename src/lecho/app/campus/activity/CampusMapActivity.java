@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import lecho.app.campus.R;
+import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.loader.PlacesLoader;
@@ -21,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -44,11 +46,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		OnQueryTextListener {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
+	private ViewPager mViewPager;
 	private GoogleMap mMap;
+	private SearchSuggestionAdapter mSearchSuggestionAdapter;
 	// TODO check WeakHashMap
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
-	private HashMap<Marker, Long> mMarkersIds = new HashMap<Marker, Long>();
-	private SearchSuggestionAdapter mSearchSuggestionAdapter;
+	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		setContentView(R.layout.activity_campus_map);
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 		Log.i(TAG, "connection result: " + playServicesStatus);
+		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		setUpMapIfNeeded();
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
@@ -155,14 +159,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void setUpMarkers(List<Place> places) {
 		mMap.clear();
 		mMarkers.clear();
-		mMarkersIds.clear();
+		mMarkersData.clear();
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongtitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
-			mMarkersIds.put(marker, place.getId());
+			mMarkersData.put(marker, place);
 		}
 	}
 
@@ -198,6 +202,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			if (mMarkers.size() != data.places.size()) {
 				setUpMarkers(data.places);
+				SearchResultFragmentAdapter adapter = new SearchResultFragmentAdapter(getSupportFragmentManager(),
+						data.places);
+				if (null != mViewPager) {
+					mViewPager.setAdapter(adapter);
+				}
 			} else {
 				changeMarkersVisibility(data);
 			}
@@ -210,7 +219,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			mMap.clear();
 			mMarkers.clear();
-			mMarkersIds.clear();
+			mMarkersData.clear();
 		}
 	}
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+    android:paddingRight="4dip"
+    android:background="@color/second" >
+
+    <TextView
+        android:id="@+id/symbol"
+        android:layout_width="@dimen/abs__dropdownitem_icon_width"
+        android:layout_height="48dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="S1"
+        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/description"
+        style="?android:attr/dropDownItemStyle"
+        android:layout_width="match_parent"
+        android:layout_height="29dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toRightOf="@id/symbol"
+        android:gravity="top"
+        android:paddingBottom="4dip"
+        android:singleLine="true"
+        android:text="Description"
+        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Subtitle"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/name"
+        style="?android:attr/dropDownItemStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/description"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/symbol"
+        android:singleLine="true"
+        android:text="Name"
+        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title" />
+
+</RelativeLayout>
