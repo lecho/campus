@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import lecho.app.campus.R;
+import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
 import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
@@ -90,7 +91,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		mMap.setInfoWindowAdapter(new CampusInfoWindowAdapter(getApplicationContext()));
+		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
 		mMap.setOnMapClickListener(new MapClickListener());
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
 		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
@@ -249,31 +250,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		Cursor c = mSearchSuggestionAdapter.runQueryOnBackgroundThread(newText);
 		mSearchSuggestionAdapter.changeCursor(c);
 		return true;
-	}
-
-	/**
-	 * Adapter for custom marker info window
-	 * 
-	 * @author lecho
-	 * 
-	 */
-	private static class CampusInfoWindowAdapter implements InfoWindowAdapter {
-		private Context mContext;
-
-		public CampusInfoWindowAdapter(Context context) {
-			mContext = context;
-		}
-
-		@Override
-		public View getInfoContents(Marker marker) {
-			return null;
-		}
-
-		@Override
-		public View getInfoWindow(Marker marker) {
-			return View.inflate(mContext, R.layout.custom_info_window, null);
-		}
-
 	}
 
 	/**
