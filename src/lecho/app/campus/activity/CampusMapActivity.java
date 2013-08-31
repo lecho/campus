@@ -57,7 +57,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	// TODO check WeakHashMap
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
-	private Marker mCurrentMarkerKey;
+	private Marker mCurrentMarker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +158,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			try {
 				Uri data = intent.getData();
 				Long id = Long.parseLong(data.getLastPathSegment());
-				searchOnMap(mMarkers.get(id));
+				goToMarker(mMarkers.get(id));
 			} catch (NumberFormatException e) {
 				Log.e(TAG, "Could not find marker for place", e);
 			}
@@ -192,8 +192,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	private void searchOnMap(final Marker marker) {
+	private void goToMarker(final Marker marker) {
 		mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), new ZoomAnimationCalback(marker));
+	}
+
+	private void handleMarker(Marker marker) {
+		mCurrentMarker = marker;
+		mViewPager.setVisibility(View.VISIBLE);
+		Place place = mMarkersData.get(marker);
+		int pos = mSearchResultAdapter.getItemPosition(place);
+		mViewPager.setCurrentItem(pos);
 	}
 
 	@Override
@@ -288,8 +296,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onFinish() {
-			mCurrentMarkerKey = mMarker;
-			mViewPager.setVisibility(View.VISIBLE);
+			handleMarker(mMarker);
 			mMarker.showInfoWindow();
 		}
 	}
@@ -300,7 +307,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public void onPageSelected(int position) {
 			Long id = mSearchResultAdapter.getItemId(position);
 			Marker marker = mMarkers.get(id);
-			searchOnMap(marker);
+			goToMarker(marker);
 		}
 	}
 
@@ -320,8 +327,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMarkerClick(Marker marker) {
-			mCurrentMarkerKey = marker;
-			mViewPager.setVisibility(View.VISIBLE);
+			handleMarker(marker);
 			return false;
 		}
 
@@ -331,7 +337,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onMapClick(LatLng latLng) {
-			mCurrentMarkerKey = null;
+			mCurrentMarker = null;
 			mViewPager.setVisibility(View.GONE);
 
 		}

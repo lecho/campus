@@ -7,8 +7,10 @@ import lecho.app.campus.fragment.SearchResultFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
+	private static final String TAG = SearchResultFragmentAdapter.class.getSimpleName();
 	List<Place> mPlaces;
 
 	public SearchResultFragmentAdapter(FragmentManager fm, List<Place> places) {
@@ -34,5 +36,20 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 	@Override
 	public long getItemId(int position) {
 		return mPlaces.get(position).getId();
+	}
+
+	@Override
+	public int getItemPosition(Object object) {
+		// TODO Use collections sort - search
+		Place dest = (Place) object;
+		int pos = 0;
+		for (Place place : mPlaces) {
+			if (place.getId().equals(dest.getId())) {
+				return pos;
+			}
+			++pos;
+		}
+		Log.e(TAG, "Could not find given object");
+		throw new IllegalArgumentException("Could not find given object in SearchResultFragmentAdapter");
 	}
 }
