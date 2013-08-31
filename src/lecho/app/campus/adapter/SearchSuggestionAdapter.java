@@ -21,6 +21,7 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 	private static final String TAG = SearchSuggestionAdapter.class.getSimpleName();
 	private SearchableInfo mSearchableInfo;
 	private SearchView mSearchView;
+	private boolean mClosed = false;
 
 	static final int INVALID_INDEX = -1;
 	// Cached column indexes, updated when the cursor changes.
@@ -46,6 +47,9 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
+		if (mClosed) {
+			return;
+		}
 		ChildViewCache views = (ChildViewCache) view.getTag();
 
 		String symbol = cursor.getString(mSymbolCol);
@@ -152,6 +156,9 @@ public class SearchSuggestionAdapter extends ResourceCursorAdapter {
 				mSymbolCol = c.getColumnIndex(PlaceDao.Properties.Symbol.columnName);
 				mNameCol = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1);
 				mDescriptionCol = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2);
+				mClosed = false;
+			} else {
+				mClosed = true;
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "error changing cursor and caching columns", e);
