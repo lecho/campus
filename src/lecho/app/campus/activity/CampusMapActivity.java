@@ -36,7 +36,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -44,8 +43,6 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.CameraPositionCreator;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -54,6 +51,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList> {
 	private static final String TAG = CampusMapActivity.class.getSimpleName();
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
+	private static final int CAMERA_ANIMATION_LENGTH = 500;
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
@@ -195,7 +193,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			handleMarker(marker);
 			marker.showInfoWindow();
 		} else {
-			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), new ZoomAnimationCalback(marker));
+			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), CAMERA_ANIMATION_LENGTH,
+					new ZoomAnimationCalback(marker));
 		}
 	}
 
@@ -240,6 +239,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				if (null != mViewPager) {
 					mViewPager.setVisibility(View.VISIBLE);
 					mViewPager.setAdapter(mSearchResultAdapter);
+					// Zoom to show all results, chose first one as active
 					if (data.mPlaces.size() > 0) {
 						final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
 						if (mapView.getWidth() > 0 & mapView.getHeight() > 0) {
