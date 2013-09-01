@@ -245,12 +245,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 						if (mapView.getWidth() > 0 & mapView.getHeight() > 0) {
 							Long placeId = data.mPlaces.get(0).getId();
 							Marker marker = mMarkers.get(placeId);
-
-							LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
-							LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
-							LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
-							mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50),
-									new ZoomAnimationCalback(marker));
+							goToMarker(marker);
 						}
 
 					} else {
@@ -365,11 +360,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onMessageClick(Parcelable token) {
-			// Bundle args = new Bundle();
-			// args.putInt(PlacesLoader.ARG_ACTION,
-			// PlacesLoader.LOAD_ALL_PLACES);
-			// getSupportLoaderManager().restartLoader(PLACES_LOADER, args,
-			// CampusMapActivity.this);
 			if (null != mSearchMenuItem) {
 				mSearchMenuItem.collapseActionView();
 			}

@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="58dp"
-    android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-    android:paddingRight="4dip"
-    android:background="@color/second" >
+    android:layout_height="@dimen/search_result_height"
+    android:background="@color/first"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <TextView
         android:id="@+id/symbol"
-        android:layout_width="@dimen/abs__dropdownitem_icon_width"
-        android:layout_height="48dip"
+        android:layout_width="@dimen/search_result_symbol_width"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:text="S1"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
+
+    <View
+        android:id="@+id/symbol_separator"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_toRightOf="@id/symbol"
+        android:background="@color/second" />
 
     <TextView
         android:id="@+id/description"
-        style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
-        android:layout_height="29dip"
+        android:layout_height="@dimen/search_result_description_height"
         android:layout_alignParentBottom="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/symbol"
+        android:layout_toRightOf="@id/symbol_separator"
         android:gravity="top"
-        android:paddingBottom="4dip"
         android:singleLine="true"
-        android:text="Description"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Subtitle"
-        android:visibility="visible" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/name"
-        style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/description"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/symbol"
+        android:layout_toRightOf="@id/symbol_separator"
+        android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="Name"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>
