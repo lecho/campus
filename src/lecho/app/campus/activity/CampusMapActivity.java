@@ -110,6 +110,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.setMyLocationEnabled(true);
+		mMap.getUiSettings().setMyLocationButtonEnabled(true);
+		mMap.getUiSettings().setZoomControlsEnabled(false);
 		zoomMapOnStart();
 	}
 
@@ -225,8 +227,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void showSearchResultsPager() {
 		if (mViewPager.getVisibility() != View.VISIBLE) {
 			Log.e(TAG, "showing pager");
-			// Animation pagerAnimation = AnimationUtils.loadAnimation(this,
-			// R.anim.search_result_pager_show);
 			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
 			mViewPager.setVisibility(View.VISIBLE);
 		}
@@ -238,8 +238,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void hideSearchResultsPager() {
 		if (mViewPager.getVisibility() == View.VISIBLE) {
 			Log.e(TAG, "hiding pager");
-			// Animation pagerAnimation = AnimationUtils.loadAnimation(this,
-			// R.anim.search_result_pager_hide);
 			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
 			mViewPager.setVisibility(View.GONE);
 		}
