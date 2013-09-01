@@ -29,6 +29,8 @@ import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -62,6 +64,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
 	private Marker mCurrentMarker;
+	private Animation mSearchResultsPagerShowAnim;
+	private Animation mSearchResultsPagerHideAnim;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
+		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.search_result_pager_show);
+		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.search_result_pager_hide);
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		setUpMapIfNeeded();
@@ -206,10 +212,37 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void handleMarker(final Marker marker) {
 		mCurrentMarker = marker;
-		mViewPager.setVisibility(View.VISIBLE);
+		showSearchResultsPager();
 		Place place = mMarkersData.get(marker);
 		int pos = mSearchResultAdapter.getItemPosition(place);
 		mViewPager.setCurrentItem(pos);
+	}
+
+	/**
+	 * Shows search results pager with animation only if pager is not yet
+	 * visible.
+	 */
+	private void showSearchResultsPager() {
+		if (mViewPager.getVisibility() != View.VISIBLE) {
+			Log.e(TAG, "showing pager");
+			// Animation pagerAnimation = AnimationUtils.loadAnimation(this,
+			// R.anim.search_result_pager_show);
+			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
+			mViewPager.setVisibility(View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Hides search results pager with animation only if pager is visible.
+	 */
+	private void hideSearchResultsPager() {
+		if (mViewPager.getVisibility() == View.VISIBLE) {
+			Log.e(TAG, "hiding pager");
+			// Animation pagerAnimation = AnimationUtils.loadAnimation(this,
+			// R.anim.search_result_pager_hide);
+			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
+			mViewPager.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -230,14 +263,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				setUpMarkers(data.mPlaces);
 				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
 				if (null != mViewPager) {
-					mViewPager.setVisibility(View.GONE);
+					hideSearchResultsPager();
 					mViewPager.setAdapter(mSearchResultAdapter);
 				}
 			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
 				setUpMarkers(data.mPlaces);
 				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
 				if (null != mViewPager) {
-					mViewPager.setVisibility(View.VISIBLE);
+					showSearchResultsPager();
 					mViewPager.setAdapter(mSearchResultAdapter);
 					// Zoom to show all results, chose first one as active
 					if (data.mPlaces.size() > 0) {
@@ -334,7 +367,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		@Override
 		public void onMapClick(LatLng latLng) {
 			mCurrentMarker = null;
-			mViewPager.setVisibility(View.GONE);
+			hideSearchResultsPager();
 
 		}
 
