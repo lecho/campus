@@ -140,6 +140,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
+		setUpSearchView(menu);
+		return true;
+	}
+
+	/**
+	 * Prepares SearchView on ActionBar.
+	 * 
+	 * @param menu
+	 */
+	private void setUpSearchView(Menu menu) {
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		// Search view preparation
 		// Workaround for but
@@ -153,12 +163,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// Set custom adapter for custom dropdown view
 		mSearchSuggestionAdapter = new SearchSuggestionAdapter(getApplicationContext(), searchView, searchableInfo);
 		searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
-		return true;
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			// Handle search button click
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Bundle args = new Bundle();
 			args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_PLACES_BY_SEARCH);
@@ -328,6 +338,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Listen to changes of current selected search result.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class SearchResultChangeListener extends SimpleOnPageChangeListener {
 
 		@Override
@@ -350,6 +366,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
+	/**
+	 * Selects marker.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class MarkerClickListener implements OnMarkerClickListener {
 
 		@Override
@@ -360,6 +382,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
+	/**
+	 * Clears marker selection.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class MapClickListener implements OnMapClickListener {
 
 		@Override
@@ -371,6 +399,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
+	/**
+	 * Clears search results after SearchView collapse.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class SearchViewExpandListener implements OnActionExpandListener {
 
 		@Override
@@ -387,6 +421,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Listen to click on MessageBar button.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class MessageBarButtonListener implements OnMessageClickListener {
 
 		@Override
