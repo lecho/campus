@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.widget.SearchView;
 
 public class SearchSuggestionAdapter extends ResourceCursorAdapter {
-	private static final String TAG = SearchSuggestionAdapter.class.getSimpleName();
+	private static final String TAG = "SearchSuggestionAdapter";
 	private SearchableInfo mSearchableInfo;
 	private SearchView mSearchView;
 

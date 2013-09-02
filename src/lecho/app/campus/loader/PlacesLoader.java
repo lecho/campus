@@ -28,7 +28,7 @@ import android.util.Log;
  * 
  */
 public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
-	private static final String TAG = PlacesLoader.class.getSimpleName();
+	private static final String TAG = "PlacesLoader";
 	public static final String ARG_ACTION = "lecho.app.campus:ACTION";
 	public static final String ARG_ARG = "lecho.app.campus:ARG";
 	// No args

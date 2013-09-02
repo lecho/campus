@@ -1,11 +1,10 @@
 package lecho.app.campus.fragment;
 
 import lecho.app.campus.R;
-import lecho.app.campus.activity.PlaceDetailsActivity;
-import lecho.app.campus.utils.Config;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,10 +14,12 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class SearchResultFragment extends SherlockFragment {
+	private static final String TAG = "SearchResultFragment";
 	private static final String ARG_ID = "lecho.app.campus:ID";
 	private static final String ARG_SYMBOL = "lecho.app.campus:SYMBOL";
 	private static final String ARG_NAME = "lecho.app.campus:NAME";
 	private static final String ARG_DESCRIPTION = "lecho.app.campus:DESCRIPTION";
+	private OnSearchResultClickListener mSearchResultClickListener;
 
 	public static SearchResultFragment newInstance(Long id, String symbol, String name, String description) {
 		SearchResultFragment fragment = new SearchResultFragment();
@@ -29,6 +30,23 @@ public class SearchResultFragment extends SherlockFragment {
 		args.putString(ARG_DESCRIPTION, description);
 		fragment.setArguments(args);
 		return fragment;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof OnSearchResultClickListener) {
+			mSearchResultClickListener = (OnSearchResultClickListener) activity;
+		} else {
+			Log.e(TAG, "Parent activity should implements OnSearchResultClickListener");
+			throw new IllegalStateException("Parent activity should implements OnSearchResultClickListener");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mSearchResultClickListener = null;
 	}
 
 	@Override
@@ -61,12 +79,21 @@ public class SearchResultFragment extends SherlockFragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getActivity(), PlaceDetailsActivity.class);
-				i.putExtra(Config.ARG_PLACE_ID, 1L);
-				startActivity(i);
+				if (null != mSearchResultClickListener) {
+					mSearchResultClickListener.onSearchResultClick(getArguments().getLong(ARG_ID));
+				}
 			}
 		});
 		return view;
+	}
+
+	public interface OnSearchResultClickListener {
+		/**
+		 * Should show place details view.
+		 * 
+		 * @param placeId
+		 */
+		public void onSearchResultClick(Long placeId);
 	}
 
 }

@@ -40,7 +40,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
  * 
  */
 public class PlaceDetailsFragment extends SherlockListFragment implements LoaderCallbacks<PlaceDetails> {
-	private static final String TAG = PlaceDetailsFragment.class.getSimpleName();
+	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
 	private View mHeader;
@@ -62,6 +62,12 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		getListView().setBackgroundResource(R.color.second);
 	}
 
 	@Override

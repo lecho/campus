@@ -35,7 +35,7 @@ import android.util.Log;
  * 
  */
 public class DataParser {
-	public static final String TAG = DataParser.class.getSimpleName();
+	public static final String TAG = "DataParser";
 
 	private static final String SEPARATOR = ",";
 	private static final String ID = "id";

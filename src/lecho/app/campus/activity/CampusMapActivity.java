@@ -8,6 +8,8 @@ import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
 import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
+import lecho.app.campus.fragment.PlaceDetailsFragment;
+import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlacesList;
@@ -22,6 +24,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -50,8 +56,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList> {
-	private static final String TAG = CampusMapActivity.class.getSimpleName();
+public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
+		OnSearchResultClickListener {
+	private static final String TAG = "CampusMapActivity";
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private static final int CAMERA_ANIMATION_LENGTH = 500;
 	private ViewPager mViewPager;
@@ -81,6 +88,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.search_result_pager_hide);
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
+		// Listen when user hides details fragment to show search menu on action bar
+		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
 		setUpMapIfNeeded();
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
@@ -151,9 +160,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void setUpSearchView(Menu menu) {
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		// Search view preparation
-		// Workaround for but
-		// http://code.google.com/p/android/issues/detail?id=25758
+		// Search view preparation Workaround for but http://code.google.com/p/android/issues/detail?id=25758
 		mSearchMenuItem = menu.findItem(R.id.search);
 		mSearchMenuItem.setOnActionExpandListener(new SearchViewExpandListener());
 
@@ -175,8 +182,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			args.putString(PlacesLoader.ARG_ARG, query);
 			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			// Handle a suggestions click (because all the suggestions use
-			// ACTION_VIEW)
+			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
 			try {
 				Uri data = intent.getData();
 				Long id = Long.parseLong(data.getLastPathSegment());
@@ -217,8 +223,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Performs necessary actions when user click on the marker or camera is
-	 * moved to that marker.
+	 * Performs necessary actions when user click on the marker or camera is moved to that marker.
 	 * 
 	 * @param marker
 	 */
@@ -231,12 +236,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Shows search results pager with animation only if pager is not yet
-	 * visible.
+	 * Shows search results pager with animation only if pager is not yet visible.
 	 */
 	private void showSearchResultsPager() {
 		if (mViewPager.getVisibility() != View.VISIBLE) {
-			Log.e(TAG, "showing pager");
 			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
 			mViewPager.setVisibility(View.VISIBLE);
 		}
@@ -247,10 +250,21 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void hideSearchResultsPager() {
 		if (mViewPager.getVisibility() == View.VISIBLE) {
-			Log.e(TAG, "hiding pager");
 			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
 			mViewPager.setVisibility(View.GONE);
 		}
+	}
+
+	@Override
+	public void onSearchResultClick(Long placeId) {
+		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction transaction = fm.beginTransaction();
+		transaction.add(R.id.details, fragment);
+		transaction.addToBackStack(PlaceDetailsFragment.TAG);
+		transaction.commit();
+		mSearchMenuItem.collapseActionView();
+		mSearchMenuItem.setVisible(false);
 	}
 
 	@Override
@@ -358,9 +372,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onInfoWindowClick(Marker marker) {
-			Intent i = new Intent(CampusMapActivity.this, PlaceDetailsActivity.class);
-			i.putExtra(Config.ARG_PLACE_ID, mMarkersData.get(marker).getId());
-			startActivity(i);
+			Place place = mMarkersData.get(marker);
+			onSearchResultClick(place.getId());
 
 		}
 
@@ -409,14 +422,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionExpand(MenuItem item) {
+			if (null != mCurrentMarker) {
+				mCurrentMarker.hideInfoWindow();
+				hideSearchResultsPager();
+			}
 			return true;
 		}
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			Bundle args = new Bundle();
-			args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
-			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, CampusMapActivity.this);
+			if (null == mCurrentMarker) {
+				Bundle args = new Bundle();
+				args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
+				getSupportLoaderManager().restartLoader(PLACES_LOADER, args, CampusMapActivity.this);
+			}
 			return true;
 		}
 	}
@@ -433,6 +452,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public void onMessageClick(Parcelable token) {
 			if (null != mSearchMenuItem) {
 				mSearchMenuItem.collapseActionView();
+			}
+		}
+
+	}
+
+	private class BackStackChangeListener implements OnBackStackChangedListener {
+
+		@Override
+		public void onBackStackChanged() {
+			int count = getSupportFragmentManager().getBackStackEntryCount();
+			if (0 == count) {
+				mSearchMenuItem.setVisible(true);
 			}
 		}
 

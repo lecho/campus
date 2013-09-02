@@ -17,7 +17,7 @@ import android.widget.ImageView;
  * 
  */
 public class PhotoBitmapLoader implements Runnable {
-	private static final String TAG = PhotoBitmapLoader.class.getSimpleName();
+	private static final String TAG = "PhotoBitmapLoader";
 	private final Context mContext;
 	private final ImageView mZoomImageView;
 	private final String mPath;

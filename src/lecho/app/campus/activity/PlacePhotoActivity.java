@@ -24,7 +24,7 @@ import com.viewpagerindicator.LinePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
 public class PlacePhotoActivity extends SherlockFragmentActivity {
-	private static final String TAG = PlaceDetailsActivity.class.getSimpleName();
+	private static final String TAG = "PlaceDetailsActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

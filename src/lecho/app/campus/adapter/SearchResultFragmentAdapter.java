@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
-	private static final String TAG = SearchResultFragmentAdapter.class.getSimpleName();
+	private static final String TAG = "SearchResultFragmentAdapter";
 	List<Place> mPlaces;
 
 	public SearchResultFragmentAdapter(FragmentManager fm, List<Place> places) {
