@@ -113,6 +113,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+		mapFragment.setRetainInstance(true);
 		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
 		mMap.setOnMapClickListener(new MapClickListener());
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
@@ -151,6 +153,17 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
 		setUpSearchView(menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		// Only if place details are visible.
+		if (id == android.R.id.home) {
+			getSupportFragmentManager().popBackStack();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -265,6 +278,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		transaction.commit();
 		mSearchMenuItem.collapseActionView();
 		mSearchMenuItem.setVisible(false);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -457,6 +472,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
+	/**
+	 * Restores SearchView and hides home menu when user go back from details.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class BackStackChangeListener implements OnBackStackChangedListener {
 
 		@Override
@@ -464,6 +485,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			int count = getSupportFragmentManager().getBackStackEntryCount();
 			if (0 == count) {
 				mSearchMenuItem.setVisible(true);
+				getSupportActionBar().setHomeButtonEnabled(false);
+				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 			}
 		}
 
