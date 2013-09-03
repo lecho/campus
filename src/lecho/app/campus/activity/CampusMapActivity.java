@@ -271,9 +271,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onSearchResultClick(Long placeId) {
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction transaction = fm.beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.add(R.id.details, fragment);
+		transaction.setTransitionStyle(FragmentTransaction.TRANSIT_NONE);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();
 		mSearchMenuItem.collapseActionView();
@@ -295,6 +295,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
 		if (PLACES_LOADER == loader.getId()) {
+			mCurrentMarker = null;
 			int action = data.mAction;
 			if (PlacesLoader.LOAD_ALL_PLACES == action) {
 				setUpMarkers(data.mPlaces);
