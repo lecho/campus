@@ -1,82 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_switcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/second"
     tools:context=".fragment.PlaceDetailsFragment" >
 
     <RelativeLayout
-        android:id="@+id/sticky_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/first"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" >
+        android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/symbol"
-            android:layout_width="@dimen/search_result_symbol_width"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/name_and_description_layout"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:text="B9"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <View
-            android:id="@+id/symbol_separator"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@id/name_and_description_layout"
-            android:layout_alignParentTop="true"
-            android:layout_margin="8dp"
-            android:layout_toRightOf="@id/symbol"
-            android:background="@color/second" />
-
-        <LinearLayout
-            android:id="@id/name_and_description_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/symbol_separator"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/search_result_height"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:text="Budynek Trzech Wydziałów"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="8dp"
-                android:gravity="top"
-                android:text="lodex tramwaj"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/white"
-                android:visibility="visible" />
-        </LinearLayout>
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@android:id/list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sticky_header"
-        android:background="@color/second"
-        android:listSelector="@null" >
-    </ListView>
+        android:layout_height="match_parent" >
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/sticky_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/first"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" >
+
+            <TextView
+                android:id="@+id/symbol"
+                android:layout_width="@dimen/search_result_symbol_width"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/name_and_description_layout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/symbol_separator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/name_and_description_layout"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/symbol"
+                android:background="@color/second" />
+
+            <LinearLayout
+                android:id="@id/name_and_description_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/symbol_separator"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/search_result_height"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="top"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sticky_header"
+            android:listSelector="@android:color/transparent" >
+        </ListView>
+    </RelativeLayout>
+
+</ViewSwitcher>

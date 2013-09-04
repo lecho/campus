@@ -89,9 +89,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		// Listen when user hides details fragment to show search menu on action bar
 		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
-		
+
 		setUpMapIfNeeded();
-		
+
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
 		getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
@@ -114,7 +114,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		if(null == mMap){
+		if (null == mMap) {
 			Log.e(TAG, "Could not set up GoogleMap - null");
 			return;
 		}
@@ -212,7 +212,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void setUpMarkers(List<Place> places) {
-		if(null == mMap){
+		if (null == mMap) {
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
 			return;
 		}
@@ -281,7 +281,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public void onSearchResultClick(Long placeId) {
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		transaction.add(R.id.details, fragment);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();

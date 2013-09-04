@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/search_result_height"
     android:background="@drawable/selector_search_result"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
 
     <TextView
         android:id="@+id/symbol"

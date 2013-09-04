@@ -20,6 +20,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -43,7 +45,11 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
-	private View mHeader;
+	private TextView mSymbol;
+	private TextView mName;
+	private TextView mDescription;
+	private View mListHeader;
+	private ViewSwitcher mViewSwitcher;
 	private PlaceUnitsAdapter mUnitsAdapter;
 
 	public static PlaceDetailsFragment newInstance(long placeId) {
@@ -61,7 +67,12 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_place_details, container, false);
+		View view = inflater.inflate(R.layout.fragment_place_details, container, false);
+		mSymbol = (TextView) view.findViewById(R.id.symbol);
+		mName = (TextView) view.findViewById(R.id.name);
+		mDescription = (TextView) view.findViewById(R.id.description);
+		mViewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher);
+		return view;
 	}
 
 	@Override
@@ -78,6 +89,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<PlaceDetails> onCreateLoader(int id, Bundle args) {
 		if (PLACE_DETAILS_LOADER == id) {
+			mViewSwitcher.setDisplayedChild(0);
 			return new PlaceDetailsLoader(getActivity().getApplicationContext(), getArguments().getLong(
 					Config.ARG_PLACE_ID));
 		}
@@ -87,13 +99,16 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
+			// Fill the sticky header with symbol, name,description
+			prepareStickyHeader(data);
 			// Fill the list header.
-			prepareHeader(data);
+			prepareListHeader(data);
 			// Fill the list adapter.
 			mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
 					data.units);
 			setListAdapter(mUnitsAdapter);
 
+			mViewSwitcher.setDisplayedChild(1);
 		}
 	}
 
@@ -104,38 +119,31 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		}
 	}
 
-	private void prepareHeader(final PlaceDetails data) {
-		mHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_header, null);
+	private void prepareStickyHeader(final PlaceDetails data) {
+		mSymbol.setText(data.place.getSymbol());
+		mName.setText(data.place.getName());
+		if (TextUtils.isEmpty(data.place.getDescription())) {
+			mDescription.setVisibility(View.GONE);
+		} else {
+			mDescription.setVisibility(View.VISIBLE);
+			mDescription.setText(data.place.getDescription());
+		}
+	}
+
+	private void prepareListHeader(final PlaceDetails data) {
+		mListHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_list_header,
+				null);
 		// Photo.
-		ImageView placePhoto = (ImageView) mHeader.findViewById(R.id.place_photo);
+		ImageView placePhoto = (ImageView) mListHeader.findViewById(R.id.place_photo);
 		GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getActivity(),
 				new PlacePhotoGestureListener());
 		gestureDetector.setOnDoubleTapListener(new PlacePhotoTapListener(getActivity(), data));
 		placePhoto.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
 		loadPlaceMainPhoto(data, placePhoto);
-		// Symbol.
-		TextView placeSymbol = (TextView) mHeader.findViewById(R.id.place_symbol);
-		placeSymbol.setText(data.place.getSymbol());
-		// Name.
-		TextView placeName = (TextView) mHeader.findViewById(R.id.place_name);
-		String placeNameText = data.place.getName();
-		if (TextUtils.isEmpty(placeNameText)) {
-			placeName.setVisibility(View.GONE);
-		} else {
-			placeName.setText(placeNameText);
-		}
-		// Description.
-		TextView placeDescription = (TextView) mHeader.findViewById(R.id.place_description);
-		String placeDescriptionText = data.place.getDescription();
-		if (TextUtils.isEmpty(placeDescriptionText)) {
-			placeDescription.setVisibility(View.GONE);
-		} else {
-			placeDescription.setText(placeDescriptionText);
-		}
 
 		// Set list header.
 		if (getListView().getHeaderViewsCount() == 0) {
-			getListView().addHeaderView(mHeader);
+			getListView().addHeaderView(mListHeader);
 		}
 	}
 
