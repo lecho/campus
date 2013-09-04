@@ -52,6 +52,10 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
         </activity>
+         <activity
+            android:name="lecho.app.campus.activity.PlaceDetailsActivity"
+            android:label="@string/app_name" >
+        </activity>
 
         <provider
             android:name="lecho.app.campus.provider.SearchSuggestionProvider"

@@ -23,9 +23,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				// Intent i = new Intent(MainActivity.this, PlaceDetailsActivity.class);
-				// i.putExtra(Config.ARG_PLACE_ID, 1L);
-				// startActivity(i);
+				Intent i = new Intent(MainActivity.this, PlaceDetailsActivity.class);
+				i.putExtra(Config.ARG_PLACE_ID, 1L);
+				startActivity(i);
 
 			}
 		});

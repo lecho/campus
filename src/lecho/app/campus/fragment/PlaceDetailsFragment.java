@@ -61,13 +61,12 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.fragment_place_details, container, false);
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		getListView().setBackgroundResource(R.color.second);
 	}
 
 	@Override
