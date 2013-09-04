@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -90,7 +89,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		// Listen when user hides details fragment to show search menu on action bar
 		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
+		
 		setUpMapIfNeeded();
+		
 		Bundle args = new Bundle();
 		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
 		getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
@@ -113,6 +114,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
+		if(null == mMap){
+			Log.e(TAG, "Could not set up GoogleMap - null");
+			return;
+		}
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		mapFragment.setRetainInstance(true);
 		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
@@ -207,6 +212,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void setUpMarkers(List<Place> places) {
+		if(null == mMap){
+			Log.e(TAG, "Could not set up markers - GoogleMap is null");
+			return;
+		}
 		mMap.clear();
 		mMarkers.clear();
 		mMarkersData.clear();
@@ -272,8 +281,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public void onSearchResultClick(Long placeId) {
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		transaction.add(R.id.details, fragment);
-		transaction.setTransitionStyle(FragmentTransaction.TRANSIT_NONE);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();
 		mSearchMenuItem.collapseActionView();
