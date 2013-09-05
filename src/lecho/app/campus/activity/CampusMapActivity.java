@@ -83,8 +83,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
-		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.search_result_pager_show);
-		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.search_result_pager_hide);
+		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
+		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.slide_hide);
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		// Listen when user hides details fragment to show search menu on action bar
@@ -281,6 +281,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public void onSearchResultClick(Long placeId) {
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		// transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		transaction.setCustomAnimations(R.anim.show, R.anim.hide, R.anim.show, R.anim.hide);
 		transaction.add(R.id.details, fragment);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();

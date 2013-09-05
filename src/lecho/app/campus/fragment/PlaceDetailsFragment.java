@@ -20,7 +20,6 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
@@ -30,8 +29,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -45,11 +44,11 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
+	private View mProgressBar;
 	private TextView mSymbol;
 	private TextView mName;
 	private TextView mDescription;
 	private View mListHeader;
-	private ViewSwitcher mViewSwitcher;
 	private PlaceUnitsAdapter mUnitsAdapter;
 
 	public static PlaceDetailsFragment newInstance(long placeId) {
@@ -68,10 +67,10 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_place_details, container, false);
+		mProgressBar = view.findViewById(R.id.progress_bar);
 		mSymbol = (TextView) view.findViewById(R.id.symbol);
 		mName = (TextView) view.findViewById(R.id.name);
 		mDescription = (TextView) view.findViewById(R.id.description);
-		mViewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher);
 		return view;
 	}
 
@@ -89,7 +88,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<PlaceDetails> onCreateLoader(int id, Bundle args) {
 		if (PLACE_DETAILS_LOADER == id) {
-			mViewSwitcher.setDisplayedChild(0);
+			// mViewSwitcher.setDisplayedChild(0);
 			return new PlaceDetailsLoader(getActivity().getApplicationContext(), getArguments().getLong(
 					Config.ARG_PLACE_ID));
 		}
@@ -102,13 +101,14 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			// Fill the sticky header with symbol, name,description
 			prepareStickyHeader(data);
 			// Fill the list header.
-			prepareListHeader(data);
+			// prepareListHeader(data);
 			// Fill the list adapter.
 			mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
 					data.units);
 			setListAdapter(mUnitsAdapter);
 
-			mViewSwitcher.setDisplayedChild(1);
+			mProgressBar.setVisibility(View.GONE);
+
 		}
 	}
 
@@ -183,6 +183,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			Faculty faculty = unit.getFaculty();
 			if (null != faculty) {
 				holder.unitFaculty.setText(unit.getFaculty().getShortName());
+				holder.unitFaculty.setVisibility(View.VISIBLE);
 			} else {
 				holder.unitFaculty.setVisibility(View.INVISIBLE);
 			}
