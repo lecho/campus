@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -85,6 +86,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
 		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
 		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.slide_hide);
+		mSearchResultsPagerHideAnim.setAnimationListener(new HideSearchResultAnimationListener());
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		// Listen when user hides details fragment to show search menu on action bar
@@ -262,8 +264,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void showSearchResultsPager() {
 		if (mViewPager.getVisibility() != View.VISIBLE) {
-			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
 			mViewPager.setVisibility(View.VISIBLE);
+			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
 		}
 	}
 
@@ -273,7 +275,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void hideSearchResultsPager() {
 		if (mViewPager.getVisibility() == View.VISIBLE) {
 			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
-			mViewPager.setVisibility(View.GONE);
 		}
 	}
 
@@ -499,6 +500,24 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				getSupportActionBar().setHomeButtonEnabled(false);
 				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 			}
+		}
+	}
+
+	private class HideSearchResultAnimationListener implements AnimationListener {
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			mViewPager.setVisibility(View.INVISIBLE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+
 		}
 
 	}
