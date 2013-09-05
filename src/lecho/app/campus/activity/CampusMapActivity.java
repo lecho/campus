@@ -33,10 +33,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -187,6 +188,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
 		searchView.setSearchableInfo(searchableInfo);
+		searchView.setOnQueryTextFocusChangeListener(new SearchViewFocusChangeListener());
 		// Set custom adapter for custom dropdown view
 		mSearchSuggestionAdapter = new SearchSuggestionAdapter(getApplicationContext(), searchView, searchableInfo);
 		searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
@@ -518,6 +520,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		@Override
 		public void onAnimationStart(Animation animation) {
 
+		}
+
+	}
+
+	private class SearchViewFocusChangeListener implements OnFocusChangeListener {
+
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			mSearchMenuItem.collapseActionView();
 		}
 
 	}
