@@ -255,10 +255,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void handleMarker(final Marker marker) {
 		mCurrentMarker = marker;
-		showSearchResultsPager();
 		Place place = mMarkersData.get(marker);
 		int pos = mSearchResultAdapter.getItemPosition(place);
 		mViewPager.setCurrentItem(pos);
+		showSearchResultsPager();
 	}
 
 	/**

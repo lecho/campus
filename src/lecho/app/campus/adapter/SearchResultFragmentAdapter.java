@@ -40,7 +40,10 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getItemPosition(Object object) {
-		// TODO Use collections sort - search
+		if (null == object) {
+			Log.w(TAG, "Trying to get item position for null");
+			return -1;
+		}
 		Place dest = (Place) object;
 		int pos = 0;
 		for (Place place : mPlaces) {
