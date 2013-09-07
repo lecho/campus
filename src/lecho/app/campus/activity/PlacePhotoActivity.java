@@ -5,12 +5,10 @@ import java.io.IOException;
 
 import lecho.app.campus.R;
 import lecho.app.campus.utils.Config;
-import lecho.app.campus.utils.PhotoBitmapLoader;
 import lecho.app.campus.view.ZoomImageView;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -94,7 +92,8 @@ public class PlacePhotoActivity extends SherlockFragmentActivity {
 		public Object instantiateItem(ViewGroup container, int position) {
 			final ZoomImageView zoomImageView = new ZoomImageView(container.getContext());
 			final StringBuilder path = new StringBuilder(mPlacePath).append(File.separator).append(mPaths[position]);
-			new Handler().post(new PhotoBitmapLoader(container.getContext(), zoomImageView, path.toString()));
+			//BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(this, zoomImageView);
+			//bitmapAsyncTask.execute(path.toString());
 			container.addView(zoomImageView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 			return zoomImageView;
 
