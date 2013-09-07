@@ -9,6 +9,7 @@
         android:layout_height="196dp"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/place_details_header_image_description"
+        android:cropToPadding="true"
         android:scaleType="centerCrop" />
 
 </RelativeLayout>

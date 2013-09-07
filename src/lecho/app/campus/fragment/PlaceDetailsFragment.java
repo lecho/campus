@@ -5,12 +5,13 @@ import java.util.List;
 
 import lecho.app.campus.R;
 import lecho.app.campus.activity.PlacePhotoActivity;
-import lecho.app.campus.dao.Faculty;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.loader.PlaceDetailsLoader;
 import lecho.app.campus.utils.BitmapAsyncTask;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlaceDetails;
+import lecho.app.campus.utils.UnitsGroup;
+import lecho.app.campus.view.UnitsGroupLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +29,10 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 
 /**
  * Displays Place details, photo, name, symbol etc.
@@ -38,7 +40,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
  * @author Lecho
  * 
  */
-public class PlaceDetailsFragment extends SherlockListFragment implements LoaderCallbacks<PlaceDetails> {
+public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails> {
 	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
@@ -46,8 +48,8 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 	private TextView mSymbol;
 	private TextView mName;
 	private TextView mDescription;
+	private LinearLayout mScrollContent;
 	private View mListHeader;
-	private PlaceUnitsAdapter mUnitsAdapter;
 	ImageView placePhoto;
 
 	public static PlaceDetailsFragment newInstance(long placeId) {
@@ -70,6 +72,7 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		mSymbol = (TextView) view.findViewById(R.id.symbol);
 		mName = (TextView) view.findViewById(R.id.name);
 		mDescription = (TextView) view.findViewById(R.id.description);
+		mScrollContent = (LinearLayout) view.findViewById(R.id.scroll_view_content);
 		return view;
 	}
 
@@ -102,12 +105,30 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 			// Fill the list header.
 			prepareListHeader(data);
 			// Fill the list adapter.
-			mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
-					data.units);
-			setListAdapter(mUnitsAdapter);
+			// mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
+			// data.unitsGroups);
+			// setListAdapter(mUnitsAdapter);
 
+			prepareScrollContent(data);
 			mProgressBar.setVisibility(View.GONE);
 
+		}
+	}
+
+	private void prepareScrollContent(PlaceDetails data) {
+		for (UnitsGroup unitsGroup : data.unitsGroups) {
+			UnitsGroupLayout groupLayout = new UnitsGroupLayout(getActivity());
+			if (null != unitsGroup.faculty) {
+				groupLayout.setFaculty(unitsGroup.faculty.getShortName());
+				groupLayout.addSeparator();
+			}
+			for (Unit unit : unitsGroup.units) {
+				if (groupLayout.getUnitsCount() > 0) {
+					groupLayout.addSeparator();
+				}
+				groupLayout.addUnit(unit.getName());
+			}
+			mScrollContent.addView(groupLayout);
 		}
 	}
 
@@ -139,63 +160,19 @@ public class PlaceDetailsFragment extends SherlockListFragment implements Loader
 		gestureDetector.setOnDoubleTapListener(new PlacePhotoTapListener(getActivity(), data));
 		placePhoto.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
 		loadPlaceMainPhoto(data, placePhoto);
-
+		mScrollContent.addView(mListHeader);
 		// Set list header.
-		if (getListView().getHeaderViewsCount() == 0) {
-			getListView().addHeaderView(mListHeader);
-		}
+		// if (getListView().getHeaderViewsCount() == 0) {
+		// getListView().addHeaderView(mListHeader);
+		// }
 	}
 
 	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
 		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
 				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO);
+
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), placePhoto);
 		bitmapAsyncTask.execute(placePhotoPath.toString());
-	}
-
-	/**
-	 * Units Array Adapter.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
-	private static class PlaceUnitsAdapter extends ArrayAdapter<Unit> {
-
-		public PlaceUnitsAdapter(Context context, int textViewResourceId, List<Unit> objects) {
-			super(context, textViewResourceId, objects);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder;
-			if (null == convertView) {
-				convertView = View.inflate(getContext(), R.layout.list_item_unit, null);
-				holder = new ViewHolder();
-				holder.unitName = (TextView) convertView.findViewById(R.id.unit_name);
-				holder.unitFaculty = (TextView) convertView.findViewById(R.id.unit_facluty);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-
-			Unit unit = getItem(position);
-			holder.unitName.setText(unit.getName());
-			Faculty faculty = unit.getFaculty();
-			if (null != faculty) {
-				holder.unitFaculty.setText(unit.getFaculty().getShortName());
-				holder.unitFaculty.setVisibility(View.VISIBLE);
-			} else {
-				holder.unitFaculty.setVisibility(View.INVISIBLE);
-			}
-
-			return convertView;
-		}
-
-		private static class ViewHolder {
-			TextView unitName;
-			TextView unitFaculty;
-		}
-
 	}
 
 	private static class PlacePhotoGestureListener implements OnGestureListener {

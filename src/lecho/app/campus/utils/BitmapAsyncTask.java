@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
@@ -63,7 +64,7 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
 			// Decode bitmap with inSampleSize set
 			options.inJustDecodeBounds = false;
-			return BitmapFactory.decodeStream(stream, null, options);
+			return BitmapFactory.decodeStream(stream, new Rect(10, 13, 13, 13), options);
 
 		} catch (IOException e) {
 			Log.e(TAG, "Could not load main place photo from file: " + path, e);
