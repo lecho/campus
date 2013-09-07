@@ -7,17 +7,22 @@ import lecho.app.campus.activity.PlacePhotoActivity;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.loader.PlaceDetailsLoader;
 import lecho.app.campus.utils.BitmapAsyncTask;
+import lecho.app.campus.utils.BitmapAsyncTask.OnBitmapLoadedListener;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlaceDetails;
 import lecho.app.campus.utils.UnitsGroup;
 import lecho.app.campus.view.UnitsGroupLayout;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
@@ -25,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +43,8 @@ import com.actionbarsherlock.app.SherlockFragment;
  * @author Lecho
  * 
  */
-public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails> {
+public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails>,
+		OnBitmapLoadedListener {
 	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
@@ -46,8 +53,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	private TextView mName;
 	private TextView mDescription;
 	private LinearLayout mScrollContent;
-	private View mListHeader;
-	ImageView placePhoto;
+	private ImageView mImage;
 
 	public static PlaceDetailsFragment newInstance(long placeId) {
 		PlaceDetailsFragment fragment = new PlaceDetailsFragment();
@@ -87,7 +93,6 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	@Override
 	public Loader<PlaceDetails> onCreateLoader(int id, Bundle args) {
 		if (PLACE_DETAILS_LOADER == id) {
-			// mViewSwitcher.setDisplayedChild(0);
 			return new PlaceDetailsLoader(getActivity().getApplicationContext(), getArguments().getLong(
 					Config.ARG_PLACE_ID));
 		}
@@ -97,18 +102,29 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	@Override
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
+			mScrollContent.removeAllViews();
 			prepareHeader(data);
 			prepareImage(data);
 			prepareScrollContent(data);
 			mProgressBar.setVisibility(View.GONE);
-
 		}
 	}
 
 	@Override
 	public void onLoaderReset(Loader<PlaceDetails> loader) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
-			// Nothing to do here.
+			mScrollContent.removeAllViews();
+			recycleImage();
+		}
+	}
+
+	@Override
+	public void onBitmapLoaded() {
+		if (null == mImage.getParent()) {
+			mScrollContent.addView(mImage, 0);
+			mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
+		} else {
+			Log.w(TAG, "Place photo already attached");
 		}
 	}
 
@@ -141,23 +157,35 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	private void prepareImage(final PlaceDetails data) {
-		mListHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_list_header,
+		recycleImage();
+		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
-		// Photo.
-		placePhoto = (ImageView) mListHeader.findViewById(R.id.place_photo);
 		GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getActivity(),
 				new PlacePhotoGestureListener());
 		gestureDetector.setOnDoubleTapListener(new PlacePhotoTapListener(getActivity(), data));
-		placePhoto.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
-		loadPlaceMainPhoto(data, placePhoto);
-		mScrollContent.addView(mListHeader);
+		mImage.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
+		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator).append(
+				data.place.getSymbol());
+		loadPlaceMainPhoto(data, mImage);
+
+	}
+
+	private void recycleImage() {
+		if (null != mImage) {
+			final Drawable drawable = mImage.getDrawable();
+			if (null != drawable) {
+				Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+				bitmap.recycle();
+				mImage = null;
+			}
+		}
 	}
 
 	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
 		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
 				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO);
 
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), placePhoto);
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), placePhoto, this);
 		bitmapAsyncTask.execute(placePhotoPath.toString());
 	}
 

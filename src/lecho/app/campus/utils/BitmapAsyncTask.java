@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
 import lecho.app.campus.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -18,13 +17,16 @@ import android.widget.ImageView;
 public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 	private static final String TAG = "BitmapAsyncTask";
 	private Context mContext;
-	private final WeakReference<ImageView> imageViewReference;
+	private final WeakReference<ImageView> mImageViewReference;
+	private final WeakReference<OnBitmapLoadedListener> mListenerReference;
 	private String mData;
 
-	public BitmapAsyncTask(Context context, ImageView imageView) {
+	public BitmapAsyncTask(Context context, ImageView imageView, OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
-		imageViewReference = new WeakReference<ImageView>(imageView);
+		mImageViewReference = new WeakReference<ImageView>(imageView);
+		// Use a WeakReference in case activity finished before AsyncTask.
+		mListenerReference = new WeakReference<BitmapAsyncTask.OnBitmapLoadedListener>(onBitmapLoadedListener);
 	}
 
 	// Decode image in background.
@@ -40,11 +42,22 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 	// Once complete, see if ImageView is still around and set bitmap.
 	@Override
 	protected void onPostExecute(Bitmap bitmap) {
-		if (imageViewReference != null && bitmap != null) {
-			final ImageView imageView = imageViewReference.get();
+		if (mImageViewReference != null && bitmap != null) {
+			final ImageView imageView = mImageViewReference.get();
 			if (imageView != null) {
 				imageView.setImageBitmap(bitmap);
+				callListener();
 			}
+		}
+	}
+
+	private void callListener() {
+		if (mListenerReference != null) {
+			final OnBitmapLoadedListener listener = mListenerReference.get();
+			if (null != listener) {
+				listener.onBitmapLoaded();
+			}
+
 		}
 	}
 
@@ -100,5 +113,13 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 		}
 
 		return inSampleSize;
+	}
+
+	public interface OnBitmapLoadedListener {
+		/**
+		 * Called when AsyncTasc finish loading bitmap and set it as ImageView source. Called only if listener is not
+		 * null and bitmap was loaded sucessfuly into ImageView.
+		 */
+		public void onBitmapLoaded();
 	}
 }

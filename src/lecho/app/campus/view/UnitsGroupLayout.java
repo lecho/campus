@@ -82,4 +82,5 @@ public class UnitsGroupLayout extends LinearLayout {
 	public int getUnitsCount() {
 		return mUnitsCount;
 	}
+	
 }

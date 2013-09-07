@@ -24,7 +24,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:gravity="center"
-        android:text="A1"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/maroon"
         android:textStyle="bold" />
@@ -58,7 +57,6 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Budynek Trzech Wydziałów"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/maroon" />
 
@@ -67,7 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Lodex, Tramwaj"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/maroon"
             android:visibility="visible" />
@@ -88,7 +85,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_separator"
-        android:animateLayoutChanges="true"
         android:scrollbars="none" >
 
         <LinearLayout
