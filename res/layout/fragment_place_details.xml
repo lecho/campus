@@ -31,14 +31,15 @@
 
     <View
         android:id="@+id/symbol_separator"
-        android:layout_width="1dp"
+        android:layout_width="1px"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/name_and_description_layout"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/symbol"
-        android:background="@color/maroon" />
+        android:background="@color/maroon"
+        tools:ignore="PxUsage" />
 
     <LinearLayout
         android:id="@id/name_and_description_layout"
@@ -75,9 +76,12 @@
     <View
         android:id="@+id/header_separator"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_below="@id/symbol"
-        android:background="@color/maroon" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/maroon"
+        tools:ignore="PxUsage" />
 
     <ScrollView
         android:id="@+id/scroll_view"

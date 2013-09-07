@@ -18,22 +18,19 @@ public class UnitsGroupLayout extends LinearLayout {
 		super(context);
 		setOrientation(LinearLayout.VERTICAL);
 		setBackgroundResource(R.drawable.details_box_shadow);
-		// android.widget.AbsListView.LayoutParams lp = new android.widget.AbsListView.LayoutParams(
-		// android.widget.AbsListView.LayoutParams.MATCH_PARENT,
-		// android.widget.AbsListView.LayoutParams.WRAP_CONTENT);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		int margin = Utils.dp2px(getContext(), 4);
+		lp.setMargins(0, margin, 0, margin);
 		setLayoutParams(lp);
-		// int padding = Utils.dp2px(getContext(), 8);
-		// setPadding(padding, padding, padding, padding);
-
 	}
 
 	public void setFaculty(String facultyName) {
 		TextView tv = new TextView(getContext());
 		tv.setText(facultyName);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		int margin = Utils.dp2px(getContext(), 16);
-		lp.setMargins(margin, 0, margin, 0);
+		int hMargin = Utils.dp2px(getContext(), 16);
+		int vMargin = Utils.dp2px(getContext(), 16);
+		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.RIGHT);
 		tv.setTypeface(null, Typeface.BOLD);
@@ -46,6 +43,9 @@ public class UnitsGroupLayout extends LinearLayout {
 		TextView tv = new TextView(getContext());
 		tv.setText(unitName);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		int hMargin = Utils.dp2px(getContext(), 16);
+		int vMargin = Utils.dp2px(getContext(), 16);
+		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.LEFT);
 		tv.setTextColor(getContext().getResources().getColor(R.color.black));
@@ -54,12 +54,23 @@ public class UnitsGroupLayout extends LinearLayout {
 		++mUnitsCount;
 	}
 
-	public void addSeparator() {
+	public void addUnitSeparator() {
 		View v = new View(getContext());
 		v.setBackgroundResource(R.color.background);
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, Utils.dp2px(getContext(), 1));
-		int margin = Utils.dp2px(getContext(), 8);
-		lp.setMargins(margin, margin, margin, margin);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
+		int margin = Utils.dp2px(getContext(), 16);
+		lp.setMargins(margin, 0, margin, 0);
+		v.setLayoutParams(lp);
+		this.addView(v);
+	}
+
+	public void addFacultySeparator() {
+		View v = new View(getContext());
+		v.setBackgroundResource(R.color.background);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
+		int marginRight = Utils.dp2px(getContext(), 16);
+		int marginLeft = Utils.dp2px(getContext(), 16);
+		lp.setMargins(marginLeft, 0, marginRight, 0);
 		v.setLayoutParams(lp);
 		this.addView(v);
 	}

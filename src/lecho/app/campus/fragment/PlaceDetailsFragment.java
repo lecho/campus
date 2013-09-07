@@ -1,7 +1,6 @@
 package lecho.app.campus.fragment;
 
 import java.io.File;
-import java.util.List;
 
 import lecho.app.campus.R;
 import lecho.app.campus.activity.PlacePhotoActivity;
@@ -13,7 +12,6 @@ import lecho.app.campus.utils.PlaceDetails;
 import lecho.app.campus.utils.UnitsGroup;
 import lecho.app.campus.view.UnitsGroupLayout;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -27,7 +25,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -100,35 +97,11 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	@Override
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
-			// Fill the sticky header with symbol, name,description
-			prepareStickyHeader(data);
-			// Fill the list header.
-			prepareListHeader(data);
-			// Fill the list adapter.
-			// mUnitsAdapter = new PlaceUnitsAdapter(getActivity().getApplicationContext(), R.layout.list_item_unit,
-			// data.unitsGroups);
-			// setListAdapter(mUnitsAdapter);
-
+			prepareHeader(data);
+			prepareImage(data);
 			prepareScrollContent(data);
 			mProgressBar.setVisibility(View.GONE);
 
-		}
-	}
-
-	private void prepareScrollContent(PlaceDetails data) {
-		for (UnitsGroup unitsGroup : data.unitsGroups) {
-			UnitsGroupLayout groupLayout = new UnitsGroupLayout(getActivity());
-			if (null != unitsGroup.faculty) {
-				groupLayout.setFaculty(unitsGroup.faculty.getShortName());
-				groupLayout.addSeparator();
-			}
-			for (Unit unit : unitsGroup.units) {
-				if (groupLayout.getUnitsCount() > 0) {
-					groupLayout.addSeparator();
-				}
-				groupLayout.addUnit(unit.getName());
-			}
-			mScrollContent.addView(groupLayout);
 		}
 	}
 
@@ -139,7 +112,24 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		}
 	}
 
-	private void prepareStickyHeader(final PlaceDetails data) {
+	private void prepareScrollContent(PlaceDetails data) {
+		for (UnitsGroup unitsGroup : data.unitsGroups) {
+			UnitsGroupLayout groupLayout = new UnitsGroupLayout(getActivity());
+			if (null != unitsGroup.faculty) {
+				groupLayout.setFaculty(unitsGroup.faculty.getShortName());
+				groupLayout.addFacultySeparator();
+			}
+			for (Unit unit : unitsGroup.units) {
+				if (groupLayout.getUnitsCount() > 0) {
+					groupLayout.addUnitSeparator();
+				}
+				groupLayout.addUnit(unit.getName());
+			}
+			mScrollContent.addView(groupLayout);
+		}
+	}
+
+	private void prepareHeader(final PlaceDetails data) {
 		mSymbol.setText(data.place.getSymbol());
 		mName.setText(data.place.getName());
 		if (TextUtils.isEmpty(data.place.getDescription())) {
@@ -150,7 +140,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		}
 	}
 
-	private void prepareListHeader(final PlaceDetails data) {
+	private void prepareImage(final PlaceDetails data) {
 		mListHeader = View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_list_header,
 				null);
 		// Photo.
@@ -161,10 +151,6 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		placePhoto.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
 		loadPlaceMainPhoto(data, placePhoto);
 		mScrollContent.addView(mListHeader);
-		// Set list header.
-		// if (getListView().getHeaderViewsCount() == 0) {
-		// getListView().addHeaderView(mListHeader);
-		// }
 	}
 
 	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
