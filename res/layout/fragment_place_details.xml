@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/second"
+    android:background="@color/pale_goldenrod"
     tools:context=".fragment.PlaceDetailsFragment" >
 
     <ProgressBar
@@ -16,7 +16,7 @@
         android:id="@+id/sticky_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/first"
+        android:background="@color/maroon"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
@@ -40,7 +40,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="8dp"
             android:layout_toRightOf="@id/symbol"
-            android:background="@color/second" />
+            android:background="@color/pale_goldenrod" />
 
         <LinearLayout
             android:id="@id/name_and_description_layout"
@@ -79,7 +79,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sticky_header"
-        android:listSelector="@android:color/transparent" >
+        android:divider="@color/dim_goldenrod"
+        android:dividerHeight="1dp"
+        android:listSelector="@color/transparent" >
     </ListView>
 
 </RelativeLayout>

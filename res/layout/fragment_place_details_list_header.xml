@@ -11,11 +11,4 @@
         android:contentDescription="@string/place_details_header_image_description"
         android:scaleType="centerCrop" />
 
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@id/place_photo"
-        android:background="@color/first" />
-
 </RelativeLayout>

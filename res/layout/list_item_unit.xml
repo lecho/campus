@@ -13,7 +13,7 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/dark_text" />
 
     <TextView
         android:id="@+id/unit_facluty"
@@ -21,12 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/unit_name"
-        android:background="@color/fifth"
+        android:background="@color/dim_goldenrod"
         android:gravity="center_horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/third"
+        android:textColor="@color/dark_khaki"
         android:textStyle="bold|italic" />
 
 </RelativeLayout>

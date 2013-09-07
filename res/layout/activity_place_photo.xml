@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:padding="5dip"
         app:lineWidth="30dp"
-        app:selectedColor="@color/first"
+        app:selectedColor="@color/maroon"
         app:strokeWidth="4dp"
-        app:unselectedColor="@color/second" />
+        app:unselectedColor="@color/pale_goldenrod" />
 
 </merge>

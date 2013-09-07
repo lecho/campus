@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="first">#800000</color>
-    <color name="second">#C6BCA1</color>
-    <color name="third">#867C61</color>
-    <color name="forth">#373833</color>
-    <color name="fifth">#b5ab90</color>
+    <color name="maroon">#800000</color>
+    <color name="pale_goldenrod">#C6BCA1</color>
+    <color name="dim_goldenrod">#B5AB90</color>
+    <color name="dark_khaki">#867C61</color>
+    <color name="dark_slate_grey">#373833</color>
+    <color name="ivory">#FFF7E3</color>
+    <color name="dark_text">#000000</color>
+    <color name="light_text">#ffffff</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
