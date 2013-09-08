@@ -21,7 +21,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.LinePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
-public class PlacePhotoActivity extends SherlockFragmentActivity {
+public class PlaceImageActivity extends SherlockFragmentActivity {
 	private static final String TAG = "PlaceDetailsActivity";
 
 	@Override

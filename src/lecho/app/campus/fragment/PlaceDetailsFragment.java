@@ -3,7 +3,7 @@ package lecho.app.campus.fragment;
 import java.io.File;
 
 import lecho.app.campus.R;
-import lecho.app.campus.activity.PlacePhotoActivity;
+import lecho.app.campus.activity.PlaceImageActivity;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.loader.PlaceDetailsLoader;
 import lecho.app.campus.utils.BitmapAsyncTask;
@@ -275,7 +275,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
-			Intent intent = new Intent(mActivity, PlacePhotoActivity.class);
+			Intent intent = new Intent(mActivity, PlaceImageActivity.class);
 			intent.putExtra(Config.ARG_PLACE_ID, mPlaceId);
 			intent.putExtra(Config.ARG_PLACE_SYMBOL, mPlaceSymbol);
 			mActivity.startActivity(intent);

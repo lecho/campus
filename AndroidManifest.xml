@@ -48,7 +48,7 @@
                 android:resource="@xml/searchable_activity_campus_map" />
         </activity>
         <activity
-            android:name="lecho.app.campus.activity.PlacePhotoActivity"
+            android:name="lecho.app.campus.activity.PlaceImageActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
         </activity>
