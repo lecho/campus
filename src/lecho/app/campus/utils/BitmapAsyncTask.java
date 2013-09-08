@@ -15,11 +15,12 @@ import android.util.Log;
 import android.widget.ImageView;
 
 public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
+	public static final int SYMBOL = 1;
+	public static final int PATH = 2;
 	private static final String TAG = "BitmapAsyncTask";
 	private Context mContext;
 	private final WeakReference<ImageView> mImageViewReference;
 	private final WeakReference<OnBitmapLoadedListener> mListenerReference;
-	private String mData;
 
 	public BitmapAsyncTask(Context context, ImageView imageView, OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
@@ -32,11 +33,11 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 	// Decode image in background.
 	@Override
 	protected Bitmap doInBackground(String... params) {
-		mData = params[0];
+		final String path = params[0];// crush crush crush
 		Resources resources = mContext.getResources();
 		int reqWidth = resources.getDimensionPixelSize(R.dimen.place_image_width);
 		int reqHeight = resources.getDimensionPixelSize(R.dimen.place_image_width);
-		return decodeSampledBitmapFromAssets(mContext, mData, reqWidth, reqHeight);
+		return decodeSampledBitmapFromAssets(mContext, path, reqWidth, reqHeight);
 	}
 
 	// Once complete, see if ImageView is still around and set bitmap.
@@ -46,16 +47,18 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 			final ImageView imageView = mImageViewReference.get();
 			if (imageView != null) {
 				imageView.setImageBitmap(bitmap);
-				callListener();
+				callListener(true);
+				return;
 			}
 		}
+		callListener(false);
 	}
 
-	private void callListener() {
+	private void callListener(boolean success) {
 		if (mListenerReference != null) {
 			final OnBitmapLoadedListener listener = mListenerReference.get();
 			if (null != listener) {
-				listener.onBitmapLoaded();
+				listener.onBitmapLoaded(success);
 			}
 
 		}
@@ -80,14 +83,14 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 			return BitmapFactory.decodeStream(stream, new Rect(10, 13, 13, 13), options);
 
 		} catch (IOException e) {
-			Log.e(TAG, "Could not load main place photo from file: " + path, e);
+			Log.e(TAG, "Could not load place photo from file: " + path, e);
 			return null;
 		} finally {
 			if (null != stream) {
 				try {
 					stream.close();
 				} catch (IOException e) {
-					Log.e(TAG, "Could not close stream for main place photo from file: " + path, e);
+					Log.e(TAG, "Could not close stream for place photo from file: " + path, e);
 				}
 			}
 		}
@@ -120,6 +123,6 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 		 * Called when AsyncTasc finish loading bitmap and set it as ImageView source. Called only if listener is not
 		 * null and bitmap was loaded sucessfuly into ImageView.
 		 */
-		public void onBitmapLoaded();
+		public void onBitmapLoaded(boolean success);
 	}
 }

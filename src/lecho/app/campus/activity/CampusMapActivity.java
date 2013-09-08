@@ -285,7 +285,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		// transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		transaction.setCustomAnimations(R.anim.show, R.anim.hide, R.anim.show, R.anim.hide);
+		transaction.setCustomAnimations(R.anim.slide_show, R.anim.slide_hide, R.anim.slide_show, R.anim.slide_hide);
 		transaction.add(R.id.details, fragment);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();

@@ -30,7 +30,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +41,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 /**
- * Displays Place details, photo, name, symbol etc.
+ * Displays Place details, image, name, symbol etc.
  * 
  * @author Lecho
  * 
@@ -66,6 +69,12 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onDestroy() {
+		recycleImage();
+		super.onDestroy();
 	}
 
 	@Override
@@ -103,10 +112,14 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
 			mScrollContent.removeAllViews();
-			prepareHeader(data);
-			prepareImage(data);
-			prepareScrollContent(data);
-			mProgressBar.setVisibility(View.GONE);
+			if (null != data && null != data.place) {
+				prepareHeader(data);
+				prepareImage(data);
+				prepareScrollContent(data);
+				mProgressBar.setVisibility(View.GONE);
+			} else {
+				Log.w(TAG, "Null data returned from details loader");
+			}
 		}
 	}
 
@@ -119,12 +132,33 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	@Override
-	public void onBitmapLoaded() {
-		if (null == mImage.getParent()) {
+	public void onBitmapLoaded(boolean success) {
+		if (success && null == mImage.getParent()) {
+			final ViewTreeObserver observer = mScrollContent.getViewTreeObserver();
+			observer.addOnPreDrawListener(new OnPreDrawListener() {
+
+				@Override
+				public boolean onPreDraw() {
+					observer.removeOnPreDrawListener(this);
+					int childCount = mScrollContent.getChildCount();
+					if (childCount < 2) {
+						// No need for animation
+						return true;
+					}
+					View v0 = mScrollContent.getChildAt(0);
+					View v1 = mScrollContent.getChildAt(1);
+					int deltaX = v1.getTop() - v0.getTop();
+					final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
+					anim.setDuration(300);
+					for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
+						View v = mScrollContent.getChildAt(i);
+						v.startAnimation(anim);
+					}
+					return true;
+				}
+			});
 			mScrollContent.addView(mImage, 0);
 			mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
-		} else {
-			Log.w(TAG, "Place photo already attached");
 		}
 	}
 
@@ -161,12 +195,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
 		GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getActivity(),
-				new PlacePhotoGestureListener());
-		gestureDetector.setOnDoubleTapListener(new PlacePhotoTapListener(getActivity(), data));
-		mImage.setOnTouchListener(new PlacePhotoTouchListener(gestureDetector));
-		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator).append(
-				data.place.getSymbol());
-		loadPlaceMainPhoto(data, mImage);
+				new PlaceImageGestureListener());
+		gestureDetector.setOnDoubleTapListener(new PlaceImageTapListener(getActivity(), data));
+		mImage.setOnTouchListener(new PlaceImageTouchListener(gestureDetector));
+		loadPlaceImage(data, mImage);
 
 	}
 
@@ -181,15 +213,14 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		}
 	}
 
-	private void loadPlaceMainPhoto(final PlaceDetails data, final ImageView placePhoto) {
-		StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
-				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO);
-
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), placePhoto, this);
-		bitmapAsyncTask.execute(placePhotoPath.toString());
+	private void loadPlaceImage(final PlaceDetails data, final ImageView imageView) {
+		final String path = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
+				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO).toString();
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
+		bitmapAsyncTask.execute(path);
 	}
 
-	private static class PlacePhotoGestureListener implements OnGestureListener {
+	private static class PlaceImageGestureListener implements OnGestureListener {
 
 		@Override
 		public boolean onDown(MotionEvent e) {
@@ -221,12 +252,12 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 	}
 
-	private static class PlacePhotoTapListener implements OnDoubleTapListener {
+	private static class PlaceImageTapListener implements OnDoubleTapListener {
 		private Activity mActivity;
 		private long mPlaceId;
 		private String mPlaceSymbol;
 
-		public PlacePhotoTapListener(final Activity activity, final PlaceDetails data) {
+		public PlaceImageTapListener(final Activity activity, final PlaceDetails data) {
 			mActivity = activity;
 			mPlaceId = data.place.getId();
 			mPlaceSymbol = data.place.getSymbol();
@@ -234,11 +265,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-			Intent intent = new Intent(mActivity, PlacePhotoActivity.class);
-			intent.putExtra(Config.ARG_PLACE_ID, mPlaceId);
-			intent.putExtra(Config.ARG_PLACE_SYMBOL, mPlaceSymbol);
-			mActivity.startActivity(intent);
-			return true;
+			return false;
 		}
 
 		@Override
@@ -248,16 +275,20 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
-			return false;
+			Intent intent = new Intent(mActivity, PlacePhotoActivity.class);
+			intent.putExtra(Config.ARG_PLACE_ID, mPlaceId);
+			intent.putExtra(Config.ARG_PLACE_SYMBOL, mPlaceSymbol);
+			mActivity.startActivity(intent);
+			return true;
 		}
 
 	}
 
-	private static class PlacePhotoTouchListener implements OnTouchListener {
+	private static class PlaceImageTouchListener implements OnTouchListener {
 
 		private GestureDetectorCompat mGestureDetector;
 
-		public PlacePhotoTouchListener(final GestureDetectorCompat gestureDetector) {
+		public PlaceImageTouchListener(final GestureDetectorCompat gestureDetector) {
 			mGestureDetector = gestureDetector;
 		}
 
