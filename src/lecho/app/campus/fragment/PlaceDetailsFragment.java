@@ -22,15 +22,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.GestureDetector.OnDoubleTapListener;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnPreDrawListener;
@@ -191,10 +187,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		recycleImage();
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
-		GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getActivity(),
-				new PlaceImageGestureListener());
-		gestureDetector.setOnDoubleTapListener(new PlaceImageTapListener(getActivity(), data));
-		mImage.setOnTouchListener(new PlaceImageTouchListener(gestureDetector));
+		mImage.setOnClickListener(new PlaceImageClickListener(getActivity(), data));
 		loadPlaceImage(data, mImage);
 
 	}
@@ -219,82 +212,24 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		bitmapAsyncTask.execute(path);
 	}
 
-	private static class PlaceImageGestureListener implements OnGestureListener {
-
-		@Override
-		public boolean onDown(MotionEvent e) {
-			return false;
-		}
-
-		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-			return false;
-		}
-
-		@Override
-		public void onLongPress(MotionEvent e) {
-		}
-
-		@Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-			return false;
-		}
-
-		@Override
-		public void onShowPress(MotionEvent e) {
-		}
-
-		@Override
-		public boolean onSingleTapUp(MotionEvent e) {
-			return false;
-		}
-
-	}
-
-	private static class PlaceImageTapListener implements OnDoubleTapListener {
+	private static class PlaceImageClickListener implements OnClickListener {
 		private Activity mActivity;
 		private long mPlaceId;
 		private String mPlaceSymbol;
 
-		public PlaceImageTapListener(final Activity activity, final PlaceDetails data) {
+		public PlaceImageClickListener(final Activity activity, final PlaceDetails data) {
 			mActivity = activity;
 			mPlaceId = data.place.getId();
 			mPlaceSymbol = data.place.getSymbol();
 		}
 
 		@Override
-		public boolean onDoubleTap(MotionEvent e) {
-			return false;
-		}
-
-		@Override
-		public boolean onDoubleTapEvent(MotionEvent e) {
-			return false;
-		}
-
-		@Override
-		public boolean onSingleTapConfirmed(MotionEvent e) {
+		public void onClick(View v) {
 			Intent intent = new Intent(mActivity, PlaceImageActivity.class);
 			intent.putExtra(Config.EXTRA_PLACE_ID, mPlaceId);
 			intent.putExtra(Config.EXTRA_PLACE_SYMBOL, mPlaceSymbol);
 			mActivity.startActivity(intent);
-			return true;
-		}
 
-	}
-
-	private static class PlaceImageTouchListener implements OnTouchListener {
-
-		private GestureDetectorCompat mGestureDetector;
-
-		public PlaceImageTouchListener(final GestureDetectorCompat gestureDetector) {
-			mGestureDetector = gestureDetector;
-		}
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			mGestureDetector.onTouchEvent(event);
-			return true;
 		}
 
 	}

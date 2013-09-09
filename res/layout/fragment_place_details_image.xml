@@ -5,7 +5,7 @@
     android:layout_height="196dp"
     android:layout_alignParentTop="true"
     android:layout_margin="8dp"
-    android:background="@drawable/details_box_shadow"
+    android:background="@drawable/selector_place_image"
     android:contentDescription="@string/place_details_header_image_description"
     android:cropToPadding="true"
     android:scaleType="centerCrop" />

@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:layout_toRightOf="@id/symbol"
-        android:background="@color/pale_goldenrod" />
+        android:background="@color/maroon" />
 
     <TextView
         android:id="@+id/description"

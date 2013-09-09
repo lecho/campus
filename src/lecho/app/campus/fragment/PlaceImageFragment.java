@@ -40,7 +40,6 @@ public class PlaceImageFragment extends SherlockFragment implements OnBitmapLoad
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_place_image, container, false);
-		// mImageView = (ZoomImageView) view.findViewById(R.id.zoom_image_view);
 		mLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
 		mImageView = new ZoomImageView(getActivity());
 		mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);

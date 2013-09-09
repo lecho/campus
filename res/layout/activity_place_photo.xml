@@ -24,6 +24,6 @@
         app:lineWidth="30dp"
         app:selectedColor="@color/maroon"
         app:strokeWidth="4dp"
-        app:unselectedColor="@color/pale_goldenrod" />
+        app:unselectedColor="@color/background" />
 
 </merge>
