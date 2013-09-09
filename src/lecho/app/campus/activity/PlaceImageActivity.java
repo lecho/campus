@@ -30,7 +30,7 @@ public class PlaceImageActivity extends SherlockFragmentActivity implements OnIm
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_place_photo);
+		setContentView(R.layout.activity_place_image);
 		mPager = (ViewPager) findViewById(R.id.view_pager);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		mIndicator = (LinePageIndicator) findViewById(R.id.indicator);

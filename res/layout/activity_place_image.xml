@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dip"
-        app:lineWidth="30dp"
+        app:lineWidth="16dp"
         app:selectedColor="@color/maroon"
         app:strokeWidth="4dp"
-        app:unselectedColor="@color/background" />
+        app:unselectedColor="@color/white" />
 
 </merge>
