@@ -33,6 +33,8 @@ public class UnitsGroupLayout extends LinearLayout {
 		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.RIGHT);
+		tv.setTextAppearance(getContext(), android.R.attr.textAppearanceSmall);
+		tv.setTextColor(getResources().getColor(R.color.black));
 		tv.setTypeface(null, Typeface.BOLD);
 		this.addView(tv);
 		mHasFaculty = true;
@@ -48,8 +50,8 @@ public class UnitsGroupLayout extends LinearLayout {
 		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.LEFT);
-		tv.setTextColor(getContext().getResources().getColor(R.color.black));
 		tv.setTextAppearance(getContext(), android.R.attr.textAppearanceSmall);
+		tv.setTextColor(getContext().getResources().getColor(R.color.black));
 		this.addView(tv);
 		++mUnitsCount;
 	}
@@ -82,5 +84,5 @@ public class UnitsGroupLayout extends LinearLayout {
 	public int getUnitsCount() {
 		return mUnitsCount;
 	}
-	
+
 }

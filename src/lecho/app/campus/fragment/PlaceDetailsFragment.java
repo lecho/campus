@@ -24,6 +24,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +35,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -156,6 +158,11 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	private void prepareScrollContent(PlaceDetails data) {
+		prepareUnitsGroups(data);
+		prepareGoToGMapsLink(data);
+	}
+
+	private void prepareUnitsGroups(PlaceDetails data) {
 		for (UnitsGroup unitsGroup : data.unitsGroups) {
 			UnitsGroupLayout groupLayout = new UnitsGroupLayout(getActivity());
 			if (null != unitsGroup.faculty) {
@@ -170,6 +177,24 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 			}
 			mScrollContent.addView(groupLayout);
 		}
+	}
+
+	private void prepareGoToGMapsLink(PlaceDetails data) {
+		double latitude = data.place.getLatitude();
+		double longitude = data.place.getLongtitude();
+
+		TextView gMapsLink = new TextView(getActivity());
+		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		int margin = Utils.dp2px(getActivity(), 16);
+		lp.setMargins(margin, margin, margin, margin);
+		lp.gravity = Gravity.RIGHT;
+		gMapsLink.setLayoutParams(lp);
+		gMapsLink.setGravity(Gravity.RIGHT);
+		gMapsLink.setText(R.string.go_to_google_maps);
+		gMapsLink.setTextColor(getResources().getColor(R.color.holo_blue));
+		gMapsLink.setBackgroundResource(R.drawable.selector_gmaps_link);
+		gMapsLink.setOnClickListener(new GoToGMapsClickListener(getActivity(), latitude, longitude));
+		mScrollContent.addView(gMapsLink);
 	}
 
 	private void prepareHeader(final PlaceDetails data) {
@@ -212,10 +237,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		bitmapAsyncTask.execute(path);
 	}
 
-	private static class PlaceImageClickListener implements OnClickListener {
-		private Activity mActivity;
-		private long mPlaceId;
-		private String mPlaceSymbol;
+	private class PlaceImageClickListener implements OnClickListener {
+		private final Activity mActivity;
+		private final long mPlaceId;
+		private final String mPlaceSymbol;
 
 		public PlaceImageClickListener(final Activity activity, final PlaceDetails data) {
 			mActivity = activity;
@@ -229,8 +254,28 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 			intent.putExtra(Config.EXTRA_PLACE_ID, mPlaceId);
 			intent.putExtra(Config.EXTRA_PLACE_SYMBOL, mPlaceSymbol);
 			mActivity.startActivity(intent);
+		}
+	}
 
+	private static class GoToGMapsClickListener implements OnClickListener {
+		private final Activity mActivity;
+		private final double mLatitude;
+		private final double mLongitude;
+
+		public GoToGMapsClickListener(final Activity activity, double latitude, double longitude) {
+			mActivity = activity;
+			mLatitude = latitude;
+			mLongitude = longitude;
 		}
 
+		@Override
+		public void onClick(View v) {
+			if (Utils.launchGMaps(mActivity, mLatitude, mLongitude)) {
+				Log.i(TAG, "Start Google Maps application");
+			} else {
+				// TODO Show error message
+			}
+
+		}
 	}
 }

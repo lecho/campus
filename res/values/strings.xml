@@ -13,5 +13,6 @@
     <string name="search_no_results_back">Cofnij</string>
     <string name="image_view_loading_error">Nie mogłem załadować zdjęcia</string>
     <string name="image_view_loading_error_pity">Szkoda</string>
+    <string name="go_to_google_maps">Przejdź do Map Google</string>
 
 </resources>

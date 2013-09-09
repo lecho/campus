@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import com.google.android.gms.maps.model.LatLng;
 
 public final class Utils {
+	private static final String TAG = "Utils";
 
 	/**
 	 * Check if first position is close enough to second position
@@ -36,20 +37,16 @@ public final class Utils {
 		return false;
 	}
 
-	public static boolean launchNavigation(Context context, double latitude, double longitude) {
-		final String GNAVI = "google.navigation:q=";
-		StringBuilder sb = new StringBuilder().append(GNAVI).append(latitude).append(",").append(longitude);
-
+	public static boolean launchGMaps(Context context, double latitude, double longitude) {
+		final String GMAPS = "geo:";
+		StringBuilder sb = new StringBuilder().append(GMAPS).append(Double.toString(latitude)).append(",")
+				.append(Double.toString(longitude));
 		try {
-			Intent navIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
-
-			context.startActivity(navIntent);
-			Log.i(Utils.class.getSimpleName(), "Launching navigation to location: lat:" + latitude + ", lng:"
-					+ longitude);
+			Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
+			context.startActivity(mapsIntent);
 			return true;
-
 		} catch (Exception e) {
-			Log.e(Utils.class.getSimpleName(), "Could not start google navigation", e);
+			Log.e(TAG, "Could not start google navigation", e);
 			return false;
 		}
 	}
@@ -65,10 +62,10 @@ public final class Utils {
 			Intent i = new Intent(Intent.ACTION_VIEW);
 			i.setData(Uri.parse(url));
 			context.startActivity(i);
-			Log.i(Utils.class.getSimpleName(), "Launching browser with url: " + url);
+			Log.i(TAG, "Launching browser with url: " + url);
 			return true;
 		} catch (Exception e) {
-			Log.e(Utils.class.getSimpleName(), "Could not start web browser", e);
+			Log.e(TAG, "Could not start web browser", e);
 			return false;
 		}
 	}
