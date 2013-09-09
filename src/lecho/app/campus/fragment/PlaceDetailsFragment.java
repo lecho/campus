@@ -11,12 +11,14 @@ import lecho.app.campus.utils.BitmapAsyncTask.OnBitmapLoadedListener;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlaceDetails;
 import lecho.app.campus.utils.UnitsGroup;
+import lecho.app.campus.utils.Utils;
 import lecho.app.campus.view.UnitsGroupLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -61,14 +63,9 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	public static PlaceDetailsFragment newInstance(long placeId) {
 		PlaceDetailsFragment fragment = new PlaceDetailsFragment();
 		Bundle args = new Bundle();
-		args.putLong(Config.ARG_PLACE_ID, placeId);
+		args.putLong(Config.EXTRA_PLACE_ID, placeId);
 		fragment.setArguments(args);
 		return fragment;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -103,7 +100,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	public Loader<PlaceDetails> onCreateLoader(int id, Bundle args) {
 		if (PLACE_DETAILS_LOADER == id) {
 			return new PlaceDetailsLoader(getActivity().getApplicationContext(), getArguments().getLong(
-					Config.ARG_PLACE_ID));
+					Config.EXTRA_PLACE_ID));
 		}
 		return null;
 	}
@@ -203,19 +200,21 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	private void recycleImage() {
-		if (null != mImage) {
-			final Drawable drawable = mImage.getDrawable();
-			if (null != drawable) {
-				Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-				bitmap.recycle();
-				mImage = null;
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+			if (null != mImage) {
+				final Drawable drawable = mImage.getDrawable();
+				if (null != drawable) {
+					Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+					bitmap.recycle();
+					mImage = null;
+				}
 			}
 		}
 	}
 
 	private void loadPlaceImage(final PlaceDetails data, final ImageView imageView) {
-		final String path = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator)
-				.append(data.place.getSymbol()).append(File.separator).append(Config.PLACE_MAIN_PHOTO).toString();
+		final String path = new StringBuilder(Utils.getPlaceImagesDir(data.place.getSymbol())).append(File.separator)
+				.append(Config.PLACE_MAIN_PHOTO).toString();
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
 		bitmapAsyncTask.execute(path);
 	}
@@ -276,8 +275,8 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
 			Intent intent = new Intent(mActivity, PlaceImageActivity.class);
-			intent.putExtra(Config.ARG_PLACE_ID, mPlaceId);
-			intent.putExtra(Config.ARG_PLACE_SYMBOL, mPlaceSymbol);
+			intent.putExtra(Config.EXTRA_PLACE_ID, mPlaceId);
+			intent.putExtra(Config.EXTRA_PLACE_SYMBOL, mPlaceSymbol);
 			mActivity.startActivity(intent);
 			return true;
 		}

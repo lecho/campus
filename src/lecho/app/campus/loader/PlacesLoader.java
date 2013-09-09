@@ -29,8 +29,8 @@ import android.util.Log;
  */
 public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private static final String TAG = "PlacesLoader";
-	public static final String ARG_ACTION = "lecho.app.campus:ACTION";
-	public static final String ARG_ARG = "lecho.app.campus:ARG";
+	public static final String EXTRA_ACTION = "lecho.app.campus:ACTION";
+	public static final String EXTRA_ARG = "lecho.app.campus:ARG";
 	// No args
 	public static final int LOAD_ALL_PLACES = 1;
 	// One arg - category id

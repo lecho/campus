@@ -1,5 +1,7 @@
 package lecho.app.campus.utils;
 
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -95,4 +97,9 @@ public final class Utils {
 		return (int) (dp * scale + 0.5f);
 
 	}
+
+	public static String getPlaceImagesDir(String symbol) {
+		return new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator).append(symbol).toString();
+	}
+
 }

@@ -1,103 +1,58 @@
 package lecho.app.campus.activity;
 
-import java.io.File;
-import java.io.IOException;
-
 import lecho.app.campus.R;
+import lecho.app.campus.adapter.PlaceImageFragmentAdapter;
 import lecho.app.campus.utils.Config;
-import lecho.app.campus.view.ZoomImageView;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import lecho.app.campus.utils.ImagesDirAsyncTask;
+import lecho.app.campus.utils.ImagesDirAsyncTask.OnImagesDirListener;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.LinePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
-public class PlaceImageActivity extends SherlockFragmentActivity {
+/**
+ * 
+ * @author Lecho
+ * 
+ */
+public class PlaceImageActivity extends SherlockFragmentActivity implements OnImagesDirListener {
 	private static final String TAG = "PlaceDetailsActivity";
+	private ViewPager mPager;
+	private ProgressBar mProgressBar;
+	private PageIndicator mIndicator;
+	private String mSymbol;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_photo);
-		final ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
-		final PageIndicator indicator = (LinePageIndicator) findViewById(R.id.indicator);
-		final String placeSymbol = getIntent().getStringExtra(Config.ARG_PLACE_SYMBOL);
-		final StringBuilder placePhotoPath = new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator).append(
-				placeSymbol);
-		try {
-			final String[] paths = getAssets().list(placePhotoPath.toString());
-			pager.setAdapter(new ImagesPagerAdapter(placePhotoPath.toString(), paths));
-			pager.setPageMargin((int) getResources().getDisplayMetrics().density * 10);
-			indicator.setViewPager(pager);
-		} catch (IOException e) {
-			Log.e(TAG, "Could not list photos for place with symbol: " + placeSymbol);
-		}
+		mPager = (ViewPager) findViewById(R.id.view_pager);
+		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+		mIndicator = (LinePageIndicator) findViewById(R.id.indicator);
+		mSymbol = getIntent().getStringExtra(Config.EXTRA_PLACE_SYMBOL);
+		ImagesDirAsyncTask task = new ImagesDirAsyncTask(getApplicationContext(), this);
+		task.execute(mSymbol);
 	}
 
-	/**
-	 * Adapter backing up ViewPager acting as images pager.
-	 * 
-	 * @author lecho
-	 * 
-	 */
-	private static class ImagesPagerAdapter extends PagerAdapter {
-		private String mPlacePath;
-		private String[] mPaths;
-
-		public ImagesPagerAdapter(String placePath, String[] paths) {
-			mPlacePath = placePath;
-			mPaths = paths;
-		}
-
-		@Override
-		public int getCount() {
-			return mPaths.length;
-		}
-
-		// @Override
-		// public CharSequence getPageTitle(int position) {
-		// return "ala";
-		// }
-
-		@Override
-		public boolean isViewFromObject(View view, Object object) {
-			return view == object;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			container.removeView((View) object);
-			/*
-			 * Recycle the old bitmap to free up memory straight away
-			 */
-			try {
-				final ImageView imageView = (ImageView) object;
-				final Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-				imageView.setImageBitmap(null);
-				bitmap.recycle();
-			} catch (Exception e) {
-			}
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			final ZoomImageView zoomImageView = new ZoomImageView(container.getContext());
-			final StringBuilder path = new StringBuilder(mPlacePath).append(File.separator).append(mPaths[position]);
-			//BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(this, zoomImageView);
-			//bitmapAsyncTask.execute(path.toString());
-			container.addView(zoomImageView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-			return zoomImageView;
-
+	@Override
+	public void onImagesDir(String[] paths) {
+		if (paths.length > 0) {
+			mPager.setAdapter(new PlaceImageFragmentAdapter(getSupportFragmentManager(), mSymbol, paths));
+			mPager.setOffscreenPageLimit(1);
+			mIndicator.setViewPager(mPager);
+			mProgressBar.setVisibility(View.GONE);
+		} else {
+			// That's not normal and should never happen, if user starts this activity there should be at least one
+			// image!
+			Log.e(TAG, "Could not load any image for symbol: " + mSymbol);
+			finish();
 		}
 
 	}
+
 }

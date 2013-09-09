@@ -24,7 +24,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this, PlaceDetailsActivity.class);
-				i.putExtra(Config.ARG_PLACE_ID, 1L);
+				i.putExtra(Config.EXTRA_PLACE_ID, 1L);
 				startActivity(i);
 
 			}
@@ -36,7 +36,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MainActivity.this, CampusMapActivity.class);
-				i.putExtra(Config.ARG_PLACE_ID, 1L);
+				i.putExtra(Config.EXTRA_PLACE_ID, 1L);
 				startActivity(i);
 
 			}

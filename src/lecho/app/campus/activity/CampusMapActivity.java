@@ -96,7 +96,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		setUpMapIfNeeded();
 
 		Bundle args = new Bundle();
-		args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
+		args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_ALL_PLACES);
 		getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
 	}
 
@@ -200,8 +200,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			// Handle search button click
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Bundle args = new Bundle();
-			args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_PLACES_BY_SEARCH);
-			args.putString(PlacesLoader.ARG_ARG, query);
+			args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_PLACES_BY_SEARCH);
+			args.putString(PlacesLoader.EXTRA_ARG, query);
 			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
@@ -297,8 +297,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
 		if (PLACES_LOADER == id) {
-			int action = bundle.getInt(PlacesLoader.ARG_ACTION);
-			String arg = bundle.getString(PlacesLoader.ARG_ARG);
+			int action = bundle.getInt(PlacesLoader.EXTRA_ACTION);
+			String arg = bundle.getString(PlacesLoader.EXTRA_ARG);
 			return new PlacesLoader(getApplicationContext(), action, arg);
 		}
 		return null;
@@ -461,7 +461,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public boolean onMenuItemActionCollapse(MenuItem item) {
 			if (null == mCurrentMarker) {
 				Bundle args = new Bundle();
-				args.putInt(PlacesLoader.ARG_ACTION, PlacesLoader.LOAD_ALL_PLACES);
+				args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_ALL_PLACES);
 				getSupportLoaderManager().restartLoader(PLACES_LOADER, args, CampusMapActivity.this);
 			}
 			return true;

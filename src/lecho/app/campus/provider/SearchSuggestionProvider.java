@@ -24,7 +24,7 @@ import android.net.Uri;
  * 
  */
 public class SearchSuggestionProvider extends ContentProvider {
-	public static final String AUTHORITY = SearchSuggestionProvider.class.getName();
+	public static final String AUTHORITY = Config.SEARCH_SUGGESTION_AUTHORITY;
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 	public static final String DIR_CONTENT_TYPE = "vnd.android.cursor.dir/vnd.lecho.app.campus";
 	public static final int CAMPUS_MAP_DIR = 1;

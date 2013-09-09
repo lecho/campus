@@ -11,5 +11,7 @@
     <string name="search_fake_place_name">Budynek</string>
     <string name="search_no_results">Nic nie znalazłem:(</string>
     <string name="search_no_results_back">Cofnij</string>
+    <string name="image_view_loading_error">Nie mogłem załadować zdjęcia</string>
+    <string name="image_view_loading_error_pity">Szkoda</string>
 
 </resources>
