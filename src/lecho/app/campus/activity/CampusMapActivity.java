@@ -74,6 +74,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Marker mCurrentMarker;
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
+	private boolean mDetailsVisible = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +216,17 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	@Override
+	public void onBackPressed() {
+		if (!mDetailsVisible && null != mCurrentMarker) {
+			mCurrentMarker.hideInfoWindow();
+			mCurrentMarker = null;
+			hideSearchResultsPager();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
 	private void setUpMarkers(List<Place> places) {
 		if (null == mMap) {
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
@@ -292,6 +304,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mSearchMenuItem.setVisible(false);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		mDetailsVisible = true;
 	}
 
 	@Override
@@ -497,6 +510,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public void onBackStackChanged() {
 			int count = getSupportFragmentManager().getBackStackEntryCount();
 			if (0 == count) {
+				mDetailsVisible = false;
 				mSearchMenuItem.setVisible(true);
 				getSupportActionBar().setHomeButtonEnabled(false);
 				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
