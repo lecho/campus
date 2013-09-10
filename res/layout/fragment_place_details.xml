@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/symbol"
-        android:layout_width="@dimen/search_result_symbol_width"
+        android:layout_width="@dimen/details_symbol_width"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/name_and_description_layout"
         android:layout_alignParentLeft="true"

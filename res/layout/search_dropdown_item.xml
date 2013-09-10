@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/symbol"
-        android:layout_width="@dimen/abs__dropdownitem_icon_width"
-        android:layout_height="48dip"
+        android:layout_width="@dimen/search_suggestion_symbol_width"
+        android:layout_height="@dimen/search_suggestion_symbol_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
