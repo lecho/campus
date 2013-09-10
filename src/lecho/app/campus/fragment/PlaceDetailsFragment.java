@@ -189,10 +189,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		lp.setMargins(margin, margin, margin, margin);
 		lp.gravity = Gravity.RIGHT;
 		gMapsLink.setLayoutParams(lp);
+		gMapsLink.setMinHeight(Utils.dp2px(getActivity(), 48));
 		gMapsLink.setGravity(Gravity.RIGHT);
 		gMapsLink.setText(R.string.go_to_google_maps);
-		gMapsLink.setTextColor(getResources().getColor(R.color.holo_blue));
-		gMapsLink.setBackgroundResource(R.drawable.selector_gmaps_link);
+		gMapsLink.setTextColor(getResources().getColorStateList(R.color.selector_gmaps_link));
 		gMapsLink.setOnClickListener(new GoToGMapsClickListener(getActivity(), latitude, longitude));
 		mScrollContent.addView(gMapsLink);
 	}

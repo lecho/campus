@@ -6,6 +6,8 @@
     <color name="maroon">#800000</color>
     <color name="dark_slate_grey">#373833</color>
     <color name="holo_blue">#33B5E5</color>
+    <color name="holo_blue_light">#8033B5E5</color>
+    <color name="holo_blue_dark">#0099CC</color>
     <color name="dark_text">#000000</color>
     <color name="light_text">#FFFFFF</color>
     <color name="transparent">#00000000</color>
