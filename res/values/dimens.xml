@@ -3,11 +3,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    
-    <dimen name="search_result_height">74dp</dimen>
+    <dimen name="search_result_height">80dp</dimen>
     <dimen name="search_result_symbol_width">58dp</dimen>
     <dimen name="search_result_description_height">32dp</dimen>
-    
+    <dimen name="details_header_height">74dp</dimen>
     <dimen name="place_image_width">120dp</dimen>
     <dimen name="place_image_height">240dp</dimen>
 

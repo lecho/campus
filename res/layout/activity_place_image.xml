@@ -20,10 +20,10 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dip"
-        app:lineWidth="16dp"
+        android:padding="8dip"
+        app:lineWidth="24dp"
         app:selectedColor="@color/maroon"
         app:strokeWidth="4dp"
-        app:unselectedColor="@color/white" />
+        app:unselectedColor="@color/background" />
 
 </merge>
