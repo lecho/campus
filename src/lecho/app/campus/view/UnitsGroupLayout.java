@@ -38,6 +38,7 @@ public class UnitsGroupLayout extends LinearLayout {
 		tv.setTypeface(null, Typeface.BOLD);
 		this.addView(tv);
 		mHasFaculty = true;
+		addSeparator();
 
 	}
 
@@ -56,23 +57,12 @@ public class UnitsGroupLayout extends LinearLayout {
 		++mUnitsCount;
 	}
 
-	public void addUnitSeparator() {
+	public void addSeparator() {
 		View v = new View(getContext());
 		v.setBackgroundResource(R.color.background);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
 		int margin = Utils.dp2px(getContext(), 16);
 		lp.setMargins(margin, 0, margin, 0);
-		v.setLayoutParams(lp);
-		this.addView(v);
-	}
-
-	public void addFacultySeparator() {
-		View v = new View(getContext());
-		v.setBackgroundResource(R.color.background);
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
-		int marginRight = Utils.dp2px(getContext(), 16);
-		int marginLeft = Utils.dp2px(getContext(), 16);
-		lp.setMargins(marginLeft, 0, marginRight, 0);
 		v.setLayoutParams(lp);
 		this.addView(v);
 	}

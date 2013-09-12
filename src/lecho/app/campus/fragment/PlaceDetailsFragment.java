@@ -167,11 +167,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 			UnitsGroupLayout groupLayout = new UnitsGroupLayout(getActivity());
 			if (null != unitsGroup.faculty) {
 				groupLayout.setFaculty(unitsGroup.faculty.getShortName());
-				groupLayout.addFacultySeparator();
 			}
 			for (Unit unit : unitsGroup.units) {
 				if (groupLayout.getUnitsCount() > 0) {
-					groupLayout.addUnitSeparator();
+					groupLayout.addSeparator();
 				}
 				groupLayout.addUnit(unit.getName());
 			}
