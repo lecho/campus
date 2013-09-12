@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="196dp"
     android:layout_alignParentTop="true"
-    android:padding="8dp"
     android:layout_margin="4dp"
     android:background="@drawable/selector_place_image"
     android:contentDescription="@string/place_details_header_image_description"
     android:cropToPadding="true"
-    android:src="@drawable/ic_custom_info_window"
+    android:padding="8dp"
     android:scaleType="centerCrop" />
