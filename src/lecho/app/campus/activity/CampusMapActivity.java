@@ -62,6 +62,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String TAG = "CampusMapActivity";
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
 	private static final int CAMERA_ANIMATION_LENGTH = 500;
+	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
@@ -71,7 +72,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	// TODO check WeakHashMap
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
-	private Marker mCurrentMarker;
+	private Long mCurrentPlaceId;
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private boolean mDetailsVisible = false;
@@ -94,11 +95,50 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// Listen when user hides details fragment to show search menu on action bar
 		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
 
-		setUpMapIfNeeded();
+		// SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+		// if (savedInstanceState == null) {
+		// // First incarnation of this activity.
+		// mapFragment.setRetainInstance(true);
+		// } else {
+		// // Reincarnated activity. The obtained map is the same map instance in the previous
+		// // activity life cycle. There is no need to reinitialize it.
+		// mMap = mapFragment.getMap();
+		// Long placeId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
+		// mCurrentMarker = mMarkers.get(placeId);
+		// }
+		if (savedInstanceState == null) {
+			mCurrentPlaceId = Long.MIN_VALUE;
+		} else {
+			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
+		}
 
+		setUpMapIfNeeded();
+		initLoader(false, PlacesLoader.LOAD_ALL_PLACES, "");
+	}
+
+	private void initLoader(boolean isRestart, int action, String argument) {
 		Bundle args = new Bundle();
-		args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_ALL_PLACES);
-		getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
+		args.putInt(PlacesLoader.EXTRA_ACTION, action);
+		args.putString(PlacesLoader.EXTRA_ARGUMENT, argument);
+		if (isRestart) {
+			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
+		} else {
+			getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mCurrentPlaceId > 0) {
+			// if null let it crash here
+			outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
+		}
 	}
 
 	private void setUpMapIfNeeded() {
@@ -109,6 +149,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 			// Check if we were successful in obtaining the map.
 			if (mMap != null) {
+				mMap.clear();
 				setUpMap();
 			}
 		}
@@ -118,12 +159,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		if (null == mMap) {
-			Log.e(TAG, "Could not set up GoogleMap - null");
-			return;
-		}
-		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-		mapFragment.setRetainInstance(true);
 		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
 		mMap.setOnMapClickListener(new MapClickListener());
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
@@ -136,6 +171,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void zoomMapOnStart() {
+		if (mCurrentPlaceId > 0) {
+			// Map should animate to current marker, no need to zoom to bounds.
+			return;
+		}
 		final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
 		if (mapView.getViewTreeObserver().isAlive()) {
 			mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -202,7 +241,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Bundle args = new Bundle();
 			args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_PLACES_BY_SEARCH);
-			args.putString(PlacesLoader.EXTRA_ARG, query);
+			args.putString(PlacesLoader.EXTRA_ARGUMENT, query);
 			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
@@ -218,9 +257,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public void onBackPressed() {
-		if (!mDetailsVisible && null != mCurrentMarker) {
-			mCurrentMarker.hideInfoWindow();
-			mCurrentMarker = null;
+		if (!mDetailsVisible && mCurrentPlaceId > 0) {
+			Marker marker = mMarkers.get(mCurrentPlaceId);
+			marker.hideInfoWindow();
+			mCurrentPlaceId = Long.MIN_VALUE;
 			hideSearchResultsPager();
 		} else {
 			super.onBackPressed();
@@ -256,7 +296,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			marker.showInfoWindow();
 		} else {
 			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), CAMERA_ANIMATION_LENGTH,
-					new ZoomAnimationCalback(marker));
+					new MapCameraAnimationCalback(marker));
 		}
 	}
 
@@ -266,8 +306,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param marker
 	 */
 	private void handleMarker(final Marker marker) {
-		mCurrentMarker = marker;
 		Place place = mMarkersData.get(marker);
+		mCurrentPlaceId = place.getId();
 		int pos = mSearchResultAdapter.getItemPosition(place);
 		mViewPager.setCurrentItem(pos);
 		showSearchResultsPager();
@@ -311,8 +351,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
 		if (PLACES_LOADER == id) {
 			int action = bundle.getInt(PlacesLoader.EXTRA_ACTION);
-			String arg = bundle.getString(PlacesLoader.EXTRA_ARG);
-			return new PlacesLoader(getApplicationContext(), action, arg);
+			String argument = bundle.getString(PlacesLoader.EXTRA_ARGUMENT);
+			return new PlacesLoader(getApplicationContext(), action, argument);
 		}
 		return null;
 	}
@@ -320,7 +360,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
 		if (PLACES_LOADER == loader.getId()) {
-			mCurrentMarker = null;
 			int action = data.mAction;
 			if (PlacesLoader.LOAD_ALL_PLACES == action) {
 				setUpMarkers(data.mPlaces);
@@ -355,6 +394,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 			} else {
 				Log.e(TAG, "Invalid PlacesLoader action: " + action);
+				throw new IllegalArgumentException("Invalid PlacesLoader action: " + action);
+			}
+
+			// If marker should be "clicked" after load finished.
+			if (mCurrentPlaceId > 0 && !mMarkers.isEmpty()) {
+				goToMarker(mMarkers.get(mCurrentPlaceId));
 			}
 		}
 
@@ -363,6 +408,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoaderReset(Loader<PlacesList> loader) {
 		if (PLACES_LOADER == loader.getId()) {
+			mCurrentPlaceId = Long.MIN_VALUE;
 			mMap.clear();
 			mMarkers.clear();
 			mMarkersData.clear();
@@ -375,19 +421,21 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @author lecho
 	 * 
 	 */
-	private class ZoomAnimationCalback implements GoogleMap.CancelableCallback {
+	private class MapCameraAnimationCalback implements GoogleMap.CancelableCallback {
 		private Marker mMarker;
 
-		public ZoomAnimationCalback(Marker marker) {
+		public MapCameraAnimationCalback(Marker marker) {
 			mMarker = marker;
 		}
 
 		@Override
 		public void onCancel() {
+			Log.e(TAG, "Animation canceled");
 		}
 
 		@Override
 		public void onFinish() {
+			Log.e(TAG, "Animation finished");
 			handleMarker(mMarker);
 			mMarker.showInfoWindow();
 		}
@@ -446,7 +494,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onMapClick(LatLng latLng) {
-			mCurrentMarker = null;
+			mCurrentPlaceId = Long.MIN_VALUE;
 			hideSearchResultsPager();
 
 		}
@@ -463,8 +511,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionExpand(MenuItem item) {
-			if (null != mCurrentMarker) {
-				mCurrentMarker.hideInfoWindow();
+			if (mCurrentPlaceId > 0) {
+				Marker marker = mMarkers.get(mCurrentPlaceId);
+				marker.hideInfoWindow();
+				mCurrentPlaceId = Long.MIN_VALUE;
 				hideSearchResultsPager();
 			}
 			return true;
@@ -472,10 +522,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			if (null == mCurrentMarker) {
-				Bundle args = new Bundle();
-				args.putInt(PlacesLoader.EXTRA_ACTION, PlacesLoader.LOAD_ALL_PLACES);
-				getSupportLoaderManager().restartLoader(PLACES_LOADER, args, CampusMapActivity.this);
+			if (mCurrentPlaceId < 1) {
+				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
 			}
 			return true;
 		}

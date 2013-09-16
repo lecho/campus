@@ -19,8 +19,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 /**
- * Loads Places from database, name, symbol etc. Loader doesn't watch for
- * changes in database, there's no need for that in this app.
+ * Loads Places from database, name, symbol etc. Loader doesn't watch for changes in database, there's no need for that
+ * in this app.
  * 
  * Implementation based on sample from android sdk documentation.
  * 
@@ -30,7 +30,7 @@ import android.util.Log;
 public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private static final String TAG = "PlacesLoader";
 	public static final String EXTRA_ACTION = "lecho.app.campus:ACTION";
-	public static final String EXTRA_ARG = "lecho.app.campus:ARG";
+	public static final String EXTRA_ARGUMENT = "lecho.app.campus:ARG";
 	// No args
 	public static final int LOAD_ALL_PLACES = 1;
 	// One arg - category id
@@ -58,12 +58,12 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private DaoSession mDaoSession;
 	private PlacesList mData;
 	private int mAction;
-	private String mArg;
+	private String mArgument;
 
 	public PlacesLoader(Context context, int action, String arg) {
 		super(context);
 		mAction = action;
-		mArg = arg;
+		mArgument = arg;
 	}
 
 	@Override
@@ -80,21 +80,21 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			break;
 		case LOAD_PLACES_BY_CATEGORY:
 			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "Loading places by category with arguments " + mArg);
+				Log.d(TAG, "Loading places by category with arguments " + mArgument);
 			}
-			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_CATEGORY, mArg);
+			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_CATEGORY, mArgument);
 			break;
 		case LOAD_PLACES_BY_FACULTY:
 			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "Loading places by faculty with arguments " + mArg);
+				Log.d(TAG, "Loading places by faculty with arguments " + mArgument);
 			}
-			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_FACULTY, mArg);
+			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_FACULTY, mArgument);
 			break;
 		case LOAD_PLACES_BY_SEARCH:
 			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "Loading places by search with arguments " + mArg);
+				Log.d(TAG, "Loading places by search with arguments " + mArgument);
 			}
-			StringBuilder sb = new StringBuilder("%").append(mArg).append("%");
+			StringBuilder sb = new StringBuilder("%").append(mArgument).append("%");
 			String arg = sb.toString();
 			String[] args = new String[5];
 			Arrays.fill(args, arg);
@@ -111,9 +111,8 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	}
 
 	/**
-	 * Called when there is new data to deliver to the client. The super class
-	 * will take care of delivering it; the implementation here just adds a
-	 * little more logic.
+	 * Called when there is new data to deliver to the client. The super class will take care of delivering it; the
+	 * implementation here just adds a little more logic.
 	 */
 	@Override
 	public void deliverResult(PlacesList data) {
@@ -195,8 +194,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	}
 
 	/**
-	 * Helper function to take care of releasing resources associated with an
-	 * actively loaded data set.
+	 * Helper function to take care of releasing resources associated with an actively loaded data set.
 	 */
 	protected void onReleaseResources(PlacesList data) {
 		// TODO Check if this code is needed.
