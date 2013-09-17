@@ -264,6 +264,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onBackPressed() {
 		if (!mDetailsVisible && mCurrentPlaceId > 0) {
+			// If there is selected marker - clear that selection.
 			Marker marker = mMarkers.get(mCurrentPlaceId);
 			marker.hideInfoWindow();
 			mCurrentPlaceId = Long.MIN_VALUE;
@@ -340,6 +341,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public void onSearchResultClick(Long placeId) {
+		mDetailsVisible = true;
 		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(R.anim.slide_show, R.anim.slide_hide, R.anim.slide_show, R.anim.slide_hide);
@@ -350,7 +352,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mSearchMenuItem.setVisible(false);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		mDetailsVisible = true;
 	}
 
 	@Override
@@ -527,7 +528,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
 			// If user collapse search view return to all places.
-			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			if (!mDetailsVisible) {
+				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			}
 			return true;
 		}
 	}
