@@ -511,7 +511,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Clears search results after SearchView collapse.
+	 * Clears search results after SearchView collapse. All methods have to return true for SearchView to work properly.
 	 * 
 	 * @author Lecho
 	 * 
@@ -520,20 +520,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionExpand(MenuItem item) {
-			if (mCurrentPlaceId > 0) {
-				Marker marker = mMarkers.get(mCurrentPlaceId);
-				marker.hideInfoWindow();
-				mCurrentPlaceId = Long.MIN_VALUE;
-				hideSearchResultsPager();
-			}
+			// No action here.
 			return true;
 		}
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			if (mCurrentPlaceId < 1) {
-				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-			}
+			// If user collapse search view return to all places.
+			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
 			return true;
 		}
 	}
