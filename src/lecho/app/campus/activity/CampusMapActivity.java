@@ -65,6 +65,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
+	// TODO Hold mDetailsVisible in outState
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
@@ -100,27 +101,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
 
 		// SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-		// if (savedInstanceState == null) {
-		// // First incarnation of this activity.
-		// mapFragment.setRetainInstance(true);
-		// } else {
-		// // Reincarnated activity. The obtained map is the same map instance in the previous
-		// // activity life cycle. There is no need to reinitialize it.
-		// mMap = mapFragment.getMap();
-		// Long placeId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
-		// mCurrentMarker = mMarkers.get(placeId);
-		// }
 		if (savedInstanceState == null) {
+			// mapFragment.setRetainInstance(true);
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 		} else {
+			// mMap = mapFragment.getMap();
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
 		}
 
 		setUpMapIfNeeded();
-		initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 	}
 
 	private void initLoader(boolean isRestart, int action, String argument) {
@@ -140,6 +132,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// setUpMapIfNeeded();
 	}
 
 	@Override
@@ -158,10 +151,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 			// Check if we were successful in obtaining the map.
 			if (mMap != null) {
-				mMap.clear();
 				setUpMap();
 			}
 		}
+		initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 	}
 
 	/**
@@ -279,6 +272,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
 			return;
 		}
+		// mCurrentPlaceId = Long.MIN_VALUE;
 		mMap.clear();
 		mMarkers.clear();
 		mMarkersData.clear();
@@ -314,6 +308,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void handleMarker(final Marker marker) {
 		Place place = mMarkersData.get(marker);
+		if (null == place) {
+			// TODO Investigate this.
+			Log.e(TAG, "Cannot handle marker, null place associated with marker: " + marker.getTitle());
+			return;
+		}
 		mCurrentPlaceId = place.getId();
 		int pos = mSearchResultAdapter.getItemPosition(place);
 		mViewPager.setCurrentItem(pos);
