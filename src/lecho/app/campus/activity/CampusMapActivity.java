@@ -74,8 +74,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private SearchResultFragmentAdapter mSearchResultAdapter;
 	// Maps place ID to Marker
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
-	// Maps marker ID to Place
-	private HashMap<String, Place> mMarkersData = new HashMap<String, Place>();
+	// Maps marker to Place
+	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
 	private Long mCurrentPlaceId;
 	private int mCurrentLoaderAction;
 	private String mCurrentLoaderArgument;
@@ -285,7 +285,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
-			mMarkersData.put(marker.getId(), place);
+			mMarkersData.put(marker, place);
 		}
 	}
 
@@ -310,7 +310,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param marker
 	 */
 	private void handleMarker(final Marker marker) {
-		Place place = mMarkersData.get(marker.getId());
+		Place place = mMarkersData.get(marker);
 		if (null == place) {
 			// TODO Investigate this.
 			Log.e(TAG, "Cannot handle marker, null place associated with marker: " + marker.getTitle());
@@ -473,7 +473,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onInfoWindowClick(Marker marker) {
-			Place place = mMarkersData.get(marker.getId());
+			Place place = mMarkersData.get(marker);
 			onSearchResultClick(place.getId());
 
 		}
