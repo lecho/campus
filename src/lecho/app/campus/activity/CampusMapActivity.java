@@ -33,7 +33,6 @@ import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
@@ -252,19 +251,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return true;
 	}
 
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		menu.findItem(R.id.search).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
 			return true;
 		}
-		int id = item.getItemId();
-		// Only if place details are visible.
-		// if (id == android.R.id.home) {
-		// getSupportFragmentManager().popBackStack();
-		// return true;
-		// } else {
-		// return super.onOptionsItemSelected(item);
-		// }
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -398,10 +398,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		transaction.add(R.id.details, fragment);
 		transaction.addToBackStack(PlaceDetailsFragment.TAG);
 		transaction.commit();
-		mSearchMenuItem.collapseActionView();
-		mSearchMenuItem.setVisible(false);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -615,9 +611,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			int count = getSupportFragmentManager().getBackStackEntryCount();
 			if (0 == count) {
 				mDetailsVisible = false;
-				mSearchMenuItem.setVisible(true);
-				getSupportActionBar().setHomeButtonEnabled(false);
-				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 			}
 		}
 	}
@@ -668,6 +661,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
 				int openDrawerContentDescRes, int closeDrawerContentDescRes) {
 			super(activity, drawerLayout, drawerImageRes, openDrawerContentDescRes, closeDrawerContentDescRes);
+		}
+
+		@Override
+		public void onDrawerOpened(View drawerView) {
+			super.onDrawerOpened(drawerView);
+			supportInvalidateOptionsMenu();
+		}
+
+		@Override
+		public void onDrawerClosed(View drawerView) {
+			super.onDrawerClosed(drawerView);
+			supportInvalidateOptionsMenu();
 		}
 	}
 
