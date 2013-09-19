@@ -113,6 +113,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 
 		setUpMapIfNeeded();
+		initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 	}
 
 	private void initLoader(boolean isRestart, int action, String argument) {
@@ -154,7 +155,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				setUpMap();
 			}
 		}
-		initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 	}
 
 	/**
