@@ -5,6 +5,7 @@ import java.util.List;
 
 import lecho.app.campus.R;
 import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
+import lecho.app.campus.adapter.NavigationDrawerAdapter;
 import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
@@ -13,6 +14,7 @@ import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListene
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
+import lecho.app.campus.utils.NavigationDrawerItem;
 import lecho.app.campus.utils.PlacesList;
 import net.simonvt.messagebar.MessageBar;
 import net.simonvt.messagebar.MessageBar.OnMessageClickListener;
@@ -89,6 +91,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private boolean mDetailsVisible = false;
+	private static NavigationDrawerItem[] sNavigationItems = new NavigationDrawerItem[] {
+			new NavigationDrawerItem("Kampusy", true), new NavigationDrawerItem("Kampus A", false),
+			new NavigationDrawerItem("Kampus B", false), new NavigationDrawerItem("Kampus C", false),
+			new NavigationDrawerItem("Kampus D", false), new NavigationDrawerItem("Bydynki", true),
+			new NavigationDrawerItem("Administracyjne", false), new NavigationDrawerItem("Dydaktyczne", false),
+			new NavigationDrawerItem("Sportowe", false), new NavigationDrawerItem("Akademiki", false),
+			new NavigationDrawerItem("Inne", false), new NavigationDrawerItem("Wydziały", true),
+			new NavigationDrawerItem("EEIA", false), new NavigationDrawerItem("FTIMS", false),
+			new NavigationDrawerItem("BINOŻ", false), new NavigationDrawerItem("...", false), };
 
 	// Nav-Drawer related
 	private DrawerLayout mDrawerLayout;
@@ -107,8 +118,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// set up the drawer's list view with items and click listener
-		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-		// R.layout.drawer_list_item, mPlanetTitles));
+		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, sNavigationItems));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
