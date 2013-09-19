@@ -429,12 +429,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					mViewPager.setAdapter(mSearchResultAdapter);
 					// Zoom to show all results, chose first one as active
 					if (data.mPlaces.size() > 0) {
-						// final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
-						// if (mapView.getWidth() > 0 & mapView.getHeight() > 0) {
-						// Long placeId = data.mPlaces.get(0).getId();
-						// Marker marker = mMarkers.get(placeId);
-						// goToMarker(marker);
-						// }
 						if (mCurrentPlaceId < 0) {
 							// TODO NPE check.
 							mCurrentPlaceId = data.mPlaces.get(0).getId();
