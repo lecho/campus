@@ -65,16 +65,17 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
-	// TODO Hold mDetailsVisible in outState
+	private static final String EXTRA_DETAILS_VISIBLE = "lecho.app.campus:DETAILS_VISIBLE";
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
 	private MessageBar mMessageBar;
 	private SearchSuggestionAdapter mSearchSuggestionAdapter;
 	private SearchResultFragmentAdapter mSearchResultAdapter;
-	// TODO check WeakHashMap
+	// Maps place ID to Marker
 	private HashMap<Long, Marker> mMarkers = new HashMap<Long, Marker>();
-	private HashMap<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
+	// Maps marker ID to Place
+	private HashMap<String, Place> mMarkersData = new HashMap<String, Place>();
 	private Long mCurrentPlaceId;
 	private int mCurrentLoaderAction;
 	private String mCurrentLoaderArgument;
@@ -105,11 +106,13 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			// mapFragment.setRetainInstance(true);
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
+			mDetailsVisible = false;
 		} else {
 			// mMap = mapFragment.getMap();
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
+			mDetailsVisible = savedInstanceState.getBoolean(EXTRA_DETAILS_VISIBLE);
 		}
 
 		setUpMapIfNeeded();
@@ -142,6 +145,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		outState.putInt(EXTRA_CURRENT_LOADER_ACTION, mCurrentLoaderAction);
 		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
 		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
+		outState.putBoolean(EXTRA_DETAILS_VISIBLE, mDetailsVisible);
 	}
 
 	private void setUpMapIfNeeded() {
@@ -272,7 +276,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
 			return;
 		}
-		// mCurrentPlaceId = Long.MIN_VALUE;
 		mMap.clear();
 		mMarkers.clear();
 		mMarkersData.clear();
@@ -282,7 +285,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
-			mMarkersData.put(marker, place);
+			mMarkersData.put(marker.getId(), place);
 		}
 	}
 
@@ -307,7 +310,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param marker
 	 */
 	private void handleMarker(final Marker marker) {
-		Place place = mMarkersData.get(marker);
+		Place place = mMarkersData.get(marker.getId());
 		if (null == place) {
 			// TODO Investigate this.
 			Log.e(TAG, "Cannot handle marker, null place associated with marker: " + marker.getTitle());
@@ -470,7 +473,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onInfoWindowClick(Marker marker) {
-			Place place = mMarkersData.get(marker);
+			Place place = mMarkersData.get(marker.getId());
 			onSearchResultClick(place.getId());
 
 		}
