@@ -14,5 +14,7 @@
     <string name="image_view_loading_error">Nie mogłem załadować zdjęcia</string>
     <string name="image_view_loading_error_pity">Szkoda</string>
     <string name="go_to_google_maps">Przejdź do Map Google</string>
+    <string name="drawer_open">Otwórz lewe menu</string>
+    <string name="drawer_close">Zamknij lewe menu</string>
 
 </resources>

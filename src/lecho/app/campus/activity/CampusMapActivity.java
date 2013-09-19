@@ -11,26 +11,32 @@ import lecho.app.campus.dao.Place;
 import lecho.app.campus.fragment.PlaceDetailsFragment;
 import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
 import lecho.app.campus.loader.PlacesLoader;
+import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlacesList;
 import net.simonvt.messagebar.MessageBar;
 import net.simonvt.messagebar.MessageBar.OnMessageClickListener;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -38,6 +44,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -83,6 +91,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Animation mSearchResultsPagerHideAnim;
 	private boolean mDetailsVisible = false;
 
+	// Nav-Drawer related
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +104,22 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 		Log.i(TAG, "connection result: " + playServicesStatus);
 
+		// *** Navi-Drawer
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		// set up the drawer's list view with items and click listener
+		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+		// R.layout.drawer_list_item, mPlanetTitles));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new DrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close);
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		// ***
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
 		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
@@ -137,6 +166,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	protected void onResume() {
 		super.onResume();
 		// setUpMapIfNeeded();
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
 	@Override
@@ -211,12 +254,17 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		// Only if place details are visible.
-		if (id == android.R.id.home) {
-			getSupportFragmentManager().popBackStack();
+		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
 			return true;
 		}
+		int id = item.getItemId();
+		// Only if place details are visible.
+		// if (id == android.R.id.home) {
+		// getSupportFragmentManager().popBackStack();
+		// return true;
+		// } else {
+		// return super.onOptionsItemSelected(item);
+		// }
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -602,6 +650,25 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			}
 		}
 
+	}
+
+	/**
+	 * The click listner for ListView in the navigation drawer
+	 * */
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			// selectItem(position);
+			// TODO IMPLEMENT
+		}
+	}
+
+	private class DrawerToggle extends ActionBarDrawerToggle {
+
+		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
+				int openDrawerContentDescRes, int closeDrawerContentDescRes) {
+			super(activity, drawerLayout, drawerImageRes, openDrawerContentDescRes, closeDrawerContentDescRes);
+		}
 	}
 
 }
