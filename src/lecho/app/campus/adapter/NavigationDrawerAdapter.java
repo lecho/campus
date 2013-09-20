@@ -25,23 +25,18 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 		}
 
 		TextView tv = (TextView) convertView.findViewById(R.id.text);
-		tv.setText(getItem(position).label);
+		tv.setText(getContext().getString(getItem(position).stringRes));
 		return convertView;
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		NavigationDrawerItem item = getItem(position);
-		if (item.isTitle) {
-			return 0;
-		} else {
-			return 1;
-		}
+		return getItem(position).type;
 	}
 
 	@Override
 	public int getViewTypeCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override

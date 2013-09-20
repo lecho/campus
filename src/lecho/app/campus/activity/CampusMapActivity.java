@@ -91,15 +91,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private boolean mDetailsVisible = false;
-	private static NavigationDrawerItem[] sNavigationItems = new NavigationDrawerItem[] {
-			new NavigationDrawerItem("Kampusy", true), new NavigationDrawerItem("Kampus A", false),
-			new NavigationDrawerItem("Kampus B", false), new NavigationDrawerItem("Kampus C", false),
-			new NavigationDrawerItem("Kampus D", false), new NavigationDrawerItem("Bydynki", true),
-			new NavigationDrawerItem("Administracyjne", false), new NavigationDrawerItem("Dydaktyczne", false),
-			new NavigationDrawerItem("Sportowe", false), new NavigationDrawerItem("Akademiki", false),
-			new NavigationDrawerItem("Inne", false), new NavigationDrawerItem("Wydziały", true),
-			new NavigationDrawerItem("EEIA", false), new NavigationDrawerItem("FTIMS", false),
-			new NavigationDrawerItem("BINOŻ", false), new NavigationDrawerItem("...", false), };
 
 	// Nav-Drawer related
 	private DrawerLayout mDrawerLayout;
@@ -118,7 +109,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, sNavigationItems));
+		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -410,6 +401,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		transaction.commit();
 	}
 
+	private void selectDrawerItem(int position) {
+		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
+		initLoader(true, item.action, item.argument);
+		// update selected item and title, then close the drawer
+		mDrawerList.setItemChecked(position, true);
+		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
 	@Override
 	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
 		if (PLACES_LOADER == id) {
@@ -449,9 +448,19 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					}
 				}
 			} else if (PlacesLoader.LOAD_PLACES_BY_CATEGORY == action) {
-
+				setUpMarkers(data.mPlaces);
+				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
+				if (null != mViewPager) {
+					hideSearchResultsPager();
+					mViewPager.setAdapter(mSearchResultAdapter);
+				}
 			} else if (PlacesLoader.LOAD_PLACES_BY_FACULTY == action) {
-
+				setUpMarkers(data.mPlaces);
+				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
+				if (null != mViewPager) {
+					hideSearchResultsPager();
+					mViewPager.setAdapter(mSearchResultAdapter);
+				}
 			} else {
 				Log.e(TAG, "Invalid PlacesLoader action: " + action);
 				throw new IllegalArgumentException("Invalid PlacesLoader action: " + action);
@@ -655,8 +664,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// selectItem(position);
-			// TODO IMPLEMENT
+			selectDrawerItem(position);
 		}
 	}
 
