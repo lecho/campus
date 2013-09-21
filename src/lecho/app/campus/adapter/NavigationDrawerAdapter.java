@@ -20,7 +20,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 			if (0 == getItemViewType(position)) {
 				convertView = View.inflate(getContext(), R.layout.item_title_navigation_drawer, null);
 			} else {
-				convertView = View.inflate(getContext(), R.layout.item_navigation_drawer, null);
+				convertView = View.inflate(getContext(), R.layout.item_under_title_navigation_drawer, null);
 			}
 		}
 

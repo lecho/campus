@@ -75,6 +75,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
 	private static final String EXTRA_DETAILS_VISIBLE = "lecho.app.campus:DETAILS_VISIBLE";
+	private static final String EXTRA_CURRENT_DRAWER_ITEM = "lecho.app.campus:CURRENT_DRAWER_ITEM";
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
@@ -96,6 +97,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private int mCurrentDrawerItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,12 +138,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 			mDetailsVisible = false;
+			mCurrentDrawerItem = Integer.MIN_VALUE;
 		} else {
 			// mMap = mapFragment.getMap();
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
 			mDetailsVisible = savedInstanceState.getBoolean(EXTRA_DETAILS_VISIBLE);
+			mCurrentDrawerItem = savedInstanceState.getInt(EXTRA_CURRENT_DRAWER_ITEM);
 		}
 
 		setUpMapIfNeeded();
@@ -189,6 +193,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
 		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
 		outState.putBoolean(EXTRA_DETAILS_VISIBLE, mDetailsVisible);
+		outState.putInt(EXTRA_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
 	}
 
 	private void setUpMapIfNeeded() {
@@ -403,9 +408,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	private void selectDrawerItem(int position) {
 		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
-		initLoader(true, item.action, item.argument);
-		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position, true);
+		if (position == mCurrentDrawerItem) {
+			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			mDrawerList.setItemChecked(position, false);
+			mCurrentDrawerItem = Integer.MIN_VALUE;
+		} else {
+			initLoader(true, item.action, item.argument);
+			mDrawerList.setItemChecked(position, true);
+			mCurrentDrawerItem = position;
+		}
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
