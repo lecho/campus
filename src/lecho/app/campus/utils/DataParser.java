@@ -148,8 +148,8 @@ public class DataParser {
 					category.setId(Long.valueOf(xpp.nextText().trim()));
 				} else if (NAME.equals(xpp.getName())) {
 					category.setName(xpp.nextText().trim());
-				} else if (SYMBOL.equals(xpp.getName())) {
-					category.setSymbol(xpp.nextText().trim());
+				} else if (SHORT_NAME.equals(xpp.getName())) {
+					category.setShortName(xpp.nextText().trim());
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (CATEGORY.equals(xpp.getName())) {
@@ -240,7 +240,7 @@ public class DataParser {
 				} else if (LATITUDE.equals(xpp.getName())) {
 					place.setLatitude(Double.valueOf(xpp.nextText().trim()));
 				} else if (LONGTITUDE.equals(xpp.getName())) {
-					place.setLongtitude(Double.valueOf(xpp.nextText().trim()));
+					place.setLongitude(Double.valueOf(xpp.nextText().trim()));
 				} else if (PLACE_CATEGORY.equals(xpp.getName())) {
 					if (null == place) {
 						throw new IllegalStateException(

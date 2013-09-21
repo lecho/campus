@@ -180,7 +180,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 	private void prepareGoToGMapsLink(PlaceDetails data) {
 		double latitude = data.place.getLatitude();
-		double longitude = data.place.getLongtitude();
+		double longitude = data.place.getLongitude();
 
 		TextView gMapsLink = new TextView(getActivity());
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

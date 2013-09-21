@@ -4,17 +4,17 @@
 		<category>
 			<id>1</id>
 			<name>category1</name>
-			<symbol>cat1</symbol>
+			<short_name>cat1</short_name>
 		</category>
 		<category>
 			<id>2</id>
 			<name>category2</name>
-			<symbol>cat2</symbol>
+			<short_name>cat2</short_name>
 		</category>		
 		<category>
 			<id>3</id>
 			<name>category3</name>
-			<symbol>cat3</symbol>
+			<short_name>cat3</short_name>
 		</category>
 	</categories>
 	<faculties>

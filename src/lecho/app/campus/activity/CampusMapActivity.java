@@ -334,7 +334,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMarkers.clear();
 		mMarkersData.clear();
 		for (Place place : places) {
-			LatLng latLng = new LatLng(place.getLatitude(), place.getLongtitude());
+			LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default)).title(place.getSymbol())
 					.snippet(place.getDescription()));
