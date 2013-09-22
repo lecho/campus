@@ -9,7 +9,6 @@ import lecho.app.campus.adapter.NavigationDrawerAdapter;
 import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
-import lecho.app.campus.fragment.PlaceDetailsFragment;
 import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.ABSMenuItemConverter;
@@ -30,9 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -74,7 +70,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
-	private static final String EXTRA_DETAILS_VISIBLE = "lecho.app.campus:DETAILS_VISIBLE";
 	private static final String EXTRA_CURRENT_DRAWER_ITEM = "lecho.app.campus:CURRENT_DRAWER_ITEM";
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
@@ -91,7 +86,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private String mCurrentLoaderArgument;
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
-	private boolean mDetailsVisible = false;
 
 	// Nav-Drawer related
 	private DrawerLayout mDrawerLayout;
@@ -129,22 +123,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mSearchResultsPagerHideAnim.setAnimationListener(new HideSearchResultAnimationListener());
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
-		// Listen when user hides details fragment to show search menu on action bar
-		getSupportFragmentManager().addOnBackStackChangedListener(new BackStackChangeListener());
 
 		// SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		if (savedInstanceState == null) {
 			// mapFragment.setRetainInstance(true);
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
-			mDetailsVisible = false;
 			mCurrentDrawerItem = Integer.MIN_VALUE;
 		} else {
 			// mMap = mapFragment.getMap();
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
-			mDetailsVisible = savedInstanceState.getBoolean(EXTRA_DETAILS_VISIBLE);
 			mCurrentDrawerItem = savedInstanceState.getInt(EXTRA_CURRENT_DRAWER_ITEM);
 		}
 
@@ -192,7 +182,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		outState.putInt(EXTRA_CURRENT_LOADER_ACTION, mCurrentLoaderAction);
 		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
 		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
-		outState.putBoolean(EXTRA_DETAILS_VISIBLE, mDetailsVisible);
 		outState.putInt(EXTRA_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
 	}
 
@@ -314,7 +303,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public void onBackPressed() {
-		if (!mDetailsVisible && mCurrentPlaceId > 0) {
+		if (mCurrentPlaceId > 0) {
 			// If there is selected marker - clear that selection.
 			Marker marker = mMarkers.get(mCurrentPlaceId);
 			marker.hideInfoWindow();
@@ -397,13 +386,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public void onSearchResultClick(Long placeId) {
-		mDetailsVisible = true;
-		Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(R.anim.slide_show, R.anim.slide_hide, R.anim.slide_show, R.anim.slide_hide);
-		transaction.add(R.id.details, fragment);
-		transaction.addToBackStack(PlaceDetailsFragment.TAG);
-		transaction.commit();
+		Intent intent = new Intent(this, PlaceDetailsActivity.class);
+		intent.putExtra(Config.EXTRA_PLACE_ID, placeId);
+		startActivity(intent);
+		// Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
+		// FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		// transaction.setCustomAnimations(R.anim.slide_show, R.anim.slide_hide, R.anim.slide_show, R.anim.slide_hide);
+		// transaction.add(R.id.details, fragment);
+		// transaction.addToBackStack(PlaceDetailsFragment.TAG);
+		// transaction.commit();
 	}
 
 	private void selectDrawerItem(int position) {
@@ -598,9 +589,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
 			// If user collapse search view return to all places.
-			if (!mDetailsVisible) {
-				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-			}
+			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
 			return true;
 		}
 	}
@@ -620,23 +609,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			}
 		}
 
-	}
-
-	/**
-	 * Restores SearchView and hides home menu when user go back from details.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
-	private class BackStackChangeListener implements OnBackStackChangedListener {
-
-		@Override
-		public void onBackStackChanged() {
-			int count = getSupportFragmentManager().getBackStackEntryCount();
-			if (0 == count) {
-				mDetailsVisible = false;
-			}
-		}
 	}
 
 	private class HideSearchResultAnimationListener implements AnimationListener {
