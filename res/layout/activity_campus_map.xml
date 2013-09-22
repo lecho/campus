@@ -40,6 +40,7 @@
         android:choiceMode="singleChoice"
         android:divider="@color/background"
         android:dividerHeight="1px"
+        android:paddingTop="?attr/actionBarSize"
         tools:ignore="PxUsage" />
 
 </android.support.v4.widget.DrawerLayout>

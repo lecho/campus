@@ -15,6 +15,7 @@ import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.NavigationDrawerItem;
 import lecho.app.campus.utils.PlacesList;
+import lecho.app.campus.utils.Utils;
 import net.simonvt.messagebar.MessageBar;
 import net.simonvt.messagebar.MessageBar.OnMessageClickListener;
 import android.annotation.SuppressLint;
@@ -35,6 +36,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -48,6 +50,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
+import com.actionbarsherlock.view.Window;
 import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -96,6 +99,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// TODO Move to activity theme.
+		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		setContentView(R.layout.activity_campus_map);
 
 		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
@@ -139,7 +144,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 
 		setUpMapIfNeeded();
-		initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 	}
 
 	private void initLoader(boolean isRestart, int action, String argument) {
@@ -159,7 +163,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// setUpMapIfNeeded();
+		setUpMapIfNeeded();
 	}
 
 	@Override
@@ -194,6 +198,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			// Check if we were successful in obtaining the map.
 			if (mMap != null) {
 				setUpMap();
+				initLoader(false, mCurrentLoaderAction, mCurrentLoaderArgument);
 			}
 		}
 	}
@@ -207,10 +212,21 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
 		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		mMap.setMyLocationEnabled(true);
 		mMap.getUiSettings().setMyLocationButtonEnabled(true);
-		mMap.getUiSettings().setZoomControlsEnabled(false);
+		mMap.setMyLocationEnabled(true);
+		int actionBarHeight = getActionBarHeight();
+		mMap.setPadding(0, actionBarHeight, 0, 0);
 		zoomMapOnStart();
+	}
+
+	// Returns current ActionBar height.
+	private int getActionBarHeight() {
+		TypedValue tv = new TypedValue();
+		int actionBarHeight = 0;
+		if (getTheme().resolveAttribute(com.actionbarsherlock.R.attr.actionBarSize, tv, true)) {
+			actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+		}
+		return actionBarHeight;
 	}
 
 	private void zoomMapOnStart() {
@@ -355,7 +371,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void handleMarker(final Marker marker) {
 		Place place = mMarkersData.get(marker);
 		if (null == place) {
-			// TODO Investigate this.
 			Log.e(TAG, "Cannot handle marker, null place associated with marker: " + marker.getTitle());
 			return;
 		}
@@ -389,12 +404,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		Intent intent = new Intent(this, PlaceDetailsActivity.class);
 		intent.putExtra(Config.EXTRA_PLACE_ID, placeId);
 		startActivity(intent);
-		// Fragment fragment = PlaceDetailsFragment.newInstance(placeId);
-		// FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		// transaction.setCustomAnimations(R.anim.slide_show, R.anim.slide_hide, R.anim.slide_show, R.anim.slide_hide);
-		// transaction.add(R.id.details, fragment);
-		// transaction.addToBackStack(PlaceDetailsFragment.TAG);
-		// transaction.commit();
 	}
 
 	private void selectDrawerItem(int position) {
