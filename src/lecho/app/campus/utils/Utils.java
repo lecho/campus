@@ -3,6 +3,7 @@ package lecho.app.campus.utils;
 import java.io.File;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -93,6 +95,22 @@ public final class Utils {
 		// Convert the dps to pixels, based on density scale
 		return (int) (dp * scale + 0.5f);
 
+	}
+
+	/**
+	 * Returns current ActionBar height for given activity.
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	public static int getActionBarHeight(Activity activity) {
+		TypedValue tv = new TypedValue();
+		int actionBarHeight = 0;
+		if (activity.getTheme().resolveAttribute(com.actionbarsherlock.R.attr.actionBarSize, tv, true)) {
+			actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources()
+					.getDisplayMetrics());
+		}
+		return actionBarHeight;
 	}
 
 	public static String getPlaceImagesDir(String symbol) {
