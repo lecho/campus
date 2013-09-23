@@ -131,14 +131,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		mSearchResultSize = getResources().getDimensionPixelSize(R.dimen.search_result_height);
 
-		//SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		if (savedInstanceState == null) {
-			//mapFragment.setRetainInstance(true);
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 			mCurrentDrawerItem = Integer.MIN_VALUE;
 		} else {
-			//mMap = mapFragment.getMap();
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
@@ -195,7 +192,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * Sets up markers and map listeners
 	 */
 	private void setUpMap() {
-		Log.e(TAG, "settting map");
 		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
 		mMap.setOnMapClickListener(new MapClickListener());
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
@@ -213,7 +209,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		args.putInt(PlacesLoader.EXTRA_ACTION, action);
 		args.putString(PlacesLoader.EXTRA_ARGUMENT, argument);
 		if (isRestart) {
-			mCurrentPlaceId = Long.MIN_VALUE;
 			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
 		} else {
 			getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
@@ -280,7 +275,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// Search view preparation Workaround for but http://code.google.com/p/android/issues/detail?id=25758
 		mSearchMenuItem = menu.findItem(R.id.search);
 		mSearchMenuItem.setOnActionExpandListener(new SearchViewExpandListener());
-
 		SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
 		searchView.setSearchableInfo(searchableInfo);
@@ -295,13 +289,26 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			// Handle search button click
 			String query = intent.getStringExtra(SearchManager.QUERY);
+			mCurrentPlaceId = Long.MIN_VALUE;
+			clearCurrentDrawerItem();
 			initLoader(true, PlacesLoader.LOAD_PLACES_BY_SEARCH, query);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
 			try {
 				Uri data = intent.getData();
-				Long id = Long.parseLong(data.getLastPathSegment());
-				goToMarker(mMarkers.get(id));
+				Long placeId = Long.parseLong(data.getLastPathSegment());
+				Marker marker = mMarkers.get(placeId);
+				if (null == marker && mCurrentDrawerItem >= 0) {
+					// Marker is not currently visible, probably drawer item is selected, clear drawer item selection
+					// and
+					// load all places.
+					mCurrentPlaceId = placeId;
+					clearCurrentDrawerItem();
+					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+				} else {
+					// Just go to selected marker.
+					goToMarker(mMarkers.get(placeId));
+				}
 			} catch (NumberFormatException e) {
 				Log.e(TAG, "Could not find marker for place", e);
 			}
@@ -326,7 +333,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
 			return;
 		}
-		Log.e(TAG, "setting markers");
 		mMap.clear();
 		mMarkers.clear();
 		mMarkersData.clear();
@@ -346,6 +352,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param marker
 	 */
 	private void goToMarker(final Marker marker) {
+		if (null == marker) {
+			Log.e(TAG, "Cannot go to NULL smarker");
+			return;
+		}
 		if (mMap.getCameraPosition().target.equals(marker.getPosition())) {
 			handleMarker(marker);
 			marker.showInfoWindow();
@@ -363,7 +373,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void handleMarker(final Marker marker) {
 		Place place = mMarkersData.get(marker);
 		if (null == place) {
-			Log.e(TAG, "Cannot handle marker, null place associated with marker: " + marker.getTitle());
+			Log.e(TAG, "Cannot handle marker, NULL place associated with marker: " + marker.getTitle());
 			return;
 		}
 		mCurrentPlaceId = place.getId();
@@ -403,15 +413,19 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void selectDrawerItem(int position) {
 		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
 		if (position == mCurrentDrawerItem) {
+			clearCurrentDrawerItem();
 			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-			mDrawerList.setItemChecked(position, false);
-			mCurrentDrawerItem = Integer.MIN_VALUE;
 		} else {
 			initLoader(true, item.action, item.argument);
 			mDrawerList.setItemChecked(position, true);
 			mCurrentDrawerItem = position;
 		}
 		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
+	private void clearCurrentDrawerItem() {
+		mDrawerList.setItemChecked(mCurrentDrawerItem, false);
+		mCurrentDrawerItem = Integer.MIN_VALUE;
 	}
 
 	@Override
@@ -429,7 +443,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			int action = data.mAction;
 			if (PlacesLoader.LOAD_ALL_PLACES == action) {
-				Log.e(TAG, "Loading data and seting markers");
 				setUpMarkers(data.mPlaces);
 				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
 				if (null != mViewPager) {
@@ -505,12 +518,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onCancel() {
-			Log.e(TAG, "Animation canceled");
 		}
 
 		@Override
 		public void onFinish() {
-			Log.e(TAG, "Animation finished");
 			handleMarker(mMarker);
 			mMarker.showInfoWindow();
 		}
@@ -598,8 +609,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			// If user collapse search view return to all places.
-			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			// If user collapse search view *after search was performed* return to all places.
+			if (mCurrentLoaderAction == PlacesLoader.LOAD_PLACES_BY_SEARCH) {
+				mCurrentPlaceId = Long.MIN_VALUE;
+				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			}
 			return true;
 		}
 	}
