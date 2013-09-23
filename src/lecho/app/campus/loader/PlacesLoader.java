@@ -22,7 +22,7 @@ import android.util.Log;
 
 /**
  * Loads Places from database, name, symbol etc. Loader doesn't watch for changes in database, there's no need for that
- * in this app.
+ * in this app. Loader will never return null data;
  * 
  * Implementation based on sample from android sdk documentation.
  * 

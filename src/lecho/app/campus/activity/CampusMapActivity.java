@@ -68,7 +68,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		OnSearchResultClickListener {
 	private static final String TAG = "CampusMapActivity";
 	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
-	private static final int CAMERA_ANIMATION_LENGTH = 500;
+	private static final int CAMERA_ANIMATION_DURATION = 500;
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
@@ -227,18 +227,22 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				@SuppressLint("NewApi")
 				@Override
 				public void onGlobalLayout() {
-					LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
-					LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
-					LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
 					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 						mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 					} else {
 						mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
-					mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+					zoomMapToDefault();
 				}
 			});
 		}
+	}
+
+	private void zoomMapToDefault() {
+		LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
+		LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
+		LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
+		mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50), CAMERA_ANIMATION_DURATION, null);
 	}
 
 	@Override
@@ -360,7 +364,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			handleMarker(marker);
 			marker.showInfoWindow();
 		} else {
-			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), CAMERA_ANIMATION_LENGTH,
+			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), CAMERA_ANIMATION_DURATION,
 					new MapCameraAnimationCalback(marker));
 		}
 	}
@@ -411,6 +415,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void selectDrawerItem(int position) {
+		mCurrentPlaceId = Long.MIN_VALUE;
 		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
 		if (position == mCurrentDrawerItem) {
 			clearCurrentDrawerItem();
@@ -443,54 +448,46 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (PLACES_LOADER == loader.getId()) {
 			int action = data.mAction;
 			if (PlacesLoader.LOAD_ALL_PLACES == action) {
-				setUpMarkers(data.mPlaces);
-				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
-				if (null != mViewPager) {
-					hideSearchResultsPager();
-					mViewPager.setAdapter(mSearchResultAdapter);
-				}
+				handleLoaderResult(data);
 			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
-				setUpMarkers(data.mPlaces);
-				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
-				if (null != mViewPager) {
-					showSearchResultsPager();
-					mViewPager.setAdapter(mSearchResultAdapter);
-					// TODO Zoom to show all results, chose first one as active
-					if (data.mPlaces.size() > 0) {
-						if (mCurrentPlaceId < 0) {
-							// TODO NPE check.
-							mCurrentPlaceId = data.mPlaces.get(0).getId();
-						}
-					} else {
-						mMessageBar.show(getString(R.string.search_no_results),
-								getString(R.string.search_no_results_back));
+				handleLoaderResult(data);
+				if (data.mPlaces.size() > 0) {
+					if (mCurrentPlaceId < 0) {
+						mCurrentPlaceId = data.mPlaces.get(0).getId();
 					}
+				} else {
+					mMessageBar.show(getString(R.string.search_no_results), getString(R.string.search_no_results_back));
 				}
 			} else if (PlacesLoader.LOAD_PLACES_BY_CATEGORY == action) {
-				setUpMarkers(data.mPlaces);
-				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
-				if (null != mViewPager) {
-					hideSearchResultsPager();
-					mViewPager.setAdapter(mSearchResultAdapter);
-				}
+				handleLoaderResult(data);
 			} else if (PlacesLoader.LOAD_PLACES_BY_FACULTY == action) {
-				setUpMarkers(data.mPlaces);
-				mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
-				if (null != mViewPager) {
-					hideSearchResultsPager();
-					mViewPager.setAdapter(mSearchResultAdapter);
-				}
+				handleLoaderResult(data);
 			} else {
 				Log.e(TAG, "Invalid PlacesLoader action: " + action);
 				throw new IllegalArgumentException("Invalid PlacesLoader action: " + action);
 			}
-
 			// If marker should be "clicked" after load finished.
 			if (mCurrentPlaceId > 0 && !mMarkers.isEmpty()) {
 				goToMarker(mMarkers.get(mCurrentPlaceId));
+			} else {
+				if (null != mViewPager) {
+					hideSearchResultsPager();
+					final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
+					if (mapView.getWidth() > 0 && mapView.getHeight() > 0) {
+						zoomMapToDefault();
+					}
+				}
 			}
 		}
 
+	}
+
+	private void handleLoaderResult(PlacesList data) {
+		setUpMarkers(data.mPlaces);
+		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
+		if (null != mViewPager) {
+			mViewPager.setAdapter(mSearchResultAdapter);
+		}
 	}
 
 	@Override
