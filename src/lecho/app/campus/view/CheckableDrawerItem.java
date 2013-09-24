@@ -50,8 +50,10 @@ public class CheckableDrawerItem extends RelativeLayout implements Checkable {
 	private void toggleBackground() {
 		if (mIsChecked) {
 			setBackgroundResource(R.color.holo_blue_dark);
+			mTextView.setTextColor(getContext().getResources().getColor(R.color.light_text));
 		} else {
 			setBackgroundResource(R.color.transparent);
+			mTextView.setTextColor(getContext().getResources().getColor(R.color.dark_text));
 		}
 	}
 }

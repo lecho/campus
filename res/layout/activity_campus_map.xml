@@ -8,8 +8,7 @@
     <RelativeLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize" >
+        android:layout_height="match_parent" >
 
         <fragment
             android:id="@+id/map"
@@ -35,7 +34,9 @@
         android:choiceMode="singleChoice"
         android:divider="@color/background"
         android:dividerHeight="1px"
-        android:paddingTop="?attr/actionBarSize"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:scrollbars="none"
         tools:ignore="PxUsage" />
 
 </android.support.v4.widget.DrawerLayout>

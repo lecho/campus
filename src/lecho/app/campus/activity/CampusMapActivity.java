@@ -49,7 +49,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
-import com.actionbarsherlock.view.Window;
 import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -99,8 +98,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO Move to activity theme.
-		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		setContentView(R.layout.activity_campus_map);
 
 		// TODO Check google play services.
@@ -415,6 +412,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void selectDrawerItem(int position) {
+		mDrawerLayout.closeDrawer(mDrawerList);
 		mCurrentPlaceId = Long.MIN_VALUE;
 		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
 		if (position == mCurrentDrawerItem) {
@@ -425,7 +423,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mDrawerList.setItemChecked(position, true);
 			mCurrentDrawerItem = position;
 		}
-		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	private void clearCurrentDrawerItem() {
