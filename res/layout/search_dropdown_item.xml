@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/searchResultListItemHeight"
-    android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-    android:paddingRight="4dip" >
+    android:layout_height="@dimen/search_suggestion_height"
+    android:paddingLeft="@dimen/search_suggestion_horizontal_padding"
+    android:paddingRight="@dimen/search_suggestion_horizontal_padding" >
 
     <TextView
         android:id="@+id/symbol"
@@ -13,12 +13,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title"
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/description"
-        style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
         android:layout_height="29dip"
         android:layout_alignParentBottom="true"
@@ -27,18 +26,17 @@
         android:gravity="top"
         android:paddingBottom="4dip"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Subtitle"
+        android:textAppearance="?android:attr/textAppearanceSmallInverse"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/name"
-        style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/description"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/symbol"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.Sherlock.SearchResult.Title" />
+        android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
 </RelativeLayout>
