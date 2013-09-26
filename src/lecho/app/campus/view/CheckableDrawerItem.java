@@ -4,6 +4,7 @@ import lecho.app.campus.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ public class CheckableDrawerItem extends RelativeLayout implements Checkable {
 
 	private boolean mIsChecked = false;
 	private TextView mTextView;
+	private ImageView mImageView;
 
 	public CheckableDrawerItem(Context context) {
 		super(context);
@@ -28,6 +30,7 @@ public class CheckableDrawerItem extends RelativeLayout implements Checkable {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		mTextView = (TextView) findViewById(R.id.text);
+		mImageView = (ImageView) findViewById(R.id.checkmark);
 	}
 
 	@Override
@@ -49,11 +52,15 @@ public class CheckableDrawerItem extends RelativeLayout implements Checkable {
 
 	private void toggleBackground() {
 		if (mIsChecked) {
-			setBackgroundResource(R.color.holo_blue_dark);
-			mTextView.setTextColor(getContext().getResources().getColor(R.color.light_text));
+			mTextView.setTextColor(getContext().getResources().getColor(R.color.holo_blue_dark));
+			if (null != mImageView) {
+				mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_checkmark_on));
+			}
 		} else {
-			setBackgroundResource(R.color.transparent);
 			mTextView.setTextColor(getContext().getResources().getColor(R.color.dark_text));
+			if (null != mImageView) {
+				mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_checkmark_off));
+			}
 		}
 	}
 }

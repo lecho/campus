@@ -31,5 +31,6 @@
     <string name="drawer_item_faculty_eeia">EEIA</string>
     <string name="drawer_item_faculty_ftims">FTIMS</string>
     <string name="drawer_item_faculty_oiz">OIZ</string>
+    <string name="drawer_item_checkmar_content_description">Znacznik elementu</string>
 
 </resources>
