@@ -17,7 +17,7 @@ public class UnitsGroupLayout extends LinearLayout {
 	public UnitsGroupLayout(Context context) {
 		super(context);
 		setOrientation(LinearLayout.VERTICAL);
-		setBackgroundResource(R.drawable.ic_white_box_shadow);
+		setBackgroundResource(R.drawable.white_box_shadow);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		int margin = Utils.dp2px(getContext(), 4);
 		lp.setMargins(0, margin, 0, margin);

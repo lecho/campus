@@ -32,11 +32,8 @@
         android:layout_gravity="start"
         android:background="@color/foreground"
         android:choiceMode="singleChoice"
-        android:divider="@color/background"
+        android:divider="@drawable/list_divider_drawer"
         android:dividerHeight="1px"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:scrollbars="none"
         tools:ignore="PxUsage" />
 
 </android.support.v4.widget.DrawerLayout>
