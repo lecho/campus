@@ -7,6 +7,9 @@
     <string name="play_services_missing">Usługi Google Play nie są dostępne - to urządzenie nie jest wspierane</string>
     <string name="play_services_recovery_canceled">Usługi Google Play nie są dostępne - aplikacja musi zostać zatrzymana</string>
     <string name="place_details_header_image_content_description">Zdjęcie</string>
+    <string name="connection_no_internet">Nie mogę nawiązać połączenia z siecią. Przy pierwszym uruchomieniu aplikacji połączenie jest niezbędne do zainicjalizowania mapy. Czy chcesz przejść do widoku ustawień sieci?</string>
+    <string name="connection_go_to_settings">Tak</string>
+    <string name="connection_dont_go_to_settings">Nie</string>
     <string name="search_hint">Wyszukaj</string>
     <string name="search_label">Wyszukaj</string>
     <string name="search_invoke">Wyszukaj</string>

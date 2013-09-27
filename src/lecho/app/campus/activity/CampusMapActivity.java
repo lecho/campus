@@ -11,12 +11,14 @@ import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
+import lecho.app.campus.fragment.dialog.NoInternetConnectionDialogFragment;
 import lecho.app.campus.fragment.dialog.PlayServicesErrorDialogFragment;
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.NavigationDrawerItem;
 import lecho.app.campus.utils.PlacesList;
+import lecho.app.campus.utils.Utils;
 import net.simonvt.messagebar.MessageBar;
 import net.simonvt.messagebar.MessageBar.OnMessageClickListener;
 import android.annotation.SuppressLint;
@@ -32,6 +34,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -107,6 +110,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
 
+		checkInternetConnection();
+		
 		checkPlayServices();
 
 		// *** Navi-Drawer
@@ -133,6 +138,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 
 		setUpMapIfNeeded();
+	}
+
+	private void checkInternetConnection() {
+		if (!Utils.isOnline(getApplicationContext())) {
+			Log.w(TAG, "Device is offline");
+			FragmentManager fm = getSupportFragmentManager();
+			DialogFragment dialog = NoInternetConnectionDialogFragment.newInstance();
+			dialog.show(fm, "no-internet-dialog");
+		}
 	}
 
 	private void setUpNavigationDrawer() {

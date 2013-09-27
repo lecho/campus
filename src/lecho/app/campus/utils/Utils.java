@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -15,29 +17,8 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public final class Utils {
 	private static final String TAG = "Utils";
-
-	/**
-	 * Check if first position is close enough to second position
-	 * 
-	 * @param first
-	 * @param second
-	 * @param maxDistance
-	 *            for example 0.000001
-	 * @return
-	 */
-	public static boolean compareLocation(LatLng first, LatLng second, double maxDistance) {
-		if (first.latitude > second.latitude - maxDistance && first.latitude < second.latitude + maxDistance) {
-			if (first.longitude > second.longitude - maxDistance && first.longitude < second.longitude + maxDistance) {
-				return true;
-			}
-
-		}
-		return false;
-	}
 
 	public static boolean launchGMaps(Context context, double latitude, double longitude) {
 		final String GMAPS = "geo:";
@@ -115,6 +96,15 @@ public final class Utils {
 
 	public static String getPlaceImagesDir(String symbol) {
 		return new StringBuilder(Config.APP_ASSETS_DIR).append(File.separator).append(symbol).toString();
+	}
+
+	public static boolean isOnline(Context context) {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 }
