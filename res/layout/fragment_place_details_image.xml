@@ -6,7 +6,7 @@
     android:layout_alignParentTop="true"
     android:layout_margin="4dp"
     android:background="@drawable/selector_place_image"
-    android:contentDescription="@string/place_details_header_image_description"
+    android:contentDescription="@string/place_details_header_image_content_description"
     android:cropToPadding="true"
     android:padding="8dp"
     android:scaleType="centerCrop" />

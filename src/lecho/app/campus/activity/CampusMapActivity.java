@@ -11,6 +11,7 @@ import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
+import lecho.app.campus.fragment.dialog.PlayServicesErrorDialogFragment;
 import lecho.app.campus.loader.PlacesLoader;
 import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
@@ -30,6 +31,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
@@ -45,12 +48,14 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 import com.actionbarsherlock.widget.SearchView;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -67,7 +72,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
 		OnSearchResultClickListener {
 	private static final String TAG = "CampusMapActivity";
-	private static final int PLACES_LOADER = CampusMapActivity.class.hashCode();
+	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
+	private static final int PLACES_LOADER = 1;
 	private static final int CAMERA_ANIMATION_DURATION = 500;
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
@@ -101,11 +107,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
 
-		// TODO Check google play services.
-		int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-		Log.i(TAG, "connection result: " + playServicesStatus);
+		checkPlayServices();
 
 		// *** Navi-Drawer
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		// Find navi-drawer
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// set custom drawer shadow
@@ -113,10 +122,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
 		mDrawerToggle = new DrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
@@ -144,6 +149,43 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 
 		setUpMapIfNeeded();
+	}
+
+	private void checkPlayServices() {
+		final int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+		if (playServicesStatus == ConnectionResult.SUCCESS) {
+			Log.i(TAG, "Play Services status SUCCESS");
+		} else {
+			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
+			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
+				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
+				DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
+						REQUEST_CODE_RECOVER_PLAY_SERVICES);
+				FragmentManager fm = getSupportFragmentManager();
+				dialog.show(fm, "play-services-dialog");
+			} else {
+				Log.i(TAG, "Play Services not user recoverable - finishing app");
+				Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
+				finish();
+			}
+
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case REQUEST_CODE_RECOVER_PLAY_SERVICES:
+			// User doesn't resolve Play Services problem
+			if (resultCode == RESULT_CANCELED) {
+				Log.w(TAG, "Google Play Services resolution activity canceled!, finishing app");
+				Toast.makeText(getApplicationContext(), R.string.play_services_recovery_canceled, Toast.LENGTH_SHORT)
+						.show();
+				finish();
+			}
+			return;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -678,6 +720,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
 				int openDrawerContentDescRes, int closeDrawerContentDescRes) {
 			super(activity, drawerLayout, drawerImageRes, openDrawerContentDescRes, closeDrawerContentDescRes);
+		}
+
+		@Override
+		public void onDrawerStateChanged(int newState) {
+			// TODO Auto-generated method stub
+			super.onDrawerStateChanged(newState);
 		}
 
 		@Override
