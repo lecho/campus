@@ -114,6 +114,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		// ActionBarDrawerToggle ties together the the proper interactions
