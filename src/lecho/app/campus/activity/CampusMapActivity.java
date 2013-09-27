@@ -110,23 +110,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		checkPlayServices();
 
 		// *** Navi-Drawer
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		// Find navi-drawer
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-		// set custom drawer shadow
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new DrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
-				R.string.drawer_close);
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		setUpNavigationDrawer();
 		// ***
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
@@ -149,6 +133,26 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 
 		setUpMapIfNeeded();
+	}
+
+	private void setUpNavigationDrawer() {
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		// Find navi-drawer
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		// set custom drawer shadow
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new DrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close);
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
 	private void checkPlayServices() {
