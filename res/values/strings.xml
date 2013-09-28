@@ -54,7 +54,7 @@
     <string name="guide_button_close">Zamknij</string>
     <string name="guide_button_next">Dalej</string>
     <string name="guide_page1_text">Page 1</string>
-    <string name="guide_page2_text">Page 1</string>
-    <string name="guide_page3_text">Page 1</string>
+    <string name="guide_page2_text">Page 2</string>
+    <string name="guide_page3_text">Page 3</string>
 
 </resources>
