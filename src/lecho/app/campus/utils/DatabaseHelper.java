@@ -36,8 +36,7 @@ public abstract class DatabaseHelper {
 	}
 
 	/**
-	 * Returns always the same read/write session instance. Bleh... no double
-	 * instance checking, not final, not enum:)
+	 * Returns always the same read/write session instance. Bleh... no double instance checking, not final, not enum:)
 	 * 
 	 * @param context
 	 * @return
@@ -47,5 +46,17 @@ public abstract class DatabaseHelper {
 			sDaoSession = getDaoMaster(context).newSession();
 		}
 		return sDaoSession;
+	}
+
+	public static void clearDB(Context context) {
+		DaoSession daoSession = getDaoSession(context);
+		daoSession.getPlaceCategoryDao().deleteAll();
+		daoSession.getPlaceFacultyDao().deleteAll();
+		daoSession.getPlaceUnitDao().deleteAll();
+		daoSession.getUnitDao().deleteAll();
+		daoSession.getFacultyDao().deleteAll();
+		daoSession.getUnitDao().deleteAll();
+		daoSession.getPlaceDao().deleteAll();
+		daoSession.getFacultyDao().deleteAll();
 	}
 }

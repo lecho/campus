@@ -61,7 +61,7 @@ public class DataParser {
 	public static boolean loadCampusData(Context context, int rawResource) {
 		try {
 			Log.i(TAG, "Loading data from xml");
-			long time = System.nanoTime();
+			final long time = System.nanoTime();
 			// lists with entities to persist.
 			final List<Place> places = new ArrayList<Place>();
 			final List<Category> categories = new ArrayList<Category>();

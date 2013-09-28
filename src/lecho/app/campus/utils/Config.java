@@ -4,8 +4,13 @@ import lecho.app.campus.R;
 import lecho.app.campus.loader.PlacesLoader;
 
 public abstract class Config {
+	public static final int CAMPUS_DATA_VERSION = 1;
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
-	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONNLINE = "lecho.app.campus:FIRST_START";
+	public static final String APP_SHARED_PREFS_APP_WAS_STARTED = "lecho.app.campus:APP_WAS_STARTED";
+	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONLINE = "lecho.app.campus:DEVICE_WAS_ONLINE";
+	public static final String APP_SHARED_PREFS_CAMPUS_DATA_VERSION = "lecho.app.campus:CAMPUS_DATA_VERSION";
+	public static final String APP_SHARED_PREFS_DATA_PARSING_ONGOING = "lecho.app.campus:DATA_PARSING_ONGOING";
+
 	public static final String APP_ASSETS_DIR = "campus";
 	public static final String APP_TARGET = "";
 	public static final String APP_PACKAGE = "lecho.app.campus" + APP_TARGET;

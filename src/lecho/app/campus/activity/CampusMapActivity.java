@@ -174,7 +174,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private boolean checkIfMapWasCached() {
 		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 		// Value will be true only if GoogleMap was initialized successful before;
-		boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, false);
+		boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
 		if (!deviceWasOnline) {
 			// Hackish way to check if map was cached.
 			StringBuilder cacheFileNameBuilder = new StringBuilder("cache_vts_").append(Config.APP_PACKAGE)
@@ -201,9 +201,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void setDeviceWasOnlineFlag() {
 		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 		// Value will be true only if GoogleMap was initialized successful before;
-		final boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, false);
+		final boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
 		if (!deviceWasOnline) {
-			prefs.edit().putBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, true).commit();
+			prefs.edit().putBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, true).commit();
 		}
 	}
 
