@@ -34,7 +34,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -110,9 +109,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
 
-		checkInternetConnection();
-		
-		checkPlayServices();
+		if (null == savedInstanceState) {
+			checkInternetConnection();
+			checkPlayServices();
+		}
 
 		// *** Navi-Drawer
 		setUpNavigationDrawer();
