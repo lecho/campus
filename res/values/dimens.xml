@@ -22,7 +22,7 @@
     <dimen name="gallery_indicator_width">24dp</dimen>
     <dimen name="gallery_indicator_padding">8dp</dimen>
     <dimen name="gallery_indicator_stroke_width">4dp</dimen>
-    <dimen name="product_guide_image_width">480dp</dimen>
+    <dimen name="product_guide_image_width">260dp</dimen>
     <dimen name="product_guide_image_height">260dp</dimen>
 
 </resources>
