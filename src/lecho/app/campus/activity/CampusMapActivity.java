@@ -126,18 +126,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				startService(serviceIntent);
 
 				boolean appWasStarted = prefs.getBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, false);
-				// if (!appWasStarted) {
-				// // If first run - start product guide activity.
-				// prefs.edit().putBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, true);
-				// Intent intent = new Intent(this, ProductGuideActivity.class);
-				// startActivity(intent);
-				// finish();
-				// } else {
-				// Just database upgrade eg after app update via google play.
-				Intent intent = new Intent(this, PopulateDBActivity.class);
-				startActivity(intent);
-				finish();
-				// }
+				if (!appWasStarted) {
+					// If first run - start product guide activity.
+					prefs.edit().putBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, true);
+					Intent intent = new Intent(this, ProductGuideActivity.class);
+					startActivity(intent);
+					finish();
+				} else {
+					// Just database upgrade eg after app update via google play.
+					Intent intent = new Intent(this, PopulateDBActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			} else {
 				// Check Play Services availability.
 				if (checkPlayServices()) {

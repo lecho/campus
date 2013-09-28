@@ -25,6 +25,7 @@ public class PopulateDBIntentService extends IntentService {
 		DatabaseHelper.clearDB(getApplicationContext());
 		DataParser.loadCampusData(getApplicationContext(), R.raw.campus_data);
 		prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, false).commit();
+		// Set current data version.
 		prefs.edit().putInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, Config.CAMPUS_DATA_VERSION).commit();
 		Intent intent = new Intent(BROADCAST_INTENT_FILTER);
 		LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
