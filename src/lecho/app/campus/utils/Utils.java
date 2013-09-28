@@ -99,6 +99,7 @@ public final class Utils {
 	}
 
 	public static boolean isOnline(Context context) {
+		// TODO check timeout
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (netInfo != null && netInfo.isConnectedOrConnecting()) {

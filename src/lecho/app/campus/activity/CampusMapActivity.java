@@ -1,5 +1,6 @@
 package lecho.app.campus.activity;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
@@ -108,10 +110,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
-
 		if (null == savedInstanceState) {
-			checkInternetConnection();
-			checkPlayServices();
+			// Check Play Services availability.
+			if (checkPlayServices()) {
+				// If device was online before there should be some map cache.
+				boolean deviceWasOnline = checkIfMapWasCached();
+				if (!deviceWasOnline) {
+					// Check connection only if app wasn't online before and if Play Services are available.
+					checkInternetConnection();
+				}
+			}
 		}
 
 		// *** Navi-Drawer
@@ -140,12 +148,62 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		setUpMapIfNeeded();
 	}
 
+	private boolean checkPlayServices() {
+		final int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+		if (playServicesStatus == ConnectionResult.SUCCESS) {
+			Log.i(TAG, "Play Services status SUCCESS");
+			return true;
+		} else {
+			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
+			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
+				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
+				DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
+						REQUEST_CODE_RECOVER_PLAY_SERVICES);
+				FragmentManager fm = getSupportFragmentManager();
+				dialog.show(fm, "play-services-dialog");
+			} else {
+				Log.i(TAG, "Play Services not user recoverable - finishing app");
+				Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
+				finish();
+			}
+
+		}
+		return false;
+	}
+
+	private boolean checkIfMapWasCached() {
+		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+		// Value will be true only if GoogleMap was initialized successful before;
+		boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, false);
+		if (!deviceWasOnline) {
+			// Hackish way to check if map was cached.
+			StringBuilder cacheFileNameBuilder = new StringBuilder("cache_vts_").append(Config.APP_PACKAGE)
+					.append(".0");
+			if (new File(getExternalCacheDir(), cacheFileNameBuilder.toString()).exists()) {
+				setDeviceWasOnlineFlag();
+				deviceWasOnline = true;
+			}
+		}
+		return deviceWasOnline;
+	}
+
 	private void checkInternetConnection() {
 		if (!Utils.isOnline(getApplicationContext())) {
 			Log.w(TAG, "Device is offline");
 			FragmentManager fm = getSupportFragmentManager();
 			DialogFragment dialog = NoInternetConnectionDialogFragment.newInstance();
 			dialog.show(fm, "no-internet-dialog");
+		} else {
+			setDeviceWasOnlineFlag();
+		}
+	}
+
+	private void setDeviceWasOnlineFlag() {
+		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+		// Value will be true only if GoogleMap was initialized successful before;
+		final boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, false);
+		if (!deviceWasOnline) {
+			prefs.edit().putBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONNLINE, true).commit();
 		}
 	}
 
@@ -167,27 +225,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerToggle = new DrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
 				R.string.drawer_close);
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-	}
-
-	private void checkPlayServices() {
-		final int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-		if (playServicesStatus == ConnectionResult.SUCCESS) {
-			Log.i(TAG, "Play Services status SUCCESS");
-		} else {
-			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
-			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
-				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
-				DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
-						REQUEST_CODE_RECOVER_PLAY_SERVICES);
-				FragmentManager fm = getSupportFragmentManager();
-				dialog.show(fm, "play-services-dialog");
-			} else {
-				Log.i(TAG, "Play Services not user recoverable - finishing app");
-				Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
-				finish();
-			}
-
-		}
 	}
 
 	@Override
