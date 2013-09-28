@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -108,4 +109,13 @@ public final class Utils {
 		return false;
 	}
 
+	public static Pair<String, Integer> getAppVersionAndBuild(Context context) {
+		try {
+			PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+			return new Pair<String, Integer>(pInfo.versionName, pInfo.versionCode);
+		} catch (Exception e) {
+			Log.e(TAG, "Could not get version number");
+			return new Pair<String, Integer>("", 0);
+		}
+	}
 }

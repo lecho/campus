@@ -209,7 +209,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	private void setUpNavigationDrawer() {
 		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getSupportActionBar().setIcon(R.drawable.ic_campus_logo);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		// Find navi-drawer
@@ -363,6 +362,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
 			return true;
+		} else if (item.getItemId() == R.id.about) {
+			Intent intent = new Intent(this, AboutAppActivity.class);
+			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}

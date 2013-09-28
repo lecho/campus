@@ -29,8 +29,7 @@
         <!-- activities -->
         <activity
             android:name="lecho.app.campus.activity.MainActivity"
-            android:label="@string/app_name"
-            android:logo="@drawable/ic_campus_logo" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,8 +39,7 @@
         <activity
             android:name="lecho.app.campus.activity.CampusMapActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:logo="@drawable/ic_campus_logo" >
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -56,8 +54,15 @@
         </activity>
         <activity
             android:name="lecho.app.campus.activity.PlaceDetailsActivity"
-            android:label="@string/app_name"
-            android:logo="@drawable/ic_campus_logo" >
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="lecho.app.campus.activity.AboutAppActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="lecho.app.campus.activity.LegalInfoActivity"
+            android:label="@string/app_name" >
         </activity>
 
         <provider

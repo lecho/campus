@@ -37,5 +37,11 @@
     <string name="drawer_item_faculty_ftims">FTIMS</string>
     <string name="drawer_item_faculty_oiz">OIZ</string>
     <string name="drawer_item_checkmar_content_description">Znacznik elementu</string>
+    <string name="menu_about">O aplikacji</string>
+    <string name="about_version_label">"Wersja "</string>
+    <string name="about_build_label">"Build "</string>
+    <string name="about_play_services_missing">Brak usług Google Play</string>
+    <string name="about_play_services_button">Usługi Google Play - licencja</string>
+    <string name="about_app_icon_content_description">Ikona aplikacji</string>
 
 </resources>
