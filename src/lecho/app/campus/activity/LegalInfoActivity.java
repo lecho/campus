@@ -87,13 +87,13 @@ public class LegalInfoActivity extends SherlockActivity {
 			}
 			return text.toString();
 		} catch (IOException e) {
-			Log.e(TAG, "Could not read licence");
+			Log.e(TAG, "Could not read licence", e);
 			return "";
 		} finally {
 			try {
 				bInReader.close();
 			} catch (IOException e) {
-				Log.e(TAG, "Could not close licence stream reader");
+				Log.e(TAG, "Could not close licence stream reader", e);
 			}
 		}
 	}
