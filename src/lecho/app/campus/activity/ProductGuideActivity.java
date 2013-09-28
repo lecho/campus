@@ -1,51 +1,36 @@
 package lecho.app.campus.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lecho.app.campus.R;
-import lecho.app.campus.adapter.GalleryPagesFragmentAdapter;
-import lecho.app.campus.utils.Config;
-import lecho.app.campus.utils.ImagesDirAsyncTask;
+import lecho.app.campus.adapter.ProductGuidePagesFragmentAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
+import android.util.Pair;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.viewpagerindicator.LinePageIndicator;
-import com.viewpagerindicator.PageIndicator;
+import com.viewpagerindicator.UnderlinePageIndicator;
 
 public class ProductGuideActivity extends SherlockFragmentActivity {
-	private static final String TAG = "ProductGuideActivity";
+	public static final String TAG = "ProductGuideActivity";
 	private ViewPager mPager;
-	private ProgressBar mProgressBar;
-	private PageIndicator mIndicator;
+	private UnderlinePageIndicator mIndicator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_gallery);
+		setContentView(R.layout.activity_product_guide);
 		mPager = (ViewPager) findViewById(R.id.view_pager);
-		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-		mIndicator = (LinePageIndicator) findViewById(R.id.indicator);
-		// mSymbol = getIntent().getStringExtra(Config.EXTRA_PLACE_SYMBOL);
-		// ImagesDirAsyncTask task = new ImagesDirAsyncTask(getApplicationContext(), this);
-		// task.execute(mSymbol);
-	}
+		mIndicator = (UnderlinePageIndicator) findViewById(R.id.indicator);
 
-	// @Override
-	// public void onImagesDir(String[] paths) {
-	// if (paths.length > 0) {
-	// mPager.setAdapter(new PlaceImageFragmentAdapter(getSupportFragmentManager(), mSymbol, paths));
-	// mPager.setOffscreenPageLimit(1);
-	// mIndicator.setViewPager(mPager);
-	// mProgressBar.setVisibility(View.GONE);
-	// } else {
-	// // That's not normal and should never happen, if user starts this activity there should be at least one
-	// // image!
-	// Log.e(TAG, "Could not load any image for symbol: " + mSymbol);
-	// finish();
-	// }
-	//
-	// }
+		List<Pair<Integer, Integer>> resources = new ArrayList<Pair<Integer, Integer>>(3);
+		resources.add(new Pair<Integer, Integer>(R.raw.guide_page_1, R.string.guide_page1_text));
+		resources.add(new Pair<Integer, Integer>(R.raw.guide_page_2, R.string.guide_page2_text));
+		resources.add(new Pair<Integer, Integer>(R.raw.guide_page_3, R.string.guide_page3_text));
+		mPager.setAdapter(new ProductGuidePagesFragmentAdapter(getSupportFragmentManager(), resources));
+		mPager.setOffscreenPageLimit(1);
+		mIndicator.setViewPager(mPager);
+	}
 
 }

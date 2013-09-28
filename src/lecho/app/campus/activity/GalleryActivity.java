@@ -21,7 +21,7 @@ import com.viewpagerindicator.PageIndicator;
  * 
  */
 public class GalleryActivity extends SherlockFragmentActivity implements OnImagesDirListener {
-	private static final String TAG = "PlaceDetailsActivity";
+	public static final String TAG = "PlaceDetailsActivity";
 	private ViewPager mPager;
 	private ProgressBar mProgressBar;
 	private PageIndicator mIndicator;

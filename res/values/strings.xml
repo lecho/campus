@@ -50,6 +50,11 @@
     <string name="about_ziv_licence">ZoomImageView</string>
     <string name="about_app_icon_content_description">Ikona aplikacji</string>
     <string name="populate_db_message">Wrzucam dane do bazy, może to potrwać kilka sekund&#8230;</string>
-    <string name="product_guide_page_content_description">Strona przewodnika po aplikacji</string>
+    <string name="guide_page_content_description">Strona przewodnika po aplikacji</string>
+    <string name="guide_button_close">Zamknij</string>
+    <string name="guide_button_next">Dalej</string>
+    <string name="guide_page1_text">Page 1</string>
+    <string name="guide_page2_text">Page 1</string>
+    <string name="guide_page3_text">Page 1</string>
 
 </resources>

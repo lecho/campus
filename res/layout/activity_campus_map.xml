@@ -32,7 +32,7 @@
         android:layout_gravity="start"
         android:background="@color/foreground"
         android:choiceMode="singleChoice"
-        android:divider="@drawable/list_divider_drawer"
+        android:divider="@drawable/divider_drawer_list"
         android:dividerHeight="1px"
         tools:ignore="PxUsage" />
 

@@ -5,25 +5,34 @@
     android:layout_height="wrap_content"
     android:fillViewport="true" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/product_guide_image_height"
-            android:contentDescription="@string/product_guide_page_content_description" >
+            android:contentDescription="@string/guide_page_content_description"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop" >
         </ImageView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/image"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/image"
             android:gravity="center"
+            android:paddingTop="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>

@@ -23,13 +23,13 @@ public class GalleryPagesFragmentAdapter extends FragmentStatePagerAdapter {
 	public GalleryPagesFragmentAdapter(FragmentManager fm, String symbol, String[] paths) {
 		super(fm);
 		if (TextUtils.isEmpty(symbol)) {
-			Log.e(TAG, "Place symbol cannot be empty for PlaceImageFragmentAdapter");
-			throw new IllegalArgumentException("Place symbol cannot be empty for PlaceImageFragmentAdapter");
+			Log.e(TAG, "Null symbol");
+			throw new IllegalArgumentException("Null symbol");
 		}
 		mSymbol = symbol;
 		if (null == paths) {
-			Log.e(TAG, "Images names cannot be null for PlaceImageFragmentAdapter");
-			throw new IllegalArgumentException("Images names cannot be null for PlaceImageFragmentAdapter");
+			Log.e(TAG, "Null paths");
+			throw new IllegalArgumentException("Null paths");
 		}
 		mImagesNames = paths;
 	}
