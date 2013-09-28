@@ -339,7 +339,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
 		LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
 		LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
-		mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50), CAMERA_ANIMATION_DURATION, null);
+		mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0), CAMERA_ANIMATION_DURATION, null);
 	}
 
 	@Override
@@ -781,13 +781,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onDrawerStateChanged(int newState) {
-			// TODO Auto-generated method stub
 			super.onDrawerStateChanged(newState);
 		}
 
 		@Override
 		public void onDrawerOpened(View drawerView) {
 			super.onDrawerOpened(drawerView);
+			if (mSearchMenuItem.isActionViewExpanded()) {
+				// Collapse search view for supportInvalidateOptionsMenu() to work properly.
+				mSearchMenuItem.collapseActionView();
+			}
 			supportInvalidateOptionsMenu();
 		}
 
