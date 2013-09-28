@@ -1,5 +1,6 @@
 package lecho.app.campus.utils;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,24 +60,26 @@ public class DataParser {
 	 * 
 	 */
 	public static boolean loadCampusData(Context context, int rawResource) {
-		try {
-			Log.i(TAG, "Loading data from xml");
-			final long time = System.nanoTime();
-			// lists with entities to persist.
-			final List<Place> places = new ArrayList<Place>();
-			final List<Category> categories = new ArrayList<Category>();
-			final List<Faculty> faculties = new ArrayList<Faculty>();
-			final List<Unit> units = new ArrayList<Unit>();
-			final List<PlaceCategory> placeCategories = new ArrayList<PlaceCategory>();
-			final List<PlaceFaculty> placeFaculties = new ArrayList<PlaceFaculty>();
-			final List<PlaceUnit> placeUnits = new ArrayList<PlaceUnit>();
 
-			InputStream in;
-			in = context.getResources().openRawResource(rawResource);
+		Log.i(TAG, "Loading data from xml");
+		final long time = System.nanoTime();
+		// lists with entities to persist.
+		final List<Place> places = new ArrayList<Place>();
+		final List<Category> categories = new ArrayList<Category>();
+		final List<Faculty> faculties = new ArrayList<Faculty>();
+		final List<Unit> units = new ArrayList<Unit>();
+		final List<PlaceCategory> placeCategories = new ArrayList<PlaceCategory>();
+		final List<PlaceFaculty> placeFaculties = new ArrayList<PlaceFaculty>();
+		final List<PlaceUnit> placeUnits = new ArrayList<PlaceUnit>();
+
+		BufferedInputStream bufferedInput = null;
+		try {
+			InputStream in = context.getResources().openRawResource(rawResource);
+			bufferedInput = new BufferedInputStream(in);
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
 			XmlPullParser xpp = factory.newPullParser();
-			xpp.setInput(in, "UTF-8");
+			xpp.setInput(bufferedInput, "UTF-8");
 			int eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 				if (eventType == XmlPullParser.START_TAG) {
@@ -133,6 +136,14 @@ public class DataParser {
 			return true;
 		} catch (Exception e) {
 			Log.e(TAG, "Could not parse xml file.", e);
+		} finally {
+			if (null != bufferedInput) {
+				try {
+					bufferedInput.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Could not close stream", e);
+				}
+			}
 		}
 		return false;
 	}
