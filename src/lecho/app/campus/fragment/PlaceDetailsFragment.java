@@ -130,28 +130,30 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	public void onBitmapLoaded(boolean success) {
 		if (success && null == mImage.getParent()) {
 			final ViewTreeObserver observer = mScrollContent.getViewTreeObserver();
-			observer.addOnPreDrawListener(new OnPreDrawListener() {
+			if (observer.isAlive()) {
+				observer.addOnPreDrawListener(new OnPreDrawListener() {
 
-				@Override
-				public boolean onPreDraw() {
-					observer.removeOnPreDrawListener(this);
-					int childCount = mScrollContent.getChildCount();
-					if (childCount < 2) {
-						// No need for animation
+					@Override
+					public boolean onPreDraw() {
+						observer.removeOnPreDrawListener(this);
+						int childCount = mScrollContent.getChildCount();
+						if (childCount < 2) {
+							// No need for animation
+							return true;
+						}
+						View v0 = mScrollContent.getChildAt(0);
+						View v1 = mScrollContent.getChildAt(1);
+						int deltaX = v1.getTop() - v0.getTop();
+						final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
+						anim.setDuration(300);
+						for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
+							View v = mScrollContent.getChildAt(i);
+							v.startAnimation(anim);
+						}
 						return true;
 					}
-					View v0 = mScrollContent.getChildAt(0);
-					View v1 = mScrollContent.getChildAt(1);
-					int deltaX = v1.getTop() - v0.getTop();
-					final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
-					anim.setDuration(300);
-					for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
-						View v = mScrollContent.getChildAt(i);
-						v.startAnimation(anim);
-					}
-					return true;
-				}
-			});
+				});
+			}
 			mScrollContent.addView(mImage, 0);
 			mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
 		}
@@ -188,10 +190,11 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		lp.setMargins(margin, margin, margin, margin);
 		lp.gravity = Gravity.RIGHT;
 		gMapsLink.setLayoutParams(lp);
-		gMapsLink.setMinHeight(Utils.dp2px(getActivity(), 48));
+		int minHeight = getResources().getDimensionPixelSize(R.dimen.link_min_height);
+		gMapsLink.setMinHeight(minHeight);
 		gMapsLink.setGravity(Gravity.RIGHT);
 		gMapsLink.setText(R.string.go_to_google_maps);
-		gMapsLink.setTextColor(getResources().getColorStateList(R.color.selector_gmaps_link));
+		gMapsLink.setTextColor(getResources().getColorStateList(R.color.selector_text_link));
 		gMapsLink.setOnClickListener(new GoToGMapsClickListener(getActivity(), latitude, longitude));
 		mScrollContent.addView(gMapsLink);
 	}
@@ -231,7 +234,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 	private void loadPlaceImage(final PlaceDetails data, final ImageView imageView) {
 		final String path = new StringBuilder(Utils.getPlaceImagesDir(data.place.getSymbol())).append(File.separator)
-				.append(Config.PLACE_MAIN_PHOTO).toString();
+				.append(Config.PLACE_MAIN_PHOTO_NAME).toString();
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
 		bitmapAsyncTask.execute(path);
 	}
