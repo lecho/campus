@@ -38,8 +38,56 @@ public class AboutAppActivity extends SherlockActivity {
 				startActivity(intent);
 			}
 		});
+
+		TextView absLink = (TextView) findViewById(R.id.legal_info_abs);
+		absLink.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
+				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
+						LegalInfoActivity.EXTRA_LEGAL_INFO_ACTIONBARSHERLOCK);
+				startActivity(intent);
+			}
+		});
+
+		TextView vpiLink = (TextView) findViewById(R.id.legal_info_vpi);
+		vpiLink.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
+				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
+						LegalInfoActivity.EXTRA_LEGAL_INFO_VIEWPAGERINDICATOR);
+				startActivity(intent);
+			}
+		});
+
+		TextView mbLink = (TextView) findViewById(R.id.legal_info_mb);
+		mbLink.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
+				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
+						LegalInfoActivity.EXTRA_LEGAL_INFO_MESSAGEBAR);
+				startActivity(intent);
+			}
+		});
+
+		TextView zivLink = (TextView) findViewById(R.id.legal_info_ziv);
+		zivLink.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
+				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
+						LegalInfoActivity.EXTRA_LEGAL_INFO_ZOOMIMAGEVIEW);
+				startActivity(intent);
+			}
+		});
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return super.onCreateOptionsMenu(menu);
