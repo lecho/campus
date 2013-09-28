@@ -19,37 +19,39 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.actionbarsherlock.app.SherlockFragment;
 
 /**
+ * Single page of product guide. Loads image from raw resources in case of future i18n.
  * 
  * @author Lecho
  * 
  */
 public class ProductGuidePageFragment extends SherlockFragment implements OnBitmapLoadedListener {
-	public static final String EXTRA_PATH = "lecho.app.campus:EXTRA_PATH";
+	public static final String EXTRA_RAW_RESOURCE = "lecho.app.campus:RAW_RESOURCE";
 	private RelativeLayout mLayout;
 	private ZoomImageView mImageView;
 	private ProgressBar mProgressBar;
 
-	public static ProductGuidePageFragment newInstance(String path) {
+	public static ProductGuidePageFragment newInstance(int rawResource) {
 		ProductGuidePageFragment fragment = new ProductGuidePageFragment();
 		Bundle args = new Bundle();
-		args.putString(EXTRA_PATH, path);
+		args.putInt(EXTRA_RAW_RESOURCE, rawResource);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_place_image, container, false);
+		View view = inflater.inflate(R.layout.fragment_product_guide_page, container, false);
 		mLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
 		mImageView = new ZoomImageView(getActivity());
 		mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-		loadPlaceImage(getArguments().getString(EXTRA_PATH), mImageView);
+		loadImage(getArguments().getInt(EXTRA_RAW_RESOURCE), mImageView);
 		return view;
 	}
 
-	private void loadPlaceImage(String path, final ZoomImageView imageView) {
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
-		bitmapAsyncTask.execute(path);
+	private void loadImage(int rawResource, final ZoomImageView imageView) {
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), rawResource, imageView,
+				R.dimen.product_guide_image_width, R.dimen.product_guide_image_height, this);
+		bitmapAsyncTask.execute();
 	}
 
 	@Override

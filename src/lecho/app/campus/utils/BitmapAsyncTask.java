@@ -4,26 +4,48 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 
-import lecho.app.campus.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
+public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	public static final int SYMBOL = 1;
 	public static final int PATH = 2;
 	private static final String TAG = "BitmapAsyncTask";
 	private Context mContext;
+	private String mPath;
+	private int mRawResource;
+	private int mDimenWidth;
+	private int mDimenHeight;
+	// If false read from raw resources, if true from assets
+	private boolean mFromAssets;
 	private final WeakReference<ImageView> mImageViewReference;
 	private final WeakReference<OnBitmapLoadedListener> mListenerReference;
 
-	public BitmapAsyncTask(Context context, ImageView imageView, OnBitmapLoadedListener onBitmapLoadedListener) {
+	public BitmapAsyncTask(Context context, String path, ImageView imageView, int dimenWidth, int dimenHeight,
+			OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
+		mPath = path;
+		mFromAssets = true;
+		mDimenWidth = dimenWidth;
+		mDimenHeight = dimenHeight;
+		// Use a WeakReference to ensure the ImageView can be garbage collected
+		mImageViewReference = new WeakReference<ImageView>(imageView);
+		// Use a WeakReference in case activity finished before AsyncTask.
+		mListenerReference = new WeakReference<BitmapAsyncTask.OnBitmapLoadedListener>(onBitmapLoadedListener);
+	}
+
+	public BitmapAsyncTask(Context context, int rawResource, ImageView imageView, int dimenWidth, int dimenHeight,
+			OnBitmapLoadedListener onBitmapLoadedListener) {
+		mContext = context;
+		mRawResource = rawResource;
+		mFromAssets = false;
+		mDimenWidth = dimenWidth;
+		mDimenHeight = dimenHeight;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		mImageViewReference = new WeakReference<ImageView>(imageView);
 		// Use a WeakReference in case activity finished before AsyncTask.
@@ -32,12 +54,15 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
 	// Decode image in background.
 	@Override
-	protected Bitmap doInBackground(String... params) {
-		final String path = params[0];// crush crush crush
+	protected Bitmap doInBackground(Void... params) {
 		Resources resources = mContext.getResources();
-		int reqWidth = resources.getDimensionPixelSize(R.dimen.place_image_width);
-		int reqHeight = resources.getDimensionPixelSize(R.dimen.place_image_width);
-		return decodeSampledBitmapFromAssets(mContext, path, reqWidth, reqHeight);
+		int reqWidth = resources.getDimensionPixelSize(mDimenWidth);
+		int reqHeight = resources.getDimensionPixelSize(mDimenHeight);
+		if (mFromAssets) {
+			return decodeSampledBitmapFromAssets(mContext, mPath, reqWidth, reqHeight);
+		} else {
+			return decodeSampledBitmapFromRawResource(mContext, mRawResource, reqWidth, reqHeight);
+		}
 	}
 
 	// Once complete, see if ImageView is still around and set bitmap.
@@ -70,17 +95,7 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 		try {
 			stream = context.getAssets().open(path);
 
-			// First decode with inJustDecodeBounds=true to check dimensions
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = true;
-			BitmapFactory.decodeStream(stream, null, options);// File(path, options);
-
-			// Calculate inSampleSize
-			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-			// Decode bitmap with inSampleSize set
-			options.inJustDecodeBounds = false;
-			return BitmapFactory.decodeStream(stream, new Rect(10, 13, 13, 13), options);
+			return decodeSampledBitmap(reqWidth, reqHeight, stream);
 
 		} catch (IOException e) {
 			Log.e(TAG, "Could not load place photo from file: " + path, e);
@@ -95,6 +110,44 @@ public class BitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
 			}
 		}
 
+	}
+
+	public static Bitmap decodeSampledBitmapFromRawResource(Context context, int rawResource, int reqWidth,
+			int reqHeight) {
+
+		InputStream stream = null;
+		try {
+			stream = context.getResources().openRawResource(rawResource);
+
+			return decodeSampledBitmap(reqWidth, reqHeight, stream);
+
+		} catch (Exception e) {
+			Log.e(TAG, "Could not load place photo from raw resource", e);
+			return null;
+		} finally {
+			if (null != stream) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+					Log.e(TAG, "Could not close stream for place photo from raw resource", e);
+				}
+			}
+		}
+
+	}
+
+	private static Bitmap decodeSampledBitmap(int reqWidth, int reqHeight, InputStream stream) {
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(stream, null, options);// File(path, options);
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeStream(stream, null, options);
 	}
 
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {

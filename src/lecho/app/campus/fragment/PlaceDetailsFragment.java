@@ -3,7 +3,7 @@ package lecho.app.campus.fragment;
 import java.io.File;
 
 import lecho.app.campus.R;
-import lecho.app.campus.activity.PlaceImageActivity;
+import lecho.app.campus.activity.GalleryActivity;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.loader.PlaceDetailsLoader;
 import lecho.app.campus.utils.BitmapAsyncTask;
@@ -235,8 +235,9 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	private void loadPlaceImage(final PlaceDetails data, final ImageView imageView) {
 		final String path = new StringBuilder(Utils.getPlaceImagesDir(data.place.getSymbol())).append(File.separator)
 				.append(Config.PLACE_MAIN_PHOTO_NAME).toString();
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
-		bitmapAsyncTask.execute(path);
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView,
+				R.dimen.place_details_image_width, R.dimen.place_details_image_height, this);
+		bitmapAsyncTask.execute();
 	}
 
 	private class PlaceImageClickListener implements OnClickListener {
@@ -252,7 +253,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(mActivity, PlaceImageActivity.class);
+			Intent intent = new Intent(mActivity, GalleryActivity.class);
 			intent.putExtra(Config.EXTRA_PLACE_ID, mPlaceId);
 			intent.putExtra(Config.EXTRA_PLACE_SYMBOL, mPlaceSymbol);
 			mActivity.startActivity(intent);

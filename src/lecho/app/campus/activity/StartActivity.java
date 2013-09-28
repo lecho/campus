@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class StartActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MainActivity.this, CampusMapActivity.class);
+				Intent i = new Intent(StartActivity.this, CampusMapActivity.class);
 				i.putExtra(Config.EXTRA_PLACE_ID, 1L);
 				startActivity(i);
 

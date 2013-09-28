@@ -23,14 +23,14 @@ import com.actionbarsherlock.app.SherlockFragment;
  * @author Lecho
  * 
  */
-public class PlaceImageFragment extends SherlockFragment implements OnBitmapLoadedListener {
+public class GalleryPageFragment extends SherlockFragment implements OnBitmapLoadedListener {
 	public static final String EXTRA_PATH = "lecho.app.campus:EXTRA_PATH";
 	private RelativeLayout mLayout;
 	private ZoomImageView mImageView;
 	private ProgressBar mProgressBar;
 
-	public static PlaceImageFragment newInstance(String path) {
-		PlaceImageFragment fragment = new PlaceImageFragment();
+	public static GalleryPageFragment newInstance(String path) {
+		GalleryPageFragment fragment = new GalleryPageFragment();
 		Bundle args = new Bundle();
 		args.putString(EXTRA_PATH, path);
 		fragment.setArguments(args);
@@ -39,7 +39,7 @@ public class PlaceImageFragment extends SherlockFragment implements OnBitmapLoad
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_place_image, container, false);
+		View view = inflater.inflate(R.layout.fragment_gallery_page, container, false);
 		mLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
 		mImageView = new ZoomImageView(getActivity());
 		mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -48,8 +48,9 @@ public class PlaceImageFragment extends SherlockFragment implements OnBitmapLoad
 	}
 
 	private void loadPlaceImage(String path, final ZoomImageView imageView) {
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), imageView, this);
-		bitmapAsyncTask.execute(path);
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView,
+				R.dimen.gallery_place_image_width, R.dimen.gallery_place_image_height, this);
+		bitmapAsyncTask.execute();
 	}
 
 	@Override

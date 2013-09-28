@@ -1,7 +1,7 @@
 package lecho.app.campus.activity;
 
 import lecho.app.campus.R;
-import lecho.app.campus.adapter.PlaceImageFragmentAdapter;
+import lecho.app.campus.adapter.GalleryPagesFragmentAdapter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.ImagesDirAsyncTask;
 import lecho.app.campus.utils.ImagesDirAsyncTask.OnImagesDirListener;
@@ -20,7 +20,7 @@ import com.viewpagerindicator.PageIndicator;
  * @author Lecho
  * 
  */
-public class PlaceImageActivity extends SherlockFragmentActivity implements OnImagesDirListener {
+public class GalleryActivity extends SherlockFragmentActivity implements OnImagesDirListener {
 	private static final String TAG = "PlaceDetailsActivity";
 	private ViewPager mPager;
 	private ProgressBar mProgressBar;
@@ -30,7 +30,7 @@ public class PlaceImageActivity extends SherlockFragmentActivity implements OnIm
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_place_image);
+		setContentView(R.layout.activity_gallery);
 		mPager = (ViewPager) findViewById(R.id.view_pager);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		mIndicator = (LinePageIndicator) findViewById(R.id.indicator);
@@ -42,7 +42,7 @@ public class PlaceImageActivity extends SherlockFragmentActivity implements OnIm
 	@Override
 	public void onImagesDir(String[] paths) {
 		if (paths.length > 0) {
-			mPager.setAdapter(new PlaceImageFragmentAdapter(getSupportFragmentManager(), mSymbol, paths));
+			mPager.setAdapter(new GalleryPagesFragmentAdapter(getSupportFragmentManager(), mSymbol, paths));
 			mPager.setOffscreenPageLimit(1);
 			mIndicator.setViewPager(mPager);
 			mProgressBar.setVisibility(View.GONE);
