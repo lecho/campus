@@ -31,13 +31,13 @@ public abstract class Config {
 	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
 			new NavigationDrawerItem(R.string.drawer_title_campuses, 0, null, NavigationDrawerItem.TYPE_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_campus_a, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "A",
+			new NavigationDrawerItem(R.string.drawer_item_campus_a, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_A",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_campus_b, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "B",
+			new NavigationDrawerItem(R.string.drawer_item_campus_b, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_B",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_campus_c, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "C",
+			new NavigationDrawerItem(R.string.drawer_item_campus_c, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_C",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_campus_d, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "D",
+			new NavigationDrawerItem(R.string.drawer_item_campus_d, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_D",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "EEIA",
