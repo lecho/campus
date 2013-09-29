@@ -203,15 +203,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	 * Helper function to take care of releasing resources associated with an actively loaded data set.
 	 */
 	protected void onReleaseResources(PlacesList data) {
-		// TODO Check if this code is needed.
-		if (null != data) {
-			// Detach data from DaoSession.
-			PlaceDao placeDao = mDaoSession.getPlaceDao();
-			for (Place place : data.mPlaces) {
-				placeDao.detach(place);
-			}
-			data = null;
-		}
+
 	}
 
 }

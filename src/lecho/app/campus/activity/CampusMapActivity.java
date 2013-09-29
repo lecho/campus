@@ -15,7 +15,6 @@ import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListene
 import lecho.app.campus.fragment.dialog.NoInternetConnectionDialogFragment;
 import lecho.app.campus.fragment.dialog.PlayServicesErrorDialogFragment;
 import lecho.app.campus.loader.PlacesLoader;
-import lecho.app.campus.service.PopulateDBIntentService;
 import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.NavigationDrawerItem;
@@ -116,39 +115,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 			mCurrentDrawerItem = Integer.MIN_VALUE;
-
-			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
-			if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
-				// Database has to be upgraded.
-				prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true);
-				Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
-				startService(serviceIntent);
-
-				boolean appWasStarted = prefs.getBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, false);
-				if (!appWasStarted) {
-					// If first run - start product guide activity.
-					prefs.edit().putBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, true);
-					Intent intent = new Intent(this, ProductGuideActivity.class);
-					startActivity(intent);
-					finish();
-				} else {
-					// Just database upgrade eg after app update via google play.
-					Intent intent = new Intent(this, PopulateDBActivity.class);
-					startActivity(intent);
-					finish();
-				}
-			} else {
-				// Check Play Services availability.
-				if (checkPlayServices()) {
-					// If device was online before there should be some map cache.
-					boolean deviceWasOnline = checkIfMapWasCached();
-					if (!deviceWasOnline) {
-						// Check connection only if app wasn't online before and if Play Services are available.
-						checkInternetConnection();
-					}
+			// Check Play Services availability.
+			if (checkPlayServices()) {
+				// If device was online before there should be some map cache.
+				boolean deviceWasOnline = checkIfMapWasCached();
+				if (!deviceWasOnline) {
+					// Check connection only if app wasn't online before and if Play Services are available.
+					checkInternetConnection();
 				}
 			}
+			// }
 		} else {
 			mCurrentPlaceId = savedInstanceState.getLong(EXTRA_CURRENT_PLACE_ID);
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);

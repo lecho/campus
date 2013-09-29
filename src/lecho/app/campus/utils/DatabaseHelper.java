@@ -53,10 +53,9 @@ public abstract class DatabaseHelper {
 		daoSession.getPlaceCategoryDao().deleteAll();
 		daoSession.getPlaceFacultyDao().deleteAll();
 		daoSession.getPlaceUnitDao().deleteAll();
-		daoSession.getUnitDao().deleteAll();
-		daoSession.getFacultyDao().deleteAll();
-		daoSession.getUnitDao().deleteAll();
 		daoSession.getPlaceDao().deleteAll();
 		daoSession.getFacultyDao().deleteAll();
+		daoSession.getCategoryDao().deleteAll();
+		daoSession.getUnitDao().deleteAll();
 	}
 }

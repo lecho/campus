@@ -1,45 +1,85 @@
 package lecho.app.campus.activity;
 
 import lecho.app.campus.R;
+import lecho.app.campus.service.PopulateDBIntentService;
 import lecho.app.campus.utils.Config;
-import lecho.app.campus.utils.DataParser;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 
 public class StartActivity extends SherlockFragmentActivity {
+
+	private BroadcastReceiver mPopulateDBReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			goToCampusMapActivity();
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		// DataParser.loadCampusData(getApplicationContext(), R.raw.campus_data);
+		setContentView(R.layout.activity_populate_db);
 
-		Button btn2 = (Button) findViewById(R.id.button2);
-		btn2.setOnClickListener(new View.OnClickListener() {
+		if (null == savedInstanceState) {
+			// Check if there is new data version.
+			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+			if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
+				boolean appWasStarted = prefs.getBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, false);
+				if (!appWasStarted) {
+					// If first run - start product guide activity.
+					prefs.edit().putBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, true).commit();
+					Intent intent = new Intent(this, ProductGuideActivity.class);
+					startActivity(intent);
+				} else {
+					// Just database upgrade eg after app update via google play. Stay in this activity.
+				}
 
-			@Override
-			public void onClick(View v) {
-				// Intent i = new Intent(StartActivity.this, CampusMapActivity.class);
-				// i.putExtra(Config.EXTRA_PLACE_ID, 1L);
-				// startActivity(i);
-
-				Intent intent = new Intent(StartActivity.this, ProductGuideActivity.class);
-				startActivity(intent);
-				finish();
-
+				// Database has to be upgraded.
+				prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
+				Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
+				startService(serviceIntent);
+			} else {
+				// No action needed, go to map.
+				goToCampusMapActivity();
 			}
-		});
+		}
+
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
+	protected void onResume() {
+		super.onResume();
+		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+		boolean isParsingOngoing = prefs.getBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, false);
+		if (!isParsingOngoing) {
+			// No action needed, go to map
+			goToCampusMapActivity();
+		} else {
+			IntentFilter intentFilter = new IntentFilter(PopulateDBIntentService.BROADCAST_INTENT_FILTER);
+			LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mPopulateDBReceiver,
+					intentFilter);
+		}
+	}
+
+	private void goToCampusMapActivity() {
+		Intent startIntent = new Intent(StartActivity.this, CampusMapActivity.class);
+		startActivity(startIntent);
+		finish();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mPopulateDBReceiver);
 	}
 
 }
