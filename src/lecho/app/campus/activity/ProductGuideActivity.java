@@ -8,7 +8,6 @@ import lecho.app.campus.adapter.ProductGuidePagesFragmentAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +66,6 @@ public class ProductGuideActivity extends SherlockFragmentActivity {
 		@Override
 		public void onPageSelected(int position) {
 			super.onPageSelected(position);
-			Log.e(TAG, "Page " + position);
 			if (position == mPagesNumber - 1) {
 				mNextButton.setVisibility(View.GONE);
 				mSeparator.setVisibility(View.GONE);

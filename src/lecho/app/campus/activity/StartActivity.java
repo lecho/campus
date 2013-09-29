@@ -61,7 +61,6 @@ public class StartActivity extends SherlockFragmentActivity {
 		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 		boolean isParsingOngoing = prefs.getBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, false);
 		if (!isParsingOngoing) {
-			// No action needed, go to map
 			goToCampusMapActivity();
 		} else {
 			IntentFilter intentFilter = new IntentFilter(PopulateDBIntentService.BROADCAST_INTENT_FILTER);

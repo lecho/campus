@@ -38,6 +38,7 @@
     <string name="drawer_item_faculty_oiz">OIZ</string>
     <string name="drawer_item_checkmar_content_description">Znacznik elementu</string>
     <string name="menu_about">O aplikacji</string>
+    <string name="menu_help">Pomoc</string>
     <string name="about_version_label">"Wersja "</string>
     <string name="about_build_label">"Build "</string>
     <string name="about_author">Lecho 2013</string>
