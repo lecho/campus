@@ -28,6 +28,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -164,7 +165,7 @@ public class DataParser {
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (CATEGORY.equals(xpp.getName())) {
-					// This should be end of PLACE definition
+					// This should be end of CATEGORY definition
 					categories.add(category);
 					return;
 				}
@@ -181,7 +182,7 @@ public class DataParser {
 		Faculty faculty = new Faculty();
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			// Parse PLACE attributes
+			// Parse FACULTY attributes
 			if (eventType == XmlPullParser.START_TAG) {
 				if (ID.equals(xpp.getName())) {
 					faculty.setId(Long.valueOf(xpp.nextText().trim()));
@@ -192,7 +193,7 @@ public class DataParser {
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (FACULTY.equals(xpp.getName())) {
-					// This should be end of PLACE definition
+					// This should be end of FACULTY definition
 					faculties.add(faculty);
 					return;
 				}
@@ -208,7 +209,7 @@ public class DataParser {
 		Unit unit = new Unit();
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			// Parse PLACE attributes
+			// Parse UNIT attributes
 			if (eventType == XmlPullParser.START_TAG) {
 				if (ID.equals(xpp.getName())) {
 					unit.setId(Long.valueOf(xpp.nextText().trim()));
@@ -217,11 +218,14 @@ public class DataParser {
 				} else if (SHORT_NAME.equals(xpp.getName())) {
 					unit.setShortName(xpp.nextText().trim());
 				} else if (UNIT_FACULTY.equals(xpp.getName())) {
-					unit.setFacultyId(Long.valueOf(xpp.nextText().trim()));
+					String facultyId = xpp.nextText().trim();
+					if (!TextUtils.isEmpty(facultyId)) {
+						unit.setFacultyId(Long.valueOf(facultyId));
+					}
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (UNIT.equals(xpp.getName())) {
-					// This should be end of PLACE definition
+					// This should be end of UNIT definition
 					units.add(unit);
 					return;
 				}
@@ -257,27 +261,36 @@ public class DataParser {
 						throw new IllegalStateException(
 								"Invalid xml file format. Place cannot be null while parsing CATEGORY relation.");
 					}
-					String[] categories = xpp.nextText().trim().split(SEPARATOR);
-					for (String categoryId : categories) {
-						placeCategories.add(new PlaceCategory(null, Long.valueOf(categoryId), place.getId()));
+					String categories = xpp.nextText().trim();
+					if (!TextUtils.isEmpty(categories)) {
+						String[] categoriesArray = categories.split(SEPARATOR);
+						for (String categoryId : categoriesArray) {
+							placeCategories.add(new PlaceCategory(null, Long.valueOf(categoryId), place.getId()));
+						}
 					}
 				} else if (PLACE_UNIT.equals(xpp.getName())) {
 					if (null == place) {
 						throw new IllegalStateException(
 								"Invalid xml file format. Place cannot be null while parsing UNIT relation.");
 					}
-					String[] units = xpp.nextText().trim().split(SEPARATOR);
-					for (String unitId : units) {
-						placeUnits.add(new PlaceUnit(null, Long.valueOf(unitId), place.getId()));
+					String units = xpp.nextText().trim();
+					if (!TextUtils.isEmpty(units)) {
+						String[] unitsArray = units.split(SEPARATOR);
+						for (String unitId : unitsArray) {
+							placeUnits.add(new PlaceUnit(null, Long.valueOf(unitId), place.getId()));
+						}
 					}
 				} else if (PLACE_FACULTY.equals(xpp.getName())) {
 					if (null == place) {
 						throw new IllegalStateException(
 								"Invalid xml file format. Place cannot be null while parsing FACULTY relation.");
 					}
-					String[] faculties = xpp.nextText().trim().split(SEPARATOR);
-					for (String facultyId : faculties) {
-						placeFaculties.add(new PlaceFaculty(null, Long.valueOf(facultyId), place.getId()));
+					String faculties = xpp.nextText().trim();
+					if (!TextUtils.isEmpty(faculties)) {
+						String[] facultiesArray = faculties.split(SEPARATOR);
+						for (String facultyId : facultiesArray) {
+							placeFaculties.add(new PlaceFaculty(null, Long.valueOf(facultyId), place.getId()));
+						}
 					}
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
