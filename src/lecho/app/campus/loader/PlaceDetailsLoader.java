@@ -31,8 +31,8 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 			+ " PU on PU." + PlaceUnitDao.Properties.UnitId.columnName + "=T." + UnitDao.Properties.Id.columnName
 			+ " left join " + FacultyDao.TABLENAME + " F on F." + FacultyDao.Properties.Id.columnName + "=T."
 			+ UnitDao.Properties.FacultyId.columnName + " where PU." + PlaceUnitDao.Properties.PlaceId.columnName
-			+ "=? order by T." + UnitDao.Properties.Name.columnName + " asc, ifnull(F."
-			+ FacultyDao.Properties.ShortName.columnName + ",'zzz') asc ";
+			+ "=? order by ifnull(F." + FacultyDao.Properties.ShortName.columnName + ",'zzz') asc, T."
+			+ UnitDao.Properties.Name.columnName + " asc";
 
 	private Long mPlaceId;
 	private DaoSession mDaoSession;
