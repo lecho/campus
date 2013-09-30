@@ -15,8 +15,8 @@
     <dimen name="search_result_description_height">32dp</dimen>
     <dimen name="details_header_height">74dp</dimen>
     <dimen name="details_symbol_width">58dp</dimen>
-    <dimen name="place_details_image_width">240dp</dimen>
-    <dimen name="place_details_image_height">120dp</dimen>
+    <dimen name="place_details_image_width">1080dp</dimen>
+    <dimen name="place_details_image_height">196dp</dimen>
     <dimen name="gallery_place_image_width">1080dp</dimen>
     <dimen name="gallery_place_image_height">1080dp</dimen>
     <dimen name="gallery_indicator_width">24dp</dimen>
