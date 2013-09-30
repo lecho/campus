@@ -357,38 +357,38 @@
 		<!-- A27 -->
 		<unit_ref>37</unit_ref>
 		<unit>
-			<id>38</id>
+			<id>39</id>
 			<name>Dziekanat Wydziału Chemicznego</name>
 			<short_name></short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>39</id>
+			<id>40</id>
 			<name>Instytut Chemii Organicznej</name>
 			<short_name></short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>40</id>
+			<id>41</id>
 			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
 			<short_name></short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>41</id>
+			<id>42</id>
 			<name>Katedra Fizyki Molekularnej</name>
 			<short_name></short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<!-- A28 -->
 		<unit>
-			<id>42</id>
+			<id>43</id>
 			<name>Kanclerz</name>
 			<short_name></short_name>
 			<unit_faculty></unit_faculty>
 		</unit>
 		<unit>
-			<id>43</id>
+			<id>44</id>
 			<name>Związki Zawodowe</name>
 			<short_name></short_name>
 			<unit_faculty></unit_faculty>
@@ -396,13 +396,13 @@
 		<!-- A29 empty -->
 		<!-- A30 -->
 		<unit>
-			<id>44</id>
+			<id>45</id>
 			<name>Akademickie Centrum Zaufania</name>
 			<short_name></short_name>
 			<unit_faculty></unit_faculty>
 		</unit>
 		<unit>
-			<id>45</id>
+			<id>46</id>
 			<name>Biuro ds. Osób Niepełnosprawnych</name>
 			<short_name></short_name>
 			<unit_faculty></unit_faculty>
@@ -411,43 +411,43 @@
 		<!-- A32 empty -->
 		<!-- A33 -->
 		<unit>
-			<id>46</id>
+			<id>47</id>
 			<name>Dziekanat Wydziału MIWT</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>47</id>
+			<id>48</id>
 			<name>Instytut Architektury Tekstyliów</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>48</id>
+			<id>49</id>
 			<name>Katedra Dziewiarstwa</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>49</id>
+			<id>50</id>
 			<name>Katedra Materiałoznawstwa, Towaroznawstwa i Metrologii Włókienniczej</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>50</id>
+			<id>51</id>
 			<name>Katedra Mechaniki i Informatyki Technicznej</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>51</id>
+			<id>52</id>
 			<name>Katedra Mechaniki Maszyn Włókienniczych</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>52</id>
+			<id>53</id>
 			<name>Katedra Odzieżownictwa i Tekstroniki</name>
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
@@ -749,7 +749,7 @@
 			<latitude>51.753825</latitude>
 			<longtitude>19.450967</longtitude>
 			<place_category>11</place_category>
-			<place_unit>37,38,39,40,41</place_unit>
+			<place_unit>37,39,40,41,42</place_unit>
 			<place_faculty>3</place_faculty>
 		</place>
 		<place>
@@ -760,7 +760,7 @@
 			<latitude>51.7535851</latitude>
 			<longtitude>19.4509969</longtitude>
 			<place_category>2,11</place_category>
-			<place_unit>42,43</place_unit>
+			<place_unit>43,44</place_unit>
 			<place_faculty></place_faculty>
 		</place>
 		<place>
@@ -782,7 +782,7 @@
 			<latitude>51.752588</latitude>
 			<longtitude>19.451323</longtitude>
 			<place_category>2,11</place_category>
-			<place_unit>44,45</place_unit>
+			<place_unit>45,46</place_unit>
 			<place_faculty></place_faculty>
 		</place>
 		<place>
@@ -815,7 +815,7 @@
 			<latitude>51.752588</latitude>
 			<longtitude>19.451323</longtitude>
 			<place_category>2,11</place_category>
-			<place_unit>46,47,48,49,50,51,52</place_unit>
+			<place_unit>47,48,49,50,51,52,53</place_unit>
 			<place_faculty>4</place_faculty>
 		</place>
 	</places>
