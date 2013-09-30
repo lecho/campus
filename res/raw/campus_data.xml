@@ -452,6 +452,296 @@
 			<short_name></short_name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
+		<!-- B1 empty -->
+		<!-- B2 empty -->
+		<!-- B3 -->
+		<unit>
+			<id>54</id>
+			<name>Dział Promocji Politechniki Łódzkiej</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B4 -->
+		<unit>
+			<id>55</id>
+			<name>Dziekanat Wydziałó IPOŚ</name>
+			<short_name></short_name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<unit>
+			<id>56</id>
+			<name>Katedra Systemów Inżynierii Środowiska</name>
+			<short_name></short_name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<unit>
+			<id>57</id>
+			<name>Galeria Krótko i Węzłowato</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B5 -->
+		<unit>
+			<id>58</id>
+			<name>Katedra Inżynierii Bioprocesowej</name>
+			<short_name></short_name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<!-- B6 -->
+		<unit>
+			<id>59</id>
+			<name>Instytut Architektury i Urbanistyki</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>60</id>
+			<name>Publiczne Liceum Ogólnokształcące Politechniki Łódzkiej</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<!-- B7 -->
+		<unit>
+			<id>61</id>
+			<name>Dziekanat Wudziału BAIŚ</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>62</id>
+			<name>Katedra Mechaniki i Materiałów</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>63</id>
+			<name>Katedra Fizyki Budowli i Materiałów Budowlanych</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>64</id>
+			<name>Katedra Mechaniki Konstrukcji</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>65</id>
+			<name>Katedra Konstrukcji Stalowych</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>66</id>
+			<name>Katedra Budownictwa Betonowego</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>67</id>
+			<name>Katedra Geotechniki i Budowli Inżynierskich</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>68</id>
+			<name>Katedra Geodezji, Kartografii Środowiska i Geometrii Wykreślnej</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>69</id>
+			<name>Katedra Techniki Ogrzewczej i Wentylacyjnej</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>70</id>
+			<name>Katedra Inżynierii Środowiska</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>71</id>
+			<name>Katedra Wodociągów i Kanalizacji</name>
+			<short_name></short_name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<!-- B8 empty -->
+		<!-- B9 -->
+		<unit>
+			<id>72</id>
+			<name>Instytut Elektroniki</name>
+			<short_name></short_name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>73</id>
+			<name>Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych</name>
+			<short_name></short_name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>74</id>
+			<name>Instytut Informatyki</name>
+			<short_name>ICS</short_name>
+			<unit_faculty>7</unit_faculty>
+		</unit>
+		<unit>
+			<id>75</id>
+			<name>Instytut Matematyki</name>
+			<short_name></short_name>
+			<unit_faculty>7</unit_faculty>
+		</unit>
+		<unit>
+			<id>76</id>
+			<name>Katedra Innowacji i Marketingu</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>77</id>
+			<name>Katedra Nauk Humanistycznych</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>78</id>
+			<name>Katedra Zarządzania Produkcją</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>79</id>
+			<name>Katedra Integracji Europejskiej i Marketingu Międzynarodowego</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>80</id>
+			<name>Katedra Podstaw Techniki i Ekologii Przemysłowej</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>81</id>
+			<name>Katedra Ekonomii</name>
+			<short_name></short_name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<!-- B10 -->
+		<unit>
+			<id>82</id>
+			<name>Katedra Procesów Cieplnych i Dyfuzyjnych</name>
+			<short_name></short_name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<unit>
+			<id>83</id>
+			<name>Katedra Termodynamiki Procesower</name>
+			<short_name></short_name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<!-- B11 -->
+		<unit>
+			<id>84</id>
+			<name>Dziekanat Wydziału FTIMS</name>
+			<short_name></short_name>
+			<unit_faculty>7</unit_faculty>
+		</unit>
+		<!-- B12 -->
+		<unit>
+			<id>85</id>
+			<name>Centrum Diagnostyki i Terapii Laserowej</name>
+			<short_name>CDiTL</short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B13 -->
+		<unit>
+			<id>86</id>
+			<name>Instytut Maszyn Przepływowych</name>
+			<short_name></short_name>
+			<unit_faculty>1</unit_faculty>
+		</unit>
+		<!-- B14 -->
+		<unit>
+			<id>87</id>
+			<name>Instytut Maszyn Przepływowych</name>
+			<short_name></short_name>
+			<unit_faculty>1</unit_faculty>
+		</unit>
+		<!-- B15 -->
+		<unit>
+			<id>88</id>
+			<name>Instytut Fizyki</name>
+			<short_name></short_name>
+			<unit_faculty>7</unit_faculty>
+		</unit>
+		<!-- B16 -->
+		<unit>
+			<id>89</id>
+			<name>Dział Wydawnictw Naukowo-Dydaktycznych</name>
+			<short_name>DWD</short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B17 -->
+		<unit>
+			<id>90</id>
+			<name>Instytut Papiernictwa i Poligrafii</name>
+			<short_name>IPiP</short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B18 -->
+		<unit>
+			<id>91</id>
+			<name>Katedra Mikroelektroniki i Technik Informatycznych</name>
+			<short_name>DMCS</short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B19 empty -->
+		<!-- B20 empty -->
+		<!-- B21 empty -->
+		<!-- B22 -->
+		<unit>
+			<id>92</id>
+			<name>Uczelniany Punkt Personalizacji</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<unit>
+			<id>93</id>
+			<name>Centrum Wikamp</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<unit>
+			<id>94</id>
+			<name>Galeria Biblio-Art</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<unit>
+			<id>95</id>
+			<name>Łódzki Uniwersytet Dziecięcy</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B23 empty -->
+		<!-- B24 -->
+		<unit>
+			<id>96</id>
+			<name>Studium Języków Obcych</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
+		<!-- B25 -->
+		<unit_ref>96</unit_ref>
+		<unit>
+			<id>97</id>
+			<name>Uniwersytet Trzeciego Wieku Politechniki Łódzkiej</name>
+			<short_name></short_name>
+			<unit_faculty></unit_faculty>
+		</unit>
 	</units>
 	<places>
 	    <!-- campus A -->
@@ -818,5 +1108,283 @@
 			<place_unit>47,48,49,50,51,52,53</place_unit>
 			<place_faculty>4</place_faculty>
 		</place>
+		<!-- Campus B -->
+		<place>
+			<id>34</id>
+			<symbol>B1</symbol>
+			<name>Rektorat</name>
+			<description></description>
+			<latitude>51.748621</latitude>
+			<longtitude>19.455360</longtitude>
+			<place_category>2,12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>35</id>
+			<symbol>B2</symbol>
+			<name>Budynek B2</name>
+			<description></description>
+			<latitude>51.7489063</latitude>
+			<longtitude>19.4548576</longtitude>
+			<place_category>12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>36</id>
+			<symbol>B3</symbol>
+			<name>Budynek B3</name>
+			<description></description>
+			<latitude>51.7489063</latitude>
+			<longtitude>19.4548576</longtitude>
+			<place_category>2,12</place_category>
+			<place_unit>54</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>37</id>
+			<symbol>B4</symbol>
+			<name>Budynek B4</name>
+			<description></description>
+			<latitude>51.7480461</latitude>
+			<longtitude>19.4558245</longtitude>
+			<place_category>12</place_category>
+			<place_unit>55,56,57</place_unit>
+			<place_faculty>8</place_faculty>
+		</place>
+		<place>
+			<id>38</id>
+			<symbol>B5</symbol>
+			<name>Budynek B5</name>
+			<description></description>
+			<latitude>51.7480104</latitude>
+			<longtitude>19.4554295</longtitude>
+			<place_category>12</place_category>
+			<place_unit>58</place_unit>
+			<place_faculty>8</place_faculty>
+		</place>
+		<place>
+			<id>39</id>
+			<symbol>B6</symbol>
+			<name>Budynek B6</name>
+			<description></description>
+			<latitude>51.7477509</latitude>
+			<longtitude>19.4531241</longtitude>
+			<place_category>12</place_category>
+			<place_unit>59,60</place_unit>
+			<place_faculty>6</place_faculty>
+		</place>
+		<place>
+			<id>40</id>
+			<symbol>B7</symbol>
+			<name>Budynek B7</name>
+			<description></description>
+			<latitude>51.7476239</latitude>
+			<longtitude>19.4519306</longtitude>
+			<place_category>12</place_category>
+			<place_unit>61,62,63,64,65,66,67,68,69,70,71</place_unit>
+			<place_faculty>6</place_faculty>
+		</place>
+		<place>
+			<id>41</id>
+			<symbol>B8</symbol>
+			<name>Budynek B8</name>
+			<description></description>
+			<latitude>51.7475971</latitude>
+			<longtitude>19.450906</longtitude>
+			<place_category>12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>42</id>
+			<symbol>B9</symbol>
+			<name>Budynek Trzech Wydziałów</name>
+			<description>Lodex, Tramwaj</description>
+			<latitude>51.7472277</latitude>
+			<longtitude>19.4537199</longtitude>
+			<place_category>12</place_category>
+			<place_unit>72,73,74,75,76,77,78,79,80,81</place_unit>
+			<place_faculty>2,7,9</place_faculty>
+		</place>
+		<place>
+			<id>43</id>
+			<symbol>B10</symbol>
+			<name>Budynek B10</name>
+			<description></description>
+			<latitude>51.7473809</latitude>
+			<longtitude>19.4554135</longtitude>
+			<place_category>12</place_category>
+			<place_unit>82,83</place_unit>
+			<place_faculty>8</place_faculty>
+		</place>
+		<place>
+			<id>44</id>
+			<symbol>B11</symbol>
+			<name>Budynek B11</name>
+			<description></description>
+			<latitude>51.7473759</latitude>
+			<longtitude>19.4560713</longtitude>
+			<place_category>12</place_category>
+			<place_unit>84</place_unit>
+			<place_faculty>7</place_faculty>
+		</place>
+		<place>
+			<id>45</id>
+			<symbol>B12</symbol>
+			<name>Budynek B12</name>
+			<description></description>
+			<latitude>51.7471604</latitude>
+			<longtitude>19.4556281</longtitude>
+			<place_category>12</place_category>
+			<place_unit>85</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>46</id>
+			<symbol>B13</symbol>
+			<name>Budynek B13</name>
+			<description></description>
+			<latitude>51.7468817</latitude>
+			<longtitude>19.4542318</longtitude>
+			<place_category>12</place_category>
+			<place_unit>86</place_unit>
+			<place_faculty>1</place_faculty>
+		</place>
+		<place>
+			<id>47</id>
+			<symbol>B14</symbol>
+			<name>Budynek B14</name>
+			<description></description>
+			<latitude>51.7465856</latitude>
+			<longtitude>19.4544266</longtitude>
+			<place_category>12</place_category>
+			<place_unit>87</place_unit>
+			<place_faculty>1</place_faculty>
+		</place>
+		<place>
+			<id>48</id>
+			<symbol>B15</symbol>
+			<name>Budynek B15</name>
+			<description></description>
+			<latitude>51.7465856</latitude>
+			<longtitude>19.4544266</longtitude>
+			<place_category>12</place_category>
+			<place_unit>88</place_unit>
+			<place_faculty>7</place_faculty>
+		</place>
+		<place>
+			<id>49</id>
+			<symbol>B16</symbol>
+			<name>Budynek B16</name>
+			<description></description>
+			<latitude>51.7463987</latitude>
+			<longtitude>19.4531671</longtitude>
+			<place_category>2,12</place_category>
+			<place_unit>89</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>50</id>
+			<symbol>B17</symbol>
+			<name>Budynek B17</name>
+			<description></description>
+			<latitude>51.7461245</latitude>
+			<longtitude>19.4546554</longtitude>
+			<place_category>12</place_category>
+			<place_unit>90</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>51</id>
+			<symbol>B18</symbol>
+			<name>Budynek B18</name>
+			<description></description>
+			<latitude>51.7460987</latitude>
+			<longtitude>19.4557229</longtitude>
+			<place_category>12</place_category>
+			<place_unit>91</place_unit>
+			<place_faculty>2</place_faculty>
+		</place>
+		<place>
+			<id>52</id>
+			<symbol>B19</symbol>
+			<name>Centrum Technologii Informatycznych</name>
+			<description></description>
+			<latitude>51.7470548</latitude>
+			<longtitude>19.4559248</longtitude>
+			<place_category>12</place_category>
+			<place_unit>92</place_unit>
+			<place_faculty>7</place_faculty>
+		</place>
+		<place>
+			<id>53</id>
+			<symbol>B20</symbol>
+			<name>Budynek B20</name>
+			<description></description>
+			<latitude>51.7458151</latitude>
+			<longtitude>19.4567697</longtitude>
+			<place_category>12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>54</id>
+			<symbol>B21</symbol>
+			<name>Budynek B21</name>
+			<description></description>
+			<latitude>51.7456171</latitude>
+			<longtitude>19.4555526</longtitude>
+			<place_category>12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>55</id>
+			<symbol>B22</symbol>
+			<name>Biblioteka Główna</name>
+			<description></description>
+			<latitude>51.7456167</latitude>
+			<longtitude>19.4546038</longtitude>
+			<place_category>12</place_category>
+			<place_unit>92,93,94,95</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>56</id>
+			<symbol>B23</symbol>
+			<name>Budynek B23</name>
+			<description></description>
+			<latitude>51.745072</latitude>
+			<longtitude>19.4536816</longtitude>
+			<place_category>12</place_category>
+			<place_unit></place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>57</id>
+			<symbol>B24</symbol>
+			<name>Budynek B24</name>
+			<description></description>
+			<latitude>51.7454352</latitude>
+			<longtitude>19.4519802</longtitude>
+			<place_category>12</place_category>
+			<place_unit>96</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<place>
+			<id>58</id>
+			<symbol>B25</symbol>
+			<name>Budynek B25</name>
+			<description></description>
+			<latitude>51.7453924</latitude>
+			<longtitude>19.451256</longtitude>
+			<place_category>12</place_category>
+			<place_unit>96,97</place_unit>
+			<place_faculty></place_faculty>
+		</place>
+		<!-- Campus C -->
+		
 	</places>
 </campus>
