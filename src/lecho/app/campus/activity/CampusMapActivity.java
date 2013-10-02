@@ -33,13 +33,13 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
@@ -79,6 +79,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
 	private static final int PLACES_LOADER = 1;
 	private static final int CAMERA_ANIMATION_DURATION = 500;
+	private static final int DRAWER_RESTART_LOADER_DELAY = 300;
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
@@ -214,7 +215,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// set custom drawer shadow
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		// mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -352,7 +353,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		boolean drawerOpen = mDrawerLayout.isDrawerVisible(mDrawerList);
 		menu.findItem(R.id.search).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -516,18 +517,27 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		startActivity(intent);
 	}
 
-	private void selectDrawerItem(int position) {
+	// Selects single item on left Drawer
+	private void selectDrawerItem(final int position) {
 		mDrawerLayout.closeDrawer(mDrawerList);
 		mCurrentPlaceId = Long.MIN_VALUE;
-		NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
-		if (position == mCurrentDrawerItem) {
-			clearCurrentDrawerItem();
-			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-		} else {
-			initLoader(true, item.action, item.argument);
-			mDrawerList.setItemChecked(position, true);
-			mCurrentDrawerItem = position;
-		}
+		final NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
+		// Delay restart loader to remove Drawer animation lag
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				if (position == mCurrentDrawerItem) {
+					clearCurrentDrawerItem();
+					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+				} else {
+					initLoader(true, item.action, item.argument);
+					mDrawerList.setItemChecked(position, true);
+					mCurrentDrawerItem = position;
+				}
+			}
+		}, DRAWER_RESTART_LOADER_DELAY);
+
 	}
 
 	private void clearCurrentDrawerItem() {
@@ -702,7 +712,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionExpand(MenuItem item) {
-			// No action here.
+			boolean drawerOpen = mDrawerLayout.isDrawerVisible(mDrawerList);
+			if (drawerOpen) {
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
 			return true;
 		}
 
@@ -779,11 +792,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
 				int openDrawerContentDescRes, int closeDrawerContentDescRes) {
 			super(activity, drawerLayout, drawerImageRes, openDrawerContentDescRes, closeDrawerContentDescRes);
-		}
-
-		@Override
-		public void onDrawerStateChanged(int newState) {
-			super.onDrawerStateChanged(newState);
 		}
 
 		@Override
