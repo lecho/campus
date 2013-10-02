@@ -6,6 +6,4 @@
     android:searchSuggestIntentAction="android.intent.action.VIEW"
     android:searchSuggestIntentData="lecho.app.campus.provider.SearchSuggestionProvider"
     android:searchSuggestSelection="like ?"
-    android:searchSuggestThreshold="2"
-    android:voicePromptText="@string/search_invoke"
-    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />
+    android:searchSuggestThreshold="2" />
