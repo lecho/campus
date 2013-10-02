@@ -23,10 +23,9 @@ public abstract class Config {
 	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus." + APP_TARGET
 			+ ".provider.SearchSuggestionProvider";
 
-	public static final double START_LAT1 = 51.740000;
-	public static final double START_LNG1 = 19.440000;
-	public static final double START_LAT2 = 51.770000;
-	public static final double START_LNG2 = 19.480000;
+	public static final double DEFAULT_LAT = 51.7505298;
+	public static final double DEFAULT_LNG = 19.4551516;
+	public static final float DEFAULT_ZOOM_LEVEL = 14.5f;
 
 	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {

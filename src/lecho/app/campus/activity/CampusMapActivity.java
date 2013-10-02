@@ -68,6 +68,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -293,6 +294,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.setOnMapClickListener(new MapClickListener());
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
 		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
+		mMap.setOnCameraChangeListener(new MapCameraChangeListener());
 		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		mMap.getUiSettings().setMyLocationButtonEnabled(true);
 		mMap.setMyLocationEnabled(true);
@@ -336,10 +338,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void zoomMapToDefault() {
-		LatLng latLangS = new LatLng(Config.START_LAT1, Config.START_LNG1);
-		LatLng latLangN = new LatLng(Config.START_LAT2, Config.START_LNG2);
-		LatLngBounds bounds = new LatLngBounds(latLangS, latLangN);
-		mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0), CAMERA_ANIMATION_DURATION, null);
+		LatLng latLng = new LatLng(Config.DEFAULT_LAT, Config.DEFAULT_LNG);
+		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL),
+				CAMERA_ANIMATION_DURATION, null);
 	}
 
 	@Override
@@ -446,7 +447,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
-					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default)).title(place.getSymbol())
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_small)).title(place.getSymbol())
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
 			mMarkersData.put(marker, place);
@@ -634,6 +635,44 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			handleMarker(mMarker);
 			mMarker.showInfoWindow();
 		}
+	}
+
+	/**
+	 * Used to change markers icons on small zoom.
+	 */
+	private class MapCameraChangeListener implements GoogleMap.OnCameraChangeListener {
+		private boolean mIsMarkerSmall = true;
+
+		@Override
+		public void onCameraChange(CameraPosition position) {
+			final float zoom = position.zoom;
+			if (zoom <= Config.DEFAULT_ZOOM_LEVEL && !mIsMarkerSmall) {
+				Log.i(TAG, "Change markers to small");
+				for (Map.Entry<Long, Marker> entry : mMarkers.entrySet()) {
+					entry.getValue().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_small));
+					mIsMarkerSmall = true;
+				}
+				showMarkerInfoWindow();
+			} else if (zoom > Config.DEFAULT_ZOOM_LEVEL && mIsMarkerSmall) {
+				Log.i(TAG, "Change markers to default");
+				for (Map.Entry<Long, Marker> entry : mMarkers.entrySet()) {
+					entry.getValue().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default));
+				}
+				mIsMarkerSmall = false;
+				showMarkerInfoWindow();
+			}
+
+		}
+
+		private void showMarkerInfoWindow() {
+			if (mCurrentPlaceId > 0) {
+				final Marker marker = mMarkers.get(mCurrentPlaceId);
+				if (null != marker) {
+					marker.showInfoWindow();
+				}
+			}
+		}
+
 	}
 
 	/**
