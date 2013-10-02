@@ -376,9 +376,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		} else if (item.getItemId() == R.id.about) {
 			Intent intent = new Intent(this, AboutAppActivity.class);
 			startActivity(intent);
-		} else if (item.getItemId() == R.id.help) {
-			Intent intent = new Intent(this, ProductGuideActivity.class);
-			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}
