@@ -70,7 +70,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -155,6 +154,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.i(TAG, "Play Services status SUCCESS");
 			return true;
 		} else {
+			mSearchMenuItem.setVisible(false);
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
 			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
 				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
