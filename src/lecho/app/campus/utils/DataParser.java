@@ -50,7 +50,7 @@ public class DataParser {
 	private static final String DESCRIPTION = "description";
 	private static final String SYMBOL = "symbol";
 	private static final String LATITUDE = "latitude";
-	private static final String LONGTITUDE = "longtitude";
+	private static final String LONGTITUDE = "longitude";
 	private static final String PLACE_CATEGORY = "place_category";
 	private static final String PLACE_FACULTY = "place_faculty";
 	private static final String PLACE_UNIT = "place_unit";
