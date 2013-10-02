@@ -806,7 +806,7 @@
 	</units>
 	<places>
 	    <!-- campus A -->
-	    <place>
+	   <!--  <place>
 			<id>1</id>
 			<symbol>A1</symbol>
 			<name>Budynek A1</name>
@@ -814,7 +814,7 @@
 			<latitude>51.7552033</latitude>
 			<longtitude>19.4525747</longtitude>
 			<place_category>11</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>2</id>
 			<symbol>A2</symbol>
@@ -878,13 +878,14 @@
 			<id>8</id>
 			<symbol>A8</symbol>
 			<name>Budynek A8</name>
+			<description>Garbarstwo</description>
 			<latitude>51.753513</latitude>
 			<longtitude>19.453027</longtitude>
 			<place_category>11</place_category>
 			<place_unit>8,15</place_unit>
 			<place_faculty>8</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>9</id>
 			<symbol>A9</symbol>
 			<name>Budynek A9</name>
@@ -893,7 +894,7 @@
 			<place_category>11</place_category>
 			<place_unit>15</place_unit>
 			<place_faculty>8</place_faculty>
-		</place>
+		</place> -->
 		<place>
 			<id>10</id>
 			<symbol>A10</symbol>
@@ -943,7 +944,7 @@
 			<place_unit>23</place_unit>
 			<place_faculty>7</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>15</id>
 			<symbol>A15</symbol>
 			<name>Budynek A15</name>
@@ -951,7 +952,7 @@
 			<latitude>51.7528087</latitude>
 			<longtitude>19.4552277</longtitude>
 			<place_category>11</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>16</id>
 			<symbol>A16</symbol>
@@ -1021,14 +1022,14 @@
 			<place_unit>28,29,30,32,33,34,35,36,37</place_unit>
 			<place_faculty>1</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>23</id>
 			<symbol>A23</symbol>
 			<name>Budynek A23</name>
 			<latitude>51.7522675</latitude>
 			<longtitude>19.4526593</longtitude>
 			<place_category>11</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>24</id>
 			<symbol>A24</symbol>
@@ -1067,7 +1068,7 @@
 			<place_unit>40,41,42,43,44</place_unit>
 			<place_faculty>3</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>28</id>
 			<symbol>A28</symbol>
 			<name>Budynek A28</name>
@@ -1075,15 +1076,15 @@
 			<longtitude>19.4509969</longtitude>
 			<place_category>2,11</place_category>
 			<place_unit>45,46</place_unit>
-		</place>
-		<place>
+		</place> -->
+		<!-- <place>
 			<id>29</id>
 			<symbol>A29</symbol>
 			<name>Budynek A29</name>
 			<latitude>51.7528729</latitude>
 			<longtitude>19.451223</longtitude>
 			<place_category>11</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>30</id>
 			<symbol>A30</symbol>
@@ -1104,14 +1105,14 @@
 			<place_unit>32</place_unit>
 			<place_faculty>1</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>32</id>
 			<symbol>A32</symbol>
 			<name>Budynek A32</name>
 			<latitude>51.7534707</latitude>
 			<longtitude>19.4497603</longtitude>
 			<place_category>11</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>33</id>
 			<symbol>A33</symbol>
@@ -1126,7 +1127,7 @@
 		<place>
 			<id>34</id>
 			<symbol>B1</symbol>
-			<name>Rektorat</name>
+			<name></name>
 			<latitude>51.748621</latitude>
 			<longtitude>19.455360</longtitude>
 			<place_unit>56</place_unit>
@@ -1192,7 +1193,7 @@
 			<place_unit>65,66,67,68,69,70,71,72,73,74,75</place_unit>
 			<place_faculty>6</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>41</id>
 			<symbol>B8</symbol>
 			<name>Budynek B8</name>
@@ -1200,7 +1201,7 @@
 			<latitude>51.7475971</latitude>
 			<longtitude>19.450906</longtitude>
 			<place_category>12</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>42</id>
 			<symbol>B9</symbol>
@@ -1251,7 +1252,7 @@
 			<place_unit>90</place_unit>
 			<place_faculty>1</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>47</id>
 			<symbol>B14</symbol>
 			<name>Budynek B14</name>
@@ -1260,13 +1261,13 @@
 			<place_category>12</place_category>
 			<place_unit>91</place_unit>
 			<place_faculty>1</place_faculty>
-		</place>
+		</place> -->
 		<place>
 			<id>48</id>
 			<symbol>B15</symbol>
 			<name>Budynek B15</name>
-			<latitude>51.7465856</latitude>
-			<longtitude>19.4544266</longtitude>
+			<latitude>51.7466036</latitude>
+			<longtitude>19.4557936</longtitude>
 			<place_category>12</place_category>
 			<place_unit>92</place_unit>
 			<place_faculty>7</place_faculty>
@@ -1309,22 +1310,22 @@
 			<place_category>12</place_category>
 			<place_faculty>7</place_faculty>
 		</place>
-		<place>
+<!-- 		<place>
 			<id>53</id>
 			<symbol>B20</symbol>
 			<name>Budynek B20</name>
 			<latitude>51.7458151</latitude>
 			<longtitude>19.4567697</longtitude>
 			<place_category>12</place_category>
-		</place>
-		<place>
+		</place> -->
+<!-- 		<place>
 			<id>54</id>
 			<symbol>B21</symbol>
 			<name>Budynek B21</name>
 			<latitude>51.7456171</latitude>
 			<longtitude>19.4555526</longtitude>
 			<place_category>12</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>55</id>
 			<symbol>B22</symbol>
@@ -1334,15 +1335,15 @@
 			<place_category>12</place_category>
 			<place_unit>96,97,98,99</place_unit>
 		</place>
-		<place>
+		<!-- <place>
 			<id>56</id>
 			<symbol>B23</symbol>
 			<name>Budynek B23</name>
 			<latitude>51.745072</latitude>
 			<longtitude>19.4536816</longtitude>
 			<place_category>12</place_category>
-		</place>
-		<place>
+		</place> -->
+		<!-- <place>
 			<id>57</id>
 			<symbol>B24</symbol>
 			<name>Budynek B24</name>
@@ -1350,7 +1351,7 @@
 			<longtitude>19.4519802</longtitude>
 			<place_category>12</place_category>
 			<place_unit>100</place_unit>
-		</place>
+		</place> -->
 		<place>
 			<id>58</id>
 			<symbol>B25</symbol>
@@ -1430,14 +1431,14 @@
 			<place_unit>20</place_unit>
 			<place_faculty>2</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>66</id>
 			<symbol>C8</symbol>
 			<name>Budynek C8</name>
 			<latitude>51.7457763</latitude>
 			<longtitude>19.4486928</longtitude>
 			<place_category>13</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>67</id>
 			<symbol>C9</symbol>
@@ -1506,35 +1507,35 @@
 			<id>74</id>
 			<symbol>C16</symbol>
 			<name>VIII Dom Akademicki</name>
-			<description>Ósemka</description>
+			<description>Zwartek</description>
 			<latitude>51.7513544</latitude>
 			<longtitude>19.4479121</longtitude>
 			<place_category>1,13</place_category>
 		</place>
-		<place>
+		<!-- <place>
 			<id>75</id>
 			<symbol>C17</symbol>
 			<name>Budynek C17</name>
 			<latitude>51.7443145</latitude>
 			<longtitude>19.449157</longtitude>
 			<place_category>13</place_category>
-		</place>
-		<place>
+		</place> -->
+		<!-- <place>
 			<id>76</id>
 			<symbol>C18</symbol>
 			<name>Budynek C18</name>
 			<latitude>51.7449579</latitude>
 			<longtitude>19.4496818</longtitude>
 			<place_category>13</place_category>
-		</place>
-		<place>
+		</place> -->
+		<!-- <place>
 			<id>77</id>
 			<symbol>C19</symbol>
 			<name>Budynek C19</name>
 			<latitude>51.7483148</latitude>
 			<longtitude>19.4494224</longtitude>
 			<place_category>13</place_category>
-		</place>
+		</place> -->
 		<!-- Campus D -->
 		<place>
 			<id>78</id>
@@ -1546,14 +1547,14 @@
 			<place_unit>110,111</place_unit>
 			<place_faculty>9</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>79</id>
 			<symbol>D2</symbol>
 			<name>Budynek D2</name>
 			<latitude>51.749765</latitude>
 			<longtitude>19.4616619</longtitude>
 			<place_category>14</place_category>
-		</place>
+		</place> -->
 		<place>
 			<id>80</id>
 			<symbol>D3</symbol>
@@ -1564,7 +1565,7 @@
 			<place_unit>112</place_unit>
 			<place_faculty>9</place_faculty>
 		</place>
-		<place>
+		<!-- <place>
 			<id>81</id>
 			<symbol>D4</symbol>
 			<name>Budynek D4</name>
@@ -1573,8 +1574,8 @@
 			<place_category>14</place_category>
 			<place_unit>112</place_unit>
 			<place_faculty>9</place_faculty>
-		</place>
-		<place>
+		</place> -->
+		<!-- <place>
 			<id>82</id>
 			<symbol>D5</symbol>
 			<name>Budynek D5</name>
@@ -1583,7 +1584,7 @@
 			<longtitude>19.4610272</longtitude>
 			<place_category>14</place_category>
 			<place_faculty>9</place_faculty>
-		</place>
+		</place> -->
 		<!-- Inne E -->
 		<place>
 			<id>83</id>
