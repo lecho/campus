@@ -33,16 +33,6 @@ public class StartActivity extends SherlockFragmentActivity {
 			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
 			if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
-				boolean appWasStarted = prefs.getBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, false);
-				if (!appWasStarted) {
-					// If first run - start product guide activity.
-					prefs.edit().putBoolean(Config.APP_SHARED_PREFS_APP_WAS_STARTED, true).commit();
-					Intent intent = new Intent(this, ProductGuideActivity.class);
-					startActivity(intent);
-				} else {
-					// Just database upgrade eg after app update via google play. Stay in this activity.
-				}
-
 				// Database has to be upgraded.
 				prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
 				Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);

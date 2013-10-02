@@ -78,8 +78,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String TAG = "CampusMapActivity";
 	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
 	private static final int PLACES_LOADER = 1;
-	private static final int CAMERA_ANIMATION_DURATION = 500;
-	private static final int DRAWER_RESTART_LOADER_DELAY = 300;
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
@@ -106,6 +104,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private int mCurrentDrawerItem;
+	private boolean mIsDrawerWasOpened = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,8 +121,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				boolean deviceWasOnline = checkIfMapWasCached();
 				if (!deviceWasOnline) {
 					// Check connection only if app wasn't online before and if Play Services are available.
-					checkInternetConnection();
+					if (checkInternetConnection()) {
+						// Set flat to show drawer for the first time.
+						SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME,
+								Context.MODE_PRIVATE);
+						mIsDrawerWasOpened = prefs.getBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, false);
+					}
 				}
+				// Set flat to show drawer for the first time.
+				SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+				mIsDrawerWasOpened = prefs.getBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, false);
 			}
 			// }
 		} else {
@@ -189,14 +196,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return deviceWasOnline;
 	}
 
-	private void checkInternetConnection() {
+	private boolean checkInternetConnection() {
 		if (!Utils.isOnline(getApplicationContext())) {
 			Log.w(TAG, "Device is offline");
 			FragmentManager fm = getSupportFragmentManager();
 			DialogFragment dialog = NoInternetConnectionDialogFragment.newInstance();
 			dialog.show(fm, "no-internet-dialog");
+			return false;
 		} else {
 			setDeviceWasOnlineFlag();
+			return true;
 		}
 	}
 
@@ -341,7 +350,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void zoomMapToDefault() {
 		LatLng latLng = new LatLng(Config.DEFAULT_LAT, Config.DEFAULT_LNG);
 		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL),
-				CAMERA_ANIMATION_DURATION, null);
+				Config.CAMERA_ANIMATION_DURATION, null);
 	}
 
 	@Override
@@ -469,7 +478,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			handleMarker(marker);
 			marker.showInfoWindow();
 		} else {
-			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), CAMERA_ANIMATION_DURATION,
+			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), Config.CAMERA_ANIMATION_DURATION,
 					new MapCameraAnimationCalback(marker));
 		}
 	}
@@ -538,7 +547,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					mCurrentDrawerItem = position;
 				}
 			}
-		}, DRAWER_RESTART_LOADER_DELAY);
+		}, Config.DRAWER_RESTART_LOADER_DELAY);
 
 	}
 
@@ -592,8 +601,29 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					}
 				}
 			}
+			showDrawerFirstTime();
+
 		}
 
+	}
+
+	// Shows drawer for the first time to let user know that there is sliding menu.
+	private void showDrawerFirstTime() {
+		if (!mIsDrawerWasOpened) {
+			mDrawerLayout.openDrawer(mDrawerList);
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+						mDrawerLayout.closeDrawer(mDrawerList);
+					}
+				}
+			}, Config.DRAWER_FIRST_TIME_OPEN_DELAY);
+			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+			prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, true).commit();
+			mIsDrawerWasOpened = true;
+		}
 	}
 
 	private void handleLoaderResult(PlacesList data) {
@@ -752,8 +782,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionExpand(MenuItem item) {
-			boolean drawerOpen = mDrawerLayout.isDrawerVisible(mDrawerList);
-			if (drawerOpen) {
+			if (mDrawerLayout.isDrawerVisible(mDrawerList)) {
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 			return true;

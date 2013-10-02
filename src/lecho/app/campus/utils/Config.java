@@ -7,7 +7,7 @@ public abstract class Config {
 	// Increment to reload data after app update
 	public static final int CAMPUS_DATA_VERSION = 1;
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
-	public static final String APP_SHARED_PREFS_APP_WAS_STARTED = "lecho.app.campus:APP_WAS_STARTED";
+	public static final String APP_SHARED_PREFS_DRAWER_WAS_OPENED = "lecho.app.campus:DRAWER_WAS_OPENED";
 	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONLINE = "lecho.app.campus:DEVICE_WAS_ONLINE";
 	public static final String APP_SHARED_PREFS_CAMPUS_DATA_VERSION = "lecho.app.campus:CAMPUS_DATA_VERSION";
 	public static final String APP_SHARED_PREFS_DATA_PARSING_ONGOING = "lecho.app.campus:DATA_PARSING_ONGOING";
@@ -26,6 +26,10 @@ public abstract class Config {
 	public static final double DEFAULT_LAT = 51.7505298;
 	public static final double DEFAULT_LNG = 19.4551516;
 	public static final float DEFAULT_ZOOM_LEVEL = 14.5f;
+	
+	public static final int CAMERA_ANIMATION_DURATION = 500;
+	public static final int DRAWER_RESTART_LOADER_DELAY = 300;
+	public static final int DRAWER_FIRST_TIME_OPEN_DELAY = 2000;
 
 	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
