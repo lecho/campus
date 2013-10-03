@@ -16,3 +16,6 @@ gen/
 local.properties
 
 *.prefs
+
+#assets
+assets
