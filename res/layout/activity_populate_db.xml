@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_default_margin" >
+    android:background="@drawable/background_gradient"
+    android:layout_margin="@dimen/activity_horizontal_margin" >
 
     <ProgressBar
         android:id="@+id/progress_bar"

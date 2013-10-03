@@ -49,7 +49,7 @@ public class GalleryPageFragment extends SherlockFragment implements OnBitmapLoa
 
 	private void loadPlaceImage(String path, final ZoomImageView imageView) {
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView,
-				R.dimen.gallery_place_image_width, R.dimen.gallery_place_image_height, this);
+				R.dimen.gallery_place_image_request_width, R.dimen.gallery_place_image_request_height, this);
 		bitmapAsyncTask.execute();
 	}
 

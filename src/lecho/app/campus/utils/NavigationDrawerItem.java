@@ -1,9 +1,13 @@
 package lecho.app.campus.utils;
 
+import android.util.Log;
+
 public final class NavigationDrawerItem {
-	public static final int TYPE_TITLE = 0;
-	public static final int TYPE_ITEM_UNDER_TITLE = 1;
-	public static final int TYPE_INDEPENDENT_ITEM = 2;
+	private static final String TAG = "NavigationDrawerItem";
+
+	public static final int TYPE_TITLE = 1;// nonclickable
+	public static final int TYPE_ITEM_UNDER_TITLE = 2;// clickabel
+	public static final int NUMBER_OF_ITEM_TYPES = 2;
 
 	public NavigationDrawerItem(int stringRes, int action, String argument, int type) {
 		this.stringRes = stringRes;
@@ -16,6 +20,17 @@ public final class NavigationDrawerItem {
 	public final int action;
 	public final String argument;
 	public final int type;
+
+	public static final boolean isItemClickable(int itemType) {
+		if (TYPE_TITLE == itemType) {
+			return false;
+		} else if (TYPE_ITEM_UNDER_TITLE == itemType) {
+			return true;
+		} else {
+			Log.e(TAG, "Invalid item type " + itemType);
+			return false;
+		}
+	}
 
 	@Override
 	public int hashCode() {

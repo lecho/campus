@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:paddingLeft="@dimen/drawer_item_horizontal_margin"
+    android:paddingRight="@dimen/drawer_item_horizontal_margin" >
 
     <ImageView
         android:id="@+id/checkmark"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/drawer_item_checkmark_size"
+        android:layout_height="@dimen/drawer_item_checkmark_size"
         android:layout_centerVertical="true"
         android:contentDescription="@string/drawer_item_checkmar_content_description"
         android:cropToPadding="true"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/checkmark"
         android:gravity="center_vertical"
-        android:minHeight="48dp"
+        android:minHeight="@dimen/drawer_item_height"
         android:paddingLeft="8dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/dark_text" />

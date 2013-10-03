@@ -3,27 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/details_background_gradient"
+    android:background="@drawable/background_gradient"
     android:clickable="true"
     tools:context=".fragment.PlaceDetailsFragment" >
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
     <TextView
         android:id="@+id/symbol"
-        android:layout_width="@dimen/details_symbol_width"
+        android:layout_width="@dimen/place_details_symbol_width"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/name_and_description_layout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/maroon"
@@ -35,10 +29,8 @@
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/name_and_description_layout"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
         android:layout_toRightOf="@id/symbol"
-        android:background="@color/maroon"
+        android:background="@drawable/separator_vertical"
         tools:ignore="PxUsage" />
 
     <LinearLayout
@@ -49,9 +41,9 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@id/symbol_separator"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/details_header_height"
+        android:minHeight="@dimen/place_details_header_height"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingBottom="16dp"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
         <TextView
@@ -76,9 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@id/symbol"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/maroon"
+        android:background="@drawable/separator_horizontal"
         tools:ignore="PxUsage" />
 
     <ScrollView
@@ -92,8 +82,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp" >
+            android:layout_margin="@dimen/place_details_layout_margin" >
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

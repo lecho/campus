@@ -19,12 +19,11 @@
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
-        android:layout_height="29dip"
+        android:layout_height="@dimen/search_suggestion_description_height"
         android:layout_alignParentBottom="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/symbol"
         android:gravity="top"
-        android:paddingBottom="4dip"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmallInverse"
         android:visibility="gone" />

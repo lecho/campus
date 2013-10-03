@@ -30,6 +30,7 @@ public abstract class Config {
 	public static final int CAMERA_ANIMATION_DURATION = 500;
 	public static final int DRAWER_RESTART_LOADER_DELAY = 300;
 	public static final int DRAWER_FIRST_TIME_OPEN_DELAY = 2000;
+	public static final int DETAILS_IMAGE_ANIMATION_DURATION = 300;
 
 	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {

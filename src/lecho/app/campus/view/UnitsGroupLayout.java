@@ -1,7 +1,6 @@
 package lecho.app.campus.view;
 
 import lecho.app.campus.R;
-import lecho.app.campus.utils.Utils;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.Gravity;
@@ -19,8 +18,9 @@ public class UnitsGroupLayout extends LinearLayout {
 		setOrientation(LinearLayout.VERTICAL);
 		setBackgroundResource(R.drawable.white_box_shadow);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		int margin = Utils.dp2px(getContext(), 4);
-		lp.setMargins(0, margin, 0, margin);
+		int hMargin = getResources().getDimensionPixelSize(R.dimen.place_details_group_horizontal_margin);
+		int vMargin = getResources().getDimensionPixelSize(R.dimen.place_details_group_vertical_margin);
+		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		setLayoutParams(lp);
 	}
 
@@ -28,8 +28,8 @@ public class UnitsGroupLayout extends LinearLayout {
 		TextView tv = new TextView(getContext());
 		tv.setText(facultyName);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		int hMargin = Utils.dp2px(getContext(), 16);
-		int vMargin = Utils.dp2px(getContext(), 16);
+		int hMargin = getResources().getDimensionPixelSize(R.dimen.place_details_faculty_horizontal_margin);
+		int vMargin = getResources().getDimensionPixelSize(R.dimen.place_details_faculty_vertical_margin);
 		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.RIGHT);
@@ -46,8 +46,8 @@ public class UnitsGroupLayout extends LinearLayout {
 		TextView tv = new TextView(getContext());
 		tv.setText(unitName);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		int hMargin = Utils.dp2px(getContext(), 16);
-		int vMargin = Utils.dp2px(getContext(), 16);
+		int hMargin = getResources().getDimensionPixelSize(R.dimen.place_details_unit_horizontal_margin);
+		int vMargin = getResources().getDimensionPixelSize(R.dimen.place_details_unit_vertical_margin);
 		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.LEFT);
@@ -61,8 +61,8 @@ public class UnitsGroupLayout extends LinearLayout {
 		View v = new View(getContext());
 		v.setBackgroundResource(R.color.background);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
-		int margin = Utils.dp2px(getContext(), 16);
-		lp.setMargins(margin, 0, margin, 0);
+		int hMargin = getResources().getDimensionPixelSize(R.dimen.place_details_unit_horizontal_margin);
+		lp.setMargins(hMargin, 0, hMargin, 0);
 		v.setLayoutParams(lp);
 		this.addView(v);
 	}

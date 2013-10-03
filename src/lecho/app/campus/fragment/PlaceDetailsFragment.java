@@ -46,8 +46,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  * @author Lecho
  * 
  */
-public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails>,
-		OnBitmapLoadedListener {
+public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails> {
 	public static final String TAG = "PlaceDetailsFragment";
 	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
 
@@ -126,39 +125,6 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		}
 	}
 
-	@Override
-	public void onBitmapLoaded(boolean success) {
-		if (success && null == mImage.getParent()) {
-			final ViewTreeObserver observer = mScrollContent.getViewTreeObserver();
-			if (observer.isAlive()) {
-				observer.addOnPreDrawListener(new OnPreDrawListener() {
-
-					@Override
-					public boolean onPreDraw() {
-						observer.removeOnPreDrawListener(this);
-						int childCount = mScrollContent.getChildCount();
-						if (childCount < 2) {
-							// No need for animation
-							return true;
-						}
-						View v0 = mScrollContent.getChildAt(0);
-						View v1 = mScrollContent.getChildAt(1);
-						int deltaX = v1.getTop() - v0.getTop();
-						final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
-						anim.setDuration(300);
-						for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
-							View v = mScrollContent.getChildAt(i);
-							v.startAnimation(anim);
-						}
-						return true;
-					}
-				});
-			}
-			mScrollContent.addView(mImage, 0);
-			mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
-		}
-	}
-
 	private void prepareScrollContent(PlaceDetails data) {
 		prepareUnitsGroups(data);
 		prepareGoToGMapsLink(data);
@@ -186,8 +152,9 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		TextView gMapsLink = new TextView(getActivity());
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		int margin = Utils.dp2px(getActivity(), 16);
-		lp.setMargins(margin, margin, margin, margin);
+		int hMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+		int vMargin = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+		lp.setMargins(hMargin, vMargin, hMargin, vMargin);
 		lp.gravity = Gravity.RIGHT;
 		gMapsLink.setLayoutParams(lp);
 		int minHeight = getResources().getDimensionPixelSize(R.dimen.link_min_height);
@@ -214,7 +181,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		recycleImage();
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
-		mImage.setOnClickListener(new PlaceImageClickListener(getActivity(), data));
+		mImage.setOnClickListener(new PlaceImageClickListener(data));
 		loadPlaceImage(data, mImage);
 
 	}
@@ -236,27 +203,62 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		final String path = new StringBuilder(Utils.getPlaceImagesDir(data.place.getSymbol())).append(File.separator)
 				.append(Config.PLACE_MAIN_PHOTO_NAME).toString();
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView,
-				R.dimen.place_details_image_width, R.dimen.place_details_image_height, this);
+				R.dimen.place_details_image_request_width, R.dimen.place_details_image_request_height,
+				new BitmapLoadedListener());
 		bitmapAsyncTask.execute();
 	}
 
+	private class BitmapLoadedListener implements OnBitmapLoadedListener {
+
+		@Override
+		public void onBitmapLoaded(boolean success) {
+			if (success && null == mImage.getParent()) {
+				final ViewTreeObserver observer = mScrollContent.getViewTreeObserver();
+				if (observer.isAlive()) {
+					observer.addOnPreDrawListener(new OnPreDrawListener() {
+
+						@Override
+						public boolean onPreDraw() {
+							observer.removeOnPreDrawListener(this);
+							int childCount = mScrollContent.getChildCount();
+							if (childCount < 2) {
+								// No need for animation
+								return true;
+							}
+							View v0 = mScrollContent.getChildAt(0);
+							View v1 = mScrollContent.getChildAt(1);
+							int deltaX = v1.getTop() - v0.getTop();
+							final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
+							anim.setDuration(Config.DETAILS_IMAGE_ANIMATION_DURATION);
+							for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
+								View v = mScrollContent.getChildAt(i);
+								v.startAnimation(anim);
+							}
+							return true;
+						}
+					});
+				}
+				mScrollContent.addView(mImage, 0);
+				mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
+			}
+		}
+	}
+
 	private class PlaceImageClickListener implements OnClickListener {
-		private final Activity mActivity;
 		private final long mPlaceId;
 		private final String mPlaceSymbol;
 
-		public PlaceImageClickListener(final Activity activity, final PlaceDetails data) {
-			mActivity = activity;
+		public PlaceImageClickListener(final PlaceDetails data) {
 			mPlaceId = data.place.getId();
 			mPlaceSymbol = data.place.getSymbol();
 		}
 
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(mActivity, GalleryActivity.class);
+			Intent intent = new Intent(getActivity(), GalleryActivity.class);
 			intent.putExtra(Config.EXTRA_PLACE_ID, mPlaceId);
 			intent.putExtra(Config.EXTRA_PLACE_SYMBOL, mPlaceSymbol);
-			mActivity.startActivity(intent);
+			startActivity(intent);
 		}
 	}
 
@@ -276,9 +278,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 			if (Utils.launchGMaps(mActivity, mLatitude, mLongitude)) {
 				Log.i(TAG, "Start Google Maps application");
 			} else {
-				// TODO Show error message
+				Log.e(TAG, "Could not start Google Maps application");
 			}
 
 		}
 	}
+
 }

@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,8 +29,14 @@ public final class Utils {
 		StringBuilder sb = new StringBuilder().append(GMAPS).append(Double.toString(latitude)).append(",")
 				.append(Double.toString(longitude)).append(ZOOM);
 		try {
-			Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
-			context.startActivity(mapsIntent);
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
+			ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(intent,
+					PackageManager.MATCH_DEFAULT_ONLY);
+			if (null == resolveInfo) {
+				Log.e(TAG, "No activity to handle geo intent");
+				return false;
+			}
+			context.startActivity(intent);
 			return true;
 		} catch (Exception e) {
 			Log.e(TAG, "Could not start google navigation", e);
@@ -44,9 +52,15 @@ public final class Utils {
 				url = "http://" + url;
 			}
 
-			Intent i = new Intent(Intent.ACTION_VIEW);
-			i.setData(Uri.parse(url));
-			context.startActivity(i);
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(url));
+			ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(intent,
+					PackageManager.MATCH_DEFAULT_ONLY);
+			if (null == resolveInfo) {
+				Log.e(TAG, "No activity to handle web intent");
+				return false;
+			}
+			context.startActivity(intent);
 			Log.i(TAG, "Launching browser with url: " + url);
 			return true;
 		} catch (Exception e) {
