@@ -26,7 +26,7 @@ public abstract class Config {
 	public static final double DEFAULT_LAT = 51.7505298;
 	public static final double DEFAULT_LNG = 19.4551516;
 	public static final float DEFAULT_ZOOM_LEVEL = 14.5f;
-	
+
 	public static final int CAMERA_ANIMATION_DURATION = 500;
 	public static final int DRAWER_RESTART_LOADER_DELAY = 300;
 	public static final int DRAWER_FIRST_TIME_OPEN_DELAY = 2000;
@@ -34,6 +34,27 @@ public abstract class Config {
 
 	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
+			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_mech, PlacesLoader.LOAD_PLACES_BY_FACULTY, "MECH",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "EEIA",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_chem, PlacesLoader.LOAD_PLACES_BY_FACULTY, "CHEM",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_tmwt, PlacesLoader.LOAD_PLACES_BY_FACULTY, "TMIWT",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_binoz, PlacesLoader.LOAD_PLACES_BY_FACULTY, "BINOZ",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_bais, PlacesLoader.LOAD_PLACES_BY_FACULTY, "BAIS",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_ftims, PlacesLoader.LOAD_PLACES_BY_FACULTY, "FTIMS",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_ipos, PlacesLoader.LOAD_PLACES_BY_FACULTY, "IPOS",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_oiz, PlacesLoader.LOAD_PLACES_BY_FACULTY, "OIZ",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_ife, PlacesLoader.LOAD_PLACES_BY_FACULTY, "IFE",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_title_campuses, 0, null, NavigationDrawerItem.TYPE_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_campus_a, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_A",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
@@ -43,25 +64,12 @@ public abstract class Config {
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_campus_d, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_D",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "MECHANICAL",
-					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "EEIA",
-					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_faculty_ftims, PlacesLoader.LOAD_PLACES_BY_FACULTY, "FTIMS",
-					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_faculty_oiz, PlacesLoader.LOAD_PLACES_BY_FACULTY, "OIZ",
-					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_title_buildings, 0, null, NavigationDrawerItem.TYPE_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_building_dormitory, PlacesLoader.LOAD_PLACES_BY_CATEGORY,
 					"DORMITORY", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_building_educational, PlacesLoader.LOAD_PLACES_BY_CATEGORY,
-					"EDUCATIONAL", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_building_administration,
 					PlacesLoader.LOAD_PLACES_BY_CATEGORY, "ADMINISTRATION", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_building_sport, PlacesLoader.LOAD_PLACES_BY_CATEGORY,
-					"SPORT", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_building_other, PlacesLoader.LOAD_PLACES_BY_CATEGORY,
-					"OTHER", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE), };
+					"SPORT", NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE), };
 
 }

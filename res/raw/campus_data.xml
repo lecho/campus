@@ -42,31 +42,37 @@
 			<id>1</id>
 			<name>MECHANICZNY</name>
 			<short_name>MECHANICZNY</short_name>
+			<filterable_name>MECH</filterable_name>
 		</faculty>
 		<faculty>
 			<id>2</id>
 			<name>ELEKTROTECHNIKI, ELEKTRONIKI, INFORMATYKI I AUTOMATYKI</name>
 			<short_name>EEIA</short_name>
+			<filterable_name>EEIA</filterable_name>
 		</faculty>
 		<faculty>
 			<id>3</id>
 			<name>CHEMICZNY</name>
 			<short_name>CHEMICZNY</short_name>
+			<filterable_name>CHEM</filterable_name>
 		</faculty>
 		<faculty>
 			<id>4</id>
 			<name>TECHNOLOGII MATERIAŁOWYCH I WZORNICTWA TEKSTYLIÓW</name>
-			<short_name>TWIWT</short_name>
+			<short_name>TWiWT</short_name>
+			<filterable_name>TWIWT</filterable_name>
 		</faculty>
 		<faculty>
 			<id>5</id>
 			<name>BIOTECHNOLOGII I NAUK O ŻYWNOŚCI</name>
-			<short_name>BINOŻ</short_name>
+			<short_name>BiNOŻ</short_name>
+			<filterable_name>BINOZ</filterable_name>
 		</faculty>
 		<faculty>
 			<id>6</id>
 			<name>BUDOWNICTWA, ARCHITEKTURY I INŻYNIERII ŚRODOWISKA</name>
 			<short_name>BAIŚ</short_name>
+			<filterable_name>BAIS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>7</id>
@@ -77,16 +83,19 @@
 			<id>8</id>
 			<name>INŻYNIERII PROCESOWEJ I OCHRONY ŚRODOWISKA</name>
 			<short_name>IPOŚ</short_name>
+			<filterable_name>IPOS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>9</id>
 			<name>ORGANIZACJI I ZARZĄDZANIA</name>
 			<short_name>OIZ</short_name>
+			<filterable_name>OIZ</filterable_name>
 		</faculty>
 		<faculty>
 			<id>10</id>
 			<name>CENTRUM KSZTAŁCENIA MIĘDZYNARODOWEGO</name>
-			<short_name>IFE</short_name>
+			<short_name>IFE(CKM)</short_name>
+			<filterable_name>IFE</filterable_name>
 		</faculty>
 	</faculties>
 	<units>
@@ -1117,8 +1126,8 @@
 			<id>33</id>
 			<symbol>A33</symbol>
 			<name>Budynek A33</name>
-			<latitude>51.752588</latitude>
-			<longitude>19.451323</longitude>
+			<latitude>51.7528475</latitude>
+			<longitude>19.4500623</longitude>
 			<place_category>2,11</place_category>
 			<place_unit>49,50,51,52,53,54,55</place_unit>
 			<place_faculty>4</place_faculty>
