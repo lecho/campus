@@ -43,12 +43,12 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private static final String QUERY_FILTER_PLACES_BY_CATEGORY = "LEFT JOIN " + PlaceCategoryDao.TABLENAME
 			+ " PC ON T." + PlaceDao.Properties.Id.columnName + "=PC." + PlaceCategoryDao.Properties.PlaceId.columnName
 			+ " LEFT JOIN " + CategoryDao.TABLENAME + " C ON PC." + PlaceCategoryDao.Properties.CategoryId.columnName
-			+ "=C." + CategoryDao.Properties.Id.columnName + " WHERE C." + CategoryDao.Properties.Name.columnName
+			+ "=C." + CategoryDao.Properties.Id.columnName + " WHERE C." + CategoryDao.Properties.FilterableName.columnName
 			+ "=?";
 	private static final String QUERY_FILTER_PLACES_BY_FACULTY = "LEFT JOIN " + PlaceFacultyDao.TABLENAME + " PF ON T."
 			+ PlaceDao.Properties.Id.columnName + "=PF." + PlaceFacultyDao.Properties.PlaceId.columnName
 			+ " LEFT JOIN " + FacultyDao.TABLENAME + " F ON PF." + PlaceFacultyDao.Properties.FacultyId.columnName
-			+ "=F." + FacultyDao.Properties.Id.columnName + " WHERE F." + FacultyDao.Properties.ShortName.columnName
+			+ "=F." + FacultyDao.Properties.Id.columnName + " WHERE F." + FacultyDao.Properties.FilterableName.columnName
 			+ "=?";
 	// Search by place name, place symbol, place description, units names
 	// inside particular place(5 arguments for ?).

@@ -44,6 +44,8 @@ public abstract class Config {
 			new NavigationDrawerItem(R.string.drawer_item_campus_d, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_D",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
+			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "MECHANICAL",
+					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_faculty_eeia, PlacesLoader.LOAD_PLACES_BY_FACULTY, "EEIA",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_faculty_ftims, PlacesLoader.LOAD_PLACES_BY_FACULTY, "FTIMS",
