@@ -13,10 +13,6 @@ public class Category {
     private Long id;
     /** Not-null value. */
     private String name;
-    /** Not-null value. */
-    private String shortName;
-    /** Not-null value. */
-    private String filterableName;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -33,11 +29,9 @@ public class Category {
         this.id = id;
     }
 
-    public Category(Long id, String name, String shortName, String filterableName) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.shortName = shortName;
-        this.filterableName = filterableName;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -62,26 +56,6 @@ public class Category {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /** Not-null value. */
-    public String getShortName() {
-        return shortName;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    /** Not-null value. */
-    public String getFilterableName() {
-        return filterableName;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setFilterableName(String filterableName) {
-        this.filterableName = filterableName;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

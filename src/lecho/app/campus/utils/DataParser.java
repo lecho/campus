@@ -47,6 +47,7 @@ public class DataParser {
 	private static final String CATEGORY = "category";
 	private static final String NAME = "name";
 	private static final String SHORT_NAME = "short_name";
+	private static final String FILTERABLE_NAME = "filterable_name";
 	private static final String DESCRIPTION = "description";
 	private static final String SYMBOL = "symbol";
 	private static final String LATITUDE = "latitude";
@@ -160,8 +161,6 @@ public class DataParser {
 					category.setId(Long.valueOf(xpp.nextText().trim()));
 				} else if (NAME.equals(xpp.getName())) {
 					category.setName(xpp.nextText().trim());
-				} else if (SHORT_NAME.equals(xpp.getName())) {
-					category.setShortName(xpp.nextText().trim());
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (CATEGORY.equals(xpp.getName())) {
@@ -190,6 +189,8 @@ public class DataParser {
 					faculty.setName(xpp.nextText().trim());
 				} else if (SHORT_NAME.equals(xpp.getName())) {
 					faculty.setShortName(xpp.nextText().trim());
+				} else if (FILTERABLE_NAME.equals(xpp.getName())) {
+					faculty.setFilterableName(xpp.nextText().trim());
 				}
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (FACULTY.equals(xpp.getName())) {

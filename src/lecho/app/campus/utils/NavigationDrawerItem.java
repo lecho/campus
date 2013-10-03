@@ -5,8 +5,9 @@ import android.util.Log;
 public final class NavigationDrawerItem {
 	private static final String TAG = "NavigationDrawerItem";
 
-	public static final int TYPE_TITLE = 1;// nonclickable
-	public static final int TYPE_ITEM_UNDER_TITLE = 2;// clickabel
+	//Types must have numbers from 0 to n without gaps. 
+	public static final int TYPE_TITLE = 0;// nonclickable
+	public static final int TYPE_ITEM_UNDER_TITLE = 1;// clickabel
 	public static final int NUMBER_OF_ITEM_TYPES = 2;
 
 	public NavigationDrawerItem(int stringRes, int action, String argument, int type) {

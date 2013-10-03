@@ -25,8 +25,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property ShortName = new Property(2, String.class, "shortName", false, "SHORT_NAME");
-        public final static Property FilterableName = new Property(3, String.class, "filterableName", false, "FILTERABLE_NAME");
     };
 
     private DaoSession daoSession;
@@ -46,9 +44,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'CATEGORY' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'NAME' TEXT NOT NULL ," + // 1: name
-                "'SHORT_NAME' TEXT NOT NULL ," + // 2: shortName
-                "'FILTERABLE_NAME' TEXT NOT NULL );"); // 3: filterableName
+                "'NAME' TEXT NOT NULL );"); // 1: name
     }
 
     /** Drops the underlying database table. */
@@ -67,8 +63,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getName());
-        stmt.bindString(3, entity.getShortName());
-        stmt.bindString(4, entity.getFilterableName());
     }
 
     @Override
@@ -88,9 +82,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
     public Category readEntity(Cursor cursor, int offset) {
         Category entity = new Category( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // name
-            cursor.getString(offset + 2), // shortName
-            cursor.getString(offset + 3) // filterableName
+            cursor.getString(offset + 1) // name
         );
         return entity;
     }
@@ -100,8 +92,6 @@ public class CategoryDao extends AbstractDao<Category, Long> {
     public void readEntity(Cursor cursor, Category entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
-        entity.setShortName(cursor.getString(offset + 2));
-        entity.setFilterableName(cursor.getString(offset + 3));
      }
     
     /** @inheritdoc */

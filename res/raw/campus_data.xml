@@ -4,37 +4,30 @@
 		<category>
 			<id>1</id>
 			<name>DORMITORY</name>
-			<short_name>DORMITORY</short_name>
 		</category>	
 		<category>
 			<id>2</id>
 			<name>ADMINISTRATION</name>
-			<short_name>ADMINISTRATION</short_name>
 		</category>
 		<category>
 			<id>3</id>
 			<name>SPORT</name>
-			<short_name>SPORT</short_name>
 		</category>
 		<category>
 			<id>11</id>
 			<name>CAMPUS_A</name>
-			<short_name>CAMPUS_A</short_name>
 		</category>
 		<category>
 			<id>12</id>
 			<name>CAMPUS_B</name>
-			<short_name>CAMPUS_B</short_name>
 		</category>
 		<category>
 			<id>13</id>
 			<name>CAMPUS_C</name>
-			<short_name>CAMPUS_C</short_name>
 		</category>
 		<category>
 			<id>14</id>
 			<name>CAMPUS_D</name>
-			<short_name>CAMPUS_D</short_name>
 		</category>
 	</categories>
 	<faculties>
@@ -60,7 +53,7 @@
 			<id>4</id>
 			<name>TECHNOLOGII MATERIAŁOWYCH I WZORNICTWA TEKSTYLIÓW</name>
 			<short_name>TWiWT</short_name>
-			<filterable_name>TWIWT</filterable_name>
+			<filterable_name>TMIWT</filterable_name>
 		</faculty>
 		<faculty>
 			<id>5</id>
@@ -78,6 +71,7 @@
 			<id>7</id>
 			<name>FIZYKI TECHNICZNEJ, INFORMATYKI I MATEMATYKI STOSOWANEJ</name>
 			<short_name>FTIMS</short_name>
+			<filterable_name>FTIMS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>8</id>

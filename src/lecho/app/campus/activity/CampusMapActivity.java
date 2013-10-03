@@ -225,8 +225,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		// Find navi-drawer
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-		// set custom drawer shadow
-		// mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new NavigationDrawerAdapter(getApplicationContext(), 0, Config.NAVIGATION_DRAWER_ITEMS));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());

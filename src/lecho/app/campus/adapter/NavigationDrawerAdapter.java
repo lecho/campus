@@ -22,7 +22,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 			int itemType = getItemViewType(position);
 			if (NavigationDrawerItem.TYPE_TITLE == itemType) {
 				convertView = View.inflate(getContext(), R.layout.item_title_navigation_drawer, null);
-			} else if (NavigationDrawerItem.TYPE_TITLE == itemType) {
+			} else if (NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE == itemType) {
 				convertView = View.inflate(getContext(), R.layout.item_under_title_navigation_drawer, null);
 			} else {
 				Log.e(TAG, "Returning default title view - Invalid drawer item type" + itemType);
@@ -47,6 +47,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 
 	@Override
 	public boolean isEnabled(int position) {
+		Log.e(TAG, "pos: " + position + " and size " + getCount());
 		return NavigationDrawerItem.isItemClickable(getItemViewType(position));
 	}
 
