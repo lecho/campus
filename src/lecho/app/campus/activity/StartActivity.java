@@ -26,7 +26,7 @@ public class StartActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_populate_db);
+		setContentView(R.layout.activity_start);
 
 		if (null == savedInstanceState) {
 			// Check if there is new data version.

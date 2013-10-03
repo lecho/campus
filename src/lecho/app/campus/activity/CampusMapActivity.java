@@ -110,7 +110,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus_map);
-
+		// *** Navi-Drawer
+		setUpNavigationDrawer();
+		// ***
+		mViewPager = (ViewPager) findViewById(R.id.view_pager);
+		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
+		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
+		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.slide_hide);
+		mSearchResultsPagerHideAnim.setAnimationListener(new HideSearchResultAnimationListener());
+		mMessageBar = new MessageBar(this);
+		mMessageBar.setOnClickListener(new MessageBarButtonListener());
+		mSearchResultSize = getResources().getDimensionPixelSize(R.dimen.search_result_height);
+		// Pre-checks
 		if (null == savedInstanceState) {
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
@@ -131,6 +142,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				// Set flat to show drawer for the first time.
 				SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 				mIsDrawerWasOpened = prefs.getBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, false);
+			} else {
+				// Disable search and drawer.
+				mSearchMenuItem.setVisible(false);
+				mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 			}
 			// }
 		} else {
@@ -139,19 +154,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
 			mCurrentDrawerItem = savedInstanceState.getInt(EXTRA_CURRENT_DRAWER_ITEM);
 		}
-
-		// *** Navi-Drawer
-		setUpNavigationDrawer();
-		// ***
-		mViewPager = (ViewPager) findViewById(R.id.view_pager);
-		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
-		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
-		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.slide_hide);
-		mSearchResultsPagerHideAnim.setAnimationListener(new HideSearchResultAnimationListener());
-		mMessageBar = new MessageBar(this);
-		mMessageBar.setOnClickListener(new MessageBarButtonListener());
-		mSearchResultSize = getResources().getDimensionPixelSize(R.dimen.search_result_height);
-
+		// Finally set up map.
 		setUpMapIfNeeded();
 	}
 
@@ -161,8 +164,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.i(TAG, "Play Services status SUCCESS");
 			return true;
 		} else {
-			mSearchMenuItem.setVisible(false);
-			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
 			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
 				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
@@ -369,13 +370,26 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		final int itemId = item.getItemId();
 		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
 			return true;
-		} else if (item.getItemId() == R.id.about) {
+		} else if (itemId == R.id.about) {
 			Intent intent = new Intent(this, AboutAppActivity.class);
 			startActivity(intent);
+		} else if (itemId == R.id.map_normal) {
+			setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		} else if (itemId == R.id.map_satellite) {
+			setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+		} else if (itemId == R.id.map_hybrid) {
+			setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void setMapType(int mapType) {
+		if (null != mMap) {
+			mMap.setMapType(mapType);
+		}
 	}
 
 	/**

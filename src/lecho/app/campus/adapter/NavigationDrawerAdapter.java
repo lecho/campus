@@ -47,7 +47,6 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 
 	@Override
 	public boolean isEnabled(int position) {
-		Log.e(TAG, "pos: " + position + " and size " + getCount());
 		return NavigationDrawerItem.isItemClickable(getItemViewType(position));
 	}
 

@@ -42,8 +42,10 @@
     <string name="drawer_item_faculty_oiz">OIZ</string>
     <string name="drawer_item_faculty_ife">IFE(CKM)</string>
     <string name="drawer_item_checkmar_content_description">Znacznik elementu</string>
+    <string name="menu_map_normal">Widok normalny</string>
+    <string name="menu_map_satellite">Widok satelity</string>
+    <string name="menu_map_hybrid">Widok hybrydowy</string>
     <string name="menu_about">O aplikacji</string>
-    <string name="menu_help">Pomoc</string>
     <string name="about_version_label">"Wersja "</string>
     <string name="about_build_label">"Build "</string>
     <string name="about_author">Lecho 2013</string>
@@ -55,7 +57,7 @@
     <string name="about_mb_licence">MessageBar</string>
     <string name="about_ziv_licence">ZoomImageView</string>
     <string name="about_app_icon_content_description">Ikona aplikacji</string>
-    <string name="populate_db_message">Wrzucam dane do bazy, może to potrwać kilka sekund&#8230;</string>
+    <string name="populate_db_message">Wrzucam dane do bazy, to może potrwać kilka sekund&#8230;</string>
     <string name="guide_page_content_description">Strona przewodnika po aplikacji</string>
     <string name="guide_button_close">Zamknij</string>
     <string name="guide_button_next">Dalej</string>
