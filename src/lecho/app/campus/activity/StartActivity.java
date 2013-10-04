@@ -20,6 +20,7 @@ public class StartActivity extends SherlockFragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			goToCampusMapActivity();
+
 		}
 	};
 
@@ -60,8 +61,8 @@ public class StartActivity extends SherlockFragmentActivity {
 	}
 
 	private void goToCampusMapActivity() {
-		Intent startIntent = new Intent(StartActivity.this, CampusMapActivity.class);
-		startActivity(startIntent);
+		Intent intent = new Intent(StartActivity.this, CampusMapActivity.class);
+		startActivity(intent);
 		finish();
 	}
 

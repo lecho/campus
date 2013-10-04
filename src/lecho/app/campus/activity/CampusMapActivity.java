@@ -15,6 +15,7 @@ import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListene
 import lecho.app.campus.fragment.dialog.NoInternetConnectionDialogFragment;
 import lecho.app.campus.fragment.dialog.PlayServicesErrorDialogFragment;
 import lecho.app.campus.loader.PlacesLoader;
+import lecho.app.campus.service.PopulateDBIntentService;
 import lecho.app.campus.utils.ABSMenuItemConverter;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.NavigationDrawerItem;
@@ -26,8 +27,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -40,6 +43,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
@@ -98,13 +102,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private int mSearchResultSize;
+	private BroadcastReceiver mPopulateDBReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+		}
+
+	};
 
 	// Nav-Drawer related
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private int mCurrentDrawerItem;
-	private boolean mIsDrawerWasOpened = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,22 +137,25 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 			mCurrentDrawerItem = Integer.MIN_VALUE;
+			// Check if database has to be updated.
+			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+			if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
+				// Database has to be upgraded.
+				prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
+				Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
+				startService(serviceIntent);
+			}
 			// Check Play Services availability.
 			if (checkPlayServices()) {
 				// If device was online before there should be some map cache.
 				boolean deviceWasOnline = checkIfMapWasCached();
 				if (!deviceWasOnline) {
 					// Check connection only if app wasn't online before and if Play Services are available.
-					if (checkInternetConnection()) {
-						// Set flat to show drawer for the first time.
-						SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME,
-								Context.MODE_PRIVATE);
-						mIsDrawerWasOpened = prefs.getBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, false);
-					}
+					checkInternetConnection();
+					// Open drawer if this is first start.
+					mDrawerLayout.openDrawer(mDrawerList);
 				}
-				// Set flat to show drawer for the first time.
-				SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-				mIsDrawerWasOpened = prefs.getBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, false);
 			} else {
 				// Disable search and drawer.
 				mSearchMenuItem.setVisible(false);
@@ -255,7 +269,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (null != mPopulateDBReceiver) {
+			IntentFilter intentFilter = new IntentFilter(PopulateDBIntentService.BROADCAST_INTENT_FILTER);
+			LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mPopulateDBReceiver,
+					intentFilter);
+		}
 		setUpMapIfNeeded();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (null != mPopulateDBReceiver) {
+			LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mPopulateDBReceiver);
+		}
 	}
 
 	@Override
@@ -610,29 +637,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					}
 				}
 			}
-			showDrawerFirstTime();
-
 		}
 
-	}
-
-	// Shows drawer for the first time to let user know that there is sliding menu.
-	private void showDrawerFirstTime() {
-		if (!mIsDrawerWasOpened) {
-			mDrawerLayout.openDrawer(mDrawerList);
-			new Handler().postDelayed(new Runnable() {
-
-				@Override
-				public void run() {
-					if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-						mDrawerLayout.closeDrawer(mDrawerList);
-					}
-				}
-			}, Config.DRAWER_FIRST_TIME_OPEN_DELAY);
-			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-			prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DRAWER_WAS_OPENED, true).commit();
-			mIsDrawerWasOpened = true;
-		}
 	}
 
 	private void handleLoaderResult(PlacesList data) {

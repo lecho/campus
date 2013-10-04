@@ -13,9 +13,10 @@
     <string name="search_hint">Wyszukaj</string>
     <string name="search_label">Wyszukaj</string>
     <string name="search_invoke">Wyszukaj</string>
-    <string name="search_fake_place_name">Budynek</string>
     <string name="search_no_results">Nic nie znalazłem:(</string>
     <string name="search_no_results_back">Cofnij</string>
+    <string name="search_result_prev_item_content_description">Poprzedni obiekt</string>
+    <string name="search_result_next_item_content_description">Następny obiekt</string>
     <string name="image_view_loading_error">Nie mogłem załadować zdjęcia</string>
     <string name="image_view_loading_error_pity">Szkoda</string>
     <string name="go_to_google_maps">Przejdź do Map Google</string>
@@ -57,7 +58,7 @@
     <string name="about_mb_licence">MessageBar</string>
     <string name="about_ziv_licence">ZoomImageView</string>
     <string name="about_app_icon_content_description">Ikona aplikacji</string>
-    <string name="populate_db_message">Wrzucam dane do bazy, to może potrwać kilka sekund&#8230;</string>
+    <string name="populate_db_message">Rozpakowuje dane, jeszcze tylko chwilka&#8230;</string>
     <string name="guide_page_content_description">Strona przewodnika po aplikacji</string>
     <string name="guide_button_close">Zamknij</string>
     <string name="guide_button_next">Dalej</string>
