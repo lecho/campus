@@ -23,8 +23,10 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	// If false read from raw resources, if true from assets
 	private boolean mFromAssets;
 	private final WeakReference<ImageView> mImageViewReference;
+	private final WeakReference<OnBitmapLoadedListener> mListenerReference;
 
-	public BitmapAsyncTask(Context context, String path, ImageView imageView, int requestWidth, int requestHeight) {
+	public BitmapAsyncTask(Context context, String path, ImageView imageView, int requestWidth, int requestHeight,
+			OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
 		mPath = path;
 		mFromAssets = true;
@@ -32,9 +34,12 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 		mRequestHeight = requestHeight;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		mImageViewReference = new WeakReference<ImageView>(imageView);
+		// Use a WeakReference in case activity finished before AsyncTask.
+		mListenerReference = new WeakReference<BitmapAsyncTask.OnBitmapLoadedListener>(onBitmapLoadedListener);
 	}
 
-	public BitmapAsyncTask(Context context, int rawResource, ImageView imageView, int requestWidth, int requestHeight) {
+	public BitmapAsyncTask(Context context, int rawResource, ImageView imageView, int requestWidth, int requestHeight,
+			OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
 		mRawResource = rawResource;
 		mFromAssets = false;
@@ -42,6 +47,8 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 		mRequestHeight = requestHeight;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		mImageViewReference = new WeakReference<ImageView>(imageView);
+		// Use a WeakReference in case activity finished before AsyncTask.
+		mListenerReference = new WeakReference<BitmapAsyncTask.OnBitmapLoadedListener>(onBitmapLoadedListener);
 	}
 
 	// Decode image in background.
@@ -61,8 +68,20 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 			final ImageView imageView = mImageViewReference.get();
 			if (imageView != null) {
 				imageView.setImageBitmap(bitmap);
+				callListener(true);
 				return;
 			}
+		}
+		callListener(false);
+	}
+
+	private void callListener(boolean success) {
+		if (mListenerReference != null) {
+			final OnBitmapLoadedListener listener = mListenerReference.get();
+			if (null != listener) {
+				listener.onBitmapLoaded(success);
+			}
+
 		}
 	}
 
@@ -119,6 +138,9 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 
 		// Calculate inSampleSize
 		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+		if (Config.DEBUG) {
+			Log.d(TAG, "Loading image scaled by factor: " + options.inSampleSize);
+		}
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeStream(stream, null, options);
