@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class SearchResultFragment extends SherlockFragment {
+	public static final String EXTRA_IS_FIRST = "lecho.app.campus:IS_FIRST";
+	public static final String EXTRA_IS_LAST = "lecho.app.campus:IS_LAST";
 	private static final String TAG = "SearchResultFragment";
 	private static final String ARG_ID = "lecho.app.campus:ID";
 	private static final String ARG_SYMBOL = "lecho.app.campus:SYMBOL";
@@ -21,13 +23,15 @@ public class SearchResultFragment extends SherlockFragment {
 	private static final String ARG_DESCRIPTION = "lecho.app.campus:DESCRIPTION";
 	private OnSearchResultClickListener mSearchResultClickListener;
 
-	public static SearchResultFragment newInstance(Long id, String symbol, String name, String description) {
+	public static SearchResultFragment newInstance(Long id, String symbol, String name, String description, boolean isFirst, boolean isLast) {
 		SearchResultFragment fragment = new SearchResultFragment();
 		Bundle args = new Bundle();
 		args.putLong(ARG_ID, id);
 		args.putString(ARG_SYMBOL, symbol);
 		args.putString(ARG_NAME, name);
 		args.putString(ARG_DESCRIPTION, description);
+		args.putBoolean(EXTRA_IS_FIRST, isFirst);
+		args.putBoolean(EXTRA_IS_LAST, isLast);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -55,7 +59,14 @@ public class SearchResultFragment extends SherlockFragment {
 		TextView tvSymbol = (TextView) view.findViewById(R.id.symbol);
 		TextView tvName = (TextView) view.findViewById(R.id.name);
 		TextView tvDescription = (TextView) view.findViewById(R.id.description);
-
+		View prevItem = view.findViewById(R.id.previous_item);
+		if(!getArguments().getBoolean(EXTRA_IS_FIRST)){
+			prevItem.setVisibility(View.VISIBLE);
+		}
+		View nextItem = view.findViewById(R.id.next_item);
+		if(!getArguments().getBoolean(EXTRA_IS_LAST)){
+			nextItem.setVisibility(View.VISIBLE);
+		}
 		String symbol = getArguments().getString(ARG_SYMBOL);
 		String name = getArguments().getString(ARG_NAME);
 		String description = getArguments().getString(ARG_DESCRIPTION);

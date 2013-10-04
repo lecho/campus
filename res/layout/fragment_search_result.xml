@@ -58,4 +58,24 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/maroon" />
 
+    <ImageView
+        android:id="@+id/previous_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/search_result_prev_item_content_description"
+        android:src="@drawable/ic_navigation_previous_item"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/next_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/search_result_next_item_content_description"
+        android:src="@drawable/ic_navigation_next_item"
+        android:visibility="gone" />
+
 </RelativeLayout>

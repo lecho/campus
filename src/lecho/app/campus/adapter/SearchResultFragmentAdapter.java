@@ -25,7 +25,7 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		Place place = mPlaces.get(position);
 		return SearchResultFragment.newInstance(place.getId(), place.getSymbol(), place.getName(),
-				place.getDescription());
+				place.getDescription(), (0 == position), ((mPlaces.size() - 1) == position));
 	}
 
 	@Override
