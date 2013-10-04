@@ -39,6 +39,7 @@ import android.util.Log;
 public class DataParser {
 	public static final String TAG = "DataParser";
 
+	// These constants must correspond to xml tags.
 	private static final String SEPARATOR = ",";
 	private static final String ID = "id";
 	private static final String PLACE = "place";
@@ -56,6 +57,7 @@ public class DataParser {
 	private static final String PLACE_FACULTY = "place_faculty";
 	private static final String PLACE_UNIT = "place_unit";
 	private static final String UNIT_FACULTY = "unit_faculty";
+	private static final String HAS_IMAGE = "has_image";
 
 	/**
 	 * Parses campus_data_xx.xml file from raw resources.
@@ -257,6 +259,8 @@ public class DataParser {
 					place.setLatitude(Double.valueOf(xpp.nextText().trim()));
 				} else if (LONGTITUDE.equals(xpp.getName())) {
 					place.setLongitude(Double.valueOf(xpp.nextText().trim()));
+				} else if (HAS_IMAGE.equals(xpp.getName())) {
+					place.setHasImage(1 == Long.valueOf(xpp.nextText().trim()));
 				} else if (PLACE_CATEGORY.equals(xpp.getName())) {
 					if (null == place) {
 						throw new IllegalStateException(

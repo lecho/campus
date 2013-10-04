@@ -18,6 +18,7 @@ public class Place {
     private String description;
     private double latitude;
     private double longitude;
+    private boolean hasImage;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -36,13 +37,14 @@ public class Place {
         this.id = id;
     }
 
-    public Place(Long id, String name, String symbol, String description, double latitude, double longitude) {
+    public Place(Long id, String name, String symbol, String description, double latitude, double longitude, boolean hasImage) {
         this.id = id;
         this.name = name;
         this.symbol = symbol;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.hasImage = hasImage;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -101,6 +103,14 @@ public class Place {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean getHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

@@ -29,6 +29,7 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
         public final static Property Latitude = new Property(4, double.class, "latitude", false, "LATITUDE");
         public final static Property Longitude = new Property(5, double.class, "longitude", false, "LONGITUDE");
+        public final static Property HasImage = new Property(6, boolean.class, "hasImage", false, "HAS_IMAGE");
     };
 
     private DaoSession daoSession;
@@ -52,7 +53,8 @@ public class PlaceDao extends AbstractDao<Place, Long> {
                 "'SYMBOL' TEXT NOT NULL ," + // 2: symbol
                 "'DESCRIPTION' TEXT," + // 3: description
                 "'LATITUDE' REAL NOT NULL ," + // 4: latitude
-                "'LONGITUDE' REAL NOT NULL );"); // 5: longitude
+                "'LONGITUDE' REAL NOT NULL ," + // 5: longitude
+                "'HAS_IMAGE' INTEGER NOT NULL );"); // 6: hasImage
     }
 
     /** Drops the underlying database table. */
@@ -79,6 +81,7 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         }
         stmt.bindDouble(5, entity.getLatitude());
         stmt.bindDouble(6, entity.getLongitude());
+        stmt.bindLong(7, entity.getHasImage() ? 1l: 0l);
     }
 
     @Override
@@ -102,7 +105,8 @@ public class PlaceDao extends AbstractDao<Place, Long> {
             cursor.getString(offset + 2), // symbol
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // description
             cursor.getDouble(offset + 4), // latitude
-            cursor.getDouble(offset + 5) // longitude
+            cursor.getDouble(offset + 5), // longitude
+            cursor.getShort(offset + 6) != 0 // hasImage
         );
         return entity;
     }
@@ -116,6 +120,7 @@ public class PlaceDao extends AbstractDao<Place, Long> {
         entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setLatitude(cursor.getDouble(offset + 4));
         entity.setLongitude(cursor.getDouble(offset + 5));
+        entity.setHasImage(cursor.getShort(offset + 6) != 0);
      }
     
     /** @inheritdoc */

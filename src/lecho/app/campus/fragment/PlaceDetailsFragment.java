@@ -7,7 +7,6 @@ import lecho.app.campus.activity.GalleryActivity;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.loader.PlaceDetailsLoader;
 import lecho.app.campus.utils.BitmapAsyncTask;
-import lecho.app.campus.utils.BitmapAsyncTask.OnBitmapLoadedListener;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.PlaceDetails;
 import lecho.app.campus.utils.UnitsGroup;
@@ -174,16 +173,20 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	private void prepareImage(final PlaceDetails data) {
+		if (!data.place.getHasImage()) {
+			Log.i(TAG, "Selected place has no image assigned - skipping loading image");
+			return;
+		}
 		recycleImage();
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
+		// Fix ImageView height problem.
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(
 				R.dimen.place_details_image_height));
 		mImage.setLayoutParams(lp);
 		mImage.setOnClickListener(new PlaceImageClickListener(data));
 		mScrollContent.addView(mImage);
 		loadPlaceImage(data, mImage);
-
 	}
 
 	private void recycleImage() {
@@ -205,7 +208,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		final int requestWidth = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
 		final int requestHeight = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView, requestWidth,
-				requestHeight);
+				requestHeight, null);
 		bitmapAsyncTask.execute();
 	}
 

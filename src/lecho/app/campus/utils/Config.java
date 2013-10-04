@@ -4,6 +4,8 @@ import lecho.app.campus.R;
 import lecho.app.campus.loader.PlacesLoader;
 
 public abstract class Config {
+	public static final boolean DEBUG = true;
+	
 	// Increment to reload data after app update
 	public static final int CAMPUS_DATA_VERSION = 1;
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";

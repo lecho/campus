@@ -14,7 +14,7 @@
     <dimen name="search_result_description_height">32dp</dimen>
     <dimen name="place_details_header_height">74dp</dimen>
     <dimen name="place_details_symbol_width">58dp</dimen>
-    <dimen name="place_details_image_request_height">256dp</dimen>
+    <dimen name="place_details_image_request_height">128dp</dimen>
     <dimen name="place_details_image_request_width">128dp</dimen>
     <dimen name="place_details_image_height">128dp</dimen>
     <dimen name="place_details_image_padding">8dp</dimen>
@@ -26,8 +26,8 @@
     <dimen name="place_details_unit_vertical_margin">16dp</dimen>
     <dimen name="place_details_faculty_horizontal_margin">16dp</dimen>
     <dimen name="place_details_faculty_vertical_margin">16dp</dimen>
-    <dimen name="gallery_place_image_request_width">1080dp</dimen>
-    <dimen name="gallery_place_image_request_height">1080dp</dimen>
+    <dimen name="gallery_place_image_request_width">960dp</dimen>
+    <dimen name="gallery_place_image_request_height">720dp</dimen>
     <dimen name="gallery_indicator_width">24dp</dimen>
     <dimen name="gallery_indicator_padding">8dp</dimen>
     <dimen name="gallery_indicator_stroke_width">4dp</dimen>
