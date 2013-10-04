@@ -29,10 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnPreDrawListener;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -181,7 +177,11 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		recycleImage();
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(
+				R.dimen.place_details_image_height));
+		mImage.setLayoutParams(lp);
 		mImage.setOnClickListener(new PlaceImageClickListener(data));
+		mScrollContent.addView(mImage);
 		loadPlaceImage(data, mImage);
 
 	}
@@ -202,9 +202,10 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	private void loadPlaceImage(final PlaceDetails data, final ImageView imageView) {
 		final String path = new StringBuilder(Utils.getPlaceImagesDir(data.place.getSymbol())).append(File.separator)
 				.append(Config.PLACE_MAIN_PHOTO_NAME).toString();
-		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView,
-				R.dimen.place_details_image_request_width, R.dimen.place_details_image_request_height,
-				new BitmapLoadedListener());
+		final int requestWidth = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
+		final int requestHeight = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
+		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView, requestWidth,
+				requestHeight, new BitmapLoadedListener());
 		bitmapAsyncTask.execute();
 	}
 
@@ -212,35 +213,6 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 
 		@Override
 		public void onBitmapLoaded(boolean success) {
-			if (success && null == mImage.getParent()) {
-				final ViewTreeObserver observer = mScrollContent.getViewTreeObserver();
-				if (observer.isAlive()) {
-					observer.addOnPreDrawListener(new OnPreDrawListener() {
-
-						@Override
-						public boolean onPreDraw() {
-							observer.removeOnPreDrawListener(this);
-							int childCount = mScrollContent.getChildCount();
-							if (childCount < 2) {
-								// No need for animation
-								return true;
-							}
-							View v0 = mScrollContent.getChildAt(0);
-							View v1 = mScrollContent.getChildAt(1);
-							int deltaX = v1.getTop() - v0.getTop();
-							final TranslateAnimation anim = new TranslateAnimation(0, 0, -deltaX, 0);
-							anim.setDuration(Config.DETAILS_IMAGE_ANIMATION_DURATION);
-							for (int i = 0; i < mScrollContent.getChildCount(); ++i) {
-								View v = mScrollContent.getChildAt(i);
-								v.startAnimation(anim);
-							}
-							return true;
-						}
-					});
-				}
-				mScrollContent.addView(mImage, 0);
-				mImage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show));
-			}
 		}
 	}
 

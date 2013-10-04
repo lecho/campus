@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -23,33 +22,33 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	private Context mContext;
 	private String mPath;
 	private int mRawResource;
-	private int mDimenWidth;
-	private int mDimenHeight;
+	private int mRequestWidth;
+	private int mRequestHeight;
 	// If false read from raw resources, if true from assets
 	private boolean mFromAssets;
 	private final WeakReference<ImageView> mImageViewReference;
 	private final WeakReference<OnBitmapLoadedListener> mListenerReference;
 
-	public BitmapAsyncTask(Context context, String path, ImageView imageView, int dimenWidth, int dimenHeight,
+	public BitmapAsyncTask(Context context, String path, ImageView imageView, int requestWidth, int requestHeight,
 			OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
 		mPath = path;
 		mFromAssets = true;
-		mDimenWidth = dimenWidth;
-		mDimenHeight = dimenHeight;
+		mRequestWidth = requestWidth;
+		mRequestHeight = requestHeight;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		mImageViewReference = new WeakReference<ImageView>(imageView);
 		// Use a WeakReference in case activity finished before AsyncTask.
 		mListenerReference = new WeakReference<BitmapAsyncTask.OnBitmapLoadedListener>(onBitmapLoadedListener);
 	}
 
-	public BitmapAsyncTask(Context context, int rawResource, ImageView imageView, int dimenWidth, int dimenHeight,
+	public BitmapAsyncTask(Context context, int rawResource, ImageView imageView, int requestWidth, int requestHeight,
 			OnBitmapLoadedListener onBitmapLoadedListener) {
 		mContext = context;
 		mRawResource = rawResource;
 		mFromAssets = false;
-		mDimenWidth = dimenWidth;
-		mDimenHeight = dimenHeight;
+		mRequestWidth = requestWidth;
+		mRequestHeight = requestHeight;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		mImageViewReference = new WeakReference<ImageView>(imageView);
 		// Use a WeakReference in case activity finished before AsyncTask.
@@ -59,13 +58,10 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	// Decode image in background.
 	@Override
 	protected Bitmap doInBackground(Void... params) {
-		Resources resources = mContext.getResources();
-		int reqWidth = resources.getDimensionPixelSize(mDimenWidth);
-		int reqHeight = resources.getDimensionPixelSize(mDimenHeight);
 		if (mFromAssets) {
-			return decodeSampledBitmapFromAssets(mContext, mPath, reqWidth, reqHeight);
+			return decodeSampledBitmapFromAssets(mContext, mPath, mRequestWidth, mRequestHeight);
 		} else {
-			return decodeSampledBitmapFromRawResource(mContext, mRawResource, reqWidth, reqHeight);
+			return decodeSampledBitmapFromRawResource(mContext, mRawResource, mRequestWidth, mRequestHeight);
 		}
 	}
 
@@ -158,7 +154,6 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 
 		// Calculate inSampleSize
 		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeStream(stream, null, options);
@@ -188,7 +183,7 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	public interface OnBitmapLoadedListener {
 		/**
 		 * Called when AsyncTasc finish loading bitmap and set it as ImageView source. Called only if listener is not
-		 * null and bitmap was loaded sucessfuly into ImageView.
+		 * null and bitmap was loaded successfully into ImageView.
 		 */
 		public void onBitmapLoaded(boolean success);
 	}
