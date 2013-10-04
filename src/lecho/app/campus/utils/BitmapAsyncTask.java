@@ -1,17 +1,13 @@
 package lecho.app.campus.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -93,18 +89,6 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 
 		InputStream stream = null;
 		try {
-			// Check if photo exists.
-			File file = new File(path);
-			String parent = file.getParent();
-			if (TextUtils.isEmpty(parent)) {
-				Log.e(TAG, "Parent for photo path is null, path:" + path);
-				return null;
-			}
-			AssetManager am = context.getAssets();
-			if (!Arrays.asList(am.list(parent)).contains(file.getName())) {
-				Log.i(TAG, "No photo to load for path:" + path);
-				return null;
-			}
 			stream = context.getAssets().open(path);
 			return decodeSampledBitmap(reqWidth, reqHeight, stream);
 		} catch (IOException e) {
