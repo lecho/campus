@@ -205,15 +205,8 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		final int requestWidth = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
 		final int requestHeight = getResources().getDimensionPixelSize(R.dimen.place_details_image_request_width);
 		BitmapAsyncTask bitmapAsyncTask = new BitmapAsyncTask(getActivity(), path, imageView, requestWidth,
-				requestHeight, new BitmapLoadedListener());
+				requestHeight);
 		bitmapAsyncTask.execute();
-	}
-
-	private class BitmapLoadedListener implements OnBitmapLoadedListener {
-
-		@Override
-		public void onBitmapLoaded(boolean success) {
-		}
 	}
 
 	private class PlaceImageClickListener implements OnClickListener {
