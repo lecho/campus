@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:padding="@dimen/activity_horizontal_margin" >
 
         <ImageView
             android:id="@+id/app_icon"
@@ -56,30 +56,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/build_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/version_layout"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/build_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_build_label" />
-
-            <TextView
-                android:id="@+id/build"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/legal_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/build_layout"
+            android:layout_below="@id/version_layout"
             android:layout_marginTop="32dp"
             android:orientation="vertical" >
 
@@ -129,6 +109,15 @@
 
             <TextView
                 android:id="@+id/legal_info_ziv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="@dimen/link_min_height"
+                android:text="@string/about_ziv_licence"
+                android:textColor="@color/selector_text_link" />
+
+            <TextView
+                android:id="@+id/legal_info_gd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
