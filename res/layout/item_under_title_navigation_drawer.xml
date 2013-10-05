@@ -11,7 +11,7 @@
         android:layout_width="@dimen/drawer_item_checkmark_size"
         android:layout_height="@dimen/drawer_item_checkmark_size"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/drawer_item_checkmar_content_description"
+        android:contentDescription="@string/drawer_item_checkmark_content_description"
         android:cropToPadding="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_checkmark_off" />

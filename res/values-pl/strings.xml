@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Kampus PŁ</string>
+    <string name="play_services_missing">Usługi Google Play nie są dostępne - to urządzenie nie jest wspierane</string>
+    <string name="play_services_recovery_canceled">Usługi Google Play nie są dostępne - uruchom ponownie aplikacje</string>
+    <string name="place_details_header_image_content_description">Zdjęcie</string>
+    <string name="connection_no_internet">Nie mogę nawiązać połączenia z siecią. Przy pierwszym uruchomieniu aplikacji połączenie jest niezbędne do zainicjalizowania mapy. Czy chcesz przejść do widoku ustawień sieci?</string>
+    <string name="connection_go_to_settings">Tak</string>
+    <string name="connection_dont_go_to_settings">Nie</string>
+    <string name="search_hint">Wyszukaj</string>
+    <string name="search_label">Wyszukaj</string>
+    <string name="search_invoke">Wyszukaj</string>
+    <string name="search_no_results">Nic nie znalazłem:(</string>
+    <string name="search_no_results_back">Cofnij</string>
+    <string name="go_to_google_maps">Przejdź do Map Google</string>
+    <string name="drawer_open">Otwórz wysuwane menu</string>
+    <string name="drawer_close">Zamknij wysuwane menu</string>
+    <string name="drawer_title_campuses">KAMPUSY</string>
+    <string name="drawer_item_campus_a">Kampus A</string>
+    <string name="drawer_item_campus_b">Kampus B</string>
+    <string name="drawer_item_campus_c">Kampus C</string>
+    <string name="drawer_item_campus_d">Kampus D</string>
+    <string name="drawer_title_buildings">BUDYNKI</string>
+    <string name="drawer_item_building_dormitory">Akademiki</string>
+    <string name="drawer_item_building_administration">Administracyjne</string>
+    <string name="drawer_item_building_sport">Sportowe</string>
+    <string name="drawer_title_faculties">WYDZIAŁY</string>
+    <string name="drawer_item_faculty_mech">MECH</string>
+    <string name="drawer_item_faculty_eeia">EEIA</string>
+    <string name="drawer_item_faculty_chem">CHEM</string>
+    <string name="drawer_item_faculty_tmwt">TMiWT</string>
+    <string name="drawer_item_faculty_binoz">BiNOŻ</string>
+    <string name="drawer_item_faculty_bais">BAIŚ</string>
+    <string name="drawer_item_faculty_ftims">FTIMS</string>
+    <string name="drawer_item_faculty_ipos">IPOŚ</string>
+    <string name="drawer_item_faculty_oiz">OIZ</string>
+    <string name="drawer_item_faculty_ife">IFE(CKM)</string>
+    <string name="drawer_item_checkmark_content_description">Znacznik elementu</string>
+    <string name="menu_map_normal">Widok normalny</string>
+    <string name="menu_map_satellite">Widok satelity</string>
+    <string name="menu_map_hybrid">Widok hybrydowy</string>
+    <string name="menu_about">O aplikacji</string>
+    <string name="about_version_label">"Wersja "</string>
+    <string name="about_author">Lecho 2013</string>
+    <string name="about_play_services_missing">Brak usług Google Play</string>
+    <string name="about_open_source_licences">Licencje</string>
+    <string name="about_play_services_licence">Usługi Google Play</string>
+    <string name="about_abs_licence">ActionBarSherlock</string>
+    <string name="about_vpi_licence">ViewPagerIndicator</string>
+    <string name="about_mb_licence">MessageBar</string>
+    <string name="about_ziv_licence">ZoomImageView</string>
+    <string name="about_gd_licence">GreenDao DaoCore</string>
+    <string name="about_app_icon_content_description">Ikona aplikacji</string>
+    <string name="populate_db_message">Rozpakowuje dane, jeszcze tylko chwilka&#8230;</string>
+
+</resources>
