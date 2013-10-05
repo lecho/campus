@@ -28,10 +28,8 @@ public class AboutAppActivity extends SherlockActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 
 		TextView version = (TextView) findViewById(R.id.version);
-		TextView build = (TextView) findViewById(R.id.build);
 		Pair<String, Integer> versionAndBuild = Utils.getAppVersionAndBuild(getApplicationContext());
 		version.setText(versionAndBuild.first);
-		build.setText(Integer.toString(versionAndBuild.second));
 
 		TextView playServicesLink = (TextView) findViewById(R.id.legal_info_play_services);
 		playServicesLink.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +81,18 @@ public class AboutAppActivity extends SherlockActivity {
 
 		TextView zivLink = (TextView) findViewById(R.id.legal_info_ziv);
 		zivLink.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
+				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
+						LegalInfoActivity.EXTRA_LEGAL_INFO_ZOOMIMAGEVIEW);
+				startActivity(intent);
+			}
+		});
+		
+		TextView gdLink = (TextView) findViewById(R.id.legal_info_gd);
+		gdLink.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

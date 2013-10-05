@@ -23,6 +23,7 @@ public class LegalInfoActivity extends SherlockActivity {
 	public static final int EXTRA_LEGAL_INFO_VIEWPAGERINDICATOR = 3;
 	public static final int EXTRA_LEGAL_INFO_MESSAGEBAR = 4;
 	public static final int EXTRA_LEGAL_INFO_ZOOMIMAGEVIEW = 5;
+	public static final int EXTRA_LEGAL_INFO_GREENDAO = 6;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class LegalInfoActivity extends SherlockActivity {
 			break;
 		case EXTRA_LEGAL_INFO_ZOOMIMAGEVIEW:
 			legalInfoText = readLicence(R.raw.licence_ziv);
+			break;
+		case EXTRA_LEGAL_INFO_GREENDAO:
+			legalInfoText = readLicence(R.raw.licence_gd);
 			break;
 		}
 
