@@ -7,6 +7,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * Lists images paths available for place with given symbol.
+ * 
+ * @author Lecho
+ * 
+ */
 public class ImagesDirAsyncTask extends AsyncTask<String, Void, String[]> {
 	private static final String TAG = "ImagesDirAsyncTask";
 	private final Context mContext;

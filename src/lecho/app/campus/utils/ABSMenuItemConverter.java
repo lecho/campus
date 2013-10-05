@@ -8,6 +8,13 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
+/**
+ * MenuItem wrapper which translate ABS MenuItem to native MenuItem. Used to make Navigation Drawer toggle works
+ * properly.
+ * 
+ * @author Lecho
+ * 
+ */
 public class ABSMenuItemConverter {
 
 	public static MenuItem create(final com.actionbarsherlock.view.MenuItem menuItem) {

@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -192,13 +191,15 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	}
 
 	private void recycleImage() {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			if (null != mImage) {
-				final Drawable drawable = mImage.getDrawable();
-				if (null != drawable) {
-					Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-					bitmap.recycle();
-					mImage = null;
+		// TODO Implement reference counting. Recycle for pre-honeycomb.
+		if (null != mImage) {
+			final Drawable drawable = mImage.getDrawable();
+			if (null != drawable) {
+				Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+				bitmap.recycle();
+				mImage = null;
+				if (Config.DEBUG) {
+					Log.d("TAG", "Recycled bitmap");
 				}
 			}
 		}

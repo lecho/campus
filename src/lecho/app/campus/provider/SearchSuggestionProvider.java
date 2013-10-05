@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 /**
+ * Provider for seach suggestions on {@link CampusMapActivity}.
  * 
  * @author lecho
  * 

@@ -11,6 +11,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+/**
+ * Loads bitmap in background and uses it as source for given ImageView.
+ * 
+ * @author Lecho
+ * 
+ */
 public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 	public static final int SYMBOL = 1;
 	public static final int PATH = 2;

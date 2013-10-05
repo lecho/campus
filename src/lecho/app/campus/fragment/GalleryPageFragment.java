@@ -3,12 +3,13 @@ package lecho.app.campus.fragment;
 import lecho.app.campus.R;
 import lecho.app.campus.utils.BitmapAsyncTask;
 import lecho.app.campus.utils.BitmapAsyncTask.OnBitmapLoadedListener;
+import lecho.app.campus.utils.Config;
 import lecho.app.campus.view.ZoomImageView;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  * 
  */
 public class GalleryPageFragment extends SherlockFragment implements OnBitmapLoadedListener {
+	private static final String TAG = "GalleryPageFragment";
 	public static final String EXTRA_PATH = "lecho.app.campus:EXTRA_PATH";
 	private RelativeLayout mLayout;
 	private ZoomImageView mImageView;
@@ -60,13 +62,15 @@ public class GalleryPageFragment extends SherlockFragment implements OnBitmapLoa
 	}
 
 	private void recycleImage() {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			if (null != mImageView) {
-				final Drawable drawable = mImageView.getDrawable();
-				if (null != drawable) {
-					Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-					bitmap.recycle();
-					mImageView = null;
+		// TODO Implement reference counting. Recycle for pre-honeycomb.
+		if (null != mImageView) {
+			final Drawable drawable = mImageView.getDrawable();
+			if (null != drawable) {
+				Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+				bitmap.recycle();
+				mImageView = null;
+				if (Config.DEBUG) {
+					Log.d(TAG, "Recycled bitmap");
 				}
 			}
 		}

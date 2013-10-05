@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 /**
+ * Parses data and inserts it into database in single transaction.
  * 
  * @author lecho
  * 

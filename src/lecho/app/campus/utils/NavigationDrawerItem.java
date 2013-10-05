@@ -2,10 +2,16 @@ package lecho.app.campus.utils;
 
 import android.util.Log;
 
+/**
+ * Single item given to Drawer adapter.
+ * 
+ * @author Lecho
+ * 
+ */
 public final class NavigationDrawerItem {
 	private static final String TAG = "NavigationDrawerItem";
 
-	//Types must have numbers from 0 to n without gaps. 
+	// Types must have numbers from 0 to n without gaps.
 	public static final int TYPE_TITLE = 0;// nonclickable
 	public static final int TYPE_ITEM_UNDER_TITLE = 1;// clickabel
 	public static final int NUMBER_OF_ITEM_TYPES = 2;

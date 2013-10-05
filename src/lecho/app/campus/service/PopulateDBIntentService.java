@@ -10,6 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 
+/**
+ * Service for clearing database, parsing xml file and inserting parsed data into database.
+ * 
+ * @author Lecho
+ * 
+ */
 public class PopulateDBIntentService extends IntentService {
 	private static final String TAG = "PopulateDBIntentService";
 	public static final String BROADCAST_INTENT_FILTER = "lecho.app.campus:POPULATE_DB_BROADCAST";

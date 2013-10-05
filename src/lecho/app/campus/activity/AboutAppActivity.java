@@ -12,6 +12,12 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+/**
+ * Displays informations about app - author, version, legal info.
+ * 
+ * @author Lecho
+ * 
+ */
 public class AboutAppActivity extends SherlockActivity {
 
 	@Override

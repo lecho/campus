@@ -6,7 +6,7 @@ import lecho.app.campus.dao.DaoSession;
 import android.content.Context;
 
 /**
- * Use this class to get DevOpenHelper instance or DaoMaster instance.
+ * Use this class to get DevOpenHelper, DaoMaster or DaoSession instance.
  * 
  * @author Lecho
  * 

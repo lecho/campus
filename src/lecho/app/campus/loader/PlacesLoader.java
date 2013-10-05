@@ -26,8 +26,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 /**
- * Loads Places from database, name, symbol etc. Loader doesn't watch for changes in database, there's no need for that
- * in this app. Loader will never return null data;
+ * Loads Places from database, name, symbol etc. Loader register broadcast receiver to listen when {@link 
+ * PopulateDBIntentService} finish its work.
  * 
  * Implementation based on sample from android sdk documentation.
  * 
@@ -241,7 +241,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if(Config.DEBUG){
+			if (Config.DEBUG) {
 				Log.d(TAG, "Received data change broadcast");
 			}
 			mLoader.onContentChanged();

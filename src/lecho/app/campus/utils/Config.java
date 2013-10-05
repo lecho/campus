@@ -3,9 +3,15 @@ package lecho.app.campus.utils;
 import lecho.app.campus.R;
 import lecho.app.campus.loader.PlacesLoader;
 
+/**
+ * App configuration.
+ * 
+ * @author Lecho
+ * 
+ */
 public abstract class Config {
 	public static final boolean DEBUG = true;
-	
+
 	// Increment to reload data after app update, should be always greater than 0
 	public static final int CAMPUS_DATA_VERSION = 3;
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";

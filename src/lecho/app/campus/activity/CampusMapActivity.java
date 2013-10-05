@@ -74,6 +74,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Main application activity with map view.
+ * 
+ * @author Lecho
+ * 
+ */
 public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
 		OnSearchResultClickListener {
 	private static final String TAG = "CampusMapActivity";
@@ -599,14 +605,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
 		if (PLACES_LOADER == loader.getId()) {
-			int action = data.mAction;
+			int action = data.action;
 			if (PlacesLoader.LOAD_ALL_PLACES == action) {
 				handleLoaderResult(data);
 			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
 				handleLoaderResult(data);
-				if (data.mPlaces.size() > 0) {
+				if (data.places.size() > 0) {
 					if (mCurrentPlaceId < 0) {
-						mCurrentPlaceId = data.mPlaces.get(0).getId();
+						mCurrentPlaceId = data.places.get(0).getId();
 					}
 				} else {
 					mMessageBar.show(getString(R.string.search_no_results), getString(R.string.search_no_results_back));
@@ -636,8 +642,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void handleLoaderResult(PlacesList data) {
-		setUpMarkers(data.mPlaces);
-		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.mPlaces);
+		setUpMarkers(data.places);
+		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
 		if (null != mViewPager) {
 			mViewPager.setAdapter(mSearchResultAdapter);
 		}
