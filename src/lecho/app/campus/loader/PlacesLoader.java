@@ -13,11 +13,16 @@ import lecho.app.campus.dao.PlaceDao;
 import lecho.app.campus.dao.PlaceFacultyDao;
 import lecho.app.campus.dao.PlaceUnitDao;
 import lecho.app.campus.dao.UnitDao;
+import lecho.app.campus.service.PopulateDBIntentService;
 import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlacesList;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 /**
@@ -65,6 +70,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private PlacesList mData;
 	private int mAction;
 	private String mArgument;
+	private CampusDataObserver mCampusDataObserver;
 
 	public PlacesLoader(Context context, int action, String arg) {
 		super(context);
@@ -155,7 +161,13 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			// If we currently have a result available, deliver it
 			// immediately.
 			deliverResult(mData);
-		} else {
+		}
+
+		// Start watching for changes in the app data.
+		if (mCampusDataObserver == null) {
+			mCampusDataObserver = new CampusDataObserver(this);
+		}
+		if (null == mData || takeContentChanged()) {
 			forceLoad();
 		}
 	}
@@ -197,13 +209,43 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			onReleaseResources(mData);
 			mData = null;
 		}
+
+		// The Loader is being reset, so we should stop monitoring for changes.
+		if (mCampusDataObserver != null) {
+			LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mCampusDataObserver);
+			mCampusDataObserver = null;
+		}
 	}
 
 	/**
 	 * Helper function to take care of releasing resources associated with an actively loaded data set.
 	 */
 	protected void onReleaseResources(PlacesList data) {
-
 	}
 
+	/**
+	 * Listen for broadcast from service that insert data into database.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
+	private static class CampusDataObserver extends BroadcastReceiver {
+
+		private PlacesLoader mLoader;
+
+		public CampusDataObserver(final PlacesLoader loader) {
+			mLoader = loader;
+			IntentFilter intentFilter = new IntentFilter(PopulateDBIntentService.BROADCAST_INTENT_FILTER);
+			LocalBroadcastManager.getInstance(mLoader.getContext()).registerReceiver(this, intentFilter);
+		}
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(Config.DEBUG){
+				Log.d(TAG, "Received data change broadcast");
+			}
+			mLoader.onContentChanged();
+		}
+
+	}
 }

@@ -27,10 +27,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -43,7 +41,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
@@ -104,14 +101,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private int mSearchResultSize;
-	private BroadcastReceiver mPopulateDBReceiver = new BroadcastReceiver() {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-		}
-
-	};
 
 	// Nav-Drawer related
 	private DrawerLayout mDrawerLayout;
@@ -141,21 +130,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentDrawerItem = Integer.MIN_VALUE;
 			mCurrentMapType = GoogleMap.MAP_TYPE_NORMAL;
 			// Check if database has to be updated.
-			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
-			if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
-				// Database has to be upgraded.
-				prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
-				Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
-				startService(serviceIntent);
-			}
+			final SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+			updateCampusDataIfNeeded(prefs);
 			// Check Play Services availability.
 			if (checkPlayServices()) {
 				// If device was online before there should be some map cache.
-				boolean deviceWasOnline = checkIfMapWasCached();
+				boolean deviceWasOnline = checkIfMapWasCached(prefs);
 				if (!deviceWasOnline) {
 					// Check connection only if app wasn't online before and if Play Services are available.
-					checkInternetConnection();
+					checkInternetConnection(prefs);
 					// Open drawer if this is first start.
 					mDrawerLayout.openDrawer(mDrawerList);
 				}
@@ -176,13 +159,28 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		setUpMapIfNeeded();
 	}
 
+	/**
+	 * If there is new data version starts service that parse data xml and insert new data into database.
+	 * 
+	 * @param prefs
+	 */
+	private void updateCampusDataIfNeeded(final SharedPreferences prefs) {
+		int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+		if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
+			// Database has to be upgraded.
+			prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
+			Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
+			startService(serviceIntent);
+		}
+	}
+
 	private boolean checkPlayServices() {
 		final int playServicesStatus = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 		if (playServicesStatus == ConnectionResult.SUCCESS) {
 			Log.i(TAG, "Play Services status SUCCESS");
 			return true;
 		} else {
-			Log.i(TAG, "Play Services status ERROR: " + playServicesStatus);
+			Log.w(TAG, "Play Services status ERROR: " + playServicesStatus);
 			if (GooglePlayServicesUtil.isUserRecoverableError(playServicesStatus)) {
 				Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
 				DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
@@ -190,7 +188,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				FragmentManager fm = getSupportFragmentManager();
 				dialog.show(fm, "play-services-dialog");
 			} else {
-				Log.i(TAG, "Play Services not user recoverable - finishing app");
+				Log.w(TAG, "Play Services not user recoverable - finishing app");
 				Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
 				finish();
 			}
@@ -199,8 +197,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return false;
 	}
 
-	private boolean checkIfMapWasCached() {
-		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+	private boolean checkIfMapWasCached(final SharedPreferences prefs) {
 		// Value will be true only if GoogleMap was initialized successful before;
 		boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
 		if (!deviceWasOnline) {
@@ -208,14 +205,14 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			StringBuilder cacheFileNameBuilder = new StringBuilder("cache_vts_").append(Config.APP_PACKAGE)
 					.append(".0");
 			if (new File(getExternalCacheDir(), cacheFileNameBuilder.toString()).exists()) {
-				setDeviceWasOnlineFlag();
+				setDeviceWasOnlineFlag(prefs);
 				deviceWasOnline = true;
 			}
 		}
 		return deviceWasOnline;
 	}
 
-	private boolean checkInternetConnection() {
+	private boolean checkInternetConnection(final SharedPreferences prefs) {
 		if (!Utils.isOnline(getApplicationContext())) {
 			Log.w(TAG, "Device is offline");
 			FragmentManager fm = getSupportFragmentManager();
@@ -223,13 +220,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			dialog.show(fm, "no-internet-dialog");
 			return false;
 		} else {
-			setDeviceWasOnlineFlag();
+			setDeviceWasOnlineFlag(prefs);
 			return true;
 		}
 	}
 
-	private void setDeviceWasOnlineFlag() {
-		SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+	private void setDeviceWasOnlineFlag(final SharedPreferences prefs) {
 		// Value will be true only if GoogleMap was initialized successful before;
 		final boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
 		if (!deviceWasOnline) {
@@ -273,20 +269,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (null != mPopulateDBReceiver) {
-			IntentFilter intentFilter = new IntentFilter(PopulateDBIntentService.BROADCAST_INTENT_FILTER);
-			LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mPopulateDBReceiver,
-					intentFilter);
-		}
 		setUpMapIfNeeded();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (null != mPopulateDBReceiver) {
-			LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mPopulateDBReceiver);
-		}
 	}
 
 	@Override
@@ -419,7 +407,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	private void setMapType(int mapType) {
-		if (null != mMap) {
+		if (null != mMap && mCurrentMapType != mapType) {
 			mMap.setMapType(mapType);
 			mCurrentMapType = mapType;
 		}

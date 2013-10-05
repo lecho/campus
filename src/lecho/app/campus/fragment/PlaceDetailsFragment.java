@@ -182,7 +182,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		}
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
-		// Fix ImageView height problem.
+		// LP fixing ImageView height problem.
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(
 				R.dimen.place_details_image_height));
 		mImage.setLayoutParams(lp);
