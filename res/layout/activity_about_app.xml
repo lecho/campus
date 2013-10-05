@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:minHeight="@dimen/link_min_height"
-                android:text="@string/about_ziv_licence"
+                android:text="@string/about_gd_licence"
                 android:textColor="@color/selector_text_link" />
         </LinearLayout>
     </RelativeLayout>

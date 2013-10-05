@@ -57,6 +57,7 @@
     <string name="about_vpi_licence">ViewPagerIndicator</string>
     <string name="about_mb_licence">MessageBar</string>
     <string name="about_ziv_licence">ZoomImageView</string>
+    <string name="about_gd_licence">GreenDao DaoCore</string>
     <string name="about_app_icon_content_description">Ikona aplikacji</string>
     <string name="populate_db_message">Rozpakowuje dane, jeszcze tylko chwilka&#8230;</string>
     <string name="guide_page_content_description">Strona przewodnika po aplikacji</string>

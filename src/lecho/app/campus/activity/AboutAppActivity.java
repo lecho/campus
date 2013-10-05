@@ -98,7 +98,7 @@ public class AboutAppActivity extends SherlockActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(AboutAppActivity.this, LegalInfoActivity.class);
 				intent.putExtra(LegalInfoActivity.EXTRA_LEGAL_INFO_LIBRARY,
-						LegalInfoActivity.EXTRA_LEGAL_INFO_ZOOMIMAGEVIEW);
+						LegalInfoActivity.EXTRA_LEGAL_INFO_GREENDAO);
 				startActivity(intent);
 			}
 		});

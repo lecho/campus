@@ -25,7 +25,7 @@ public final class Utils {
 
 	public static boolean launchGMaps(Context context, double latitude, double longitude) {
 		final String GMAPS = "geo:";
-		final String ZOOM = "?z=18";
+		final String ZOOM = "?z=17";
 		StringBuilder sb = new StringBuilder().append(GMAPS).append(Double.toString(latitude)).append(",")
 				.append(Double.toString(longitude)).append(ZOOM);
 		try {
