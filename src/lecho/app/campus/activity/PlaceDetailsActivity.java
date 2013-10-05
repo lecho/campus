@@ -9,15 +9,18 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PlaceDetailsActivity extends SherlockFragmentActivity {
+	private static final String FRAGMENT_TAG = "place-details-fragment";
 
 	@Override
 	protected void onCreate(Bundle saveInstanceState) {
 		super.onCreate(saveInstanceState);
 		// TODO Validate placeId.
-		Long placeId = getIntent().getLongExtra(Config.EXTRA_PLACE_ID, Long.MIN_VALUE);
-		PlaceDetailsFragment fragment = PlaceDetailsFragment.newInstance(placeId);
-		getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment).commit();
-
+		if (null == saveInstanceState) {
+			// Add fragment only once.
+			Long placeId = getIntent().getLongExtra(Config.EXTRA_PLACE_ID, Long.MIN_VALUE);
+			PlaceDetailsFragment fragment = PlaceDetailsFragment.newInstance(placeId);
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment, FRAGMENT_TAG).commit();
+		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}

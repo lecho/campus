@@ -11,11 +11,13 @@ import lecho.app.campus.dao.PlaceDao;
 import lecho.app.campus.dao.PlaceUnitDao;
 import lecho.app.campus.dao.Unit;
 import lecho.app.campus.dao.UnitDao;
+import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlaceDetails;
 import lecho.app.campus.utils.UnitsGroup;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 /**
  * Loads Place details from database, name, symbol, faculties etc. Loader doesn't watch for changes in database, there's
@@ -27,6 +29,7 @@ import android.support.v4.content.AsyncTaskLoader;
  * 
  */
 public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
+	private static final String TAG = "PlaceDetailsLoader";
 	private static final String QUERY_UNITS_BY_PLACE_ORDER_BY_FACULTY = "left join " + PlaceUnitDao.TABLENAME
 			+ " PU on PU." + PlaceUnitDao.Properties.UnitId.columnName + "=T." + UnitDao.Properties.Id.columnName
 			+ " left join " + FacultyDao.TABLENAME + " F on F." + FacultyDao.Properties.Id.columnName + "=T."
@@ -48,6 +51,9 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 	 */
 	@Override
 	public PlaceDetails loadInBackground() {
+		if (Config.DEBUG) {
+			Log.d(TAG, "Loading place details");
+		}
 		mDaoSession = DatabaseHelper.getDaoSession(getContext());
 		PlaceDao placeDao = mDaoSession.getPlaceDao();
 		UnitDao unitDao = mDaoSession.getUnitDao();
@@ -98,6 +104,9 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 	 */
 	@Override
 	public void deliverResult(PlaceDetails data) {
+		if (Config.DEBUG) {
+			Log.d(TAG, "Delivering place details");
+		}
 		if (isReset()) {
 			// An async query came in while the loader is stopped. We
 			// don't need the result.
@@ -105,7 +114,7 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 				onReleaseResources(data);
 			}
 		}
-		PlaceDetails oldData = data;
+		PlaceDetails oldData = mData;
 		mData = data;
 
 		if (isStarted()) {
@@ -117,7 +126,7 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 		// At this point we can release the resources associated with
 		// 'oldData' if needed; now that the new result is delivered we
 		// know that it is no longer in use.
-		if (oldData != null) {
+		if (oldData != null && oldData != data) {
 			onReleaseResources(oldData);
 		}
 	}
@@ -179,6 +188,5 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 	 * Helper function to take care of releasing resources associated with an actively loaded data set.
 	 */
 	protected void onReleaseResources(PlaceDetails data) {
-
 	}
 }

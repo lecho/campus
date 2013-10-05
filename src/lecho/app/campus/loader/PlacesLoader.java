@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lecho.app.campus.BuildConfig;
 import lecho.app.campus.dao.CategoryDao;
 import lecho.app.campus.dao.DaoSession;
 import lecho.app.campus.dao.FacultyDao;
@@ -14,6 +13,7 @@ import lecho.app.campus.dao.PlaceDao;
 import lecho.app.campus.dao.PlaceFacultyDao;
 import lecho.app.campus.dao.PlaceUnitDao;
 import lecho.app.campus.dao.UnitDao;
+import lecho.app.campus.utils.Config;
 import lecho.app.campus.utils.DatabaseHelper;
 import lecho.app.campus.utils.PlacesList;
 import android.content.Context;
@@ -48,8 +48,8 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 	private static final String QUERY_FILTER_PLACES_BY_FACULTY = "LEFT JOIN " + PlaceFacultyDao.TABLENAME + " PF ON T."
 			+ PlaceDao.Properties.Id.columnName + "=PF." + PlaceFacultyDao.Properties.PlaceId.columnName
 			+ " LEFT JOIN " + FacultyDao.TABLENAME + " F ON PF." + PlaceFacultyDao.Properties.FacultyId.columnName
-			+ "=F." + FacultyDao.Properties.Id.columnName + " WHERE F." + FacultyDao.Properties.FilterableName.columnName
-			+ "=?";
+			+ "=F." + FacultyDao.Properties.Id.columnName + " WHERE F."
+			+ FacultyDao.Properties.FilterableName.columnName + "=?";
 	// Search by place name, place symbol, place description, units names
 	// inside particular place(5 arguments for ?).
 	private static final String QUERY_SEARCH_PLACES = "WHERE T." + PlaceDao.Properties.Symbol.columnName
@@ -79,25 +79,25 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		List<Place> places = null;
 		switch (mAction) {
 		case LOAD_ALL_PLACES:
-			if (BuildConfig.DEBUG) {
+			if (Config.DEBUG) {
 				Log.d(TAG, "Loading all places");
 			}
 			places = placeDao.loadAll();
 			break;
 		case LOAD_PLACES_BY_CATEGORY:
-			if (BuildConfig.DEBUG) {
+			if (Config.DEBUG) {
 				Log.d(TAG, "Loading places by category with arguments " + mArgument);
 			}
 			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_CATEGORY, mArgument);
 			break;
 		case LOAD_PLACES_BY_FACULTY:
-			if (BuildConfig.DEBUG) {
+			if (Config.DEBUG) {
 				Log.d(TAG, "Loading places by faculty with arguments " + mArgument);
 			}
 			places = placeDao.queryRaw(QUERY_FILTER_PLACES_BY_FACULTY, mArgument);
 			break;
 		case LOAD_PLACES_BY_SEARCH:
-			if (BuildConfig.DEBUG) {
+			if (Config.DEBUG) {
 				Log.d(TAG, "Loading places by search with arguments " + mArgument);
 			}
 			StringBuilder sb = new StringBuilder("%").append(mArgument).append("%");
@@ -129,7 +129,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 				onReleaseResources(data);
 			}
 		}
-		PlacesList oldData = data;
+		PlacesList oldData = mData;
 		mData = data;
 
 		if (isStarted()) {
@@ -141,7 +141,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		// At this point we can release the resources associated with
 		// 'oldData' if needed; now that the new result is delivered we
 		// know that it is no longer in use.
-		if (oldData != null) {
+		if (oldData != null && oldData != data) {
 			onReleaseResources(oldData);
 		}
 	}

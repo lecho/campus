@@ -86,6 +86,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
 	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
 	private static final String EXTRA_CURRENT_DRAWER_ITEM = "lecho.app.campus:CURRENT_DRAWER_ITEM";
+	private static final String EXTRA_CURRENT_MAP_TYPE = "lecho.app.campus:CURRENT_MAP_TYPE";
 	private ViewPager mViewPager;
 	private GoogleMap mMap;
 	private MenuItem mSearchMenuItem;
@@ -99,6 +100,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Long mCurrentPlaceId;
 	private int mCurrentLoaderAction;
 	private String mCurrentLoaderArgument;
+	private int mCurrentMapType;
 	private Animation mSearchResultsPagerShowAnim;
 	private Animation mSearchResultsPagerHideAnim;
 	private int mSearchResultSize;
@@ -137,6 +139,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
 			mCurrentDrawerItem = Integer.MIN_VALUE;
+			mCurrentMapType = GoogleMap.MAP_TYPE_NORMAL;
 			// Check if database has to be updated.
 			SharedPreferences prefs = getSharedPreferences(Config.APP_SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 			int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
@@ -167,6 +170,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentLoaderAction = savedInstanceState.getInt(EXTRA_CURRENT_LOADER_ACTION);
 			mCurrentLoaderArgument = savedInstanceState.getString(EXTRA_CURRENT_LOADER_ARGUMENT);
 			mCurrentDrawerItem = savedInstanceState.getInt(EXTRA_CURRENT_DRAWER_ITEM);
+			mCurrentMapType = savedInstanceState.getInt(EXTRA_CURRENT_MAP_TYPE);
 		}
 		// Finally set up map.
 		setUpMapIfNeeded();
@@ -306,6 +310,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
 		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
 		outState.putInt(EXTRA_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
+		outState.putInt(EXTRA_CURRENT_MAP_TYPE, mCurrentMapType);
 	}
 
 	private void setUpMapIfNeeded() {
@@ -331,7 +336,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.setOnMarkerClickListener(new MarkerClickListener());
 		mMap.setOnInfoWindowClickListener(new MarkerInfoWindowClickListener());
 		mMap.setOnCameraChangeListener(new MapCameraChangeListener());
-		mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		mMap.setMapType(mCurrentMapType);
 		mMap.getUiSettings().setMyLocationButtonEnabled(true);
 		mMap.setMyLocationEnabled(true);
 		zoomMapOnStart();
@@ -416,6 +421,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void setMapType(int mapType) {
 		if (null != mMap) {
 			mMap.setMapType(mapType);
+			mCurrentMapType = mapType;
 		}
 	}
 

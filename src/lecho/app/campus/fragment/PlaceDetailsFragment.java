@@ -43,7 +43,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  */
 public class PlaceDetailsFragment extends SherlockFragment implements LoaderCallbacks<PlaceDetails> {
 	public static final String TAG = "PlaceDetailsFragment";
-	private static final int PLACE_DETAILS_LOADER = PlaceDetailsFragment.class.hashCode();
+	private static final int PLACE_DETAILS_LOADER = 11;
 
 	private View mProgressBar;
 	private TextView mSymbol;
@@ -100,14 +100,17 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 	@Override
 	public void onLoadFinished(Loader<PlaceDetails> loader, PlaceDetails data) {
 		if (PLACE_DETAILS_LOADER == loader.getId()) {
-			mScrollContent.removeAllViews();
-			if (null != data && null != data.place) {
-				prepareHeader(data);
-				prepareImage(data);
-				prepareScrollContent(data);
-				mProgressBar.setVisibility(View.GONE);
-			} else {
-				Log.w(TAG, "Null data returned from details loader");
+			if (mScrollContent.getChildCount() == 0) {
+				// If content is empty - create it. If not - skip method, data is always the same so I don't have to
+				// recreate content.
+				if (null != data && null != data.place) {
+					prepareHeader(data);
+					prepareImage(data);
+					prepareScrollContent(data);
+					mProgressBar.setVisibility(View.GONE);
+				} else {
+					Log.w(TAG, "Null data returned from details loader");
+				}
 			}
 		}
 	}
@@ -177,7 +180,6 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 			Log.i(TAG, "Selected place has no image assigned - skipping loading image");
 			return;
 		}
-		recycleImage();
 		mImage = (ImageView) View.inflate(getActivity().getApplicationContext(), R.layout.fragment_place_details_image,
 				null);
 		// Fix ImageView height problem.
@@ -244,7 +246,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 		@Override
 		public void onClick(View v) {
 			if (Utils.launchGMaps(mActivity, mLatitude, mLongitude)) {
-				Log.i(TAG, "Start Google Maps application");
+				Log.i(TAG, "Starting Google Maps application");
 			} else {
 				Log.e(TAG, "Could not start Google Maps application");
 			}
