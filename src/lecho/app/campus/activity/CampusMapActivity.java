@@ -148,9 +148,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					// Open drawer if this is first start.
 					mDrawerLayout.openDrawer(mDrawerList);
 				}
-			} else {
-				// Disable drawer.
-				mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 			}
 			// }
 		} else {
