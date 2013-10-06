@@ -28,7 +28,7 @@ public abstract class Config {
 	public static final String EXTRA_PLACE_SYMBOL = "lecho.app.campus:ARG_PLACE_SYMBOL";
 	public static final String PLACE_MAIN_PHOTO_NAME = "1.jpg";
 
-	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus." + APP_TARGET
+	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus" + APP_TARGET
 			+ ".provider.SearchSuggestionProvider";
 
 	public static final double DEFAULT_LAT = 51.7505298;
