@@ -13,7 +13,7 @@ public abstract class Config {
 	public static final boolean DEBUG = true;
 
 	// Increment to reload data after app update, should be always greater than 0
-	public static final int CAMPUS_DATA_VERSION = 3;
+	public static final int CAMPUS_DATA_VERSION = 1;
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
 	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONLINE = "lecho.app.campus:DEVICE_WAS_ONLINE";
 	public static final String APP_SHARED_PREFS_CAMPUS_DATA_VERSION = "lecho.app.campus:CAMPUS_DATA_VERSION";

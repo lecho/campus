@@ -860,7 +860,7 @@
 			<longitude>19.454883</longitude>
 			<place_category>11</place_category>
 			<place_unit>7</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>6</id>
@@ -894,7 +894,7 @@
 			<place_category>11</place_category>
 			<place_unit>8,15</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>9</id>
@@ -948,7 +948,7 @@
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
 			<place_unit>22</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>14</id>
@@ -1012,7 +1012,7 @@
 			<place_category>11</place_category>
 			<place_unit>26,27</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>20</id>
@@ -1046,7 +1046,7 @@
 			<place_category>11</place_category>
 			<place_unit>28,29,30,32,33,34,35,36,37</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>23</id>
@@ -1097,7 +1097,7 @@
 			<place_category>11</place_category>
 			<place_unit>40,41,42,43,44</place_unit>
 			<place_faculty>3</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>28</id>
@@ -1126,7 +1126,7 @@
 			<longitude>19.451323</longitude>
 			<place_category>2,11</place_category>
 			<place_unit>47,48</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>31</id>
@@ -1158,7 +1158,7 @@
 			<place_category>2,11</place_category>
 			<place_unit>49,50,51,52,53,54,55</place_unit>
 			<place_faculty>4</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- Campus B -->
 		<place>
@@ -1169,7 +1169,7 @@
 			<longitude>19.455360</longitude>
 			<place_unit>56</place_unit>
 			<place_category>2,12</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>35</id>
@@ -1190,7 +1190,7 @@
 			<place_category>2,12</place_category>
 			<place_unit>58</place_unit>
 			<place_faculty></place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>37</id>
@@ -1201,7 +1201,7 @@
 			<place_category>12</place_category>
 			<place_unit>59,60,61</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>38</id>
@@ -1224,7 +1224,7 @@
 			<place_category>12</place_category>
 			<place_unit>63,64</place_unit>
 			<place_faculty>6</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>40</id>
@@ -1268,7 +1268,7 @@
 			<place_category>12</place_category>
 			<place_unit>86,87</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>44</id>
@@ -1279,7 +1279,7 @@
 			<place_category>12</place_category>
 			<place_unit>88</place_unit>
 			<place_faculty>7</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>45</id>
@@ -1300,7 +1300,7 @@
 			<place_category>12</place_category>
 			<place_unit>90</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>47</id>
@@ -1332,7 +1332,7 @@
 			<longitude>19.4531671</longitude>
 			<place_category>2,12</place_category>
 			<place_unit>93</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>50</id>
@@ -1364,7 +1364,7 @@
 			<longitude>19.4559248</longitude>
 			<place_category>12</place_category>
 			<place_faculty>7</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 <!-- 		<place>
 			<id>53</id>
@@ -1392,7 +1392,7 @@
 			<longitude>19.4539643</longitude>
 			<place_category>12</place_category>
 			<place_unit>96,97,98,99</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>56</id>
@@ -1421,7 +1421,7 @@
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
 			<place_unit>100,101</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- Campus C -->
 		<place>
@@ -1456,7 +1456,7 @@
 			<place_category>13</place_category>
 			<place_unit>18,19,21,95,103</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>62</id>
@@ -1466,7 +1466,7 @@
 			<longitude>19.4493607</longitude>
 			<place_category>13</place_category>
 			<place_unit>104</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>63</id>
@@ -1476,7 +1476,7 @@
 			<latitude>51.7457995</latitude>
 			<longitude>19.4498475</longitude>
 			<place_category>13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>64</id>
@@ -1487,7 +1487,7 @@
 			<place_category>13</place_category>
 			<place_unit>20</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>65</id>
@@ -1517,7 +1517,7 @@
 			<latitude>51.7461292</latitude>
 			<longitude>19.4500547</longitude>
 			<place_category>13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>68</id>
@@ -1537,7 +1537,7 @@
 			<latitude>51.7467162</latitude>
 			<longitude>19.450183</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>70</id>
@@ -1547,7 +1547,7 @@
 			<latitude>51.7474178</latitude>
 			<longitude>19.4500173</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>71</id>
@@ -1557,7 +1557,7 @@
 			<latitude>51.7482778</latitude>
 			<longitude>19.4498611</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>72</id>
@@ -1567,7 +1567,7 @@
 			<latitude>51.7485368</latitude>
 			<longitude>19.4496385</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>73</id>
@@ -1577,7 +1577,7 @@
 			<longitude>19.4494321</longitude>
 			<place_category>2,13</place_category>
 			<place_unit>106,107,108,109</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>74</id>
@@ -1587,7 +1587,7 @@
 			<latitude>51.7513544</latitude>
 			<longitude>19.4479121</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>75</id>
