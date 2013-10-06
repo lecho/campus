@@ -12,7 +12,7 @@ import android.content.Context;
  * 
  */
 public abstract class DatabaseHelper {
-	public static final String DB_NAME = "campus_db" + Config.APP_TARGET;
+	public static final String DB_NAME = "campus_db";
 	// Single DevOpenHelper means single db connection.
 	private static DevOpenHelper sDevOpenHelper;
 
