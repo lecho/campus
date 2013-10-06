@@ -106,10 +106,11 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 					prepareHeader(data);
 					prepareImage(data);
 					prepareScrollContent(data);
-					mProgressBar.setVisibility(View.GONE);
 				} else {
 					Log.w(TAG, "Null data returned from details loader");
 				}
+				// Hide progress bar either way.
+				mProgressBar.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -199,7 +200,7 @@ public class PlaceDetailsFragment extends SherlockFragment implements LoaderCall
 				bitmap.recycle();
 				mImage = null;
 				if (Config.DEBUG) {
-					Log.d("TAG", "Recycled bitmap");
+					Log.d(TAG, "Recycled bitmap");
 				}
 			}
 		}

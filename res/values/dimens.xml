@@ -26,6 +26,8 @@
     <dimen name="place_details_unit_vertical_margin">16dp</dimen>
     <dimen name="place_details_faculty_horizontal_margin">16dp</dimen>
     <dimen name="place_details_faculty_vertical_margin">16dp</dimen>
+    <dimen name="separator_horizontal_margin">8dp</dimen>
+    <dimen name="separator_vertical_margin">16dp</dimen>
     <dimen name="gallery_place_image_request_width">960dp</dimen>
     <dimen name="gallery_place_image_request_height">720dp</dimen>
     <dimen name="gallery_indicator_width">24dp</dimen>

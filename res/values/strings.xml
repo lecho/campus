@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Kampus LUT</string>
+    <string name="app_name">Campus LUT</string>
     <string name="play_services_missing">Google Play Services are missing - this devices is not supported</string>
     <string name="play_services_recovery_canceled">Google Play Services are outdated - restart application</string>
     <string name="place_details_header_image_content_description">Image</string>

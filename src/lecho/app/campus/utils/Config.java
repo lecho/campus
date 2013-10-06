@@ -18,6 +18,7 @@ public abstract class Config {
 	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONLINE = "lecho.app.campus:DEVICE_WAS_ONLINE";
 	public static final String APP_SHARED_PREFS_CAMPUS_DATA_VERSION = "lecho.app.campus:CAMPUS_DATA_VERSION";
 	public static final String APP_SHARED_PREFS_DATA_PARSING_ONGOING = "lecho.app.campus:DATA_PARSING_ONGOING";
+	public static final String APP_SHARED_PREFS_LANGUAGE = "lecho.app.campus:LANGUAGE";
 
 	public static final String APP_ASSETS_DIR = "campus";
 	public static final String APP_TARGET = "";

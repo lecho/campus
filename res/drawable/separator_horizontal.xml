@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetRight="8dp"
-    android:insetLeft="8dp" >
+    android:insetRight="@dimen/separator_horizontal_margin"
+    android:insetLeft="@dimen/separator_horizontal_margin" >
     <shape>
         <solid android:color="@color/maroon" />
     </shape>

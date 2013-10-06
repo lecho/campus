@@ -3,6 +3,7 @@ package lecho.app.campus.activity;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import lecho.app.campus.R;
@@ -167,13 +168,28 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param prefs
 	 */
 	private void updateCampusDataIfNeeded(final SharedPreferences prefs) {
-		int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+		final int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+		final String language = prefs.getString(Config.APP_SHARED_PREFS_LANGUAGE, ".");
+		final String currentLanguage = Locale.getDefault().getLanguage();
 		if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
 			// Database has to be upgraded.
-			prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
-			Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
-			startService(serviceIntent);
+			prefs.edit().putString(Config.APP_SHARED_PREFS_LANGUAGE, currentLanguage).commit();
+			startPopulateDBService(prefs);
+		} else if (!language.equals(currentLanguage)) {
+			prefs.edit().putString(Config.APP_SHARED_PREFS_LANGUAGE, currentLanguage).commit();
+			startPopulateDBService(prefs);
 		}
+	}
+
+	/**
+	 * Starts intent service in case when database has to be upgraded.
+	 * 
+	 * @param prefs
+	 */
+	private void startPopulateDBService(final SharedPreferences prefs) {
+		prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
+		Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
+		startService(serviceIntent);
 	}
 
 	private boolean checkPlayServices() {

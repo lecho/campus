@@ -58,6 +58,10 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 		PlaceDao placeDao = mDaoSession.getPlaceDao();
 		UnitDao unitDao = mDaoSession.getUnitDao();
 		Place place = placeDao.load(mPlaceId);
+		if (null == place) {
+			Log.e(TAG, "Could not load place details - null place for id: " + mPlaceId);
+			return null;
+		}
 		String[] args = new String[] { Long.toString(place.getId()) };
 		List<Unit> units = unitDao.queryDeep(QUERY_UNITS_BY_PLACE_ORDER_BY_FACULTY, args);
 		List<UnitsGroup> unitsGroups = groupUnits(units);
