@@ -42,7 +42,7 @@
     <string name="menu_map_hybrid">Widok hybrydowy</string>
     <string name="menu_about">O aplikacji</string>
     <string name="about_version_label">"Wersja "</string>
-    <string name="about_author">Lecho 2013</string>
+    <string name="about_author">Leszek Wach 2013</string>
     <string name="about_play_services_missing">Brak usług Google Play</string>
     <string name="about_open_source_licences">Licencje</string>
     <string name="about_play_services_licence">Usługi Google Play</string>

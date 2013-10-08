@@ -42,7 +42,7 @@
     <string name="menu_map_hybrid">Hybrid map</string>
     <string name="menu_about">About app</string>
     <string name="about_version_label">"Version "</string>
-    <string name="about_author">Lecho 2013</string>
+    <string name="about_author">Leszek Wach 2013</string>
     <string name="about_play_services_missing">Google Play Services are missing</string>
     <string name="about_open_source_licences">Licences</string>
     <string name="about_play_services_licence">Google Play Services</string>
