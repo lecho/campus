@@ -26,9 +26,9 @@
     <string name="drawer_item_building_administration">Administrative</string>
     <string name="drawer_item_building_sport">Sports</string>
     <string name="drawer_title_faculties">FACULTIES</string>
-    <string name="drawer_item_faculty_mech">MECH</string>
+    <string name="drawer_item_faculty_mech">MECHANICAL</string>
     <string name="drawer_item_faculty_eeia">EEIA</string>
-    <string name="drawer_item_faculty_chem">CHEM</string>
+    <string name="drawer_item_faculty_chem">CHEMISTRY</string>
     <string name="drawer_item_faculty_tmwt">TMiWT</string>
     <string name="drawer_item_faculty_binoz">BiNOŻ</string>
     <string name="drawer_item_faculty_bais">BAIŚ</string>
@@ -36,7 +36,7 @@
     <string name="drawer_item_faculty_ipos">IPOŚ</string>
     <string name="drawer_item_faculty_oiz">OIZ</string>
     <string name="drawer_item_faculty_ife">IFE(CKM)</string>
-    <string name="drawer_item_checkmark_content_description">checkmark</string>
+    <string name="drawer_item_checkmark_content_description">Checkmark</string>
     <string name="menu_map_normal">Normal map</string>
     <string name="menu_map_satellite">Satellite map</string>
     <string name="menu_map_hybrid">Hybrid map</string>

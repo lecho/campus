@@ -10,7 +10,7 @@ import lecho.app.campus.loader.PlacesLoader;
  * 
  */
 public abstract class Config {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	// Increment to reload data after app update, should be always greater than 0
 	public static final int CAMPUS_DATA_VERSION = 1;
@@ -38,7 +38,6 @@ public abstract class Config {
 	public static final int CAMERA_ANIMATION_DURATION = 500;
 	public static final int DRAWER_RESTART_LOADER_DELAY = 250;
 
-	// TODO Get this configuration from XML/database
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
 			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_faculty_mech, PlacesLoader.LOAD_PLACES_BY_FACULTY, "MECH",
