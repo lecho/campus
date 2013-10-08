@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Campus LUT</string>
+    <string name="app_name">Campus TUL</string>
     <string name="play_services_missing">Google Play Services are missing - this devices is not supported</string>
     <string name="play_services_recovery_canceled">Google Play Services are outdated - restart application</string>
     <string name="place_details_header_image_content_description">Image</string>
@@ -27,15 +27,15 @@
     <string name="drawer_item_building_sport">Sports</string>
     <string name="drawer_title_faculties">FACULTIES</string>
     <string name="drawer_item_faculty_mech">MECHANICAL</string>
-    <string name="drawer_item_faculty_eeia">EEIA</string>
+    <string name="drawer_item_faculty_eeia">ELECTRICAL</string>
     <string name="drawer_item_faculty_chem">CHEMISTRY</string>
-    <string name="drawer_item_faculty_tmwt">TMiWT</string>
-    <string name="drawer_item_faculty_binoz">BiNOŻ</string>
-    <string name="drawer_item_faculty_bais">BAIŚ</string>
-    <string name="drawer_item_faculty_ftims">FTIMS</string>
-    <string name="drawer_item_faculty_ipos">IPOŚ</string>
-    <string name="drawer_item_faculty_oiz">OIZ</string>
-    <string name="drawer_item_faculty_ife">IFE(CKM)</string>
+    <string name="drawer_item_faculty_tmwt">TEXTILE</string>
+    <string name="drawer_item_faculty_binoz">BIOTECHNOLOGY</string>
+    <string name="drawer_item_faculty_bais">ARCHITECTURE</string>
+    <string name="drawer_item_faculty_ftims">PHYS/CS/MATH</string>
+    <string name="drawer_item_faculty_ipos">PROCESS/ENVIRONMENTAL</string>
+    <string name="drawer_item_faculty_oiz">ORGANIZATION/MANAGEMENT</string>
+    <string name="drawer_item_faculty_ife">IFE</string>
     <string name="drawer_item_checkmark_content_description">Checkmark</string>
     <string name="menu_map_normal">Normal map</string>
     <string name="menu_map_satellite">Satellite map</string>
