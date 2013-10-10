@@ -33,777 +33,611 @@
 	<faculties>
 		<faculty>
 			<id>1</id>
-			<name>MECHANICZNY</name>
-			<short_name>MECHANICZNY</short_name>
+			<name>Mechaniczny</name>
+			<short_name>Mechaniczny</short_name>
 			<filterable_name>MECH</filterable_name>
 		</faculty>
 		<faculty>
 			<id>2</id>
-			<name>ELEKTROTECHNIKI, ELEKTRONIKI, INFORMATYKI I AUTOMATYKI</name>
+			<name>Elektrotechniki, Elektroniki, Informatyki i Automatyki</name>
 			<short_name>EEIA</short_name>
 			<filterable_name>EEIA</filterable_name>
 		</faculty>
 		<faculty>
 			<id>3</id>
-			<name>CHEMICZNY</name>
-			<short_name>CHEMICZNY</short_name>
+			<name>Chemiczny</name>
+			<short_name>Chemiczny</short_name>
 			<filterable_name>CHEM</filterable_name>
 		</faculty>
 		<faculty>
 			<id>4</id>
-			<name>TECHNOLOGII MATERIAŁOWYCH I WZORNICTWA TEKSTYLIÓW</name>
+			<name>Technologii Materiałowych i Wzornictwa Tekstyliów</name>
 			<short_name>TWiWT</short_name>
 			<filterable_name>TMIWT</filterable_name>
 		</faculty>
 		<faculty>
 			<id>5</id>
-			<name>BIOTECHNOLOGII I NAUK O ŻYWNOŚCI</name>
+			<name>Biotechnologi i Nauk o Żywności</name>
 			<short_name>BiNOŻ</short_name>
 			<filterable_name>BINOZ</filterable_name>
 		</faculty>
 		<faculty>
 			<id>6</id>
-			<name>BUDOWNICTWA, ARCHITEKTURY I INŻYNIERII ŚRODOWISKA</name>
+			<name>Budownictwa, Architektury i Inżynierii Środowiska</name>
 			<short_name>BAIŚ</short_name>
 			<filterable_name>BAIS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>7</id>
-			<name>FIZYKI TECHNICZNEJ, INFORMATYKI I MATEMATYKI STOSOWANEJ</name>
+			<name>Fizyki Technicznej, Informatyki i Matematyki Stosowanej</name>
 			<short_name>FTIMS</short_name>
 			<filterable_name>FTIMS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>8</id>
-			<name>INŻYNIERII PROCESOWEJ I OCHRONY ŚRODOWISKA</name>
+			<name>Inżynierii Procesowej i Ochrony Środowiska</name>
 			<short_name>IPOŚ</short_name>
 			<filterable_name>IPOS</filterable_name>
 		</faculty>
 		<faculty>
 			<id>9</id>
-			<name>ORGANIZACJI I ZARZĄDZANIA</name>
+			<name>Organizacji i Zarządzania</name>
 			<short_name>OIZ</short_name>
 			<filterable_name>OIZ</filterable_name>
 		</faculty>
 		<faculty>
 			<id>10</id>
-			<name>CENTRUM KSZTAŁCENIA MIĘDZYNARODOWEGO</name>
+			<name>Centrum Kształcenia Międzynarodowego</name>
 			<short_name>IFE(CKM)</short_name>
 			<filterable_name>IFE</filterable_name>
 		</faculty>
 	</faculties>
 	<units>
-	    <!-- A2 -->
+		<!-- FACULTY MECH -->
 		<unit>
-			<id>1</id>
-			<name>Instytut Podstaw Chemii Żywności</name>
-			<unit_faculty>5</unit_faculty>
+			<id>101</id>
+			<name>Dziekanat Wydziału Mechanicznego</name>
+			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>2</id>
-			<name>Instytut Biochemii Technicznej</name>
-			<unit_faculty>5</unit_faculty>
-		</unit>
-		<unit>
-			<id>3</id>
-			<name>Instytut Chemicznej Technologii Żywności</name>
-			<unit_faculty>5</unit_faculty>
-		</unit>
-		<unit>
-			<id>4</id>
-			<name>Instytut Technologii Fermentacji i Mikrobiologii</name>
-			<unit_faculty>5</unit_faculty>
-		</unit>
-		<!-- A4 -->
-		<unit_ref>2</unit_ref>
-		<unit_ref>3</unit_ref>
-		<unit_ref>4</unit_ref>
-		<unit>
-			<id>5</id>
-			<name>Dziekanat Wydziału Biotechnologii i Nauk o Żywności</name>
-			<unit_faculty>5</unit_faculty>
-		</unit>
-		<unit>
-			<id>6</id>
-			<name>Sala Gimnastyczna SWFIS</name>
-		</unit>
-		<!-- A5 -->
-		<unit>
-			<id>7</id>
-			<name>Centrum Komputerowe Lodman</name>
-			<short_name>Lodman</short_name>
-		</unit>
-		<!-- A6 -->
-		<unit>
-			<id>8</id>
-			<name>Katedra Aparatury Procesowej</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>9</id>
-			<name>Katedra Inżynierii Chemicznej</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>10</id>
-			<name>Katedra Inżynierii Bioprocesowej</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>11</id>
-			<name>Katedra Systemów Inżynierii Środowiska</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>12</id>
-			<name>Katedra Termodynamiki</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>13</id>
-			<name>Katedra Inżynierii Bezpieczeństwa Pracy</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<!-- A7 -->
-		<unit>
-			<id>14</id>
-			<name>Katedra Procesów Cieplnych i Dyfuzyjnych</name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<!-- A8 -->
-		<unit_ref>8</unit_ref>
-		<unit>
-			<id>15</id>
-			<name>Instytut Technologii Polimerów i Barwników</name>
-			<unit_faculty>3</unit_faculty>
-		</unit>
-		<!-- A9 -->
-		<unit_ref>15</unit_ref>
-		<!-- A10 -->
-		<unit>
-			<id>16</id>
-			<name>Dziekanat Wydziału EEIA</name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<unit>
-			<id>17</id>
-			<name>Instytut Systemów Inżynierii Elektycznej</name>
-			<unit_faculty>2</unit_faculty>
-		</unit>	
-		<unit>
-			<id>18</id>
-			<name>Instytut Automatyki</name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<unit>
-			<id>19</id>
-			<name>Instytut Elektroenergetyki</name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<unit>
-			<id>20</id>
-			<name>Instytut Informatyki Stosowanej</name>
-			<short_name>IIS</short_name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<!-- A11 -->
-		<unit_ref>19</unit_ref>
-		<unit>
-			<id>21</id>
-			<name>Katedra Aparatów Elektrycznych</name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<!-- A12 -->
-		<unit_ref>21</unit_ref>
-		<!-- A13 -->
-		<unit>
-			<id>22</id>
-			<name>Sekcja Rekrutacji Politechniki Łódzkiej</name>
-			<short_name>Rekrutacja</short_name>
-		</unit>	
-		<!-- A14 -->
-		<unit>
-			<id>23</id>
-			<name>Zakład Sieci Komputerowych</name>
-			<short_name>ZSK</short_name>
-			<unit_faculty>7</unit_faculty>
-		</unit>
-		<!-- A15 empty -->	
-		<!-- A16 -->
-		<unit>
-			<id>24</id>
-			<name>Centrum Kształcenia Międzynarodowego</name>
-			<short_name>IFE</short_name>
-			<unit_faculty>10</unit_faculty>
-		</unit>	
-		<!-- A17 -->
-		<unit>
-			<id>25</id>
-			<name>Kwestura</name>
-		</unit>	
-		<!-- A18 empty -->
-		<!-- A19 -->
-		<unit>
-			<id>26</id>
+			<id>102</id>
 			<name>Katedra Techniki Cieplnej i Chłodnictwa</name>
 			<short_name>itcich</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>27</id>
-			<name>Audytorium im. Sułtana</name>
-			<unit_faculty>1</unit_faculty>
-		</unit>
-		<!-- A20 -->
-		<unit_ref>26</unit_ref>
-		<unit>
-			<id>28</id>
+			<id>103</id>
 			<name>Instytut Inżynierii Materiałowej</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>29</id>
+			<id>104</id>
 			<name>Instytut Obrabiarek i Technologii Budowy Maszyn</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>30</id>
+			<id>105</id>
 			<name>Katedra Pojazdów i Podstaw Budowy Maszyn</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>31</id>
+			<id>106</id>
 			<name>Katedra Technologii Maszyn</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
-		<!-- A21 empty -->
-		<!-- A22 -->
-		<unit_ref>28</unit_ref>
-		<unit_ref>29</unit_ref>
-		<unit_ref>30</unit_ref>
 		<unit>
-			<id>32</id>
-			<name>Dziekanat Wydziału Mechanicznego</name>
-			<unit_faculty>1</unit_faculty>
-		</unit>
-		<unit>
-			<id>33</id>
+			<id>107</id>
 			<name>Katedra Wytrzymałości Materiałów i Konstrukcji</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>34</id>
+			<id>108</id>
 			<name>Katedra Dynamiki Maszyn</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>35</id>
+			<id>109</id>
 			<name>Katedra Automatyki i Biomechaniki</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>36</id>
+			<id>110</id>
 			<name>Katedra Technologii Materiałowych i Systemów Produkcji</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
-			<id>37</id>
+			<id>111</id>
 			<name>Katedra Maszyn Roboczych, Napędów i Sterowania</name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
-		<!-- A23 empty -->
-		<!-- A24 -->
-		<unit_ref>15</unit_ref>
 		<unit>
-			<id>38</id>
-			<name>Katedra Włókien Sztucznych</name>
-			<unit_faculty>4</unit_faculty>
+			<id>112</id>
+			<name>Instytut Maszyn Przepływowych</name>
+			<unit_faculty>1</unit_faculty>
 		</unit>
-		<!-- A25 empty -->
-		<!-- A26 -->
+		<!-- FACULTY EEIA -->
 		<unit>
-			<id>39</id>
-			<name>Instytut Chemii Ogólnej i Ekologicznej</name>
-			<unit_faculty>3</unit_faculty>
+			<id>201</id>
+			<name>Dziekanat Wydziału EEIA</name>
+			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
-			<id>40</id>
-			<name>Biblioteka Chemiczna</name>
-			<unit_faculty>3</unit_faculty>
+			<id>202</id>
+			<name>Instytut Systemów Inżynierii Elektycznej</name>
+			<unit_faculty>2</unit_faculty>
 		</unit>
-		<!-- A27 -->
-		<unit_ref>39</unit_ref>
 		<unit>
-			<id>41</id>
+			<id>203</id>
+			<name>Instytut Automatyki</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>204</id>
+			<name>Instytut Elektroenergetyki</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>205</id>
+			<name>Instytut Informatyki Stosowanej</name>
+			<short_name>IIS</short_name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>206</id>
+			<name>Katedra Aparatów Elektrycznych</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>207</id>
+			<name>Instytut Elektroniki</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>208</id>
+			<name>Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>209</id>
+			<name>Katedra Mikroelektroniki i Technik Informatycznych</name>
+			<short_name>DMCS</short_name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<unit>
+			<id>210</id>
+			<name>Instytut Mechatroniki i Systemów Informatycznych</name>
+			<unit_faculty>2</unit_faculty>
+		</unit>
+		<!-- FACULTY CHEM -->
+		<unit>
+			<id>301</id>
 			<name>Dziekanat Wydziału Chemicznego</name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>42</id>
+			<id>302</id>
+			<name>Instytut Technologii Polimerów i Barwników</name>
+			<unit_faculty>3</unit_faculty>
+		</unit>
+		<unit>
+			<id>303</id>
+			<name>Instytut Chemii Ogólnej i Ekologicznej</name>
+			<unit_faculty>3</unit_faculty>
+		</unit>
+		<unit>
+			<id>304</id>
+			<name>Biblioteka Chemiczna</name>
+			<unit_faculty>3</unit_faculty>
+		</unit>
+		<unit>
+			<id>305</id>
 			<name>Instytut Chemii Organicznej</name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>43</id>
+			<id>306</id>
 			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
-			<id>44</id>
+			<id>307</id>
 			<name>Katedra Fizyki Molekularnej</name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
-		<!-- A28 -->
 		<unit>
-			<id>45</id>
-			<name>Kanclerz</name>
+			<id>308</id>
+			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
+			<short_name>MITR</short_name>
+			<unit_faculty>3</unit_faculty>
 		</unit>
+		<!-- FACULTY TWIWT -->
 		<unit>
-			<id>46</id>
-			<name>Związki Zawodowe</name>
-		</unit>
-		<!-- A29 empty -->
-		<!-- A30 -->
-		<unit>
-			<id>47</id>
-			<name>Akademickie Centrum Zaufania</name>
-		</unit>
-		<unit>
-			<id>48</id>
-			<name>Biuro ds. Osób Niepełnosprawnych</name>
-		</unit>
-		<!-- A31 -->
-		<unit_ref>32</unit_ref>
-		<!-- A32 empty -->
-		<!-- A33 -->
-		<unit>
-			<id>49</id>
+			<id>401</id>
 			<name>Dziekanat Wydziału MIWT</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>50</id>
+			<id>402</id>
+			<name>Katedra Włókien Sztucznych</name>
+			<unit_faculty>4</unit_faculty>
+		</unit>
+		<unit>
+			<id>403</id>
 			<name>Instytut Architektury Tekstyliów</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>51</id>
+			<id>404</id>
 			<name>Katedra Dziewiarstwa</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>52</id>
+			<id>405</id>
 			<name>Katedra Materiałoznawstwa, Towaroznawstwa i Metrologii Włókienniczej</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>53</id>
+			<id>406</id>
 			<name>Katedra Mechaniki i Informatyki Technicznej</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>54</id>
+			<id>407</id>
 			<name>Katedra Mechaniki Maszyn Włókienniczych</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>55</id>
+			<id>408</id>
 			<name>Katedra Odzieżownictwa i Tekstroniki</name>
 			<unit_faculty>4</unit_faculty>
 		</unit>
-		<!-- B1  -->
+		<!-- FACULTY BINOŻ -->
 		<unit>
-			<id>56</id>
-			<name>Rektorat Politechniki Łódzkiej</name>
-		</unit>
-		<!-- B2 -->
-		<unit>
-			<id>57</id>
-			<name>Dział Transferu Technologii</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>501</id>
+			<name>Dziekanat Wydziału BiNOŻ</name>
+			<unit_faculty>4</unit_faculty>
 		</unit>
 		<unit>
-			<id>58</id>
-			<name>Dział Promocji Politechniki Łódzkiej</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B3 -->
-		<unit_ref>58</unit_ref>
-		<!-- B4 -->
-		<unit>
-			<id>59</id>
-			<name>Dziekanat Wydziałó IPOŚ</name>
-			<short_name></short_name>
-			<unit_faculty>8</unit_faculty>
+			<id>502</id>
+			<name>Instytut Podstaw Chemii Żywności</name>
+			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
-			<id>60</id>
-			<name>Katedra Systemów Inżynierii Środowiska</name>
-			<short_name></short_name>
-			<unit_faculty>8</unit_faculty>
+			<id>503</id>
+			<name>Instytut Biochemii Technicznej</name>
+			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
-			<id>61</id>
-			<name>Galeria Krótko i Węzłowato</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B5 -->
-		<unit>
-			<id>62</id>
-			<name>Katedra Inżynierii Bioprocesowej</name>
-			<short_name></short_name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<!-- B6 -->
-		<unit>
-			<id>63</id>
-			<name>Instytut Architektury i Urbanistyki</name>
-			<short_name></short_name>
-			<unit_faculty>6</unit_faculty>
+			<id>504</id>
+			<name>Instytut Chemicznej Technologii Żywności</name>
+			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
-			<id>64</id>
-			<name>Publiczne Liceum Ogólnokształcące Politechniki Łódzkiej</name>
+			<id>505</id>
+			<name>Instytut Technologii Fermentacji i Mikrobiologii</name>
+			<unit_faculty>5</unit_faculty>
 		</unit>
-		<!-- B7 -->
+		<!-- FACULTY BAIŚ -->
 		<unit>
-			<id>65</id>
+			<id>601</id>
 			<name>Dziekanat Wudziału BAIŚ</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>66</id>
-			<name>Katedra Mechaniki i Materiałów</name>
-			<short_name></short_name>
+			<id>602</id>
+			<name>Instytut Architektury i Urbanistyki</name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>67</id>
+			<id>603</id>
+			<name>Katedra Mechaniki Materiałów</name>
+			<unit_faculty>6</unit_faculty>
+		</unit>
+		<unit>
+			<id>604</id>
 			<name>Katedra Fizyki Budowli i Materiałów Budowlanych</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>68</id>
+			<id>605</id>
 			<name>Katedra Mechaniki Konstrukcji</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>69</id>
+			<id>606</id>
 			<name>Katedra Konstrukcji Stalowych</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>70</id>
+			<id>607</id>
 			<name>Katedra Budownictwa Betonowego</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>71</id>
+			<id>608</id>
 			<name>Katedra Geotechniki i Budowli Inżynierskich</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>72</id>
+			<id>609</id>
 			<name>Katedra Geodezji, Kartografii Środowiska i Geometrii Wykreślnej</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>73</id>
+			<id>610</id>
 			<name>Katedra Techniki Ogrzewczej i Wentylacyjnej</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>74</id>
+			<id>611</id>
 			<name>Katedra Inżynierii Środowiska</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
 		<unit>
-			<id>75</id>
+			<id>612</id>
 			<name>Katedra Wodociągów i Kanalizacji</name>
-			<short_name></short_name>
 			<unit_faculty>6</unit_faculty>
 		</unit>
-		<!-- B8 empty -->
-		<!-- B9 -->
+		<!-- FACULTY FTIMS -->
 		<unit>
-			<id>76</id>
-			<name>Instytut Elektroniki</name>
-			<short_name></short_name>
-			<unit_faculty>2</unit_faculty>
+			<id>701</id>
+			<name>Dziekanat Wydziału FTIMS</name>
+			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>77</id>
-			<name>Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych</name>
-			<short_name></short_name>
-			<unit_faculty>2</unit_faculty>
+			<id>702</id>
+			<name>Zakład Sieci Komputerowych</name>
+			<short_name>ZSK</short_name>
+			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>78</id>
+			<id>703</id>
 			<name>Instytut Informatyki</name>
 			<short_name>ICS</short_name>
 			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>79</id>
+			<id>704</id>
 			<name>Instytut Matematyki</name>
-			<short_name></short_name>
 			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>80</id>
-			<name>Katedra Innowacji i Marketingu</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<unit>
-			<id>81</id>
-			<name>Katedra Nauk Humanistycznych</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<unit>
-			<id>82</id>
-			<name>Katedra Zarządzania Produkcją</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<unit>
-			<id>83</id>
-			<name>Katedra Integracji Europejskiej i Marketingu Międzynarodowego</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<unit>
-			<id>84</id>
-			<name>Katedra Podstaw Techniki i Ekologii Przemysłowej</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<unit>
-			<id>85</id>
-			<name>Katedra Ekonomii</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
-		</unit>
-		<!-- B10 -->
-		<unit>
-			<id>86</id>
-			<name>Katedra Procesów Cieplnych i Dyfuzyjnych</name>
-			<short_name></short_name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<unit>
-			<id>87</id>
-			<name>Katedra Termodynamiki Procesowej</name>
-			<short_name></short_name>
-			<unit_faculty>8</unit_faculty>
-		</unit>
-		<!-- B11 -->
-		<unit>
-			<id>88</id>
-			<name>Dziekanat Wydziału FTIMS</name>
-			<short_name></short_name>
-			<unit_faculty>7</unit_faculty>
-		</unit>
-		<!-- B12 -->
-		<unit>
-			<id>89</id>
-			<name>Centrum Diagnostyki i Terapii Laserowej</name>
-			<short_name>CDiTL</short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B13 -->
-		<unit>
-			<id>90</id>
-			<name>Instytut Maszyn Przepływowych</name>
-			<short_name></short_name>
-			<unit_faculty>1</unit_faculty>
-		</unit>
-		<!-- B14 -->
-		<unit>
-			<id>91</id>
-			<name>Instytut Maszyn Przepływowych</name>
-			<short_name></short_name>
-			<unit_faculty>1</unit_faculty>
-		</unit>
-		<!-- B15 -->
-		<unit>
-			<id>92</id>
+			<id>705</id>
 			<name>Instytut Fizyki</name>
-			<short_name></short_name>
 			<unit_faculty>7</unit_faculty>
 		</unit>
-		<!-- B16 -->
+		<!-- FACULTY IPOŚ -->
 		<unit>
-			<id>93</id>
-			<name>Dział Wydawnictw Naukowo-Dydaktycznych</name>
-			<short_name>DWD</short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B17 -->
-		<unit>
-			<id>94</id>
-			<name>Instytut Papiernictwa i Poligrafii</name>
-			<short_name>IPiP</short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B18 -->
-		<unit>
-			<id>95</id>
-			<name>Katedra Mikroelektroniki i Technik Informatycznych</name>
-			<short_name>DMCS</short_name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<!-- B19 empty -->
-		<!-- B20 empty -->
-		<!-- B21 empty -->
-		<!-- B22 -->
-		<unit>
-			<id>96</id>
-			<name>Uczelniany Punkt Personalizacji</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>801</id>
+			<name>Dziekanat Wydziałó IPOŚ</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>97</id>
-			<name>Centrum Wikamp</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>802</id>
+			<name>Katedra Aparatury Procesowej</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>98</id>
-			<name>Galeria Biblio-Art</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>803</id>
+			<name>Katedra Inżynierii Chemicznej</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>99</id>
-			<name>Łódzki Uniwersytet Dziecięcy</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B23 empty -->
-		<!-- B24 -->
-		<unit>
-			<id>100</id>
-			<name>Studium Języków Obcych</name>
-			<short_name>SJO</short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- B25 -->
-		<unit_ref>100</unit_ref>
-		<unit>
-			<id>101</id>
-			<name>Uniwersytet Trzeciego Wieku Politechniki Łódzkiej</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- C1 -->
-		<unit>
-			<id>102</id>
-			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
-			<short_name>MITR</short_name>
-			<unit_faculty>3</unit_faculty>
-		</unit>
-		<!-- C2 -->
-		<unit_ref>102</unit_ref>
-		<!-- C3 -->
-		<unit_ref>18</unit_ref>
-		<unit_ref>19</unit_ref>
-		<unit_ref>21</unit_ref>
-		<unit_ref>95</unit_ref>
-		<unit>
-			<id>103</id>
-			<name>Instytut Elektrotechniki Teoretycznej, Metrologii i Materiałoznawstwa</name>
-			<short_name></short_name>
-			<unit_faculty>2</unit_faculty>
-		</unit>
-		<!-- C4 -->
-		<unit>
-			<id>104</id>
-			<name>Centrum Sportu Politechniki Łódzkiej</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- C5 empty-->
-		<!-- C6 -->
-		<unit_ref>20</unit_ref>
-		<!-- C7  -->
-		<unit_ref>20</unit_ref>
-		<!-- C8 empty -->
-		<!-- C9 empty -->
-		<!-- C10 -->
-		<unit>
-			<id>105</id>
-			<name>Sala Gimnastyczna nad Klubem Underground</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
-		</unit>
-		<!-- C11 empty -->
-		<!-- C12 empty -->
-		<!-- C13 empty -->
-		<!-- C14 empty -->
-		<!-- C15 -->
-		<unit>
-			<id>106</id>
-			<name>Dyrekcja Osiedla Akademickiego</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>804</id>
+			<name>Katedra Inżynierii Bioprocesowej</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>107</id>
-			<name>Samorząd Studencki Politechniki Łódzkiej</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>805</id>
+			<name>Katedra Systemów Inżynierii Środowiska</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>108</id>
-			<name>Sala Widowiskowo-Konferencyjna</name>
-			<short_name></short_name>
-			<unit_faculty></unit_faculty>
+			<id>806</id>
+			<name>Katedra Termodynamiki Procesowej</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
 		<unit>
-			<id>109</id>
-			<name>Stołówka Studencka</name>
-			<short_name>Jedzenie</short_name>
-			<unit_faculty></unit_faculty>
+			<id>807</id>
+			<name>Katedra Inżynierii Bezpieczeństwa Pracy</name>
+			<unit_faculty>8</unit_faculty>
 		</unit>
-		<!-- Campus D -->
-		<!-- D1 -->
 		<unit>
-			<id>110</id>
-			<name>Katedra Systemów Zarządzania</name>
+			<id>808</id>
+			<name>Katedra Procesów Cieplnych i Dyfuzyjnych</name>
+			<unit_faculty>8</unit_faculty>
+		</unit>
+		<!-- FACULTY OIZ -->
+		<unit>
+			<id>901</id>
+			<name>Dziekanat Wydziału OIZ</name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>902</id>
+			<name>Katedra Nauk Społecznych i Zarządzania Technologiami</name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>903</id>
+			<name>Katedra Zarządzania Produkcją i Logistyki</name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>904</id>
+			<name>Katedra Integracji Europejskiej i Marketingu Międzynarodowego</name>
+			<unit_faculty>9</unit_faculty>
+		</unit>
+		<unit>
+			<id>905</id>
+			<name>Katedra Systemów Zarządzania i Innowacji</name>
 			<short_name>KSZ</short_name>
 			<unit_faculty>9</unit_faculty>
 		</unit>
 		<unit>
-			<id>111</id>
+			<id>906</id>
 			<name>Katedra Zarządzania</name>
-			<short_name></short_name>
 			<unit_faculty>9</unit_faculty>
 		</unit>
-		<!-- D2 empty -->
-		<!-- D3 -->
+		<!-- FACULTY IFE -->
 		<unit>
-			<id>112</id>
-			<name>Dziekanat Wydziału OIZ</name>
-			<short_name></short_name>
-			<unit_faculty>9</unit_faculty>
+			<id>1001</id>
+			<name>Centrum Kształcenia Międzynarodowego</name>
+			<short_name>IFE</short_name>
+			<unit_faculty>10</unit_faculty>
+		</unit>	
+		<!-- NO FACULTY -->
+		<unit>
+			<id>2001</id>
+			<name>Sala Gimnastyczna SWFIS</name>
 		</unit>
-		<!-- D4 -->
-		<unit_ref>112</unit_ref>
+		<unit>
+			<id>2002</id>
+			<name>Centrum Komputerowe Lodman</name>
+			<short_name>Lodman</short_name>
+		</unit>
+		<unit>
+			<id>2003</id>
+			<name>Sekcja Rekrutacji Politechniki Łódzkiej</name>
+			<short_name>Rekrutacja</short_name>
+		</unit>
+		<unit>
+			<id>2004</id>
+			<name>Kwestura</name>
+		</unit>
+		<unit>
+			<id>2005</id>
+			<name>Kanclerz</name>
+		</unit>
+		<unit>
+			<id>2006</id>
+			<name>Związki Zawodowe</name>
+		</unit>
+		<unit>
+			<id>2007</id>
+			<name>Akademickie Centrum Zaufania</name>
+		</unit>
+		<unit>
+			<id>2008</id>
+			<name>Biuro ds. Osób Niepełnosprawnych</name>
+		</unit>
+		<unit>
+			<id>2009</id>
+			<name>Audytorium im. Sułtana</name>
+		</unit>
+		<unit>
+			<id>2010</id>
+			<name>Rektorat Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2011</id>
+			<name>Dział Transferu Technologii</name>
+		</unit>
+		<unit>
+			<id>2012</id>
+			<name>Dział Promocji Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2013</id>
+			<name>Galeria Krótko i Węzłowato</name>
+		</unit>
+		<unit>
+			<id>2014</id>
+			<name>Publiczne Liceum Ogólnokształcące Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2015</id>
+			<name>Centrum Diagnostyki i Terapii Laserowej</name>
+			<short_name>CDiTL</short_name>
+		</unit>
+		<unit>
+			<id>2016</id>
+			<name>Dział Wydawnictw Naukowo-Dydaktycznych</name>
+			<short_name>DWD</short_name>
+		</unit>
+		<unit>
+			<id>2017</id>
+			<name>Instytut Papiernictwa i Poligrafii</name>
+			<short_name>IPiP</short_name>
+		</unit>
+		<unit>
+			<id>2018</id>
+			<name>Uczelniany Punkt Personalizacji</name>
+		</unit>
+		<unit>
+			<id>2019</id>
+			<name>Centrum Wikamp</name>
+		</unit>
+		<unit>
+			<id>2020</id>
+			<name>Galeria Biblio-Art</name>
+		</unit>
+		<unit>
+			<id>2021</id>
+			<name>Łódzki Uniwersytet Dziecięcy</name>
+		</unit>
+		<unit>
+			<id>2022</id>
+			<name>Studium Języków Obcych</name>
+			<short_name>SJO</short_name>
+		</unit>
+		<unit>
+			<id>2023</id>
+			<name>Uniwersytet Trzeciego Wieku Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2024</id>
+			<name>Studium Wychowania Fizycznego i Sportu</name>
+		</unit>
+		<unit>
+			<id>2025</id>
+			<name>Sala Gimnastyczna nad Klubem Underground</name>
+		</unit>
+		<unit>
+			<id>2026</id>
+			<name>Dyrekcja Osiedla Akademickiego</name>
+		</unit>
+		<unit>
+			<id>2027</id>
+			<name>Samorząd Studencki Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2028</id>
+			<name>Sala Widowiskowo-Konferencyjna</name>
+		</unit>
+		<unit>
+			<id>2029</id>
+			<name>Stołówka Studencka</name>
+			<short_name>Jedzenie</short_name>
+		</unit>
+		<unit>
+			<id>2030</id>
+			<name>Kolegium Gospodarki Przestrzennej</name>
+		</unit>
+		<unit>
+			<id>2031</id>
+			<name>Poradnia Lekarska</name>
+		</unit>
+		<unit>
+			<id>2032</id>
+			<name>Kolegium Logistyki</name>
+		</unit>
+		<unit>
+			<id>2033</id>
+			<name>Centrum Technologii Informatycznych</name>
+		</unit>
+		<unit>
+			<id>2034</id>
+			<name>Centrum Nauczania Matematyki i Fizyki</name>
+		</unit>
+		<unit>
+			<id>2036</id>
+			<name>Urząd Pocztowy</name>
+		</unit>
+		<unit>
+			<id>2037</id>
+			<name>Studenckie Rasio Żak</name>
+		</unit>
 	</units>
 	<places>
 	    <!-- campus A -->
@@ -811,7 +645,6 @@
 			<id>1</id>
 			<symbol>A1</symbol>
 			<name>Budynek A1</name>
-			<description></description>
 			<latitude>51.7552033</latitude>
 			<longitude>19.4525747</longitude>
 			<place_category>11</place_category>
@@ -824,7 +657,7 @@
 			<latitude>51.754645</latitude>
 			<longitude>19.452780</longitude>
 			<place_category>11</place_category>
-			<place_unit>1,2,3,4</place_unit>
+			<place_unit>502,503,504,505</place_unit>
 			<place_faculty>5</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -835,7 +668,7 @@
 			<latitude>51.7547082</latitude>
 			<longitude>19.4532694</longitude>
 			<place_category>11</place_category>
-			<place_unit>2,3</place_unit>
+			<place_unit>502,503</place_unit>
 			<place_faculty>5</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -846,7 +679,7 @@
 			<latitude>51.754585</latitude>
 			<longitude>19.454711</longitude>
 			<place_category>3,11</place_category>
-			<place_unit>2,3,4,5,6</place_unit>
+			<place_unit>501,503,504,505,2001</place_unit>
 			<place_faculty>5</place_faculty>
 			<has_image>0</has_image>
 		</place>	
@@ -857,7 +690,7 @@
 			<latitude>51.754243</latitude>
 			<longitude>19.454883</longitude>
 			<place_category>11</place_category>
-			<place_unit>7</place_unit>
+			<place_unit>2002</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -867,7 +700,7 @@
 			<latitude>51.7541216</latitude>
 			<longitude>19.4540303</longitude>
 			<place_category>11</place_category>
-			<place_unit>8,9,10,11,12,13</place_unit>
+			<place_unit>802,803,804,805,806,807</place_unit>
 			<place_faculty>8</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -878,7 +711,7 @@
 			<latitude>51.754066</latitude>
 			<longitude>19.4535167</longitude>
 			<place_category>11</place_category>
-			<place_unit>14</place_unit>
+			<place_unit>808</place_unit>
 			<place_faculty>8</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -890,8 +723,8 @@
 			<latitude>51.753513</latitude>
 			<longitude>19.453027</longitude>
 			<place_category>11</place_category>
-			<place_unit>8,15</place_unit>
-			<place_faculty>8</place_faculty>
+			<place_unit>302,802</place_unit>
+			<place_faculty>3,8</place_faculty>
 			<has_image>0</has_image>
 		</place>
 		<!-- <place>
@@ -901,8 +734,8 @@
 			<latitude>51.7534724</latitude>
 			<longitude>19.4533662</longitude>
 			<place_category>11</place_category>
-			<place_unit>15</place_unit>
-			<place_faculty>8</place_faculty>
+			<place_unit>302</place_unit>
+			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
 		</place> -->
 		<place>
@@ -912,7 +745,7 @@
 			<latitude>51.752606</latitude>
 			<longitude>19.453086</longitude>
 			<place_category>11</place_category>
-			<place_unit>16,17,18,19,20</place_unit>
+			<place_unit>201,202,203,204,205</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -923,7 +756,7 @@
 			<latitude>51.753124</latitude>
 			<longitude>19.453531</longitude>
 			<place_category>11</place_category>
-			<place_unit>19,21</place_unit>
+			<place_unit>204,206</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -934,7 +767,7 @@
 			<latitude>51.7528589</latitude>
 			<longitude>19.4543747</longitude>
 			<place_category>11</place_category>
-			<place_unit>21</place_unit>
+			<place_unit>203,206,210</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -945,7 +778,7 @@
 			<latitude>51.752407</latitude>
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>22</place_unit>
+			<place_unit>2003</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -955,7 +788,7 @@
 			<latitude>51.753060</latitude>
 			<longitude>19.455130</longitude>
 			<place_category>11</place_category>
-			<place_unit>23</place_unit>
+			<place_unit>702</place_unit>
 			<place_faculty>7</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -977,8 +810,8 @@
 			<latitude>51.755112</latitude>
 			<longitude>19.451533</longitude>
 			<place_category>11</place_category>
-			<place_unit>24</place_unit>
-			<place_faculty>10</place_faculty>
+			<place_unit>403,405,1001</place_unit>
+			<place_faculty>4,10</place_faculty>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -988,7 +821,7 @@
 			<latitude>51.755103</latitude>
 			<longitude>19.450631</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>25</place_unit>
+			<place_unit>2004</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1008,7 +841,7 @@
 			<latitude>51.753788</latitude>
 			<longitude>19.452072</longitude>
 			<place_category>11</place_category>
-			<place_unit>26,27</place_unit>
+			<place_unit>102,2009</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1020,7 +853,7 @@
 			<latitude>51.753490</latitude>
 			<longitude>19.451648</longitude>
 			<place_category>11</place_category>
-			<place_unit>27,28,29,30,31</place_unit>
+			<place_unit>102,103,104,105,106</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1042,7 +875,7 @@
 			<latitude>51.752576</latitude>
 			<longitude>19.451809</longitude>
 			<place_category>11</place_category>
-			<place_unit>28,29,30,32,33,34,35,36,37</place_unit>
+			<place_unit>101,103,104,107,108,109,110,111</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1062,7 +895,7 @@
 			<latitude>51.7544842</latitude>
 			<longitude>19.4508928</longitude>
 			<place_category>11</place_category>
-			<place_unit>15,38</place_unit>
+			<place_unit>302,402</place_unit>
 			<place_faculty>3,4</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1082,7 +915,7 @@
 			<latitude>51.7540867</latitude>
 			<longitude>19.4505966</longitude>
 			<place_category>11</place_category>
-			<place_unit>39,40</place_unit>
+			<place_unit>303,304</place_unit>
 			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1093,7 +926,7 @@
 			<latitude>51.753825</latitude>
 			<longitude>19.450967</longitude>
 			<place_category>11</place_category>
-			<place_unit>40,41,42,43,44</place_unit>
+			<place_unit>301,303,305,306,307</place_unit>
 			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1104,7 +937,7 @@
 			<latitude>51.7535851</latitude>
 			<longitude>19.4509969</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>45,46</place_unit>
+			<place_unit>2005,2006</place_unit>
 			<has_image>0</has_image>
 		</place> -->
 		<!-- <place>
@@ -1123,7 +956,7 @@
 			<latitude>51.752588</latitude>
 			<longitude>19.451323</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>47,48</place_unit>
+			<place_unit>2007,2008</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1134,7 +967,7 @@
 			<latitude>51.7537783</latitude>
 			<longitude>19.4496228</longitude>
 			<place_category>11</place_category>
-			<place_unit>32</place_unit>
+			<place_unit>106</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1154,8 +987,8 @@
 			<latitude>51.7528475</latitude>
 			<longitude>19.4500623</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>49,50,51,52,53,54,55</place_unit>
-			<place_faculty>4</place_faculty>
+			<place_unit>303,401,403,404,405,406,407,408</place_unit>
+			<place_faculty>3,4</place_faculty>
 			<has_image>0</has_image>
 		</place>
 		<!-- Campus B -->
@@ -1165,8 +998,8 @@
 			<name>Budynek B1</name>
 			<latitude>51.748621</latitude>
 			<longitude>19.455360</longitude>
-			<place_unit>56</place_unit>
 			<place_category>2,12</place_category>
+			<place_unit>2010</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1175,7 +1008,7 @@
 			<name>Budynek B2</name>
 			<latitude>51.7489063</latitude>
 			<longitude>19.4548576</longitude>
-			<place_unit>57,58</place_unit>
+			<place_unit>2011,2012</place_unit>
 			<place_category>12</place_category>
 			<has_image>0</has_image>
 		</place>
@@ -1186,8 +1019,7 @@
 			<latitude>51.7486057</latitude>
 			<longitude>19.453125</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>58</place_unit>
-			<place_faculty></place_faculty>
+			<place_unit>2012</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1197,7 +1029,7 @@
 			<latitude>51.7480461</latitude>
 			<longitude>19.4558245</longitude>
 			<place_category>12</place_category>
-			<place_unit>59,60,61</place_unit>
+			<place_unit>801,805,807</place_unit>
 			<place_faculty>8</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1208,7 +1040,7 @@
 			<latitude>51.7480104</latitude>
 			<longitude>19.4554295</longitude>
 			<place_category>12</place_category>
-			<place_unit>62</place_unit>
+			<place_unit>804</place_unit>
 			<place_faculty>8</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1220,7 +1052,7 @@
 			<latitude>51.7477509</latitude>
 			<longitude>19.4531241</longitude>
 			<place_category>12</place_category>
-			<place_unit>63,64</place_unit>
+			<place_unit>602,2014</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1231,7 +1063,7 @@
 			<latitude>51.7476239</latitude>
 			<longitude>19.4519306</longitude>
 			<place_category>12</place_category>
-			<place_unit>65,66,67,68,69,70,71,72,73,74,75</place_unit>
+			<place_unit>601,603,604,605,607,608,609,610,611,2030</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1253,7 +1085,7 @@
 			<latitude>51.7472277</latitude>
 			<longitude>19.4537199</longitude>
 			<place_category>12</place_category>
-			<place_unit>76,77,78,79,80,81,82,83,84,85</place_unit>
+			<place_unit>207,208,703,704,902,903,904,905,2032</place_unit>
 			<place_faculty>2,7,9</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1264,7 +1096,7 @@
 			<latitude>51.7473809</latitude>
 			<longitude>19.4554135</longitude>
 			<place_category>12</place_category>
-			<place_unit>86,87</place_unit>
+			<place_unit>806,808</place_unit>
 			<place_faculty>8</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1275,7 +1107,7 @@
 			<latitude>51.7473759</latitude>
 			<longitude>19.4560713</longitude>
 			<place_category>12</place_category>
-			<place_unit>88</place_unit>
+			<place_unit>701</place_unit>
 			<place_faculty>7</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1286,7 +1118,7 @@
 			<latitude>51.7471604</latitude>
 			<longitude>19.4556281</longitude>
 			<place_category>12</place_category>
-			<place_unit>89</place_unit>
+			<place_unit>2015,2031</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1296,7 +1128,7 @@
 			<latitude>51.7468817</latitude>
 			<longitude>19.4542318</longitude>
 			<place_category>12</place_category>
-			<place_unit>90</place_unit>
+			<place_unit>105,112</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1307,7 +1139,7 @@
 			<latitude>51.7465856</latitude>
 			<longitude>19.4544266</longitude>
 			<place_category>12</place_category>
-			<place_unit>91</place_unit>
+			<place_unit>705,112</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place> -->
@@ -1318,7 +1150,7 @@
 			<latitude>51.7466036</latitude>
 			<longitude>19.4557936</longitude>
 			<place_category>12</place_category>
-			<place_unit>92</place_unit>
+			<place_unit>705</place_unit>
 			<place_faculty>7</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1329,7 +1161,8 @@
 			<latitude>51.7463987</latitude>
 			<longitude>19.4531671</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>93</place_unit>
+			<place_unit>602,2016</place_unit>
+			<place_faculty>6</place_faculty>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1340,7 +1173,7 @@
 			<latitude>51.7461245</latitude>
 			<longitude>19.4546554</longitude>
 			<place_category>12</place_category>
-			<place_unit>94</place_unit>
+			<place_unit>2017</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1350,18 +1183,18 @@
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
-			<place_unit>95</place_unit>
+			<place_unit>209</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>52</id>
 			<symbol>B19</symbol>
-			<name>Centrum Technologii Informatycznych</name>
+			<name>Budynek B19</name>
 			<latitude>51.7470548</latitude>
 			<longitude>19.4559248</longitude>
 			<place_category>12</place_category>
-			<place_faculty>7</place_faculty>
+			<place_unit>2033</place_unit>
 			<has_image>0</has_image>
 		</place>
 <!-- 		<place>
@@ -1389,7 +1222,7 @@
 			<latitude>51.7456283</latitude>
 			<longitude>19.4539643</longitude>
 			<place_category>12</place_category>
-			<place_unit>96,97,98,99</place_unit>
+			<place_unit>2018,2019,2020,2021</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<!-- <place>
@@ -1408,7 +1241,7 @@
 			<latitude>51.7454352</latitude>
 			<longitude>19.4519802</longitude>
 			<place_category>12</place_category>
-			<place_unit>100</place_unit>
+			<place_unit>2022</place_unit>
 			<has_image>0</has_image>
 		</place> -->
 		<place>
@@ -1418,7 +1251,7 @@
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
-			<place_unit>100,101</place_unit>
+			<place_unit>2022,2033</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<!-- Campus C -->
@@ -1429,7 +1262,7 @@
 			<latitude>51.744587</latitude>
 			<longitude>19.4481297</longitude>
 			<place_category>13</place_category>
-			<place_unit>102</place_unit>
+			<place_unit>306</place_unit>
 			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1440,7 +1273,7 @@
 			<latitude>51.7445835</latitude>
 			<longitude>19.4485581</longitude>
 			<place_category>13</place_category>
-			<place_unit>102</place_unit>
+			<place_unit>306</place_unit>
 			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1452,7 +1285,7 @@
 			<latitude>51.74519</latitude>
 			<longitude>19.4499796</longitude>
 			<place_category>13</place_category>
-			<place_unit>18,19,21,95,103</place_unit>
+			<place_unit>103,202,203,204,209,2034</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1463,7 +1296,7 @@
 			<latitude>51.7454267</latitude>
 			<longitude>19.4493607</longitude>
 			<place_category>13</place_category>
-			<place_unit>104</place_unit>
+			<place_unit>2024</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1483,7 +1316,7 @@
 			<latitude>51.7458352</latitude>
 			<longitude>19.4493218</longitude>
 			<place_category>13</place_category>
-			<place_unit>20</place_unit>
+			<place_unit>205</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1494,7 +1327,7 @@
 			<latitude>51.7458228</latitude>
 			<longitude>19.4489041</longitude>
 			<place_category>13</place_category>
-			<place_unit>20</place_unit>
+			<place_unit>205</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1524,7 +1357,7 @@
 			<latitude>51.746343</latitude>
 			<longitude>19.450086</longitude>
 			<place_category>3,13</place_category>
-			<place_unit>105</place_unit>
+			<place_unit>2025</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1545,6 +1378,7 @@
 			<latitude>51.7474178</latitude>
 			<longitude>19.4500173</longitude>
 			<place_category>1,13</place_category>
+			<place_unit>2037</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1555,6 +1389,7 @@
 			<latitude>51.7482778</latitude>
 			<longitude>19.4498611</longitude>
 			<place_category>1,13</place_category>
+			<place_unit>2031,2036</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1574,7 +1409,7 @@
 			<latitude>51.7489808</latitude>
 			<longitude>19.4494321</longitude>
 			<place_category>2,13</place_category>
-			<place_unit>106,107,108,109</place_unit>
+			<place_unit>2026,2027,2028,2029</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1622,7 +1457,7 @@
 			<latitude>51.7495769</latitude>
 			<longitude>19.4609699</longitude>
 			<place_category>14</place_category>
-			<place_unit>110,111</place_unit>
+			<place_unit>902,905,906</place_unit>
 			<place_faculty>9</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1642,7 +1477,7 @@
 			<latitude>51.7492909</latitude>
 			<longitude>19.4616163</longitude>
 			<place_category>14</place_category>
-			<place_unit>112</place_unit>
+			<place_unit>901</place_unit>
 			<place_faculty>9</place_faculty>
 			<has_image>0</has_image>
 		</place>
