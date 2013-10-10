@@ -685,7 +685,7 @@
 			<longitude>19.454883</longitude>
 			<place_category>11</place_category>
 			<place_unit>2002</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>6</id>
@@ -719,7 +719,7 @@
 			<place_category>11</place_category>
 			<place_unit>302,802</place_unit>
 			<place_faculty>3,8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>9</id>
@@ -773,7 +773,7 @@
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
 			<place_unit>2003</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>14</id>
@@ -837,7 +837,7 @@
 			<place_category>11</place_category>
 			<place_unit>102,2009</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>20</id>
@@ -871,7 +871,7 @@
 			<place_category>11</place_category>
 			<place_unit>101,103,104,107,108,109,110,111</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>23</id>
@@ -922,7 +922,7 @@
 			<place_category>11</place_category>
 			<place_unit>301,303,305,306,307</place_unit>
 			<place_faculty>3</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>28</id>
@@ -951,7 +951,7 @@
 			<longitude>19.451323</longitude>
 			<place_category>2,11</place_category>
 			<place_unit>2007,2008</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>31</id>
@@ -983,7 +983,7 @@
 			<place_category>2,11</place_category>
 			<place_unit>303,401,403,404,405,406,407,408</place_unit>
 			<place_faculty>3,4</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- Campus B -->
 		<place>
@@ -994,7 +994,7 @@
 			<longitude>19.455360</longitude>
 			<place_category>2,12</place_category>
 			<place_unit>2010</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>35</id>
@@ -1014,7 +1014,7 @@
 			<longitude>19.453125</longitude>
 			<place_category>2,12</place_category>
 			<place_unit>2012</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>37</id>
@@ -1025,7 +1025,7 @@
 			<place_category>12</place_category>
 			<place_unit>801,805,807</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>38</id>
@@ -1048,7 +1048,7 @@
 			<place_category>12</place_category>
 			<place_unit>602,2014</place_unit>
 			<place_faculty>6</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>40</id>
@@ -1092,7 +1092,7 @@
 			<place_category>12</place_category>
 			<place_unit>806,808</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>44</id>
@@ -1103,7 +1103,7 @@
 			<place_category>12</place_category>
 			<place_unit>701</place_unit>
 			<place_faculty>7</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>45</id>
@@ -1124,7 +1124,7 @@
 			<place_category>12</place_category>
 			<place_unit>105,112</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>47</id>
@@ -1157,7 +1157,7 @@
 			<place_category>2,12</place_category>
 			<place_unit>602,2016</place_unit>
 			<place_faculty>6</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>50</id>
@@ -1168,7 +1168,7 @@
 			<longitude>19.4546554</longitude>
 			<place_category>12</place_category>
 			<place_unit>2017</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>51</id>
@@ -1189,7 +1189,7 @@
 			<longitude>19.4559248</longitude>
 			<place_category>12</place_category>
 			<place_unit>2033</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 <!-- 		<place>
 			<id>53</id>
@@ -1217,7 +1217,7 @@
 			<longitude>19.4539643</longitude>
 			<place_category>12</place_category>
 			<place_unit>2018,2019,2020,2021</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>56</id>
@@ -1246,7 +1246,7 @@
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
 			<place_unit>2022,2033</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- Campus C -->
 		<place>
@@ -1281,7 +1281,7 @@
 			<place_category>13</place_category>
 			<place_unit>103,202,203,204,209,2034</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>62</id>
@@ -1291,7 +1291,7 @@
 			<longitude>19.4493607</longitude>
 			<place_category>13</place_category>
 			<place_unit>2024</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>63</id>
@@ -1301,7 +1301,7 @@
 			<latitude>51.7457995</latitude>
 			<longitude>19.4498475</longitude>
 			<place_category>13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>64</id>
@@ -1312,7 +1312,7 @@
 			<place_category>13</place_category>
 			<place_unit>205</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>65</id>
@@ -1342,7 +1342,7 @@
 			<latitude>51.7461292</latitude>
 			<longitude>19.4500547</longitude>
 			<place_category>13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>68</id>
@@ -1362,7 +1362,7 @@
 			<latitude>51.7467162</latitude>
 			<longitude>19.450183</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>70</id>
@@ -1373,7 +1373,7 @@
 			<longitude>19.4500173</longitude>
 			<place_category>1,13</place_category>
 			<place_unit>2037</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>71</id>
@@ -1384,7 +1384,7 @@
 			<longitude>19.4498611</longitude>
 			<place_category>1,13</place_category>
 			<place_unit>2031,2036</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>72</id>
@@ -1394,7 +1394,7 @@
 			<latitude>51.7485368</latitude>
 			<longitude>19.4496385</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>73</id>
@@ -1404,7 +1404,7 @@
 			<longitude>19.4494321</longitude>
 			<place_category>2,13</place_category>
 			<place_unit>2026,2027,2028,2029</place_unit>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>74</id>
@@ -1414,7 +1414,7 @@
 			<latitude>51.7513544</latitude>
 			<longitude>19.4479121</longitude>
 			<place_category>1,13</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>75</id>
