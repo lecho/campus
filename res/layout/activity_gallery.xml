@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/gallery_indicator_padding"
         app:lineWidth="@dimen/gallery_indicator_width"
-        app:selectedColor="@color/maroon"
+        app:selectedColor="@color/holo_blue"
         app:strokeWidth="@dimen/gallery_indicator_stroke_width"
         app:unselectedColor="@color/background" />
 
