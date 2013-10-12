@@ -11,6 +11,7 @@ import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
 import lecho.app.campus.adapter.NavigationDrawerAdapter;
 import lecho.app.campus.adapter.SearchResultFragmentAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
+import lecho.app.campus.dao.DaoMaster;
 import lecho.app.campus.dao.Place;
 import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
 import lecho.app.campus.fragment.dialog.NoInternetConnectionDialogFragment;
@@ -171,10 +172,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param prefs
 	 */
 	private void updateCampusDataIfNeeded(final SharedPreferences prefs) {
-		final int campusDataVersion = prefs.getInt(Config.APP_SHARED_PREFS_CAMPUS_DATA_VERSION, 0);
+		final int schemaVersion = prefs.getInt(Config.APP_SHARED_PREFS_SCHEMA_VERSION, 0);
 		final String language = prefs.getString(Config.APP_SHARED_PREFS_LANGUAGE, ".");
 		final String currentLanguage = Locale.getDefault().getLanguage();
-		if (Config.CAMPUS_DATA_VERSION != campusDataVersion) {
+		if (DaoMaster.SCHEMA_VERSION != schemaVersion) {
 			// Database has to be upgraded.
 			prefs.edit().putString(Config.APP_SHARED_PREFS_LANGUAGE, currentLanguage).commit();
 			startPopulateDBService(prefs);
