@@ -26,6 +26,8 @@ public abstract class Config {
 
 	public static final String EXTRA_PLACE_ID = "lecho.app.campus:ARG_PLACE_ID";
 	public static final String EXTRA_PLACE_SYMBOL = "lecho.app.campus:ARG_PLACE_SYMBOL";
+	public static final String EXTRA_VISIBLE_PLACES = "lecho.app.campus:VISIBLE_PLACES";
+	public static final String EXTRA_PLACE_POSITION = "lecho.app.campus:PLACE_POSITION";
 	public static final String PLACE_MAIN_PHOTO_NAME = "1.jpg";
 
 	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus" + APP_TARGET

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
+//TODO make it simple view instead of fragment.
 public class SearchResultFragment extends SherlockFragment {
 	private static final String TAG = "SearchResultFragment";
 	private static final String ARG_ID = "lecho.app.campus:ID";

@@ -85,6 +85,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		OnSearchResultClickListener {
 	private static final String TAG = "CampusMapActivity";
 	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
+	private static final int REQUEST_CODE_PLACE_DETAILS = 2;
 	private static final int PLACES_LOADER = 1;
 	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
 	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
@@ -101,6 +102,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Map<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	// Maps marker to Place
 	private Map<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
+	// Array of currently visible places, passed to details activity
+	private long[] mVisiblePlaces;
 	private Long mCurrentPlaceId;
 	private int mCurrentLoaderAction;
 	private String mCurrentLoaderArgument;
@@ -273,11 +276,17 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		switch (requestCode) {
 		case REQUEST_CODE_RECOVER_PLAY_SERVICES:
 			// User doesn't resolve Play Services problem
-			if (resultCode == RESULT_CANCELED) {
+			if (resultCode == Activity.RESULT_CANCELED) {
 				Log.w(TAG, "Google Play Services resolution activity canceled!, finishing app");
 				Toast.makeText(getApplicationContext(), R.string.play_services_recovery_canceled, Toast.LENGTH_SHORT)
 						.show();
 				finish();
+			}
+			return;
+		case REQUEST_CODE_PLACE_DETAILS:
+			if (resultCode == Activity.RESULT_OK) {
+				int position = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
+				goToMarker(position);
 			}
 			return;
 		}
@@ -504,6 +513,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.clear();
 		mMarkers.clear();
 		mMarkersData.clear();
+		mVisiblePlaces = new long[places.size()];
+		int visiblePlacesIndex = 0;
 		for (Place place : places) {
 			LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
 			Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
@@ -511,6 +522,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					.snippet(place.getDescription()));
 			mMarkers.put(place.getId(), marker);
 			mMarkersData.put(marker, place);
+			mVisiblePlaces[visiblePlacesIndex] = place.getId();
+			++visiblePlacesIndex;
 		}
 	}
 
@@ -530,6 +543,20 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		} else {
 			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), Config.CAMERA_ANIMATION_DURATION,
 					new MapCameraAnimationCalback(marker));
+		}
+	}
+
+	/**
+	 * Go to marker at given position in search results adapter.
+	 * 
+	 * @param position
+	 *            in search results adapter.
+	 */
+	private void goToMarker(final int position) {
+		Long placeId = mSearchResultAdapter.getItemId(position);
+		if (placeId != mCurrentPlaceId) {
+			Marker marker = mMarkers.get(placeId);
+			goToMarker(marker);
 		}
 	}
 
@@ -574,8 +601,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onSearchResultClick(Long placeId) {
 		Intent intent = new Intent(this, PlaceDetailsActivity.class);
-		intent.putExtra(Config.EXTRA_PLACE_ID, placeId);
-		startActivity(intent);
+		Bundle extras = new Bundle();
+		extras.putLongArray(Config.EXTRA_VISIBLE_PLACES, mVisiblePlaces);
+		extras.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
+		intent.putExtras(extras);
+		startActivityForResult(intent, REQUEST_CODE_PLACE_DETAILS);
 	}
 
 	// Selects single item on left Drawer
@@ -745,9 +775,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public void onPageSelected(int position) {
-			Long id = mSearchResultAdapter.getItemId(position);
-			Marker marker = mMarkers.get(id);
-			goToMarker(marker);
+			goToMarker(position);
 		}
 	}
 

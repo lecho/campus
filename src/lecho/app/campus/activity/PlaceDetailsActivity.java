@@ -1,26 +1,32 @@
 package lecho.app.campus.activity;
 
-import lecho.app.campus.fragment.PlaceDetailsFragment;
+import lecho.app.campus.R;
+import lecho.app.campus.adapter.PlaceDetailsFragmentAdapter;
 import lecho.app.campus.utils.Config;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PlaceDetailsActivity extends SherlockFragmentActivity {
-	private static final String FRAGMENT_TAG = "place-details-fragment";
+
+	private ViewPager mViewPager;
+	private PlaceDetailsFragmentAdapter mDetailsFragmentAdapter;
 
 	@Override
 	protected void onCreate(Bundle saveInstanceState) {
 		super.onCreate(saveInstanceState);
-		// TODO Validate placeId.
-		if (null == saveInstanceState) {
-			// Add fragment only once.
-			Long placeId = getIntent().getLongExtra(Config.EXTRA_PLACE_ID, Long.MIN_VALUE);
-			PlaceDetailsFragment fragment = PlaceDetailsFragment.newInstance(placeId);
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment, FRAGMENT_TAG).commit();
-		}
+		setContentView(R.layout.activity_place_details);
+		long[] visiblePlaces = getIntent().getExtras().getLongArray(Config.EXTRA_VISIBLE_PLACES);
+		int currentPlacePostion = getIntent().getExtras().getInt(Config.EXTRA_PLACE_POSITION);
+		mDetailsFragmentAdapter = new PlaceDetailsFragmentAdapter(getSupportFragmentManager(), visiblePlaces);
+		mViewPager = (ViewPager) findViewById(R.id.view_pager);
+		mViewPager.setAdapter(mDetailsFragmentAdapter);
+		mViewPager.setCurrentItem(currentPlacePostion);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
@@ -37,5 +43,15 @@ public class PlaceDetailsActivity extends SherlockFragmentActivity {
 			this.finish();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		Bundle bundle = new Bundle();
+		bundle.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
+		Intent data = new Intent();
+		data.putExtras(bundle);
+		setResult(Activity.RESULT_OK, data);
+		super.onBackPressed();
 	}
 }
