@@ -51,7 +51,6 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -130,7 +129,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mViewPager.setOnPageChangeListener(new SearchResultChangeListener());
 		mSearchResultsPagerShowAnim = AnimationUtils.loadAnimation(this, R.anim.slide_show);
 		mSearchResultsPagerHideAnim = AnimationUtils.loadAnimation(this, R.anim.slide_hide);
-		mSearchResultsPagerHideAnim.setAnimationListener(new HideSearchResultAnimationListener());
 		mMessageBar = new MessageBar(this);
 		mMessageBar.setOnClickListener(new MessageBarButtonListener());
 		mSearchResultSize = getResources().getDimensionPixelSize(R.dimen.search_result_height);
@@ -219,6 +217,13 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return false;
 	}
 
+	/**
+	 * If Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE is false - checks if there is map cache in
+	 * Android/data/app_package/cache directory.
+	 * 
+	 * @param prefs
+	 * @return true if Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE is true or there is map cache.
+	 */
 	private boolean checkIfMapWasCached(final SharedPreferences prefs) {
 		// Value will be true only if GoogleMap was initialized successful before;
 		boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
@@ -234,6 +239,13 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return deviceWasOnline;
 	}
 
+	/**
+	 * Check if device is online(only if connection is available, it not checking for timouts etc.
+	 * 
+	 * @param prefs
+	 * @return true if device is online, false otherwise. If false it also shows dialog asking user to go to settings
+	 *         window.
+	 */
 	private boolean checkInternetConnection(final SharedPreferences prefs) {
 		if (!Utils.isOnline(getApplicationContext())) {
 			Log.w(TAG, "Device is offline");
@@ -247,6 +259,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Sets Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE flag to true;
+	 * 
+	 * @param prefs
+	 */
 	private void setDeviceWasOnlineFlag(final SharedPreferences prefs) {
 		// Value will be true only if GoogleMap was initialized successful before;
 		final boolean deviceWasOnline = prefs.getBoolean(Config.APP_SHADER_PREFS_DEVICE_WAS_ONLINE, false);
@@ -255,6 +272,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Prepares navigation drawer.
+	 */
 	private void setUpNavigationDrawer() {
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -285,6 +305,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			}
 			break;
 		case REQUEST_CODE_PLACE_DETAILS:
+			// Handle case when user returned from details view and changed current place.
 			if (resultCode == Activity.RESULT_OK) {
 				int placePosition = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
 				Long placeId = data.getExtras().getLong(Config.EXTRA_PLACE_ID);
@@ -354,7 +375,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Sets up markers and map listeners
+	 * Sets up map properties and map listeners.
 	 */
 	private void setUpMap() {
 		mMap.setInfoWindowAdapter(new MarkerInfoWindowAdapter(getApplicationContext()));
@@ -368,6 +389,16 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		zoomMapOnStart();
 	}
 
+	/**
+	 * Restrts or initializes places loader.
+	 * 
+	 * @param isRestart
+	 *            if true loader will be restarted.
+	 * @param action
+	 *            action constant from PlacesLoader.
+	 * @param argument
+	 *            search argument for search action or null/empty string for loading all places.
+	 */
 	private void initLoader(boolean isRestart, int action, String argument) {
 		Bundle args = new Bundle();
 		mCurrentLoaderAction = action;
@@ -381,6 +412,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Zooming map on app start.
+	 */
 	private void zoomMapOnStart() {
 		if (mCurrentPlaceId > 0) {
 			// Map should animate to current marker, no need to zoom to bounds.
@@ -404,6 +438,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Zooming map to default position where almost all places are visible.
+	 */
 	private void zoomMapToDefault() {
 		if (null != mMap) {
 			LatLng latLng = new LatLng(Config.DEFAULT_LAT, Config.DEFAULT_LNG);
@@ -526,6 +563,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Fills up mMarkers, mMarkersData, mVisiblePlaces collections.
+	 * 
+	 * @param places
+	 */
 	private void setUpMarkers(List<Place> places) {
 		if (null == mMap) {
 			Log.e(TAG, "Could not set up markers - GoogleMap is null");
@@ -549,7 +591,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Move map camera to selected marker.
+	 * Move map camera to selected marker if animation is needed. Show marker infoWindow.
 	 * 
 	 * @param marker
 	 */
@@ -568,7 +610,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Go to marker at given position in search results adapter.
+	 * Go to marker at given position on search results adapter.
 	 * 
 	 * @param position
 	 *            in search results adapter.
@@ -614,6 +656,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void hideSearchResultsPager() {
 		if (mViewPager.getVisibility() == View.VISIBLE) {
+			mViewPager.setVisibility(View.GONE);
 			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
 			mMap.setPadding(0, 0, 0, 0);
 		}
@@ -629,7 +672,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		startActivityForResult(intent, REQUEST_CODE_PLACE_DETAILS);
 	}
 
-	// Selects single item on left Drawer
+	/**
+	 * Selects/deselect item on navigation drawer and restarting loader if needed.
+	 * 
+	 * @param position
+	 */
 	private void selectDrawerItem(final int position) {
 		mDrawerLayout.closeDrawer(mDrawerList);
 		mCurrentPlaceId = Long.MIN_VALUE;
@@ -655,6 +702,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Changes single navigation drawer item selection state.
+	 * 
+	 * @param drawerItemPosition
+	 * @param isCheck
+	 */
 	private void switchDrawerItem(int drawerItemPosition, boolean isCheck) {
 		mDrawerList.setItemChecked(drawerItemPosition, isCheck);
 		if (isCheck) {
@@ -713,6 +766,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
+	/**
+	 * Handles data loaded by loader - setting up markers and ViewPager.
+	 * 
+	 * @param data
+	 */
 	private void handleLoaderResult(PlacesList data) {
 		setUpMarkers(data.places);
 		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
@@ -811,6 +869,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Perform onSearchResultClick action when marker InfoWindow is clicked.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class MarkerInfoWindowClickListener implements OnInfoWindowClickListener {
 
 		@Override
@@ -907,25 +971,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
-	private class HideSearchResultAnimationListener implements AnimationListener {
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			mViewPager.setVisibility(View.INVISIBLE);
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-
-		}
-
-		@Override
-		public void onAnimationStart(Animation animation) {
-
-		}
-
-	}
-
 	private class SearchViewFocusChangeListener implements OnFocusChangeListener {
 
 		@Override
@@ -947,6 +992,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
+	/**
+	 * Toggle for navigation drawer.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
 	private class DrawerToggle extends ActionBarDrawerToggle {
 
 		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
