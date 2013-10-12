@@ -38,10 +38,7 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 		return mPlaces.get(position).getId();
 	}
 
-	/**
-	 * This method can take some time to finish when number of places is large but it should be save to call it in ui
-	 * thread for <500 places;
-	 */
+
 	@Override
 	public int getItemPosition(Object object) {
 		if (null == object) {

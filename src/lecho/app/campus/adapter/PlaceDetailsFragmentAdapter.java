@@ -25,6 +25,10 @@ public class PlaceDetailsFragmentAdapter extends FragmentStatePagerAdapter {
 		return PlaceDetailsFragment.newInstance(placeId);
 	}
 
+	public long getItemId(int position){
+		return mPlaceIdList[position];
+	}
+	
 	@Override
 	public int getCount() {
 		return mPlaceIdList.length;

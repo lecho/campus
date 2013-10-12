@@ -283,15 +283,25 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 						.show();
 				finish();
 			}
-			return;
+			break;
 		case REQUEST_CODE_PLACE_DETAILS:
 			if (resultCode == Activity.RESULT_OK) {
-				int position = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
-				goToMarker(position);
+				int placePosition = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
+				Long placeId = data.getExtras().getLong(Config.EXTRA_PLACE_ID);
+				if (placeId != mCurrentPlaceId) {
+					if (mMarkers.isEmpty()) {
+						// data is not initialized - probably activity recreation on orientation change.
+						mCurrentPlaceId = placeId;
+					} else {
+						// data is initialized - safe to goToMarker.
+						goToMarker(placePosition);
+					}
+				}
 			}
-			return;
+			break;
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
 		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -535,7 +545,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void goToMarker(final Marker marker) {
 		if (null == marker) {
-			Log.e(TAG, "Cannot go to NULL smarker");
+			Log.e(TAG, "Cannot go to NULL marker");
 			return;
 		}
 		if (mMap.getCameraPosition().target.equals(marker.getPosition())) {
@@ -738,14 +748,18 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		public void onCameraChange(CameraPosition position) {
 			final float zoom = position.zoom;
 			if (zoom <= Config.DEFAULT_ZOOM_LEVEL && !mIsMarkerSmall) {
-				Log.i(TAG, "Change markers to small");
+				if (Config.DEBUG) {
+					Log.d(TAG, "Change markers to small");
+				}
 				for (Map.Entry<Long, Marker> entry : mMarkers.entrySet()) {
 					entry.getValue().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_small));
 					mIsMarkerSmall = true;
 				}
 				showMarkerInfoWindow();
 			} else if (zoom > Config.DEFAULT_ZOOM_LEVEL && mIsMarkerSmall) {
-				Log.i(TAG, "Change markers to default");
+				if (Config.DEBUG) {
+					Log.d(TAG, "Change markers to default");
+				}
 				for (Map.Entry<Long, Marker> entry : mMarkers.entrySet()) {
 					entry.getValue().setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default));
 				}

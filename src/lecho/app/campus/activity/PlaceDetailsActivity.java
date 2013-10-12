@@ -55,6 +55,7 @@ public class PlaceDetailsActivity extends SherlockFragmentActivity {
 	private void setReturnResult() {
 		Bundle bundle = new Bundle();
 		bundle.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
+		bundle.putLong(Config.EXTRA_PLACE_ID, mDetailsFragmentAdapter.getItemId(mViewPager.getCurrentItem()));
 		Intent data = new Intent();
 		data.putExtras(bundle);
 		setResult(Activity.RESULT_OK, data);
