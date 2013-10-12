@@ -40,6 +40,7 @@ public class PlaceDetailsActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int itemId = item.getItemId();
 		if (android.R.id.home == itemId) {
+			setReturnResult();
 			this.finish();
 		}
 		return super.onOptionsItemSelected(item);
@@ -47,11 +48,15 @@ public class PlaceDetailsActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onBackPressed() {
+		setReturnResult();
+		super.onBackPressed();
+	}
+
+	private void setReturnResult() {
 		Bundle bundle = new Bundle();
 		bundle.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
 		Intent data = new Intent();
 		data.putExtras(bundle);
 		setResult(Activity.RESULT_OK, data);
-		super.onBackPressed();
 	}
 }
