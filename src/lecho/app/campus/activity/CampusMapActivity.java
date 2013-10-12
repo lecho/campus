@@ -478,7 +478,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			// Handle search button click
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			mCurrentPlaceId = Long.MIN_VALUE;
-			clearCurrentDrawerItem();
+			switchDrawerItem(mCurrentDrawerItem, false);
 			initLoader(true, PlacesLoader.LOAD_PLACES_BY_SEARCH, query);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
@@ -491,7 +491,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					// and
 					// load all places.
 					mCurrentPlaceId = placeId;
-					clearCurrentDrawerItem();
+					switchDrawerItem(mCurrentDrawerItem, false);
 					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
 				} else {
 					// Just go to selected marker.
@@ -634,27 +634,34 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerLayout.closeDrawer(mDrawerList);
 		mCurrentPlaceId = Long.MIN_VALUE;
 		final NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
-		// Delay restart loader to remove Drawer animation lag
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				if (position == mCurrentDrawerItem) {
-					clearCurrentDrawerItem();
+		if (position == mCurrentDrawerItem) {
+			switchDrawerItem(mCurrentDrawerItem, false);
+			// Delay restart loader to prevent Drawer animation lag
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
 					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-				} else {
-					initLoader(true, item.action, item.argument);
-					mDrawerList.setItemChecked(position, true);
-					mCurrentDrawerItem = position;
 				}
-			}
-		}, Config.DRAWER_RESTART_LOADER_DELAY);
-
+			}, Config.DRAWER_RESTART_LOADER_DELAY);
+		} else {
+			switchDrawerItem(position, true);
+			// Delay restart loader to prevent Drawer animation lag
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					initLoader(true, item.action, item.argument);
+				}
+			}, Config.DRAWER_RESTART_LOADER_DELAY);
+		}
 	}
 
-	private void clearCurrentDrawerItem() {
-		mDrawerList.setItemChecked(mCurrentDrawerItem, false);
-		mCurrentDrawerItem = Integer.MIN_VALUE;
+	private void switchDrawerItem(int drawerItemPosition, boolean isCheck) {
+		mDrawerList.setItemChecked(drawerItemPosition, isCheck);
+		if (isCheck) {
+			mCurrentDrawerItem = drawerItemPosition;
+		} else {
+			mCurrentDrawerItem = Integer.MIN_VALUE;
+		}
 	}
 
 	@Override
