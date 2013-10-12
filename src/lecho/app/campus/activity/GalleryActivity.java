@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.LinePageIndicator;
-import com.viewpagerindicator.PageIndicator;
 
 /**
  * 
@@ -24,7 +23,7 @@ public class GalleryActivity extends SherlockFragmentActivity implements OnImage
 	public static final String TAG = "PlaceDetailsActivity";
 	private ViewPager mPager;
 	private ProgressBar mProgressBar;
-	private PageIndicator mIndicator;
+	private LinePageIndicator mIndicator;
 	private String mSymbol;
 
 	@Override
@@ -44,7 +43,12 @@ public class GalleryActivity extends SherlockFragmentActivity implements OnImage
 		if (paths.length > 0) {
 			mPager.setAdapter(new GalleryPagesFragmentAdapter(getSupportFragmentManager(), mSymbol, paths));
 			mPager.setOffscreenPageLimit(1);
-			mIndicator.setViewPager(mPager);
+			if (paths.length == 1) {
+				mIndicator.setVisibility(View.GONE);
+			} else {
+				mIndicator.setVisibility(View.VISIBLE);
+				mIndicator.setViewPager(mPager);
+			}
 			mProgressBar.setVisibility(View.GONE);
 		} else {
 			// That's not normal and should never happen, if user starts this activity there should be at least one
