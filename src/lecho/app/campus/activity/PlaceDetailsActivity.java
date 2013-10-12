@@ -12,6 +12,15 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+/**
+ * It has to be started with intent containing array of longs(identifiers of all visible places) and integer(current
+ * place position in search result adapter).
+ * 
+ * As results activity will set id and position of place currently displayed on details view.
+ * 
+ * @author Lecho
+ * 
+ */
 public class PlaceDetailsActivity extends SherlockFragmentActivity {
 
 	private ViewPager mViewPager;
