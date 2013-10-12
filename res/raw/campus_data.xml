@@ -741,7 +741,7 @@
 			<place_category>11</place_category>
 			<place_unit>201,202,203,204,205</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>11</id>
@@ -821,10 +821,11 @@
 		<place>
 			<id>18</id>
 			<symbol>A18</symbol>
-			<name>Fabryka Inżynierów</name>
+			<name>Factory of Engineers</name>
 			<latitude>51.754805</latitude>
 			<longitude>19.451415</longitude>
 			<place_category>11</place_category>
+			<place_unit>103,104,105,106</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -891,7 +892,7 @@
 			<place_category>11</place_category>
 			<place_unit>302,402</place_unit>
 			<place_faculty>3,4</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>25</id>
@@ -911,7 +912,7 @@
 			<place_category>11</place_category>
 			<place_unit>303,304</place_unit>
 			<place_faculty>3</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>27</id>
@@ -961,7 +962,7 @@
 			<latitude>51.7537783</latitude>
 			<longitude>19.4496228</longitude>
 			<place_category>11</place_category>
-			<place_unit>106</place_unit>
+			<place_unit>105</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>0</has_image>
 		</place>
