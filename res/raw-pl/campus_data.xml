@@ -970,7 +970,7 @@
 			<place_category>11</place_category>
 			<place_unit>105</place_unit>
 			<place_faculty>1</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<!-- <place>
 			<id>32</id>
