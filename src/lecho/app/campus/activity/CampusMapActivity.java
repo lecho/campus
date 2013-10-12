@@ -506,13 +506,23 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	@Override
 	public void onBackPressed() {
 		if (mCurrentPlaceId > 0) {
+			clearCurrentMarker();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	private void clearCurrentMarker() {
+		if (mCurrentPlaceId > 0) {
 			// If there is selected marker - clear that selection.
 			Marker marker = mMarkers.get(mCurrentPlaceId);
+			if (null == marker) {
+				Log.e(TAG, "Could not clear current marker - marker is null");
+				return;
+			}
 			marker.hideInfoWindow();
 			mCurrentPlaceId = Long.MIN_VALUE;
 			hideSearchResultsPager();
-		} else {
-			super.onBackPressed();
 		}
 	}
 
@@ -866,6 +876,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			if (mCurrentLoaderAction == PlacesLoader.LOAD_PLACES_BY_SEARCH) {
 				mCurrentPlaceId = Long.MIN_VALUE;
 				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+			} else if (mCurrentPlaceId > 0) {
+				clearCurrentMarker();
 			}
 			return true;
 		}
