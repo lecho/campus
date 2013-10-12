@@ -6,10 +6,10 @@ import lecho.app.campus.dao.Place;
 import lecho.app.campus.fragment.SearchResultFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
-public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
+public class SearchResultFragmentAdapter extends FragmentStatePagerAdapter {
 	private static final String TAG = "SearchResultFragmentAdapter";
 	List<Place> mPlaces;
 
@@ -33,11 +33,9 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 		return mPlaces.size();
 	}
 
-	@Override
-	public long getItemId(int position) {
+	public Long getItemId(int position) {
 		return mPlaces.get(position).getId();
 	}
-
 
 	@Override
 	public int getItemPosition(Object object) {

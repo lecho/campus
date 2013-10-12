@@ -136,6 +136,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		if (null == savedInstanceState) {
 			mCurrentPlaceId = Long.MIN_VALUE;
 			mCurrentLoaderAction = PlacesLoader.LOAD_ALL_PLACES;
+			mCurrentLoaderArgument = "";
 			mCurrentDrawerItem = Integer.MIN_VALUE;
 			mCurrentMapType = GoogleMap.MAP_TYPE_NORMAL;
 			// Check if database has to be updated.
