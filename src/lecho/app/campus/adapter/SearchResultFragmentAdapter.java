@@ -38,19 +38,24 @@ public class SearchResultFragmentAdapter extends FragmentPagerAdapter {
 		return mPlaces.get(position).getId();
 	}
 
+	/**
+	 * This method can take some time to finish when number of places is large but it should be save to call it in ui
+	 * thread for <500 places;
+	 */
 	@Override
 	public int getItemPosition(Object object) {
 		if (null == object) {
 			Log.w(TAG, "Trying to get item position for null");
 			return -1;
 		}
+		// Sort and binary search for smaller list take longer then iteration.
 		Place dest = (Place) object;
-		int pos = 0;
+		int position = 0;
 		for (Place place : mPlaces) {
 			if (place.getId().equals(dest.getId())) {
-				return pos;
+				return position;
 			}
-			++pos;
+			++position;
 		}
 		Log.e(TAG, "Could not find given object");
 		throw new IllegalArgumentException("Could not find given object in SearchResultFragmentAdapter");

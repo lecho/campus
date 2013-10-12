@@ -102,7 +102,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private Map<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	// Maps marker to Place
 	private Map<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
-	// Array of currently visible places, passed to details activity
+	// Array of currently visible places identifiers, passed to details activity
 	private long[] mVisiblePlaces;
 	private Long mCurrentPlaceId;
 	private int mCurrentLoaderAction;
