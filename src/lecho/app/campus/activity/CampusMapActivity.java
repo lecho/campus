@@ -944,11 +944,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 		@Override
 		public boolean onMenuItemActionCollapse(MenuItem item) {
-			// If user collapse search view *after search was performed* return to all places.
 			if (mCurrentLoaderAction == PlacesLoader.LOAD_PLACES_BY_SEARCH) {
+				// If user collapse search view *after search was performed* return to all places.
 				mCurrentPlaceId = Long.MIN_VALUE;
 				initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
 			} else if (mCurrentPlaceId > 0) {
+				// Otherwise just clear current marker.
 				clearCurrentMarker();
 			}
 			return true;
