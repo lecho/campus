@@ -108,41 +108,49 @@
 		<unit>
 			<id>103</id>
 			<name>Institute of Materials Science and Engineering</name>
+			<short_name>I7</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>104</id>
 			<name>Institute of Machine Tools and Production Engineering</name>
+			<short_name>I8</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>105</id>
 			<name>Department of Vehicles and Fundamentals of Machine Design</name>
+			<short_name>K111</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>106</id>
 			<name>Department of Production Engineering</name>
+			<short_name>K14</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>107</id>
 			<name>Department of Strength of Materials</name>
+			<short_name>K12</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>108</id>
 			<name>Department of Dynamics</name>
+			<short_name>K13</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>109</id>
 			<name>Department of Automation and Biomechanics</name>
+			<short_name>K16</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>110</id>
 			<name>Department of Materials Engineering and Production Systems</name>
+			<short_name>K17</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
@@ -153,6 +161,7 @@
 		<unit>
 			<id>112</id>
 			<name>Institute of Turbomachinery</name>
+			<short_name>I10</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<!-- FACULTY EEIA -->
@@ -164,43 +173,49 @@
 		<unit>
 			<id>202</id>
 			<name>Institute of Electrical Engineering Systems</name>
+			<short_name>I12</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>203</id>
 			<name>Institute of Automatic Control</name>
+			<short_name>I13</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>204</id>
 			<name>Institute of Electrical Power Engineering</name>
+			<short_name>I15</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>205</id>
 			<name>Institute of Applied Computer Science</name>
-			<short_name>IIS</short_name>
+			<short_name>KIIS,I14</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>206</id>
 			<name>Department of Electrical Apparatus</name>
+			<short_name>K26</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>207</id>
 			<name>Institute of Electronics</name>
+			<short_name>I16</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>208</id>
 			<name>Department of Semiconductor and Optoelectronic Devices</name>
+			<short_name>K27</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>209</id>
 			<name>Department of Microelectronics and Computer Science</name>
-			<short_name>DMCS</short_name>
+			<short_name>DMCS,K25</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
@@ -846,6 +861,7 @@
 			<id>20</id>
 			<symbol>A20</symbol>
 			<name>Building A20</name>
+			<description>4M</description>
 			<latitude>51.753490</latitude>
 			<longitude>19.451648</longitude>
 			<place_category>11</place_category>
@@ -867,7 +883,7 @@
 			<id>22</id>
 			<symbol>A22</symbol>
 			<name>Building A22</name>
-			<description>1M</description>
+			<description>1M, 2M</description>
 			<latitude>51.752576</latitude>
 			<longitude>19.451809</longitude>
 			<place_category>11</place_category>
@@ -959,7 +975,6 @@
 			<id>31</id>
 			<symbol>A31</symbol>
 			<name>Building A31</name>
-			<description>I11</description>
 			<latitude>51.7537783</latitude>
 			<longitude>19.4496228</longitude>
 			<place_category>11</place_category>
@@ -1176,6 +1191,7 @@
 			<id>51</id>
 			<symbol>B18</symbol>
 			<name>Building B18</name>
+			<description>5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
@@ -1214,7 +1230,7 @@
 		<place>
 			<id>55</id>
 			<symbol>B22</symbol>
-			<name>Biblioteka Główna</name>
+			<name>Library</name>
 			<latitude>51.7456283</latitude>
 			<longitude>19.4539643</longitude>
 			<place_category>12</place_category>

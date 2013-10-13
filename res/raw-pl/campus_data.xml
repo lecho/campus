@@ -108,41 +108,49 @@
 		<unit>
 			<id>103</id>
 			<name>Instytut Inżynierii Materiałowej</name>
+			<short_name>I7</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>104</id>
 			<name>Instytut Obrabiarek i Technologii Budowy Maszyn</name>
+			<short_name>I8</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>105</id>
 			<name>Katedra Pojazdów i Podstaw Budowy Maszyn</name>
+			<short_name>K111</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>106</id>
 			<name>Katedra Technologii Maszyn</name>
+			<short_name>K14</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>107</id>
 			<name>Katedra Wytrzymałości Materiałów i Konstrukcji</name>
+			<short_name>K12</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>108</id>
 			<name>Katedra Dynamiki Maszyn</name>
+			<short_name>K13</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>109</id>
-			<name>Katedra Automatyki i Biomechaniki</name>
+			<name>Katedra Automatyki, Biomechaniki i Mechatroniki</name>
+			<short_name>K16</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
 			<id>110</id>
 			<name>Katedra Technologii Materiałowych i Systemów Produkcji</name>
+			<short_name>K17</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<unit>
@@ -153,6 +161,7 @@
 		<unit>
 			<id>112</id>
 			<name>Instytut Maszyn Przepływowych</name>
+			<short_name>I10</short_name>
 			<unit_faculty>1</unit_faculty>
 		</unit>
 		<!-- FACULTY EEIA -->
@@ -163,44 +172,50 @@
 		</unit>
 		<unit>
 			<id>202</id>
-			<name>Instytut Systemów Inżynierii Elektycznej</name>
+			<name>Instytut Systemów Inżynierii Elektrycznej</name>
+			<short_name>I12</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>203</id>
 			<name>Instytut Automatyki</name>
+			<short_name>I13</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>204</id>
 			<name>Instytut Elektroenergetyki</name>
+			<short_name>I15</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>205</id>
 			<name>Instytut Informatyki Stosowanej</name>
-			<short_name>IIS</short_name>
+			<short_name>KIIS,I14</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>206</id>
 			<name>Katedra Aparatów Elektrycznych</name>
+			<short_name>K26</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>207</id>
 			<name>Instytut Elektroniki</name>
+			<short_name>I16</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>208</id>
 			<name>Katedra Przyrządów Półprzewodnikowych i Optoelektronicznych</name>
+			<short_name>K27</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
 			<id>209</id>
 			<name>Katedra Mikroelektroniki i Technik Informatycznych</name>
-			<short_name>DMCS</short_name>
+			<short_name>DMCS,K25</short_name>
 			<unit_faculty>2</unit_faculty>
 		</unit>
 		<unit>
@@ -738,6 +753,7 @@
 			<id>10</id>
 			<symbol>A10</symbol>
 			<name>Budynek A10</name>
+			<description>Elektryczny</description>
 			<latitude>51.752606</latitude>
 			<longitude>19.453086</longitude>
 			<place_category>11</place_category>
@@ -749,6 +765,7 @@
 			<id>11</id>
 			<symbol>A11</symbol>
 			<name>Budynek A11</name>
+			<description>Mały Elektryczny</description>
 			<latitude>51.753124</latitude>
 			<longitude>19.453531</longitude>
 			<place_category>11</place_category>
@@ -846,6 +863,7 @@
 			<id>20</id>
 			<symbol>A20</symbol>
 			<name>Budynek A20</name>
+			<description>4M</description>
 			<latitude>51.753490</latitude>
 			<longitude>19.451648</longitude>
 			<place_category>11</place_category>
@@ -867,7 +885,7 @@
 			<id>22</id>
 			<symbol>A22</symbol>
 			<name>Budynek A22</name>
-			<description>1M</description>
+			<description>1M, 2M</description>
 			<latitude>51.752576</latitude>
 			<longitude>19.451809</longitude>
 			<place_category>11</place_category>
@@ -959,7 +977,6 @@
 			<id>31</id>
 			<symbol>A31</symbol>
 			<name>Budynek A31</name>
-			<description>I11</description>
 			<latitude>51.7537783</latitude>
 			<longitude>19.4496228</longitude>
 			<place_category>11</place_category>
@@ -1176,6 +1193,7 @@
 			<id>51</id>
 			<symbol>B18</symbol>
 			<name>Budynek B18</name>
+			<description>5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
