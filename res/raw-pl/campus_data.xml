@@ -217,6 +217,7 @@
 		<unit>
 			<id>302</id>
 			<name>Instytut Technologii Polimerów i Barwników</name>
+			<short_name>I20</short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
@@ -237,17 +238,12 @@
 		<unit>
 			<id>306</id>
 			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
+			<short_name>MITR</short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<unit>
 			<id>307</id>
 			<name>Katedra Fizyki Molekularnej</name>
-			<unit_faculty>3</unit_faculty>
-		</unit>
-		<unit>
-			<id>308</id>
-			<name>Międzyresortowy Instytut Techniki Radiacyjnej</name>
-			<short_name>MITR</short_name>
 			<unit_faculty>3</unit_faculty>
 		</unit>
 		<!-- FACULTY TWIWT -->
@@ -727,7 +723,7 @@
 			<place_faculty>3,8</place_faculty>
 			<has_image>1</has_image>
 		</place>
-		<!-- <place>
+		<place>
 			<id>9</id>
 			<symbol>A9</symbol>
 			<name>Budynek A9</name>
@@ -737,7 +733,7 @@
 			<place_unit>302</place_unit>
 			<place_faculty>3</place_faculty>
 			<has_image>0</has_image>
-		</place> -->
+		</place>
 		<place>
 			<id>10</id>
 			<symbol>A10</symbol>
@@ -850,7 +846,6 @@
 			<id>20</id>
 			<symbol>A20</symbol>
 			<name>Budynek A20</name>
-			<description></description>
 			<latitude>51.753490</latitude>
 			<longitude>19.451648</longitude>
 			<place_category>11</place_category>
@@ -862,7 +857,6 @@
 			<id>21</id>
 			<symbol>A21</symbol>
 			<name>Budynek A21</name>
-			<description></description>
 			<latitude>51.7529831</latitude>
 			<longitude>19.4516726</longitude>
 			<place_category>11</place_category>
@@ -873,6 +867,7 @@
 			<id>22</id>
 			<symbol>A22</symbol>
 			<name>Budynek A22</name>
+			<description>1M</description>
 			<latitude>51.752576</latitude>
 			<longitude>19.451809</longitude>
 			<place_category>11</place_category>
@@ -964,7 +959,7 @@
 			<id>31</id>
 			<symbol>A31</symbol>
 			<name>Budynek A31</name>
-			<description></description>
+			<description>I11</description>
 			<latitude>51.7537783</latitude>
 			<longitude>19.4496228</longitude>
 			<place_category>11</place_category>
