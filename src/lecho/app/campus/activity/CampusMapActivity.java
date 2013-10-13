@@ -9,7 +9,7 @@ import java.util.Map;
 import lecho.app.campus.R;
 import lecho.app.campus.adapter.MarkerInfoWindowAdapter;
 import lecho.app.campus.adapter.NavigationDrawerAdapter;
-import lecho.app.campus.adapter.SearchResultFragmentAdapter;
+import lecho.app.campus.adapter.SearchResultViewAdapter;
 import lecho.app.campus.adapter.SearchSuggestionAdapter;
 import lecho.app.campus.dao.DaoMaster;
 import lecho.app.campus.dao.Place;
@@ -97,7 +97,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private MenuItem mSearchMenuItem;
 	private MessageBar mMessageBar;
 	private SearchSuggestionAdapter mSearchSuggestionAdapter;
-	private SearchResultFragmentAdapter mSearchResultAdapter;
+	private SearchResultViewAdapter mSearchResultAdapter;
 	// Maps place ID to Marker
 	private Map<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	// Maps marker to Place
@@ -600,7 +600,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 */
 	private void handleLoaderResult(PlacesList data) {
 		setUpMarkers(data.places);
-		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
+		mSearchResultAdapter = new SearchResultViewAdapter(getApplicationContext(), this, data.places);
 		if (null != mViewPager) {
 			mViewPager.setAdapter(mSearchResultAdapter);
 		}
