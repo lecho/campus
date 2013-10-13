@@ -100,6 +100,9 @@ public class BitmapAsyncTask extends AsyncTask<Void, Void, Bitmap> {
 		} catch (IOException e) {
 			Log.e(TAG, "Could not load place photo from file: " + path, e);
 			return null;
+		} catch (Exception e) {
+			Log.e(TAG, "Could not load place photo from file: " + path, e);
+			return null;
 		} finally {
 			if (null != stream) {
 				try {
