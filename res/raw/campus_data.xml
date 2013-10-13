@@ -306,7 +306,7 @@
 		<unit>
 			<id>501</id>
 			<name>Deanery</name>
-			<unit_faculty>4</unit_faculty>
+			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
 			<id>502</id>
@@ -635,18 +635,14 @@
 		</unit>
 		<unit>
 			<id>2033</id>
-			<name>Centre for Information Technology</name>
-		</unit>
-		<unit>
-			<id>2034</id>
 			<name>Mathematics and Physics Teaching Centre</name>
 		</unit>
 		<unit>
-			<id>2036</id>
+			<id>2034</id>
 			<name>Post Office</name>
 		</unit>
 		<unit>
-			<id>2037</id>
+			<id>2035</id>
 			<name>"Żak" Student Radio</name>
 		</unit>
 	</units>
@@ -1202,11 +1198,10 @@
 		<place>
 			<id>52</id>
 			<symbol>B19</symbol>
-			<name>Building B19</name>
+			<name>Centre of Information Technology</name>
 			<latitude>51.7470548</latitude>
 			<longitude>19.4559248</longitude>
 			<place_category>12</place_category>
-			<place_unit>2033</place_unit>
 			<has_image>1</has_image>
 		</place>
 <!-- 		<place>
@@ -1263,7 +1258,7 @@
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
-			<place_unit>2022,2033</place_unit>
+			<place_unit>2022,2023</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<!-- Campus C -->
@@ -1297,7 +1292,7 @@
 			<latitude>51.74519</latitude>
 			<longitude>19.4499796</longitude>
 			<place_category>13</place_category>
-			<place_unit>103,202,203,204,209,2034</place_unit>
+			<place_unit>103,202,203,204,209,2033</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1390,7 +1385,7 @@
 			<latitude>51.7474178</latitude>
 			<longitude>19.4500173</longitude>
 			<place_category>1,13</place_category>
-			<place_unit>2037</place_unit>
+			<place_unit>2035</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1401,7 +1396,7 @@
 			<latitude>51.7482778</latitude>
 			<longitude>19.4498611</longitude>
 			<place_category>1,13</place_category>
-			<place_unit>2031,2036</place_unit>
+			<place_unit>2031,2034</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
