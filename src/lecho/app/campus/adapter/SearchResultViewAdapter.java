@@ -4,7 +4,6 @@ import java.util.List;
 
 import lecho.app.campus.R;
 import lecho.app.campus.dao.Place;
-import lecho.app.campus.fragment.SearchResultFragment.OnSearchResultClickListener;
 import lecho.app.campus.utils.Config;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -112,6 +111,15 @@ public class SearchResultViewAdapter extends PagerAdapter {
 			mListener.onSearchResultClick(mPlaceId);
 		}
 
+	}
+	
+	public interface OnSearchResultClickListener {
+		/**
+		 * Should show place details view.
+		 * 
+		 * @param placeId
+		 */
+		public void onSearchResultClick(Long placeId);
 	}
 
 }
