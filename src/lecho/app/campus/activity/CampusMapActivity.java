@@ -386,12 +386,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		final String language = prefs.getString(Config.APP_SHARED_PREFS_LANGUAGE, ".");
 		final String currentLanguage = Locale.getDefault().getLanguage();
 		if (DaoMaster.SCHEMA_VERSION != schemaVersion) {
-			// Database has to be upgraded.
-			prefs.edit().putString(Config.APP_SHARED_PREFS_LANGUAGE, currentLanguage).commit();
-			startPopulateDBService(prefs);
+			// Database has to be upgraded by DaoMaster.
+			startPopulateDBService(prefs, false);
 		} else if (!language.equals(currentLanguage)) {
-			prefs.edit().putString(Config.APP_SHARED_PREFS_LANGUAGE, currentLanguage).commit();
-			startPopulateDBService(prefs);
+			// Database has to be rebuild because of language change.
+			startPopulateDBService(prefs, true);
 		}
 	}
 
@@ -400,9 +399,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * 
 	 * @param prefs
 	 */
-	private void startPopulateDBService(final SharedPreferences prefs) {
+	private void startPopulateDBService(final SharedPreferences prefs, final boolean languageChanged) {
 		prefs.edit().putBoolean(Config.APP_SHARED_PREFS_DATA_PARSING_ONGOING, true).commit();
 		Intent serviceIntent = new Intent(getApplicationContext(), PopulateDBIntentService.class);
+		serviceIntent.putExtra(Config.EXTRA_LANGUAGE_CHANGED, languageChanged);
 		startService(serviceIntent);
 	}
 

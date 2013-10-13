@@ -47,4 +47,15 @@ public abstract class DatabaseHelper {
 		}
 		return sDaoSession;
 	}
+
+	public static void clearDB(Context context) {
+		DaoSession daoSession = getDaoSession(context);
+		daoSession.getPlaceCategoryDao().deleteAll();
+		daoSession.getPlaceFacultyDao().deleteAll();
+		daoSession.getPlaceUnitDao().deleteAll();
+		daoSession.getPlaceDao().deleteAll();
+		daoSession.getFacultyDao().deleteAll();
+		daoSession.getCategoryDao().deleteAll();
+		daoSession.getUnitDao().deleteAll();
+	}
 }
