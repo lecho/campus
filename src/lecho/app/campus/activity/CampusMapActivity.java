@@ -165,6 +165,217 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		setUpMapIfNeeded();
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			// Handle search button click
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			mCurrentPlaceId = Long.MIN_VALUE;
+			switchDrawerItem(mCurrentDrawerItem, false);
+			initLoader(true, PlacesLoader.LOAD_PLACES_BY_SEARCH, query);
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
+			try {
+				Uri data = intent.getData();
+				Long placeId = Long.parseLong(data.getLastPathSegment());
+				Marker marker = mMarkers.get(placeId);
+				if (null == marker && mCurrentDrawerItem >= 0) {
+					// Marker is not currently visible, probably drawer item is selected, clear drawer item selection
+					// and
+					// load all places.
+					mCurrentPlaceId = placeId;
+					switchDrawerItem(mCurrentDrawerItem, false);
+					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
+				} else {
+					// Just go to selected marker.
+					goToMarker(mMarkers.get(placeId));
+				}
+			} catch (NumberFormatException e) {
+				Log.e(TAG, "Could not find marker for place", e);
+			}
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case REQUEST_CODE_RECOVER_PLAY_SERVICES:
+			// User doesn't resolve Play Services problem
+			if (resultCode == Activity.RESULT_CANCELED) {
+				Log.w(TAG, "Google Play Services resolution activity canceled!, finishing app");
+				Toast.makeText(getApplicationContext(), R.string.play_services_recovery_canceled, Toast.LENGTH_SHORT)
+						.show();
+				finish();
+			}
+			break;
+		case REQUEST_CODE_PLACE_DETAILS:
+			// Handle case when user returned from details view and changed current place.
+			if (resultCode == Activity.RESULT_OK) {
+				int placePosition = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
+				Long placeId = data.getExtras().getLong(Config.EXTRA_PLACE_ID);
+				if (placeId != mCurrentPlaceId) {
+					if (mMarkers.isEmpty()) {
+						// data is not initialized - probably activity recreation on orientation change.
+						mCurrentPlaceId = placeId;
+					} else {
+						// data is initialized - safe to goToMarker.
+						goToMarker(placePosition);
+					}
+				}
+			}
+			break;
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setUpMapIfNeeded();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(EXTRA_CURRENT_LOADER_ACTION, mCurrentLoaderAction);
+		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
+		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
+		outState.putInt(EXTRA_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
+		outState.putInt(EXTRA_CURRENT_MAP_TYPE, mCurrentMapType);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
+		setUpSearchView(menu);
+		return true;
+	}
+
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		boolean drawerOpen = mDrawerLayout.isDrawerVisible(mDrawerList);
+		menu.findItem(R.id.search).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		final int itemId = item.getItemId();
+		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
+			return true;
+		} else if (itemId == R.id.about) {
+			Intent intent = new Intent(this, AboutAppActivity.class);
+			startActivity(intent);
+		} else if (itemId == R.id.map_normal) {
+			setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		} else if (itemId == R.id.map_satellite) {
+			setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+		} else if (itemId == R.id.map_hybrid) {
+			setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mCurrentPlaceId > 0) {
+			clearCurrentMarker();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	@Override
+	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
+		if (PLACES_LOADER == id) {
+			int action = bundle.getInt(PlacesLoader.EXTRA_ACTION);
+			String argument = bundle.getString(PlacesLoader.EXTRA_ARGUMENT);
+			return new PlacesLoader(getApplicationContext(), action, argument);
+		}
+		return null;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
+		if (PLACES_LOADER == loader.getId()) {
+			int action = data.action;
+			if (PlacesLoader.LOAD_ALL_PLACES == action) {
+				handleLoaderResult(data);
+			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
+				handleLoaderResult(data);
+				if (data.places.size() > 0) {
+					if (mCurrentPlaceId < 0) {
+						mCurrentPlaceId = data.places.get(0).getId();
+					}
+				} else {
+					mMessageBar.show(getString(R.string.search_no_results), getString(R.string.search_no_results_back));
+				}
+			} else if (PlacesLoader.LOAD_PLACES_BY_CATEGORY == action) {
+				handleLoaderResult(data);
+			} else if (PlacesLoader.LOAD_PLACES_BY_FACULTY == action) {
+				handleLoaderResult(data);
+			} else {
+				Log.e(TAG, "Invalid PlacesLoader action: " + action);
+				throw new IllegalArgumentException("Invalid PlacesLoader action: " + action);
+			}
+			// If marker should be "clicked" after load finished.
+			if (mCurrentPlaceId > 0 && !mMarkers.isEmpty()) {
+				goToMarker(mMarkers.get(mCurrentPlaceId));
+			} else {
+				if (null != mViewPager) {
+					hideSearchResultsPager();
+					final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
+					if (mapView.getWidth() > 0 && mapView.getHeight() > 0) {
+						zoomMapToDefault();
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<PlacesList> loader) {
+		if (PLACES_LOADER == loader.getId()) {
+			mCurrentPlaceId = Long.MIN_VALUE;
+			mMap.clear();
+			mMarkers.clear();
+			mMarkersData.clear();
+			mVisiblePlaces = null;
+		}
+	}
+
+	@Override
+	public void onSearchResultClick(Long placeId) {
+		Intent intent = new Intent(this, PlaceDetailsActivity.class);
+		Bundle extras = new Bundle();
+		extras.putLongArray(Config.EXTRA_VISIBLE_PLACES, mVisiblePlaces);
+		extras.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
+		intent.putExtras(extras);
+		startActivityForResult(intent, REQUEST_CODE_PLACE_DETAILS);
+	}
+
 	/**
 	 * If there is new data version starts service that parse data xml and insert new data into database.
 	 * 
@@ -293,74 +504,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case REQUEST_CODE_RECOVER_PLAY_SERVICES:
-			// User doesn't resolve Play Services problem
-			if (resultCode == Activity.RESULT_CANCELED) {
-				Log.w(TAG, "Google Play Services resolution activity canceled!, finishing app");
-				Toast.makeText(getApplicationContext(), R.string.play_services_recovery_canceled, Toast.LENGTH_SHORT)
-						.show();
-				finish();
-			}
-			break;
-		case REQUEST_CODE_PLACE_DETAILS:
-			// Handle case when user returned from details view and changed current place.
-			if (resultCode == Activity.RESULT_OK) {
-				int placePosition = data.getExtras().getInt(Config.EXTRA_PLACE_POSITION);
-				Long placeId = data.getExtras().getLong(Config.EXTRA_PLACE_ID);
-				if (placeId != mCurrentPlaceId) {
-					if (mMarkers.isEmpty()) {
-						// data is not initialized - probably activity recreation on orientation change.
-						mCurrentPlaceId = placeId;
-					} else {
-						// data is initialized - safe to goToMarker.
-						goToMarker(placePosition);
-					}
-				}
-			}
-			break;
-		default:
-			super.onActivityResult(requestCode, resultCode, data);
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setUpMapIfNeeded();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggle
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(EXTRA_CURRENT_LOADER_ACTION, mCurrentLoaderAction);
-		outState.putString(EXTRA_CURRENT_LOADER_ARGUMENT, mCurrentLoaderArgument);
-		outState.putLong(EXTRA_CURRENT_PLACE_ID, mCurrentPlaceId);
-		outState.putInt(EXTRA_CURRENT_DRAWER_ITEM, mCurrentDrawerItem);
-		outState.putInt(EXTRA_CURRENT_MAP_TYPE, mCurrentMapType);
-	}
-
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the
 		// map.
@@ -388,29 +531,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		mMap.getUiSettings().setMyLocationButtonEnabled(true);
 		mMap.setMyLocationEnabled(true);
 		zoomMapOnStart();
-	}
-
-	/**
-	 * Restrts or initializes places loader.
-	 * 
-	 * @param isRestart
-	 *            if true loader will be restarted.
-	 * @param action
-	 *            action constant from PlacesLoader.
-	 * @param argument
-	 *            search argument for search action or null/empty string for loading all places.
-	 */
-	private void initLoader(boolean isRestart, int action, String argument) {
-		Bundle args = new Bundle();
-		mCurrentLoaderAction = action;
-		mCurrentLoaderArgument = argument;
-		args.putInt(PlacesLoader.EXTRA_ACTION, action);
-		args.putString(PlacesLoader.EXTRA_ARGUMENT, argument);
-		if (isRestart) {
-			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
-		} else {
-			getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
-		}
 	}
 
 	/**
@@ -450,40 +570,47 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_campus_map, menu);
-		setUpSearchView(menu);
-		return true;
-	}
-
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content view
-		boolean drawerOpen = mDrawerLayout.isDrawerVisible(mDrawerList);
-		menu.findItem(R.id.search).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		final int itemId = item.getItemId();
-		if (mDrawerToggle.onOptionsItemSelected(ABSMenuItemConverter.create(item))) {
-			return true;
-		} else if (itemId == R.id.about) {
-			Intent intent = new Intent(this, AboutAppActivity.class);
-			startActivity(intent);
-		} else if (itemId == R.id.map_normal) {
-			setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		} else if (itemId == R.id.map_satellite) {
-			setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-		} else if (itemId == R.id.map_hybrid) {
-			setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	/**
+	 * Restrts or initializes places loader.
+	 * 
+	 * @param isRestart
+	 *            if true loader will be restarted.
+	 * @param action
+	 *            action constant from PlacesLoader.
+	 * @param argument
+	 *            search argument for search action or null/empty string for loading all places.
+	 */
+	private void initLoader(boolean isRestart, int action, String argument) {
+		Bundle args = new Bundle();
+		mCurrentLoaderAction = action;
+		mCurrentLoaderArgument = argument;
+		args.putInt(PlacesLoader.EXTRA_ACTION, action);
+		args.putString(PlacesLoader.EXTRA_ARGUMENT, argument);
+		if (isRestart) {
+			getSupportLoaderManager().restartLoader(PLACES_LOADER, args, this);
+		} else {
+			getSupportLoaderManager().initLoader(PLACES_LOADER, args, this);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Handles data loaded by loader - setting up markers and ViewPager.
+	 * 
+	 * @param data
+	 */
+	private void handleLoaderResult(PlacesList data) {
+		setUpMarkers(data.places);
+		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
+		if (null != mViewPager) {
+			mViewPager.setAdapter(mSearchResultAdapter);
+		}
+	}
+
+	/**
+	 * Changes map type if necessary.
+	 * 
+	 * @param mapType
+	 */
 	private void setMapType(int mapType) {
 		if (null != mMap && mCurrentMapType != mapType) {
 			mMap.setMapType(mapType);
@@ -510,46 +637,9 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		searchView.setSuggestionsAdapter(mSearchSuggestionAdapter);
 	}
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			// Handle search button click
-			String query = intent.getStringExtra(SearchManager.QUERY);
-			mCurrentPlaceId = Long.MIN_VALUE;
-			switchDrawerItem(mCurrentDrawerItem, false);
-			initLoader(true, PlacesLoader.LOAD_PLACES_BY_SEARCH, query);
-		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			// Handle a suggestions click (because all the suggestions use ACTION_VIEW)
-			try {
-				Uri data = intent.getData();
-				Long placeId = Long.parseLong(data.getLastPathSegment());
-				Marker marker = mMarkers.get(placeId);
-				if (null == marker && mCurrentDrawerItem >= 0) {
-					// Marker is not currently visible, probably drawer item is selected, clear drawer item selection
-					// and
-					// load all places.
-					mCurrentPlaceId = placeId;
-					switchDrawerItem(mCurrentDrawerItem, false);
-					initLoader(true, PlacesLoader.LOAD_ALL_PLACES, "");
-				} else {
-					// Just go to selected marker.
-					goToMarker(mMarkers.get(placeId));
-				}
-			} catch (NumberFormatException e) {
-				Log.e(TAG, "Could not find marker for place", e);
-			}
-		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		if (mCurrentPlaceId > 0) {
-			clearCurrentMarker();
-		} else {
-			super.onBackPressed();
-		}
-	}
-
+	/**
+	 * Removes current marker selection and hiding search results pager.
+	 */
 	private void clearCurrentMarker() {
 		if (mCurrentPlaceId > 0) {
 			// If there is selected marker - clear that selection.
@@ -663,16 +753,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	@Override
-	public void onSearchResultClick(Long placeId) {
-		Intent intent = new Intent(this, PlaceDetailsActivity.class);
-		Bundle extras = new Bundle();
-		extras.putLongArray(Config.EXTRA_VISIBLE_PLACES, mVisiblePlaces);
-		extras.putInt(Config.EXTRA_PLACE_POSITION, mViewPager.getCurrentItem());
-		intent.putExtras(extras);
-		startActivityForResult(intent, REQUEST_CODE_PLACE_DETAILS);
-	}
-
 	/**
 	 * Selects/deselect item on navigation drawer and restarting loader if needed.
 	 * 
@@ -715,78 +795,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			mCurrentDrawerItem = drawerItemPosition;
 		} else {
 			mCurrentDrawerItem = Integer.MIN_VALUE;
-		}
-	}
-
-	@Override
-	public Loader<PlacesList> onCreateLoader(int id, Bundle bundle) {
-		if (PLACES_LOADER == id) {
-			int action = bundle.getInt(PlacesLoader.EXTRA_ACTION);
-			String argument = bundle.getString(PlacesLoader.EXTRA_ARGUMENT);
-			return new PlacesLoader(getApplicationContext(), action, argument);
-		}
-		return null;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<PlacesList> loader, PlacesList data) {
-		if (PLACES_LOADER == loader.getId()) {
-			int action = data.action;
-			if (PlacesLoader.LOAD_ALL_PLACES == action) {
-				handleLoaderResult(data);
-			} else if (PlacesLoader.LOAD_PLACES_BY_SEARCH == action) {
-				handleLoaderResult(data);
-				if (data.places.size() > 0) {
-					if (mCurrentPlaceId < 0) {
-						mCurrentPlaceId = data.places.get(0).getId();
-					}
-				} else {
-					mMessageBar.show(getString(R.string.search_no_results), getString(R.string.search_no_results_back));
-				}
-			} else if (PlacesLoader.LOAD_PLACES_BY_CATEGORY == action) {
-				handleLoaderResult(data);
-			} else if (PlacesLoader.LOAD_PLACES_BY_FACULTY == action) {
-				handleLoaderResult(data);
-			} else {
-				Log.e(TAG, "Invalid PlacesLoader action: " + action);
-				throw new IllegalArgumentException("Invalid PlacesLoader action: " + action);
-			}
-			// If marker should be "clicked" after load finished.
-			if (mCurrentPlaceId > 0 && !mMarkers.isEmpty()) {
-				goToMarker(mMarkers.get(mCurrentPlaceId));
-			} else {
-				if (null != mViewPager) {
-					hideSearchResultsPager();
-					final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
-					if (mapView.getWidth() > 0 && mapView.getHeight() > 0) {
-						zoomMapToDefault();
-					}
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * Handles data loaded by loader - setting up markers and ViewPager.
-	 * 
-	 * @param data
-	 */
-	private void handleLoaderResult(PlacesList data) {
-		setUpMarkers(data.places);
-		mSearchResultAdapter = new SearchResultFragmentAdapter(getSupportFragmentManager(), data.places);
-		if (null != mViewPager) {
-			mViewPager.setAdapter(mSearchResultAdapter);
-		}
-	}
-
-	@Override
-	public void onLoaderReset(Loader<PlacesList> loader) {
-		if (PLACES_LOADER == loader.getId()) {
-			mCurrentPlaceId = Long.MIN_VALUE;
-			mMap.clear();
-			mMarkers.clear();
-			mMarkersData.clear();
 		}
 	}
 
@@ -857,43 +865,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Listen to changes of current selected search result.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
-	private class SearchResultChangeListener extends SimpleOnPageChangeListener {
-
-		@Override
-		public void onPageSelected(int position) {
-			goToMarker(position);
-		}
-	}
-
-	/**
-	 * Perform onSearchResultClick action when marker InfoWindow is clicked.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
-	private class MarkerInfoWindowClickListener implements OnInfoWindowClickListener {
-
-		@Override
-		public void onInfoWindowClick(Marker marker) {
-			Place place = mMarkersData.get(marker);
-			if (null == place) {
-				Log.e(TAG,
-						"Cannot handle marker onInfoWindowClick, null place associated with marker: "
-								+ marker.getTitle());
-				return;
-			}
-			onSearchResultClick(place.getId());
-
-		}
-
-	}
-
-	/**
 	 * Selects marker.
 	 * 
 	 * @author Lecho
@@ -927,6 +898,43 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
+	 * Perform onSearchResultClick action when marker InfoWindow is clicked.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
+	private class MarkerInfoWindowClickListener implements OnInfoWindowClickListener {
+
+		@Override
+		public void onInfoWindowClick(Marker marker) {
+			Place place = mMarkersData.get(marker);
+			if (null == place) {
+				Log.e(TAG,
+						"Cannot handle marker onInfoWindowClick, null place associated with marker: "
+								+ marker.getTitle());
+				return;
+			}
+			onSearchResultClick(place.getId());
+
+		}
+
+	}
+
+	/**
+	 * Listen to changes of current selected search result.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
+	private class SearchResultChangeListener extends SimpleOnPageChangeListener {
+
+		@Override
+		public void onPageSelected(int position) {
+			goToMarker(position);
+		}
+	}
+
+	/**
 	 * Clears search results after SearchView collapse. All methods have to return true for SearchView to work properly.
 	 * 
 	 * @author Lecho
@@ -957,6 +965,23 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
+	 * Collapses SearchView if it lose focus, without this user has to press back twice to collapse view.
+	 * 
+	 * @author Lecho
+	 * 
+	 */
+	private class SearchViewFocusChangeListener implements OnFocusChangeListener {
+
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			if (!hasFocus) {
+				mSearchMenuItem.collapseActionView();
+			}
+		}
+
+	}
+
+	/**
 	 * Listen to click on MessageBar button.
 	 * 
 	 * @author Lecho
@@ -973,19 +998,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	}
 
-	private class SearchViewFocusChangeListener implements OnFocusChangeListener {
-
-		@Override
-		public void onFocusChange(View v, boolean hasFocus) {
-			if (!hasFocus) {
-				mSearchMenuItem.collapseActionView();
-			}
-		}
-
-	}
-
 	/**
-	 * The click listner for ListView in the navigation drawer
+	 * The click listener for ListView in the navigation drawer
 	 * */
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
