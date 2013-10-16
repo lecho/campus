@@ -500,7 +500,7 @@
 		<!-- NO FACULTY -->
 		<unit>
 			<id>2001</id>
-			<name>Sala Gimnastyczna SWFIS</name>
+			<name>Sala Gimnastyczna SWFiS</name>
 		</unit>
 		<unit>
 			<id>2002</id>
@@ -644,6 +644,10 @@
 		<unit>
 			<id>2035</id>
 			<name>Studenckie Radio Żak</name>
+		</unit>
+		<unit>
+			<id>2036</id>
+			<name>Biuro Karier Politechniki Łódzkiej</name>
 		</unit>
 	</units>
 	<places>
@@ -1418,7 +1422,7 @@
 			<latitude>51.7489808</latitude>
 			<longitude>19.4494321</longitude>
 			<place_category>2,13</place_category>
-			<place_unit>2026,2027,2028,2029</place_unit>
+			<place_unit>2026,2027,2028,2029,2036</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
