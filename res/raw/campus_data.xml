@@ -510,7 +510,6 @@
 		<unit>
 			<id>2003</id>
 			<name>Recruitment</name>
-			<short_name>Recruitment</short_name>
 		</unit>
 		<unit>
 			<id>2004</id>
@@ -648,6 +647,10 @@
 		<unit>
 			<id>2036</id>
 			<name>Office of Career Services</name>
+		</unit>
+		<unit>
+			<id>2037</id>
+			<name>Diplomas</name>
 		</unit>
 	</units>
 	<places>
@@ -789,7 +792,7 @@
 			<latitude>51.752407</latitude>
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2003</place_unit>
+			<place_unit>2003,2037</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
