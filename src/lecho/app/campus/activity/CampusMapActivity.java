@@ -83,40 +83,40 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class CampusMapActivity extends SherlockFragmentActivity implements LoaderCallbacks<PlacesList>,
 		OnSearchResultClickListener {
-	private static final String TAG = "CampusMapActivity";
-	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
-	private static final int REQUEST_CODE_PLACE_DETAILS = 2;
-	private static final int PLACES_LOADER = 1;
-	private static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
-	private static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
-	private static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
-	private static final String EXTRA_CURRENT_DRAWER_ITEM = "lecho.app.campus:CURRENT_DRAWER_ITEM";
-	private static final String EXTRA_CURRENT_MAP_TYPE = "lecho.app.campus:CURRENT_MAP_TYPE";
-	private ViewPager mViewPager;
-	private GoogleMap mMap;
-	private MenuItem mSearchMenuItem;
-	private MessageBar mMessageBar;
-	private SearchSuggestionAdapter mSearchSuggestionAdapter;
-	private SearchResultViewAdapter mSearchResultAdapter;
+	static final String TAG = "CampusMapActivity";
+	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
+	static final int REQUEST_CODE_PLACE_DETAILS = 2;
+	static final int PLACES_LOADER = 1;
+	static final String EXTRA_CURRENT_PLACE_ID = "lecho.app.campus:CURRENT_PLACE_ID";
+	static final String EXTRA_CURRENT_LOADER_ACTION = "lecho.app.campus:CURRENT_LOADER_ACTION";
+	static final String EXTRA_CURRENT_LOADER_ARGUMENT = "lecho.app.campus:CURRENT_LOADER_ARGUMENT";
+	static final String EXTRA_CURRENT_DRAWER_ITEM = "lecho.app.campus:CURRENT_DRAWER_ITEM";
+	static final String EXTRA_CURRENT_MAP_TYPE = "lecho.app.campus:CURRENT_MAP_TYPE";
+	ViewPager mViewPager;
+	GoogleMap mMap;
+	MenuItem mSearchMenuItem;
+	MessageBar mMessageBar;
+	SearchSuggestionAdapter mSearchSuggestionAdapter;
+	SearchResultViewAdapter mSearchResultAdapter;
 	// Maps place ID to Marker
-	private Map<Long, Marker> mMarkers = new HashMap<Long, Marker>();
+	Map<Long, Marker> mMarkers = new HashMap<Long, Marker>();
 	// Maps marker to Place
-	private Map<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
+	Map<Marker, Place> mMarkersData = new HashMap<Marker, Place>();
 	// Array of currently visible places identifiers, passed to details activity
-	private long[] mVisiblePlaces;
-	private Long mCurrentPlaceId;
-	private int mCurrentLoaderAction;
-	private String mCurrentLoaderArgument;
-	private int mCurrentMapType;
-	private Animation mSearchResultsPagerShowAnim;
-	private Animation mSearchResultsPagerHideAnim;
-	private int mSearchResultSize;
+	long[] mVisiblePlaces;
+	Long mCurrentPlaceId;
+	int mCurrentLoaderAction;
+	String mCurrentLoaderArgument;
+	int mCurrentMapType;
+	Animation mSearchResultsPagerShowAnim;
+	Animation mSearchResultsPagerHideAnim;
+	int mSearchResultSize;
 
 	// Nav-Drawer related
-	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerList;
-	private ActionBarDrawerToggle mDrawerToggle;
-	private int mCurrentDrawerItem;
+	DrawerLayout mDrawerLayout;
+	ListView mDrawerList;
+	ActionBarDrawerToggle mDrawerToggle;
+	int mCurrentDrawerItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -580,7 +580,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param argument
 	 *            search argument for search action or null/empty string for loading all places.
 	 */
-	private void initLoader(boolean isRestart, int action, String argument) {
+	void initLoader(boolean isRestart, int action, String argument) {
 		Bundle args = new Bundle();
 		mCurrentLoaderAction = action;
 		mCurrentLoaderArgument = argument;
@@ -640,7 +640,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	/**
 	 * Removes current marker selection and hiding search results pager.
 	 */
-	private void clearCurrentMarker() {
+	void clearCurrentMarker() {
 		if (mCurrentPlaceId > 0) {
 			// If there is selected marker - clear that selection.
 			Marker marker = mMarkers.get(mCurrentPlaceId);
@@ -706,7 +706,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param position
 	 *            in search results adapter.
 	 */
-	private void goToMarker(final int position) {
+	void goToMarker(final int position) {
 		Long placeId = mSearchResultAdapter.getItemId(position);
 		if (placeId != mCurrentPlaceId) {
 			Marker marker = mMarkers.get(placeId);
@@ -719,7 +719,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * 
 	 * @param marker
 	 */
-	private void handleMarker(final Marker marker) {
+	void handleMarker(final Marker marker) {
 		Place place = mMarkersData.get(marker);
 		if (null == place) {
 			Log.e(TAG, "Cannot handle marker, NULL place associated with marker: " + marker.getTitle());
@@ -734,7 +734,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	/**
 	 * Shows search results pager with animation only if pager is not yet visible.
 	 */
-	private void showSearchResultsPager() {
+	void showSearchResultsPager() {
 		if (mViewPager.getVisibility() != View.VISIBLE) {
 			mViewPager.setVisibility(View.VISIBLE);
 			mViewPager.startAnimation(mSearchResultsPagerShowAnim);
@@ -745,7 +745,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	/**
 	 * Hides search results pager with animation only if pager is visible.
 	 */
-	private void hideSearchResultsPager() {
+	void hideSearchResultsPager() {
 		if (mViewPager.getVisibility() == View.VISIBLE) {
 			mViewPager.setVisibility(View.GONE);
 			mViewPager.startAnimation(mSearchResultsPagerHideAnim);
@@ -758,7 +758,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * 
 	 * @param position
 	 */
-	private void selectDrawerItem(final int position) {
+	void selectDrawerItem(final int position) {
 		mDrawerLayout.closeDrawer(mDrawerList);
 		mCurrentPlaceId = Long.MIN_VALUE;
 		final NavigationDrawerItem item = Config.NAVIGATION_DRAWER_ITEMS[position];
@@ -789,7 +789,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	 * @param drawerItemPosition
 	 * @param isCheck
 	 */
-	private void switchDrawerItem(int drawerItemPosition, boolean isCheck) {
+	void switchDrawerItem(int drawerItemPosition, boolean isCheck) {
 		mDrawerList.setItemChecked(drawerItemPosition, isCheck);
 		if (isCheck) {
 			mCurrentDrawerItem = drawerItemPosition;
