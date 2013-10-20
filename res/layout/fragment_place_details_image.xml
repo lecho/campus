@@ -8,7 +8,7 @@
     android:layout_marginRight="@dimen/place_details_group_vertical_margin"
     android:layout_marginTop="@dimen/place_details_group_vertical_margin"
     android:background="@drawable/selector_place_image"
-    android:contentDescription="@string/place_details_header_image_content_description"
+    android:contentDescription="@string/place_details_image_description"
     android:cropToPadding="true"
     android:minHeight="@dimen/place_details_image_height"
     android:padding="@dimen/place_details_image_padding"

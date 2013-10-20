@@ -4,7 +4,8 @@
     <string name="app_name">Campus TUL</string>
     <string name="play_services_missing">Google Play Services are missing - this devices is not supported</string>
     <string name="play_services_recovery_canceled">Google Play Services are outdated - restart application</string>
-    <string name="place_details_header_image_content_description">Image</string>
+    <string name="place_details_image_description">Image of current place</string>
+    <string name="custom_info_window_description">Current marker indicator</string>
     <string name="connection_no_internet">Looks like you have no internet connection. When you start app for the first time the connection is necessary to initialize the map. Should I open settings window?</string>
     <string name="connection_go_to_settings">Yes</string>
     <string name="connection_dont_go_to_settings">No</string>
