@@ -1,6 +1,6 @@
 #Campus(pl. Kampus)
 
-Campus map application for TUL[GPLv2].
+Campus map application for TUL.
 
 Available on Google Play https://play.google.com/store/apps/details?id=lecho.app.campus.plodz
 
