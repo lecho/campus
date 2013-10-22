@@ -26,8 +26,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 /**
- * Loads Places from database, name, symbol etc. Loader register broadcast receiver to listen when {@link 
- * PopulateDBIntentService} finish its work.
+ * Loads Places from database, name, symbol etc. Loader register broadcast receiver to listen when
+ * {@link PopulateDBIntentService} finish its work.
  * 
  * Implementation based on sample from android sdk documentation.
  * 
@@ -116,6 +116,7 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 			throw new IllegalArgumentException("Invalid PlacesLoader action parameter: " + mAction);
 		}
 		// I don't want to return null list
+		// TODO Collections.<Place>emptyList();
 		if (null == places) {
 			places = new ArrayList<Place>(0);
 		}
