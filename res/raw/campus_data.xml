@@ -541,11 +541,6 @@
 			<short_name>DWD</short_name>
 		</unit>
 		<unit>
-			<id>2017</id>
-			<name>Institute of Papermaking and Printing</name>
-			<short_name>IPiP</short_name>
-		</unit>
-		<unit>
 			<id>2018</id>
 			<name>Academic Point of Personalization</name>
 		</unit>
@@ -1147,19 +1142,17 @@
 		<place>
 			<id>50</id>
 			<symbol>B17</symbol>
-			<name>Building B17</name>
-			<description></description>
+			<name>Institute of Papermaking and Printing</name>
 			<latitude>51.7461245</latitude>
 			<longitude>19.4546554</longitude>
 			<place_category>12</place_category>
-			<place_unit>2017</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>51</id>
 			<symbol>B18</symbol>
-			<name>Building B18</name>
-			<description>DMCS, 5E</description>
+			<name>DMCS</name>
+			<description>5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
