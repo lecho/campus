@@ -751,7 +751,7 @@
 		<place>
 			<id>13</id>
 			<symbol>A13</symbol>
-			<name>Sekcja Rekrutacji</name>
+			<name>Sekcja Rekrutacji Politechniki Łódzkiej</name>
 			<latitude>51.752407</latitude>
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
@@ -969,7 +969,7 @@
 		<place>
 			<id>34</id>
 			<symbol>B1</symbol>
-			<name>Rektorat</name>
+			<name>Rektorat Politechniki Łódzkiej</name>
 			<latitude>51.748621</latitude>
 			<longitude>19.455360</longitude>
 			<place_category>2,12</place_category>
