@@ -780,6 +780,7 @@
 			<id>16</id>
 			<symbol>A16</symbol>
 			<name>International Faculty of Engineering</name>
+			<description>IFE</description>
 			<latitude>51.755112</latitude>
 			<longitude>19.451533</longitude>
 			<place_category>11</place_category>
