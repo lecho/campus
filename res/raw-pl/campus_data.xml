@@ -495,127 +495,127 @@
 			<short_name>Lodman</short_name>
 		</unit>
 		<unit>
-			<id>2005</id>
+			<id>2003</id>
 			<name>Kanclerz</name>
 		</unit>
 		<unit>
-			<id>2006</id>
+			<id>2004</id>
 			<name>Związki Zawodowe</name>
 		</unit>
 		<unit>
-			<id>2007</id>
+			<id>2005</id>
 			<name>Akademickie Centrum Zaufania</name>
 		</unit>
 		<unit>
-			<id>2008</id>
+			<id>2006</id>
 			<name>Biuro ds. Osób Niepełnosprawnych</name>
 		</unit>
 		<unit>
-			<id>2009</id>
+			<id>2007</id>
 			<name>Audytorium im. Sułtana</name>
 		</unit>
 		<unit>
-			<id>2011</id>
+			<id>2008</id>
 			<name>Dział Transferu Technologii</name>
 		</unit>
 		<unit>
-			<id>2012</id>
+			<id>2009</id>
 			<name>Dział Promocji Politechniki Łódzkiej</name>
 		</unit>
-		<unit>
-			<id>2013</id>
+		<!-- <unit>
+			<id>2010</id>
 			<name>Galeria Krótko i Węzłowato</name>
-		</unit>
+		</unit> -->
 		<unit>
-			<id>2014</id>
+			<id>2011</id>
 			<name>Publiczne Liceum Ogólnokształcące Politechniki Łódzkiej</name>
 		</unit>
 		<unit>
-			<id>2015</id>
+			<id>2012</id>
 			<name>Centrum Diagnostyki i Terapii Laserowej</name>
 			<short_name>CDiTL</short_name>
 		</unit>
 		<unit>
-			<id>2016</id>
+			<id>2013</id>
 			<name>Dział Wydawnictw Naukowo-Dydaktycznych</name>
 			<short_name>DWD</short_name>
 		</unit>
 		<unit>
-			<id>2018</id>
+			<id>2014</id>
 			<name>Uczelniany Punkt Personalizacji</name>
 		</unit>
 		<unit>
-			<id>2019</id>
+			<id>2015</id>
 			<name>Centrum Wikamp</name>
 		</unit>
 		<unit>
-			<id>2020</id>
+			<id>2016</id>
 			<name>Galeria Biblio-Art</name>
 		</unit>
 		<unit>
-			<id>2021</id>
+			<id>2017</id>
 			<name>Łódzki Uniwersytet Dziecięcy</name>
 		</unit>
 		<unit>
-			<id>2023</id>
+			<id>2018</id>
 			<name>Uniwersytet Trzeciego Wieku Politechniki Łódzkiej</name>
 		</unit>
 		<unit>
-			<id>2025</id>
+			<id>2019</id>
 			<name>Sala Gimnastyczna nad Klubem Underground</name>
 		</unit>
 		<unit>
-			<id>2026</id>
+			<id>2020</id>
 			<name>Dyrekcja Osiedla Akademickiego</name>
 		</unit>
 		<unit>
-			<id>2027</id>
+			<id>2021</id>
 			<name>Samorząd Studencki Politechniki Łódzkiej</name>
 		</unit>
 		<unit>
-			<id>2028</id>
+			<id>2022</id>
 			<name>Sala Widowiskowo-Konferencyjna</name>
 		</unit>
 		<unit>
-			<id>2029</id>
+			<id>2023</id>
 			<name>Stołówka Studencka</name>
 			<short_name>Jedzenie</short_name>
 		</unit>
 		<unit>
-			<id>2030</id>
-			<name>Kolegium Gospodarki Przestrzennej</name>
-		</unit>
-		<unit>
-			<id>2031</id>
-			<name>Poradnia Lekarska</name>
-		</unit>
-		<unit>
-			<id>2032</id>
-			<name>Kolegium Logistyki</name>
-		</unit>
-		<unit>
-			<id>2033</id>
-			<name>Centrum Nauczania Matematyki i Fizyki</name>
-		</unit>
-		<unit>
-			<id>2034</id>
-			<name>Urząd Pocztowy</name>
-		</unit>
-		<unit>
-			<id>2035</id>
-			<name>Studenckie Radio Żak</name>
-		</unit>
-		<unit>
-			<id>2036</id>
+			<id>2024</id>
 			<name>Biuro Karier Politechniki Łódzkiej</name>
 		</unit>
 		<unit>
-			<id>2037</id>
+			<id>2025</id>
+			<name>Kolegium Gospodarki Przestrzennej</name>
+		</unit>
+		<unit>
+			<id>2026</id>
+			<name>Poradnia Lekarska</name>
+		</unit>
+		<unit>
+			<id>2027</id>
+			<name>Urząd Pocztowy</name>
+		</unit>
+		<unit>
+			<id>2028</id>
+			<name>Kolegium Logistyki</name>
+		</unit>
+		<unit>
+			<id>2029</id>
+			<name>Centrum Nauczania Matematyki i Fizyki</name>
+		</unit>
+		<unit>
+			<id>2030</id>
+			<name>Studenckie Radio Żak</name>
+		</unit>
+		<unit>
+			<id>2031</id>
 			<name>Sekcja Dyplomów Politechniki Łódzkiej</name>
 		</unit>
 	</units>
 	<places>
-	    <!-- campus A -->
+	   <!-- campus A -->
 	   <!--  <place>
 			<id>1</id>
 			<symbol>A1</symbol>
@@ -755,7 +755,7 @@
 			<latitude>51.752407</latitude>
 			<longitude>19.453772</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2037</place_unit>
+			<place_unit>2031</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -815,7 +815,7 @@
 			<latitude>51.753788</latitude>
 			<longitude>19.452072</longitude>
 			<place_category>11</place_category>
-			<place_unit>102,2009</place_unit>
+			<place_unit>102,2007</place_unit>
 			<place_faculty>1</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -911,7 +911,7 @@
 			<latitude>51.7535851</latitude>
 			<longitude>19.4509969</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2005,2006</place_unit>
+			<place_unit>2003,2004</place_unit>
 			<has_image>0</has_image>
 		</place> -->
 		<!-- <place>
@@ -930,7 +930,7 @@
 			<latitude>51.752588</latitude>
 			<longitude>19.451323</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2007,2008</place_unit>
+			<place_unit>2005,2006</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -980,7 +980,7 @@
 			<name>Budynek B2</name>
 			<latitude>51.7489063</latitude>
 			<longitude>19.4548576</longitude>
-			<place_unit>2011</place_unit>
+			<place_unit>2008</place_unit>
 			<place_category>2,12</place_category>
 			<has_image>0</has_image>
 		</place>
@@ -991,7 +991,7 @@
 			<latitude>51.7486057</latitude>
 			<longitude>19.453125</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>2012</place_unit>
+			<place_unit>2019</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1024,7 +1024,7 @@
 			<latitude>51.7477509</latitude>
 			<longitude>19.4531241</longitude>
 			<place_category>12</place_category>
-			<place_unit>602,2014</place_unit>
+			<place_unit>602,2011</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1035,7 +1035,7 @@
 			<latitude>51.7476239</latitude>
 			<longitude>19.4519306</longitude>
 			<place_category>12</place_category>
-			<place_unit>601,603,604,605,607,608,609,610,611,2030</place_unit>
+			<place_unit>601,603,604,605,607,608,609,610,611,2025</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>0</has_image>
 		</place>
@@ -1057,7 +1057,7 @@
 			<latitude>51.7472277</latitude>
 			<longitude>19.4537199</longitude>
 			<place_category>12</place_category>
-			<place_unit>207,208,703,704,902,903,904,905,2032</place_unit>
+			<place_unit>207,208,703,704,902,903,904,905,2028</place_unit>
 			<place_faculty>2,7,9</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1090,7 +1090,7 @@
 			<latitude>51.7471604</latitude>
 			<longitude>19.4556281</longitude>
 			<place_category>12</place_category>
-			<place_unit>2015</place_unit>
+			<place_unit>2012</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1133,7 +1133,7 @@
 			<latitude>51.7463987</latitude>
 			<longitude>19.4531671</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>602,2016</place_unit>
+			<place_unit>602,2013</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1193,7 +1193,7 @@
 			<latitude>51.7456283</latitude>
 			<longitude>19.4539643</longitude>
 			<place_category>12</place_category>
-			<place_unit>2018,2019,2020,2021</place_unit>
+			<place_unit>2014,2015,2016,2017</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<!-- <place>
@@ -1223,7 +1223,7 @@
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
-			<place_unit>2023</place_unit>
+			<place_unit>2018</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<!-- Campus C -->
@@ -1257,7 +1257,7 @@
 			<latitude>51.74519</latitude>
 			<longitude>19.4499796</longitude>
 			<place_category>13</place_category>
-			<place_unit>103,202,203,204,209,2033</place_unit>
+			<place_unit>103,202,203,204,209,2029</place_unit>
 			<place_faculty>2</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1329,7 +1329,7 @@
 			<latitude>51.746343</latitude>
 			<longitude>19.450086</longitude>
 			<place_category>3,13</place_category>
-			<place_unit>2025</place_unit>
+			<place_unit>2019</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
@@ -1350,7 +1350,7 @@
 			<latitude>51.7474178</latitude>
 			<longitude>19.4500173</longitude>
 			<place_category>1,13</place_category>
-			<place_unit>2035</place_unit>
+			<place_unit>2030</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1361,7 +1361,7 @@
 			<latitude>51.7482778</latitude>
 			<longitude>19.4498611</longitude>
 			<place_category>1,13</place_category>
-			<place_unit>2031,2034</place_unit>
+			<place_unit>2026,2027</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1381,7 +1381,7 @@
 			<latitude>51.7489808</latitude>
 			<longitude>19.4494321</longitude>
 			<place_category>2,13</place_category>
-			<place_unit>2026,2027,2028,2029,2036</place_unit>
+			<place_unit>2020,2021,2022,2023,2024</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
