@@ -36,7 +36,6 @@
     <string name="drawer_item_faculty_ftims">PHYS/CS/MATH</string>
     <string name="drawer_item_faculty_ipos">PROCESS/ENVIRONMENTAL</string>
     <string name="drawer_item_faculty_oiz">ORGANIZATION/MANAGEMENT</string>
-    <string name="drawer_item_faculty_ife">IFE</string>
     <string name="drawer_item_checkmark_content_description">Checkmark</string>
     <string name="menu_map_normal">Normal map</string>
     <string name="menu_map_satellite">Satellite map</string>

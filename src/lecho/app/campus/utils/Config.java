@@ -60,8 +60,6 @@ public abstract class Config {
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_faculty_oiz, PlacesLoader.LOAD_PLACES_BY_FACULTY, "OIZ",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
-			new NavigationDrawerItem(R.string.drawer_item_faculty_ife, PlacesLoader.LOAD_PLACES_BY_FACULTY, "IFE",
-					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
 			new NavigationDrawerItem(R.string.drawer_title_campuses, 0, null, NavigationDrawerItem.TYPE_TITLE),
 			new NavigationDrawerItem(R.string.drawer_item_campus_a, PlacesLoader.LOAD_PLACES_BY_CATEGORY, "CAMPUS_A",
 					NavigationDrawerItem.TYPE_ITEM_UNDER_TITLE),
