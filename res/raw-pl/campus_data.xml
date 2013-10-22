@@ -515,10 +515,6 @@
 			<name>Audytorium im. Sułtana</name>
 		</unit>
 		<unit>
-			<id>2010</id>
-			<name>Rektorat Politechniki Łódzkiej</name>
-		</unit>
-		<unit>
 			<id>2011</id>
 			<name>Dział Transferu Technologii</name>
 		</unit>
@@ -564,11 +560,6 @@
 		<unit>
 			<id>2021</id>
 			<name>Łódzki Uniwersytet Dziecięcy</name>
-		</unit>
-		<unit>
-			<id>2022</id>
-			<name>Studium Języków Obcych</name>
-			<short_name>SJO</short_name>
 		</unit>
 		<unit>
 			<id>2023</id>
@@ -986,11 +977,10 @@
 		<place>
 			<id>34</id>
 			<symbol>B1</symbol>
-			<name>Budynek B1</name>
+			<name>Rektorat</name>
 			<latitude>51.748621</latitude>
 			<longitude>19.455360</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>2010</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
@@ -1238,11 +1228,12 @@
 		<place>
 			<id>58</id>
 			<symbol>B25</symbol>
-			<name>Budynek B25</name>
+			<name>Studium Języków Obcych</name>
+			<description>SJO</description>
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
-			<place_unit>2022,2023</place_unit>
+			<place_unit>2023</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<!-- Campus C -->
