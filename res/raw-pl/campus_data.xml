@@ -85,12 +85,6 @@
 			<short_name>OIZ</short_name>
 			<filterable_name>OIZ</filterable_name>
 		</faculty>
-		<faculty>
-			<id>10</id>
-			<name>Centrum Kształcenia Międzynarodowego</name>
-			<short_name>IFE(CKM)</short_name>
-			<filterable_name>IFE</filterable_name>
-		</faculty>
 	</faculties>
 	<units>
 		<!-- FACULTY MECH -->
@@ -490,13 +484,6 @@
 			<name>Katedra Zarządzania</name>
 			<unit_faculty>9</unit_faculty>
 		</unit>
-		<!-- FACULTY IFE -->
-		<unit>
-			<id>1001</id>
-			<name>Centrum Kształcenia Międzynarodowego</name>
-			<short_name>IFE</short_name>
-			<unit_faculty>10</unit_faculty>
-		</unit>	
 		<!-- NO FACULTY -->
 		<unit>
 			<id>2001</id>
@@ -821,13 +808,10 @@
 		<place>
 			<id>16</id>
 			<symbol>A16</symbol>
-			<name>Budynek A16</name>
-			<description>CKM</description>
+			<name>Centrum Kształcenia Międzynarodowego</name>
 			<latitude>51.755112</latitude>
 			<longitude>19.451533</longitude>
 			<place_category>11</place_category>
-			<place_unit>403,405,1001</place_unit>
-			<place_faculty>4,10</place_faculty>
 			<has_image>1</has_image>
 		</place>
 		<place>

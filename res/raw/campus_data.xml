@@ -85,12 +85,6 @@
 			<short_name>Organization and Management</short_name>
 			<filterable_name>OIZ</filterable_name>
 		</faculty>
-		<faculty>
-			<id>10</id>
-			<name>International Faculty of Engineering</name>
-			<short_name>IFE</short_name>
-			<filterable_name>IFE</filterable_name>
-		</faculty>
 	</faculties>
 	<units>
 		<!-- FACULTY MECH -->
@@ -489,13 +483,6 @@
 			<id>906</id>
 			<name>Department of Management</name>
 			<unit_faculty>9</unit_faculty>
-		</unit>
-		<!-- FACULTY IFE -->
-		<unit>
-			<id>1001</id>
-			<name>International Faculty of Engineering</name>
-			<short_name>IFE</short_name>
-			<unit_faculty>10</unit_faculty>
 		</unit>	
 		<!-- NO FACULTY -->
 		<unit>
@@ -819,13 +806,10 @@
 		<place>
 			<id>16</id>
 			<symbol>A16</symbol>
-			<name>Building A16</name>
-			<description>CKM</description>
+			<name>International Faculty of Engineering</name>
 			<latitude>51.755112</latitude>
 			<longitude>19.451533</longitude>
 			<place_category>11</place_category>
-			<place_unit>403,405,1001</place_unit>
-			<place_faculty>4,10</place_faculty>
 			<has_image>1</has_image>
 		</place>
 		<place>
