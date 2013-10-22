@@ -694,7 +694,6 @@
 			<id>8</id>
 			<symbol>A8</symbol>
 			<name>Building A8</name>
-			<description>Garbarstwo</description>
 			<latitude>51.753513</latitude>
 			<longitude>19.453027</longitude>
 			<place_category>11</place_category>
@@ -1148,7 +1147,6 @@
 			<id>51</id>
 			<symbol>B18</symbol>
 			<name>DMCS</name>
-			<description>5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>

@@ -1141,7 +1141,6 @@
 			<id>50</id>
 			<symbol>B17</symbol>
 			<name>Instytut Papiernictwa i Poligrafii</name>
-			<description>IPiP</description>
 			<latitude>51.7461245</latitude>
 			<longitude>19.4546554</longitude>
 			<place_category>12</place_category>
@@ -1151,7 +1150,6 @@
 			<id>51</id>
 			<symbol>B18</symbol>
 			<name>DMCS</name>
-			<description>5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
@@ -1219,7 +1217,6 @@
 			<id>58</id>
 			<symbol>B25</symbol>
 			<name>Studium Języków Obcych</name>
-			<description>SJO</description>
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
@@ -1265,7 +1262,6 @@
 			<id>62</id>
 			<symbol>C4</symbol>
 			<name>Studium Wychowania Fizycznego i Sportu</name>
-			<description>SWFiS</description>
 			<latitude>51.7454267</latitude>
 			<longitude>19.4493607</longitude>
 			<place_category>3,13</place_category>
