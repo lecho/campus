@@ -561,10 +561,6 @@
 			<name>University of the Third Age</name>
 		</unit>
 		<unit>
-			<id>2024</id>
-			<name>Department of Physical Education and Sport</name>
-		</unit>
-		<unit>
 			<id>2025</id>
 			<name>Gym(on the first floor)</name>
 		</unit>
@@ -1264,11 +1260,10 @@
 		<place>
 			<id>62</id>
 			<symbol>C4</symbol>
-			<name>Building C4</name>
+			<name>Department of Physical Education and Sport</name>
 			<latitude>51.7454267</latitude>
 			<longitude>19.4493607</longitude>
 			<place_category>3,13</place_category>
-			<place_unit>2024</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>

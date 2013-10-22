@@ -561,10 +561,6 @@
 			<name>Uniwersytet Trzeciego Wieku Politechniki Łódzkiej</name>
 		</unit>
 		<unit>
-			<id>2024</id>
-			<name>Studium Wychowania Fizycznego i Sportu</name>
-		</unit>
-		<unit>
 			<id>2025</id>
 			<name>Sala Gimnastyczna nad Klubem Underground</name>
 		</unit>
@@ -1268,11 +1264,11 @@
 		<place>
 			<id>62</id>
 			<symbol>C4</symbol>
-			<name>Budynek C4</name>
+			<name>Studium Wychowania Fizycznego i Sportu</name>
+			<description>SWFiS</description>
 			<latitude>51.7454267</latitude>
 			<longitude>19.4493607</longitude>
 			<place_category>3,13</place_category>
-			<place_unit>2024</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
