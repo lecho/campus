@@ -1146,7 +1146,8 @@
 		<place>
 			<id>51</id>
 			<symbol>B18</symbol>
-			<name>DMCS</name>
+			<name>Building B18</name>
+			<description>DMCS, 5E</description>
 			<latitude>51.7460987</latitude>
 			<longitude>19.4557229</longitude>
 			<place_category>12</place_category>
