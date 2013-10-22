@@ -695,7 +695,7 @@
 			<place_category>3,11</place_category>
 			<place_unit>501,503,504,505,2001</place_unit>
 			<place_faculty>5</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>	
 		<place>
 			<id>5</id>
@@ -716,7 +716,7 @@
 			<place_category>11</place_category>
 			<place_unit>802,803,804,805,806,807</place_unit>
 			<place_faculty>8</place_faculty>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>7</id>
@@ -1332,7 +1332,7 @@
 			<place_category>13</place_category>
 			<place_unit>205</place_unit>
 			<place_faculty>2</place_faculty>
-			<has_image>1</has_image>
+			<has_image>0</has_image>
 		</place>
 		<place>
 			<id>65</id>
