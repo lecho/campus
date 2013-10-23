@@ -1,7 +1,7 @@
 package lecho.app.campus.loader;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lecho.app.campus.dao.CategoryDao;
@@ -115,10 +115,9 @@ public class PlacesLoader extends AsyncTaskLoader<PlacesList> {
 		default:
 			throw new IllegalArgumentException("Invalid PlacesLoader action parameter: " + mAction);
 		}
-		// I don't want to return null list
-		// TODO Collections.<Place>emptyList();
+		// I don't want to return null.
 		if (null == places) {
-			places = new ArrayList<Place>(0);
+			places = Collections.emptyList();
 		}
 		return new PlacesList(mAction, places);
 	}
