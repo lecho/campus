@@ -46,9 +46,6 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 		mPlaceId = placeId;
 	}
 
-	/**
-	 * You know what is does, right:P
-	 */
 	@Override
 	public PlaceDetails loadInBackground() {
 		if (Config.DEBUG) {
@@ -69,25 +66,34 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 		return placeDetails;
 	}
 
+	/**
+	 * Groups units by faculty name
+	 * @param units
+	 * @return
+	 */
 	private List<UnitsGroup> groupUnits(List<Unit> units) {
 		List<UnitsGroup> unitsGroups = new ArrayList<UnitsGroup>();
 		if (units.isEmpty()) {
 			return unitsGroups;
 		}
 		Faculty currentFaculty = units.get(0).getFaculty();
-		String currentFacultyName = "";
+		String currentFacultyName;
 		if (null != currentFaculty) {
 			currentFacultyName = currentFaculty.getShortName();
+		} else {
+			currentFacultyName = "";
 		}
 		List<Unit> group = new ArrayList<Unit>();
 		for (Unit unit : units) {
-			String newFacultyName = "";
+			String newFacultyName;
 			Faculty newFaculty = unit.getFaculty();
 			if (null != newFaculty) {
 				newFacultyName = newFaculty.getShortName();
+			} else {
+				newFacultyName = "";
 			}
 			if (!currentFacultyName.equals(newFacultyName)) {
-				// if new unit has different faculty - start new group
+				// if new unit has different faculty - start new group.
 				unitsGroups.add(new UnitsGroup(currentFaculty, group));
 				currentFaculty = newFaculty;
 				currentFacultyName = newFacultyName;
@@ -95,7 +101,7 @@ public class PlaceDetailsLoader extends AsyncTaskLoader<PlaceDetails> {
 			}
 			group.add(unit);
 		}
-		// Add last group if not empty
+		// Add last group if it's not empty.
 		if (!group.isEmpty()) {
 			unitsGroups.add(new UnitsGroup(currentFaculty, group));
 		}
