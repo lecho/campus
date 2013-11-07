@@ -13,6 +13,7 @@ public class Faculty {
     private Long id;
     /** Not-null value. */
     private String name;
+    /** Not-null value. */
     private String shortName;
     /** Not-null value. */
     private String filterableName;
@@ -63,10 +64,12 @@ public class Faculty {
         this.name = name;
     }
 
+    /** Not-null value. */
     public String getShortName() {
         return shortName;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }

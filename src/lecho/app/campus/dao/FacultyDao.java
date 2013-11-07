@@ -47,7 +47,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'FACULTY' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'NAME' TEXT NOT NULL ," + // 1: name
-                "'SHORT_NAME' TEXT," + // 2: shortName
+                "'SHORT_NAME' TEXT NOT NULL ," + // 2: shortName
                 "'FILTERABLE_NAME' TEXT NOT NULL );"); // 3: filterableName
     }
 
@@ -67,11 +67,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getName());
- 
-        String shortName = entity.getShortName();
-        if (shortName != null) {
-            stmt.bindString(3, shortName);
-        }
+        stmt.bindString(3, entity.getShortName());
         stmt.bindString(4, entity.getFilterableName());
     }
 
@@ -93,7 +89,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
         Faculty entity = new Faculty( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // shortName
+            cursor.getString(offset + 2), // shortName
             cursor.getString(offset + 3) // filterableName
         );
         return entity;
@@ -104,7 +100,7 @@ public class FacultyDao extends AbstractDao<Faculty, Long> {
     public void readEntity(Cursor cursor, Faculty entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.getString(offset + 1));
-        entity.setShortName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setShortName(cursor.getString(offset + 2));
         entity.setFilterableName(cursor.getString(offset + 3));
      }
     
