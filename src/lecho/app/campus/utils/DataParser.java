@@ -101,42 +101,42 @@ public class DataParser {
 			}
 			// Insert data into database in single transaction.
 			final DaoSession daoSession = DatabaseHelper.getDaoSession(context);
-			DatabaseHelper.getDaoSession(context).runInTx(new Runnable() {
+			final CategoryDao categoryDao = daoSession.getCategoryDao();
+			final FacultyDao facultyDao = daoSession.getFacultyDao();
+			final UnitDao unitDao = daoSession.getUnitDao();
+			final PlaceDao placeDao = daoSession.getPlaceDao();
+			final PlaceCategoryDao placeCategoryDao = daoSession.getPlaceCategoryDao();
+			final PlaceFacultyDao placeFacultyDao = daoSession.getPlaceFacultyDao();
+			final PlaceUnitDao placeUnitDao = daoSession.getPlaceUnitDao();
+			daoSession.runInTx(new Runnable() {
 
 				@Override
 				public void run() {
-					CategoryDao categoryDao = daoSession.getCategoryDao();
 					for (Category category : categories) {
 						categoryDao.insert(category);
 					}
-					FacultyDao facultyDao = daoSession.getFacultyDao();
 					for (Faculty faculty : faculties) {
 						facultyDao.insert(faculty);
 					}
-					UnitDao unitDao = daoSession.getUnitDao();
 					for (Unit unit : units) {
 						unitDao.insert(unit);
 					}
-					PlaceDao placeDao = daoSession.getPlaceDao();
 					for (Place place : places) {
 						placeDao.insert(place);
 					}
-					PlaceCategoryDao placeCategoryDao = daoSession.getPlaceCategoryDao();
 					for (PlaceCategory placeCategory : placeCategories) {
 						placeCategoryDao.insert(placeCategory);
 					}
-					PlaceFacultyDao placeFacultyDao = daoSession.getPlaceFacultyDao();
 					for (PlaceFaculty placeFaculty : placeFaculties) {
 						placeFacultyDao.insert(placeFaculty);
 					}
-					PlaceUnitDao placeUnitDao = daoSession.getPlaceUnitDao();
 					for (PlaceUnit placeUnit : placeUnits) {
 						placeUnitDao.insert(placeUnit);
 					}
 				}
 			});
 			long elapsedTime = (System.nanoTime() - time) / 1000000L;
-			Log.i(TAG, "Success, data loaded from xml in " + elapsedTime + "ms.");
+			Log.i(TAG, "Success, data loaded from xml in[miliseconds]: " + elapsedTime);
 			return true;
 		} catch (Exception e) {
 			Log.e(TAG, "Could not parse xml file.", e);
