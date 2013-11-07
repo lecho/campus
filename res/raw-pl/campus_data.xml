@@ -376,19 +376,19 @@
 			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>703</id>
+			<id>702</id>
 			<name>Instytut Informatyki</name>
 			<short_name>I1,ICS</short_name>
 			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>704</id>
+			<id>703</id>
 			<name>Instytut Matematyki</name>
 			<short_name>I2</short_name>
 			<unit_faculty>7</unit_faculty>
 		</unit>
 		<unit>
-			<id>705</id>
+			<id>704</id>
 			<name>Instytut Fizyki</name>
 			<short_name>I3</short_name>
 			<unit_faculty>7</unit_faculty>
@@ -475,7 +475,6 @@
 		<unit>
 			<id>2001</id>
 			<name>Instytut Papiernictwa i Poligrafii</name>
-			<short_name>IPiP</short_name>
 		</unit>
 		<!-- <unit>
 			<id>2002</id>
@@ -685,7 +684,7 @@
 			<place_faculty>10</place_faculty>
 			<has_image>1</has_image>
 		</place>
-		<place>
+		<!-- <place>
 			<id>7</id>
 			<symbol>A7</symbol>
 			<name>Budynek A7</name>
@@ -693,7 +692,7 @@
 			<longitude>19.4535167</longitude>
 			<place_category>11</place_category>
 			<has_image>0</has_image>
-		</place>
+		</place> -->
 		<place>
 			<id>8</id>
 			<symbol>A8</symbol>
@@ -1105,8 +1104,8 @@
 			<id>46</id>
 			<symbol>B13</symbol>
 			<name>Budynek B13</name>
-			<latitude>51.7468817</latitude>
-			<longitude>19.4542318</longitude>
+			<latitude>51.746788</latitude>
+			<longitude>19.454275</longitude>
 			<place_category>12</place_category>
 			<place_unit>104</place_unit>
 			<place_faculty>1</place_faculty>
@@ -1116,8 +1115,8 @@
 			<id>47</id>
 			<symbol>B14</symbol>
 			<name>Budynek B14</name>
-			<latitude>51.7465856</latitude>
-			<longitude>19.4544266</longitude>
+			<latitude>51.7465176</latitude>
+			<longitude>19.4553862</longitude>
 			<place_category>12</place_category>
 			<place_unit>104,704</place_unit>
 			<place_faculty>1,7</place_faculty>
@@ -1127,7 +1126,7 @@
 			<id>48</id>
 			<symbol>B15</symbol>
 			<name>Budynek B15</name>
-			<latitude>51.7466036</latitude>
+			<latitude>51.7466000</latitude>
 			<longitude>19.4557936</longitude>
 			<place_category>12</place_category>
 			<place_unit>704</place_unit>
@@ -1149,7 +1148,6 @@
 			<id>50</id>
 			<symbol>B17</symbol>
 			<name>Instytut Papiernictwa i Poligrafii</name>
-			<description>IPiP</description>
 			<latitude>51.7461245</latitude>
 			<longitude>19.4546554</longitude>
 			<place_category>12</place_category>
@@ -1217,7 +1215,6 @@
 			<id>57</id>
 			<symbol>B24</symbol>
 			<name>Centrum Językowe</name>
-			<description>SJO</description>
 			<latitude>51.7454352</latitude>
 			<longitude>19.4519802</longitude>
 			<place_category>12</place_category>
@@ -1228,7 +1225,6 @@
 			<id>58</id>
 			<symbol>B25</symbol>
 			<name>Centrum Językowe</name>
-			<description>SJO</description>
 			<latitude>51.7453924</latitude>
 			<longitude>19.451256</longitude>
 			<place_category>12</place_category>
@@ -1336,7 +1332,7 @@
 			<latitude>51.746343</latitude>
 			<longitude>19.450086</longitude>
 			<place_category>3,13</place_category>
-			<place_unit>2019</place_unit>
+			<place_unit>2025</place_unit>
 			<has_image>0</has_image>
 		</place>
 		<place>
