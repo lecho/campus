@@ -10,7 +10,7 @@ import lecho.app.campus.loader.PlacesLoader;
  * 
  */
 public abstract class Config {
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	// Increment to reload data after app update, should be always greater than 0
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
@@ -35,7 +35,7 @@ public abstract class Config {
 
 	public static final double DEFAULT_LAT = 51.7505298;
 	public static final double DEFAULT_LNG = 19.4551516;
-	public static final float DEFAULT_ZOOM_LEVEL = 14.5f;
+	public static final float DEFAULT_ZOOM_LEVEL = 14.8f;
 
 	public static final int CAMERA_ANIMATION_DURATION = 500;
 	public static final int DRAWER_RESTART_LOADER_DELAY = 250;
