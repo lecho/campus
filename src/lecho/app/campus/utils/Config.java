@@ -10,7 +10,7 @@ import lecho.app.campus.loader.PlacesLoader;
  * 
  */
 public abstract class Config {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	// Increment to reload data after app update, should be always greater than 0
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
