@@ -127,19 +127,16 @@ public class ABSMenuItemConverter {
 
 			@Override
 			public MenuItem setActionProvider(ActionProvider actionProvider) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
 			@Override
 			public MenuItem setActionView(View view) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
 			@Override
 			public MenuItem setActionView(int resId) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 
