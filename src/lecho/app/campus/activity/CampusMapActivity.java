@@ -112,7 +112,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	Animation mSearchResultsPagerShowAnim;
 	Animation mSearchResultsPagerHideAnim;
 	int mSearchResultSize;
-
 	// Nav-Drawer related
 	DrawerLayout mDrawerLayout;
 	ListView mDrawerList;
@@ -216,7 +215,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				Long placeId = data.getExtras().getLong(Config.EXTRA_PLACE_ID);
 				if (placeId != mCurrentPlaceId) {
 					if (mMarkers.isEmpty()) {
-						// data is not initialized - probably activity recreation on orientation change.
+						// data is not initialized - probably activity recreation on orientation change. Set current
+						// place id and let loader do the rest.
 						mCurrentPlaceId = placeId;
 					} else {
 						// data is initialized - safe to goToMarker.
@@ -272,7 +272,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		return true;
 	}
 
-	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
@@ -413,7 +412,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
 				finish();
 			}
-
 		}
 		return false;
 	}
@@ -704,12 +702,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			Log.e(TAG, "Cannot go to NULL marker");
 			return;
 		}
-		if (mMap.getCameraPosition().target.equals(marker.getPosition())) {
-			handleMarker(marker);
-			marker.showInfoWindow();
-		} else {
-			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()), Config.CAMERA_ANIMATION_DURATION,
-					new MapCameraAnimationCalback(marker));
+		marker.showInfoWindow();
+		handleMarker(marker);
+		// if current position differs from marker position animate to that marker.
+		if (!mMap.getCameraPosition().target.equals(marker.getPosition())) {
+			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
 		}
 	}
 
@@ -812,31 +809,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	}
 
 	/**
-	 * Callback called when map animate to given marker
-	 * 
-	 * @author lecho
-	 * 
-	 */
-	private class MapCameraAnimationCalback implements GoogleMap.CancelableCallback {
-		private Marker mMarker;
-
-		public MapCameraAnimationCalback(Marker marker) {
-			mMarker = marker;
-		}
-
-		@Override
-		public void onCancel() {
-		}
-
-		@Override
-		public void onFinish() {
-			handleMarker(mMarker);
-			mMarker.showInfoWindow();
-		}
-	}
-
-	/**
 	 * Used to change markers icons depending on map zoom.
+	 * 
 	 */
 	private class MapCameraChangeListener implements GoogleMap.OnCameraChangeListener {
 		// app starts with small markers
@@ -881,15 +855,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				}
 			}
 		}
-
 	}
 
-	/**
-	 * Selects marker.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
 	private class MarkerClickListener implements OnMarkerClickListener {
 
 		@Override
@@ -897,30 +864,19 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 			handleMarker(marker);
 			return false;
 		}
-
 	}
 
-	/**
-	 * Clears marker selection.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
 	private class MapClickListener implements OnMapClickListener {
 
 		@Override
 		public void onMapClick(LatLng latLng) {
 			mCurrentPlaceId = Long.MIN_VALUE;
 			hideSearchResultsPager();
-
 		}
-
 	}
 
 	/**
 	 * Perform onSearchResultClick action when marker InfoWindow is clicked.
-	 * 
-	 * @author Lecho
 	 * 
 	 */
 	private class MarkerInfoWindowClickListener implements OnInfoWindowClickListener {
@@ -935,15 +891,11 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				return;
 			}
 			onSearchResultClick(place.getId());
-
 		}
-
 	}
 
 	/**
 	 * Listen to changes of current selected search result.
-	 * 
-	 * @author Lecho
 	 * 
 	 */
 	private class SearchResultChangeListener extends SimpleOnPageChangeListener {
@@ -956,8 +908,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 
 	/**
 	 * Clears search results after SearchView collapse. All methods have to return true for SearchView to work properly.
-	 * 
-	 * @author Lecho
 	 * 
 	 */
 	private class SearchViewExpandListener implements OnActionExpandListener {
@@ -987,8 +937,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	/**
 	 * Collapses SearchView if it lose focus, without this user has to press back twice to collapse view.
 	 * 
-	 * @author Lecho
-	 * 
 	 */
 	private class SearchViewFocusChangeListener implements OnFocusChangeListener {
 
@@ -998,13 +946,10 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				mSearchMenuItem.collapseActionView();
 			}
 		}
-
 	}
 
 	/**
 	 * Listen to click on MessageBar button.
-	 * 
-	 * @author Lecho
 	 * 
 	 */
 	private class MessageBarButtonListener implements OnMessageClickListener {
@@ -1015,12 +960,12 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				mSearchMenuItem.collapseActionView();
 			}
 		}
-
 	}
 
 	/**
 	 * The click listener for ListView in the navigation drawer
-	 * */
+	 * 
+	 */
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -1028,12 +973,6 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		}
 	}
 
-	/**
-	 * Toggle for navigation drawer.
-	 * 
-	 * @author Lecho
-	 * 
-	 */
 	private class DrawerToggle extends ActionBarDrawerToggle {
 
 		public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int drawerImageRes,
