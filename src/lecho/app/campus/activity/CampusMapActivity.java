@@ -552,8 +552,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	private void zoomMapToDefault() {
 		if (null != mMap) {
 			LatLng latLng = new LatLng(Config.DEFAULT_LAT, Config.DEFAULT_LNG);
-			mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL),
-					Config.CAMERA_ANIMATION_DURATION, null);
+			mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL));
 		}
 	}
 

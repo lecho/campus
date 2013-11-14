@@ -37,7 +37,6 @@ public abstract class Config {
 	public static final double DEFAULT_LNG = 19.4551516;
 	public static final float DEFAULT_ZOOM_LEVEL = 14.8f;
 
-	public static final int CAMERA_ANIMATION_DURATION = 500;
 	public static final int DRAWER_RESTART_LOADER_DELAY = 250;
 
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
