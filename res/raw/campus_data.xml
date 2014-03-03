@@ -636,6 +636,26 @@
 			<id>2039</id>
 			<name>Vice-Rector for University Development</name>
 		</unit>
+		<unit>
+			<id>2040</id>
+			<name>Chancellor</name>
+		</unit>
+		<unit>
+			<id>2041</id>
+			<name>Secretariat of the Chancellor</name>
+		</unit>
+		<unit>
+			<id>2042</id>
+			<name>Department of Procurement</name>
+		</unit>
+		<unit>
+			<id>2043</id>
+			<name>Department of Social</name>
+		</unit>
+		<unit>
+			<id>2044</id>
+			<name>Chancellor's Office</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -930,16 +950,16 @@
 			<place_faculty>3</place_faculty>
 			<has_image>1</has_image>
 		</place>
-		<!-- <place>
+		<place>
 			<id>28</id>
 			<symbol>A28</symbol>
 			<name>Building A28</name>
 			<latitude>51.7535851</latitude>
 			<longitude>19.4509969</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2003,2004</place_unit>
+			<place_unit>2040,2041,2042,2043,2044</place_unit>
 			<has_image>0</has_image>
-		</place> -->
+		</place>
 		<!-- <place>
 			<id>29</id>
 			<symbol>A29</symbol>

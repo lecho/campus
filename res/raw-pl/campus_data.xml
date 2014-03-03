@@ -636,6 +636,26 @@
 			<id>2039</id>
 			<name>Prorektor ds. Rozwoju Uczelni</name>
 		</unit>
+		<unit>
+			<id>2040</id>
+			<name>Kanclerz</name>
+		</unit>
+		<unit>
+			<id>2041</id>
+			<name>Sekretariat Kanclerza</name>
+		</unit>
+		<unit>
+			<id>2042</id>
+			<name>Dział Zamówień Publicznych</name>
+		</unit>
+		<unit>
+			<id>2043</id>
+			<name>Dział Socjalny</name>
+		</unit>
+		<unit>
+			<id>2044</id>
+			<name>Kancelaria</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -930,16 +950,16 @@
 			<place_faculty>3</place_faculty>
 			<has_image>1</has_image>
 		</place>
-		<!-- <place>
+		<place>
 			<id>28</id>
 			<symbol>A28</symbol>
 			<name>Budynek A28</name>
 			<latitude>51.7535851</latitude>
 			<longitude>19.4509969</longitude>
 			<place_category>2,11</place_category>
-			<place_unit>2003,2004</place_unit>
+			<place_unit>2040,2041,2042,2043,2044</place_unit>
 			<has_image>0</has_image>
-		</place> -->
+		</place>
 		<!-- <place>
 			<id>29</id>
 			<symbol>A29</symbol>
