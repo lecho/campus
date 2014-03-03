@@ -708,6 +708,10 @@
 			<id>2057</id>
 			<name>Publiczne Gimnazjum PŁ</name>
 		</unit>
+		<unit>
+			<id>2058</id>
+			<name>Międzynarodowa Szkoła Doktorska</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -1221,7 +1225,7 @@
 			<latitude>51.7466000</latitude>
 			<longitude>19.4557936</longitude>
 			<place_category>12</place_category>
-			<place_unit>704</place_unit>
+			<place_unit>704,2058</place_unit>
 			<place_faculty>7</place_faculty>
 			<has_image>0</has_image>
 		</place>
