@@ -656,6 +656,42 @@
 			<id>2044</id>
 			<name>Kancelaria</name>
 		</unit>
+		<unit>
+			<id>2045</id>
+			<name>Rektor Politechniki Łódzkiej</name>
+		</unit>
+		<unit>
+			<id>2046</id>
+			<name>Prorektor ds. Nauki</name>
+		</unit>
+		<unit>
+			<id>2047</id>
+			<name>Prorektor ds. Innowacji</name>
+		</unit>
+		<unit>
+			<id>2048</id>
+			<name>Prorektor ds. Edukacji</name>
+		</unit>
+		<unit>
+			<id>2049</id>
+			<name>Prorektor ds. Rozwoju Uczelni</name>
+		</unit>
+		<unit>
+			<id>2050</id>
+			<name>Biuro Rektora</name>
+		</unit>
+		<unit>
+			<id>2051</id>
+			<name>Dział Nauki</name>
+		</unit>
+		<unit>
+			<id>2052</id>
+			<name>Dział Organizacji Zarządzania</name>
+		</unit>
+		<unit>
+			<id>2053</id>
+			<name>Dział Prawny</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -1018,6 +1054,7 @@
 			<latitude>51.748621</latitude>
 			<longitude>19.455360</longitude>
 			<place_category>2,12</place_category>
+			<place_unit>2045,2046,2047,2048,2049,2050,2051,2052,2053</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>

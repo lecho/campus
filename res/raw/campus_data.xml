@@ -656,6 +656,42 @@
 			<id>2044</id>
 			<name>Chancellor's Office</name>
 		</unit>
+		<unit>
+			<id>2045</id>
+			<name>Rector</name>
+		</unit>
+		<unit>
+			<id>2046</id>
+			<name>Vice-Rector for Science</name>
+		</unit>
+		<unit>
+			<id>2047</id>
+			<name>Vice-Rector for Innovation</name>
+		</unit>
+		<unit>
+			<id>2048</id>
+			<name>Vice-Rector for Education</name>
+		</unit>
+		<unit>
+			<id>2049</id>
+			<name>Vice-Rector for University Development</name>
+		</unit>
+		<unit>
+			<id>2050</id>
+			<name>Rector's Office</name>
+		</unit>
+		<unit>
+			<id>2051</id>
+			<name>Department of Sciencei</name>
+		</unit>
+		<unit>
+			<id>2052</id>
+			<name>Department of Management Organization</name>
+		</unit>
+		<unit>
+			<id>2053</id>
+			<name>Legal Department</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -1018,6 +1054,7 @@
 			<latitude>51.748621</latitude>
 			<longitude>19.455360</longitude>
 			<place_category>2,12</place_category>
+			<place_unit>2045,2046,2047,2048,2049,2050,2051,2052,2053</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
