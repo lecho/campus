@@ -30,8 +30,7 @@ public abstract class Config {
 	public static final String EXTRA_LANGUAGE_CHANGED = "lecho.app.campus:LANGUAGE_CHANGED";
 	public static final String PLACE_MAIN_PHOTO_NAME = "1.jpg";
 
-	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus" + APP_TARGET
-			+ ".provider.SearchSuggestionProvider";
+	public static final String SEARCH_SUGGESTION_AUTHORITY = "lecho.app.campus.provider.SearchSuggestionProvider";
 
 	public static final double DEFAULT_LAT = 51.7505298;
 	public static final double DEFAULT_LNG = 19.4551516;
