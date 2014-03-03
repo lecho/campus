@@ -471,6 +471,12 @@
 			<short_name>K108</short_name>
 			<unit_faculty>10</unit_faculty>
 		</unit>
+		<unit>
+			<id>1008</id>
+			<name>Katedra Inżynierii Molekularnej</name>
+			<short_name>K109</short_name>
+			<unit_faculty>10</unit_faculty>
+		</unit>
 		<!-- NO FACULTY -->
 		<unit>
 			<id>2001</id>
@@ -680,7 +686,7 @@
 			<latitude>51.7541216</latitude>
 			<longitude>19.4540303</longitude>
 			<place_category>11</place_category>
-			<place_unit>1002,1003,1004,1005,1006,1007</place_unit>
+			<place_unit>1002,1003,1004,1005,1006,1007,1008</place_unit>
 			<place_faculty>10</place_faculty>
 			<has_image>1</has_image>
 		</place>
