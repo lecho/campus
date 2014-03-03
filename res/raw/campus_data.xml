@@ -624,6 +624,18 @@
 			<id>2036</id>
 			<name>Academic Centre of Trust</name>
 		</unit>
+		<unit>
+			<id>2037</id>
+			<name>Bursar</name>
+		</unit>
+		<unit>
+			<id>2038</id>
+			<name>Director of Finance</name>
+		</unit>
+		<unit>
+			<id>2039</id>
+			<name>Vice-Rector for University Development</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -807,6 +819,7 @@
 			<latitude>51.755103</latitude>
 			<longitude>19.450631</longitude>
 			<place_category>2,11</place_category>
+			<place_unit>2037,2038,2039</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<place>
