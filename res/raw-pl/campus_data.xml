@@ -692,6 +692,14 @@
 			<id>2053</id>
 			<name>Dział Prawny</name>
 		</unit>
+		<unit>
+			<id>2054</id>
+			<name>Rzecznik Prasowy</name>
+		</unit>
+		<unit>
+			<id>2055</id>
+			<name>Rzecznik Patentowy</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -1063,7 +1071,7 @@
 			<name>Budynek B2</name>
 			<latitude>51.7489063</latitude>
 			<longitude>19.4548576</longitude>
-			<place_unit>2012</place_unit>
+			<place_unit>2012,2054,2055</place_unit>
 			<place_category>2,12</place_category>
 			<has_image>0</has_image>
 		</place>
