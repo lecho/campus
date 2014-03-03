@@ -550,11 +550,11 @@
 			<id>2018</id>
 			<name>Audytorium im. Sułtana</name>
 		</unit>
-		<unit>
+		<!--<unit>
 			<id>2019</id>
 			<name>Dział Wydawnictw Naukowo-Dydaktycznych</name>
 			<short_name>DWD</short_name>
-		</unit>
+		</unit>-->
 		<unit>
 			<id>2020</id>
 			<name>Uczelniany Punkt Personalizacji</name>
@@ -711,6 +711,10 @@
 		<unit>
 			<id>2058</id>
 			<name>Międzynarodowa Szkoła Doktorska</name>
+		</unit>
+		<unit>
+			<id>2059</id>
+			<name>Wydawnictwa Uczelniane</name>
 		</unit>
 	</units>
 	<places>
@@ -1236,7 +1240,7 @@
 			<latitude>51.7463987</latitude>
 			<longitude>19.4531671</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>602,2019</place_unit>
+			<place_unit>602</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>1</has_image>
 		</place>
@@ -1295,7 +1299,7 @@
 			<latitude>51.7456283</latitude>
 			<longitude>19.4539643</longitude>
 			<place_category>2,12</place_category>
-			<place_unit>2020,2021,2022,2023</place_unit>
+			<place_unit>2020,2021,2022,2023,2059</place_unit>
 			<has_image>1</has_image>
 		</place>
 		<!-- <place>
