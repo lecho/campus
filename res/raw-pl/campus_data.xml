@@ -520,7 +520,7 @@
 		</unit>
 		<unit>
 			<id>2011</id>
-			<name>Publiczne Liceum Ogólnokształcące</name>
+			<name>Publiczne Liceum Ogólnokształcące PŁ</name>
 		</unit>
 		<unit>
 			<id>2012</id>
@@ -703,6 +703,10 @@
 		<unit>
 			<id>2056</id>
 			<name>Dział Współpracy z Zagranicą</name>
+		</unit>
+		<unit>
+			<id>2057</id>
+			<name>Publiczne Gimnazjum PŁ</name>
 		</unit>
 	</units>
 	<places>
@@ -1119,7 +1123,7 @@
 			<latitude>51.7477509</latitude>
 			<longitude>19.4531241</longitude>
 			<place_category>12</place_category>
-			<place_unit>602,2011</place_unit>
+			<place_unit>602,2011,2057</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>1</has_image>
 		</place>

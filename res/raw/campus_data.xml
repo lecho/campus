@@ -704,6 +704,10 @@
 			<id>2056</id>
 			<name>Department of International Relations</name>
 		</unit>
+		<unit>
+			<id>2057</id>
+			<name>Public Middle School</name>
+		</unit>
 	</units>
 	<places>
 	   <!-- campus A -->
@@ -1119,7 +1123,7 @@
 			<latitude>51.7477509</latitude>
 			<longitude>19.4531241</longitude>
 			<place_category>12</place_category>
-			<place_unit>602,2011</place_unit>
+			<place_unit>602,2011,2057</place_unit>
 			<place_faculty>6</place_faculty>
 			<has_image>1</has_image>
 		</place>
