@@ -289,12 +289,13 @@
 		<unit>
 			<id>501</id>
 			<name>Dziekanat Wydziału BiNOŻ</name>
+			<short_name>dziekanat binoż</short_name>
 			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
 			<id>502</id>
 			<name>Instytut Podstaw Chemii Żywności</name>
-			<short_name>I28</short_name>
+			<short_name>I28,żywności</short_name>
 			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
@@ -306,7 +307,7 @@
 		<unit>
 			<id>504</id>
 			<name>Instytut Chemicznej Technologii Żywności</name>
-			<short_name>I30</short_name>
+			<short_name>I30,żywności</short_name>
 			<unit_faculty>5</unit_faculty>
 		</unit>
 		<unit>
@@ -570,6 +571,7 @@
 		<unit>
 			<id>2023</id>
 			<name>Łódzki Uniwersytet Dziecięcy</name>
+			<short_name>łódzki uniwersytet dziecięcy</short_name>
 		</unit>
 		<unit>
 			<id>2024</id>
@@ -610,7 +612,8 @@
 		</unit>
 		<unit>
 			<id>2033</id>
-			<name>Studenckie Radio Żak</name>
+			<name>Studenckie Radio Żak 88,8 MHz</name>
+			<short_name>radio żak</short_name>
 		</unit>
 		<!-- <unit>
 			<id>2034</id>

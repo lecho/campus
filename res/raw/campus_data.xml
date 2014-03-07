@@ -610,7 +610,8 @@
 		</unit>
 		<unit>
 			<id>2033</id>
-			<name>Żak" Student Radio</name>
+			<name>Student Radio Żak 88.8 MHz</name>
+			<short_name>radio żak</short_name>
 		</unit>
 		<!-- <unit>
 			<id>2034</id>
