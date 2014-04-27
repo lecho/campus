@@ -1092,7 +1092,7 @@
 			<longitude>19.4548576</longitude>
 			<place_unit>2012,2054,2055</place_unit>
 			<place_category>2,12</place_category>
-			<has_image>0</has_image>
+			<has_image>1</has_image>
 		</place>
 		<place>
 			<id>36</id>
