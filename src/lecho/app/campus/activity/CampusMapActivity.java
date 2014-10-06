@@ -63,6 +63,7 @@ import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -540,7 +541,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 					} else {
 						mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
-					zoomMapToDefault();
+					zoomMapToDefault(false);
 				}
 			});
 		}
@@ -549,10 +550,15 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 	/**
 	 * Zooming map to default position where almost all places are visible.
 	 */
-	private void zoomMapToDefault() {
+	private void zoomMapToDefault(boolean animate) {
 		if (null != mMap) {
 			LatLng latLng = new LatLng(Config.DEFAULT_LAT, Config.DEFAULT_LNG);
-			mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL));
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, Config.DEFAULT_ZOOM_LEVEL);
+			if (animate) {
+				mMap.animateCamera(cameraUpdate, Config.MAP_CAMERA_ANIMATION_DURATION, null);
+			} else {
+				mMap.moveCamera(cameraUpdate);
+			}
 		}
 	}
 
@@ -600,7 +606,7 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 				hideSearchResultsPager();
 				final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
 				if (mapView.getWidth() > 0 && mapView.getHeight() > 0) {
-					zoomMapToDefault();
+					zoomMapToDefault(true);
 				}
 			}
 		}
@@ -705,7 +711,8 @@ public class CampusMapActivity extends SherlockFragmentActivity implements Loade
 		handleMarker(marker);
 		// if current position differs from marker position animate to that marker.
 		if (!mMap.getCameraPosition().target.equals(marker.getPosition())) {
-			mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(marker.getPosition());
+			mMap.animateCamera(cameraUpdate, Config.MAP_CAMERA_ANIMATION_DURATION, null);
 		}
 	}
 

@@ -12,7 +12,6 @@ import lecho.app.campus.loader.PlacesLoader;
 public abstract class Config {
 	public static final boolean DEBUG = false;
 
-	// Increment to reload data after app update, should be always greater than 0
 	public static final String APP_SHARED_PREFS_NAME = "lecho.app.campus:SHARED_PREFS";
 	public static final String APP_SHADER_PREFS_DEVICE_WAS_ONLINE = "lecho.app.campus:DEVICE_WAS_ONLINE";
 	public static final String APP_SHARED_PREFS_SCHEMA_VERSION = "lecho.app.campus:CAMPUS_DATA_VERSION";
@@ -38,6 +37,7 @@ public abstract class Config {
 	public static final float DEFAULT_ZOOM_LEVEL = 14.8f;
 
 	public static final int DRAWER_RESTART_LOADER_DELAY = 250;
+	public static final int MAP_CAMERA_ANIMATION_DURATION = 300;
 
 	public static final NavigationDrawerItem[] NAVIGATION_DRAWER_ITEMS = new NavigationDrawerItem[] {
 			new NavigationDrawerItem(R.string.drawer_title_faculties, 0, null, NavigationDrawerItem.TYPE_TITLE),
