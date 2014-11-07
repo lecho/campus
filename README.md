@@ -1,6 +1,6 @@
-#Campus
+#Campus for Android
 
-Campus map for Technical University of Lodz.
+Campus map for Technical University of Lodz - Android application.
 
 Available on the [**Google Play**][1]
 
