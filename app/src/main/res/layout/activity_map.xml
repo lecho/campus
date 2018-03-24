@@ -12,28 +12,23 @@
         android:fitsSystemWindows="true"
         tools:context="lecho.app.campus.plodz.MapActivity" />
 
-    <android.support.v7.widget.Toolbar
-        android:layout_marginTop="36dp"
-        android:layout_marginStart="16dp"
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:id="@+id/toolbar"
-        android:fitsSystemWindows="true"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:queryHint="Search..."
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="start"
-        android:background="@color/colorPrimaryDark"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_items" />
 </android.support.constraint.ConstraintLayout>
