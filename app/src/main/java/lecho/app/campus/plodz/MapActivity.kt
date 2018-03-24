@@ -1,16 +1,24 @@
 package lecho.app.campus.plodz
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    companion object {
+        @JvmField val TAG: String = MapActivity::class.java.simpleName
+
+    }
 
     private lateinit var mMap: GoogleMap
 
@@ -35,10 +43,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        changeMapStyle(R.raw.map_style)
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    private fun changeMapStyle(styleJson: Int) {
+        try {
+            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, styleJson))
+            if (!success) Log.e(TAG, "Style parsing failed.")
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
     }
 }
