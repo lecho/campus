@@ -16,21 +16,6 @@
             tools:context="lecho.app.campus.plodz.MapActivity" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:layout_marginTop="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:id="@+id/toolbar"
-        android:fitsSystemWindows="true"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:layout_insetEdge="top"
-        app:layout_dodgeInsetEdges="top"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
