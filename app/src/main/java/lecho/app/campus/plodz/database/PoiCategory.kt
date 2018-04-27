@@ -1,4 +1,4 @@
-package lecho.app.campus.plodz
+package lecho.app.campus.plodz.database
 
 enum class PoiCategory {
     SPORT, DORMITORY, ADMINISTRATION, UNIVERSITY
