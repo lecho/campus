@@ -1,4 +1,4 @@
-package lecho.app.campus.plodz.database
+package lecho.app.campus.plodz.database.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

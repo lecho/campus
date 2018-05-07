@@ -1,9 +1,10 @@
-package lecho.app.campus.plodz.database
+package lecho.app.campus.plodz.database.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 
+// TODO Add foreignKeys to index to avoid full table scan
 /**
  * Unit like ICS or DMCS. Unit may belong to one faculty or exists without faculty.
  */
