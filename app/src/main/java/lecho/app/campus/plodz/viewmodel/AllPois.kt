@@ -1,4 +1,3 @@
 package lecho.app.campus.plodz.viewmodel
 
-class AllPois {
-}
+class AllPois(val pois: List<PoiSummary>)
