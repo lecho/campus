@@ -4,11 +4,14 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import lecho.app.campus.plodz.repository.PoiRepository
 
-class AllPoisViewModel(val poiRepository: PoiRepository) : ViewModel() {
+// TODO consider constructor with parameter and ViewModelFactory
+class AllPoisViewModel : ViewModel() {
 
+    private lateinit var poiRepository: PoiRepository
     lateinit var pois: LiveData<AllPois>
 
-    fun init() {
+    fun init(poiRepository: PoiRepository) {
+        this.poiRepository = poiRepository
         pois = poiRepository.getAllPois()
     }
 }

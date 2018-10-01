@@ -1,3 +1,5 @@
 package lecho.app.campus.plodz.viewmodel
 
-class AllPois(val pois: List<PoiSummary>)
+import android.support.annotation.NonNull
+
+class AllPois(@NonNull val pois: List<PoiSummary>)

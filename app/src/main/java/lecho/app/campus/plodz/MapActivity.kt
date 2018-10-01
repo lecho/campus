@@ -1,5 +1,6 @@
 package lecho.app.campus.plodz
 
+import android.arch.lifecycle.Observer
 import android.content.res.Resources
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,16 +13,21 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
+import android.arch.lifecycle.ViewModelProviders
+import lecho.app.campus.plodz.repository.PoiRepository
+import lecho.app.campus.plodz.viewmodel.AllPois
+import lecho.app.campus.plodz.viewmodel.AllPoisViewModel
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
-        @JvmField val TAG: String = MapActivity::class.java.simpleName
-
+        @JvmField
+        val TAG: String = MapActivity::class.java.simpleName
     }
 
     private lateinit var mMap: GoogleMap
+    private lateinit var allPoisViewModel: AllPoisViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        allPoisViewModel = ViewModelProviders.of(this).get(AllPoisViewModel::class.java)
+        allPoisViewModel.init(PoiRepository())
     }
 
     /**
@@ -46,10 +55,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         changeMapStyle(R.raw.map_style)
 
+        allPoisViewModel.pois.observe(this, Observer<AllPois> { allPois ->
+            allPois!!.pois.forEach { it ->
+                val position = it.latLong.toMapsLatLng()
+                mMap.addMarker(MarkerOptions().position(position).title(it.name))
+            }
+            val position = allPois.pois.get(0).latLong.toMapsLatLng()
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(position))
+        })
+
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+//        val sydney = LatLng(-34.0, 151.0)
+        //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     private fun changeMapStyle(styleJson: Int) {
