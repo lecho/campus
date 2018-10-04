@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@id/poi_name"
+        android:id="@+id/poi_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -27,25 +27,24 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/poi_symbol"
-        app:layout_constraintBottom_toTopOf="@+id/poi_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@id/poi_other_names"
+        android:id="@+id/poi_other_names"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Lodex, Tramwaj"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/poi_name"
-        app:layout_constraintTop_toBottomOf="@id/poi_name" />
+        app:layout_constraintStart_toStartOf="@+id/poi_name"
+        app:layout_constraintTop_toBottomOf="@+id/poi_name" />
 
     <ImageView
-        android:id="@id/poi_image"
-        android:layout_width="match_parent"
+        android:id="@+id/poi_image"
+        android:layout_width="0dp"
         android:layout_height="128dp"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poi_symbol" />
+        app:layout_constraintTop_toBottomOf="@+id/poi_other_names" />
 </android.support.constraint.ConstraintLayout>

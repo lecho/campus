@@ -60,7 +60,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val position = it.latLong.toMapsLatLng()
                 mMap.addMarker(MarkerOptions().position(position).title(it.name))
             }
-            val position = allPois.pois.get(0).latLong.toMapsLatLng()
+            val position = allPois.pois[0].latLong.toMapsLatLng()
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position))
         })
 

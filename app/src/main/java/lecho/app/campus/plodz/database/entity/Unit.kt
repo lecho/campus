@@ -21,5 +21,5 @@ data class Unit(@PrimaryKey val id: Long,
                 val name: String,
                 val shortName: String,
                 val filterableName: String,
-                val facultyId: Long,
+                val facultyId: Long, // Possible many to many relation
                 val poiId: Long)
