@@ -1,7 +1,7 @@
 package lecho.app.campus.plodz.database
 
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.Database
 import lecho.app.campus.plodz.database.entity.Faculty
 import lecho.app.campus.plodz.database.entity.Poi
 import lecho.app.campus.plodz.database.entity.Unit

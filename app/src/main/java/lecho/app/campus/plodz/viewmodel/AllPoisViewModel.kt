@@ -1,7 +1,7 @@
 package lecho.app.campus.plodz.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import lecho.app.campus.plodz.repository.PoiRepository
 
 // TODO consider constructor with parameter and ViewModelFactory

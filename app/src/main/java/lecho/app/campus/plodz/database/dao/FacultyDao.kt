@@ -1,6 +1,6 @@
 package lecho.app.campus.plodz.database.dao
 
-import android.arch.persistence.room.Dao
+import androidx.room.Dao
 
 @Dao
 interface FacultyDao {

@@ -1,7 +1,7 @@
 package lecho.app.campus.plodz.database.entity
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * Single building or other kind of object with specific location on the map

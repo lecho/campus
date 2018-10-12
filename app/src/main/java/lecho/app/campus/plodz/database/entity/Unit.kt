@@ -1,8 +1,8 @@
 package lecho.app.campus.plodz.database.entity
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 // TODO Add foreignKeys to index to avoid full table scan
 /**
