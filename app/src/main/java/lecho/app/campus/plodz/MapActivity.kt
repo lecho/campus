@@ -56,9 +56,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         changeMapStyle(R.raw.map_style)
 
         allPoisViewModel.pois.observe(this, Observer<AllPois> { allPois ->
-            allPois!!.pois.forEach { it ->
-                val position = it.latLong.toMapsLatLng()
-                mMap.addMarker(MarkerOptions().position(position).title(it.name))
+            allPois!!.pois.forEach { poi ->
+                val position = poi.latLong.toMapsLatLng()
+                mMap.addMarker(MarkerOptions().position(position).title(poi.name))
             }
             val position = allPois.pois[0].latLong.toMapsLatLng()
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position))
