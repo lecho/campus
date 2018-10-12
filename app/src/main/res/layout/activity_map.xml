@@ -15,12 +15,13 @@
         android:background="@android:color/white"
         android:id="@+id/navigation"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
     <include layout="@layout/poi_info_view"
-        android:id="@+id/poi_info_view"
+        android:id="@+id/poiInfoView"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

@@ -1,19 +1,19 @@
 package lecho.app.campus.plodz
 
-import androidx.lifecycle.Observer
 import android.content.res.Resources
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
-import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.poi_info_view.*
 import lecho.app.campus.plodz.repository.PoiRepository
 import lecho.app.campus.plodz.viewmodel.AllPois
 import lecho.app.campus.plodz.viewmodel.AllPoisViewModel
@@ -34,8 +34,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_map)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         allPoisViewModel = ViewModelProviders.of(this).get(AllPoisViewModel::class.java)
