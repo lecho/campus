@@ -13,9 +13,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.poi_info_view.*
 import lecho.app.campus.plodz.repository.PoiRepository
 import lecho.app.campus.plodz.viewmodel.AllPois
 import lecho.app.campus.plodz.viewmodel.AllPoisViewModel
+import lecho.app.campus.plodz.viewmodel.PoiSummary
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -27,8 +29,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         const val DEFAULT_ZOOM = 14.8F
     }
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var map: GoogleMap
     private lateinit var allPoisViewModel: AllPoisViewModel
+    private lateinit var poisSymbolsMap: Map<String, PoiSummary>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,27 +57,38 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        map = googleMap
         changeMapStyle(R.raw.map_style)
 
         allPoisViewModel.pois.observe(this, Observer<AllPois> { allPois ->
             allPois!!.pois.forEach { poi ->
                 val position = poi.latLong.toMapsLatLng()
-                mMap.addMarker(MarkerOptions().position(position).title(poi.name))
+                val markerOptions = MarkerOptions().position(position).title(poi.symbol)
+                map.addMarker(markerOptions)
+
             }
-            val position = allPois.pois[0].latLong.toMapsLatLng()
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(position))
+
+            poisSymbolsMap = allPois.pois.map { poi -> poi.symbol to poi }.toMap()
         })
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
+        map.setOnMarkerClickListener { marker ->
+            val poi = poisSymbolsMap.getValue(marker.title)
+            poiSymbolView.text = poi.symbol
+            poiNameView.text = poi.name
+            poiOtherNamesView.text = "Other names"
+            false
+        }
     }
 
     private fun changeMapStyle(styleJson: Int) {
         try {
-            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, styleJson))
+            val success = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, styleJson))
             if (!success) Log.e(TAG, "Style parsing failed.")
         } catch (e: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
     }
+
+
 }
