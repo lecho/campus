@@ -22,7 +22,8 @@
 
     <include layout="@layout/poi_info_view"
         android:id="@+id/poiInfoView"
-        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_height="196dp"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package lecho.app.campus.plodz
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.poi_info_view.*
 import lecho.app.campus.plodz.repository.PoiRepository
 import lecho.app.campus.plodz.viewmodel.AllPois
@@ -72,12 +74,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
+
         map.setOnMarkerClickListener { marker ->
             val poi = poisSymbolsMap.getValue(marker.title)
             poiSymbolView.text = poi.symbol
             poiNameView.text = poi.name
             poiOtherNamesView.text = "Other names"
+            poiInfoView.visibility = View.VISIBLE // TODO animation!
+            map.setPadding(0, 0, 0, 196.dpToPx(this))
             false
+        }
+
+        map.setOnMapClickListener {
+            poiInfoView.visibility = View.GONE // TODO animation!
+            map.setPadding(0, 0, 0, 0)
         }
     }
 
