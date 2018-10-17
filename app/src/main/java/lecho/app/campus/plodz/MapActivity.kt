@@ -3,7 +3,8 @@ package lecho.app.campus.plodz
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -35,7 +36,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var allPoisViewModel: AllPoisViewModel
     private lateinit var poisSymbolsMap: Map<String, PoiSummary>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -47,6 +47,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         allPoisViewModel = ViewModelProviders.of(this).get(AllPoisViewModel::class.java)
         allPoisViewModel.init(PoiRepository())
+        poiInfoView.translationY = 196.dpToPx(this).toFloat()
     }
 
     /**
@@ -80,13 +81,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             poiSymbolView.text = poi.symbol
             poiNameView.text = poi.name
             poiOtherNamesView.text = "Other names"
-            poiInfoView.visibility = View.VISIBLE // TODO animation!
+            poiInfoView.animate().setInterpolator(AccelerateInterpolator())
+                    .translationY(0f)
             map.setPadding(0, 0, 0, 196.dpToPx(this))
             false
         }
 
         map.setOnMapClickListener {
-            poiInfoView.visibility = View.GONE // TODO animation!
+            poiInfoView.animate().setInterpolator(DecelerateInterpolator())
+                    .translationY(196.dpToPx(this).toFloat())
             map.setPadding(0, 0, 0, 0)
         }
     }

@@ -22,7 +22,6 @@
 
     <include layout="@layout/poi_info_view"
         android:id="@+id/poiInfoView"
-        android:visibility="gone"
         android:layout_height="196dp"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
