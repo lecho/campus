@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import lecho.app.campus.plodz.repository.PoiRepository
 
 // TODO consider constructor with parameter and ViewModelFactory
-class AllPoisViewModel : ViewModel() {
+class MapViewModel : ViewModel() {
 
     private lateinit var poiRepository: PoiRepository
-    lateinit var pois: LiveData<AllPois>
+    lateinit var pois: LiveData<MapData>
 
     fun init(poiRepository: PoiRepository) {
         this.poiRepository = poiRepository

@@ -18,9 +18,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.poi_info_view.*
 import lecho.app.campus.plodz.repository.PoiRepository
-import lecho.app.campus.plodz.viewmodel.AllPois
-import lecho.app.campus.plodz.viewmodel.AllPoisViewModel
-import lecho.app.campus.plodz.viewmodel.PoiSummary
+import lecho.app.campus.plodz.viewmodel.MapData
+import lecho.app.campus.plodz.viewmodel.MapViewModel
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -33,8 +32,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private lateinit var map: GoogleMap
-    private lateinit var allPoisViewModel: AllPoisViewModel
-    private lateinit var poisSymbolsMap: Map<String, PoiSummary>
+    private lateinit var mapViewModel: MapViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +43,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        allPoisViewModel = ViewModelProviders.of(this).get(AllPoisViewModel::class.java)
-        allPoisViewModel.init(PoiRepository())
+        mapViewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
+        mapViewModel.init(PoiRepository())
         poiInfoView.translationY = 196.dpToPx(this).toFloat()
     }
 
@@ -62,36 +60,35 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         changeMapStyle(R.raw.map_style)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
 
-        allPoisViewModel.pois.observe(this, Observer<AllPois> { allPois ->
-            allPois!!.pois.forEach { poi ->
+        mapViewModel.pois.observe(this, Observer<MapData> { mapData ->
+            mapData!!.pois.forEach { poi ->
                 val position = poi.latLong.toMapsLatLng()
                 val markerOptions = MarkerOptions().position(position).title(poi.symbol)
                 map.addMarker(markerOptions)
-
             }
 
-            poisSymbolsMap = allPois.pois.map { poi -> poi.symbol to poi }.toMap()
+            val poisSymbolsMap = mapData.pois.map { poi -> poi.symbol to poi }.toMap()
+
+            map.setOnMarkerClickListener { marker ->
+                val poi = poisSymbolsMap.getValue(marker.title)
+                poiSymbolView.text = poi.symbol
+                poiNameView.text = poi.name
+                poiOtherNamesView.text = "Other names"
+                poiInfoView.animate().setInterpolator(AccelerateInterpolator())
+                        .translationY(0f)
+                map.setPadding(0, 0, 0, 196.dpToPx(this))
+                false
+            }
+
+            map.setOnMapClickListener {
+                poiInfoView.animate().setInterpolator(DecelerateInterpolator())
+                        .translationY(196.dpToPx(this).toFloat())
+                map.setPadding(0, 0, 0, 0)
+            }
+
         })
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
-
-        map.setOnMarkerClickListener { marker ->
-            val poi = poisSymbolsMap.getValue(marker.title)
-            poiSymbolView.text = poi.symbol
-            poiNameView.text = poi.name
-            poiOtherNamesView.text = "Other names"
-            poiInfoView.animate().setInterpolator(AccelerateInterpolator())
-                    .translationY(0f)
-            map.setPadding(0, 0, 0, 196.dpToPx(this))
-            false
-        }
-
-        map.setOnMapClickListener {
-            poiInfoView.animate().setInterpolator(DecelerateInterpolator())
-                    .translationY(196.dpToPx(this).toFloat())
-            map.setPadding(0, 0, 0, 0)
-        }
     }
 
     private fun changeMapStyle(styleJson: Int) {
