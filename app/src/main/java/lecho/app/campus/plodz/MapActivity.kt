@@ -58,8 +58,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
+        // TODO involve presenter
         map = googleMap
         changeMapStyle(R.raw.map_style)
+        map.setPadding(0, 0, 0, 58.dpToPx(this))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATlNG, DEFAULT_ZOOM))
 
         mapViewModel.pois.observe(this, Observer<MapData> { mapData ->
@@ -79,13 +81,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 poiInfoView.animate().setInterpolator(AccelerateInterpolator())
                         .translationY(0f)
                 map.setPadding(0, 0, 0, 196.dpToPx(this))
+                navigationView.animate().translationY(58.dpToPx(this).toFloat())
                 false
             }
 
             map.setOnMapClickListener {
                 poiInfoView.animate().setInterpolator(DecelerateInterpolator())
                         .translationY(196.dpToPx(this).toFloat())
-                map.setPadding(0, 0, 0, 0)
+                navigationView.animate().translationY(0f)
+                map.setPadding(0, 0, 0, 58.dpToPx(this))
             }
 
         })
