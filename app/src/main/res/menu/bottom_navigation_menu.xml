@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/actionMap"
         android:title="Map"
         android:icon="@android:drawable/ic_menu_search" />
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/actionCategories"
         android:title="Categories"
         android:icon="@android:drawable/ic_menu_agenda" />
-    <item android:id="@+id/action_navigation"
+    <item android:id="@+id/actionSearch"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_add" />
 </menu>

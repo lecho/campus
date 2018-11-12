@@ -11,6 +11,28 @@
         android:layout_height="match_parent"
         tools:context="lecho.app.campus.plodz.MapActivity" />
 
+    <include
+        android:id="@+id/poiInfoView"
+        layout="@layout/poi_info_view"
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <include
+        android:id="@+id/categoriesView"
+        layout="@layout/categories_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include
+        android:id="@+id/searchView"
+        layout="@layout/search_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -18,12 +40,5 @@
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
-
-    <include
-        android:id="@+id/poiInfoView"
-        layout="@layout/poi_info_view"
-        android:layout_width="match_parent"
-        android:layout_height="196dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
